@@ -1,0 +1,71 @@
+import Image from "next/image"
+
+export function HeroSection() {
+  return (
+    <section className="min-h-screen relative flex flex-col items-center justify-center px-8 py-30 text-center overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('/images/interior.jpg')`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-coal/45 via-coal/65 to-coal/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,130,32,0.12)_0%,transparent_70%)]" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-2 max-w-[880px]">
+        <p className="font-label text-[11px] tracking-[0.5em] uppercase text-orange mb-8 drop-shadow-lg">
+          Solvang · California · Est. 2025
+        </p>
+
+        <Image
+          src="/images/ar-logo.png"
+          alt="The Analogue Room"
+          width={260}
+          height={260}
+          className="w-[min(260px,55vw)] h-auto mx-auto mb-10 drop-shadow-xl"
+          priority
+        />
+
+        <h1 className="font-display text-[clamp(36px,5vw,58px)] text-cream leading-[1.1] mb-7 drop-shadow-lg">
+          A Room for <em className="not-italic text-orange">Listening</em>
+        </h1>
+
+        {/* Divider */}
+        <div className="flex items-center justify-center gap-3.5 my-8">
+          <div className="w-15 h-px bg-cream/40" />
+          <span className="text-orange text-sm">★</span>
+          <div className="w-15 h-px bg-cream/40" />
+        </div>
+
+        <p className="font-body text-sm font-normal leading-relaxed text-cream/85 max-w-[540px] mx-auto mb-10 drop-shadow-md">
+          A curated vinyl bar in the heart of Solvang. Hand-selected records, thoughtful drinks, and a room designed for slowing down and tuning in.
+        </p>
+
+        {/* Meta info */}
+        <div className="flex justify-center gap-12 flex-wrap pt-8 border-t border-cream/20 mt-8">
+          <div className="text-center">
+            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
+              Location
+            </p>
+            <p className="font-display text-sm text-cream">Solvang, CA</p>
+          </div>
+          <div className="text-center">
+            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
+              Experience
+            </p>
+            <p className="font-display text-sm text-cream">Vinyl & Wine</p>
+          </div>
+          <div className="text-center">
+            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
+              Sister Property
+            </p>
+            <p className="font-display text-sm text-cream">Standing Sun</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

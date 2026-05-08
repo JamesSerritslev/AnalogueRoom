@@ -1,0 +1,144 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Analogue Room Brand Palette */
+  --cream: #f8e9d0;
+  --parched: #f9f5e5;
+  --coal: #282b2e;
+  --orange: #f58220;
+  --orange-dk: #a05c26;
+  --spanish: #b65627;
+  --spanish-dk: #7c4024;
+  --gold: #f9af1b;
+  --gold-dk: #a4762b;
+  --folder: #f4daab;
+  --folder-dk: #a19073;
+  --sage: #b8bc8c;
+  --hammock: #c3b398;
+  --earth: #302725;
+  
+  /* shadcn compatibility tokens */
+  --background: var(--cream);
+  --foreground: var(--coal);
+  --card: var(--cream);
+  --card-foreground: var(--coal);
+  --popover: var(--cream);
+  --popover-foreground: var(--coal);
+  --primary: var(--orange);
+  --primary-foreground: var(--cream);
+  --secondary: var(--spanish);
+  --secondary-foreground: var(--cream);
+  --muted: var(--folder);
+  --muted-foreground: var(--folder-dk);
+  --accent: var(--gold);
+  --accent-foreground: var(--coal);
+  --destructive: #ef4444;
+  --destructive-foreground: white;
+  --border: rgba(40, 43, 46, 0.12);
+  --input: rgba(40, 43, 46, 0.08);
+  --ring: var(--orange);
+  --radius: 0px;
+}
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-label: var(--font-label);
+  --font-body: var(--font-body);
+  
+  --color-cream: var(--cream);
+  --color-parched: var(--parched);
+  --color-coal: var(--coal);
+  --color-orange: var(--orange);
+  --color-orange-dk: var(--orange-dk);
+  --color-spanish: var(--spanish);
+  --color-spanish-dk: var(--spanish-dk);
+  --color-gold: var(--gold);
+  --color-gold-dk: var(--gold-dk);
+  --color-folder: var(--folder);
+  --color-folder-dk: var(--folder-dk);
+  --color-sage: var(--sage);
+  --color-hammock: var(--hammock);
+  --color-earth: var(--earth);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-cream text-coal overflow-x-hidden;
+    font-weight: 400;
+  }
+  
+  /* Paper texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(160, 92, 38, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(245, 130, 32, 0.06) 0%, transparent 40%);
+  }
+}
+
+/* Typography Utilities */
+.font-display {
+  font-family: var(--font-display), 'Special Elite', serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.font-label {
+  font-family: var(--font-label), 'Oswald', sans-serif;
+  font-weight: 500;
+}
+
+.font-body {
+  font-family: var(--font-body), 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+/* Animation for spinning vinyl */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin 30s linear infinite;
+}
