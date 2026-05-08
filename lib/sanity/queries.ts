@@ -2,8 +2,7 @@ import { client } from "./client"
 import type { Event } from "./types"
 
 export async function getEvents(): Promise<Event[]> {
-  // If no Sanity project is configured, return empty array
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+  if (!client) {
     return []
   }
 
@@ -31,7 +30,7 @@ export async function getEvents(): Promise<Event[]> {
 }
 
 export async function getEventBySlug(slug: string): Promise<Event | null> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+  if (!client) {
     return null
   }
 
@@ -60,7 +59,7 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
 }
 
 export async function getFeaturedEvents(): Promise<Event[]> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+  if (!client) {
     return []
   }
 
