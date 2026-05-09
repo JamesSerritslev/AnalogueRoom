@@ -1,18 +1,27 @@
+/**
+ * Sanity Studio mounted at `/studio` (see `app/studio/[[...index]]/page.tsx`).
+ * https://www.sanity.io/docs/api-versioning
+ */
+
+import { visionTool } from "@sanity/vision"
 import { defineConfig } from "sanity"
 import { structureTool } from "sanity/structure"
-import { schemaTypes } from "./sanity/schemaTypes"
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim() ?? ""
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production"
+import { apiVersion, dataset, projectId } from "./sanity/env"
+import { schema } from "./sanity/schemaTypes"
+import { structure } from "./sanity/structure"
 
 export default defineConfig({
-  name: "default",
-  title: "The Analogue Room",
   basePath: "/studio",
   projectId,
   dataset,
-  plugins: [structureTool()],
-  schema: {
-    types: schemaTypes,
-  },
+  schema,
+  plugins: [
+    structureTool({ structure }),
+    // GROQ playground — uses same apiVersion as `sanity/env.ts` (invalid dates break Fetch)
+    visionTool({
+      defaultApiVersion: apiVersion,
+      defaultDataset: dataset,
+    }),
+  ],
 })

@@ -4,19 +4,19 @@ export function PillarsSection() {
       num: "01",
       title: "Curation",
       description:
-        "Every record, every pour, every detail chosen with intention. We believe great experiences start with thoughtful selection.",
+        "A rotating selection of wines, beers, and non-alcoholic offerings — chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
     },
     {
       num: "02",
       title: "Intention",
       description:
-        "A space designed to slow the world down. The room itself is tuned for listening — acoustically, visually, spiritually.",
+        "Nothing here is by accident. The lighting, the volume, the pour. We design a room that asks you to be present, to listen, to settle in.",
     },
     {
       num: "03",
       title: "Analogue",
       description:
-        "In a digital world, we choose the tangible. Vinyl crackle, warm light, real conversation. The beauty of imperfection.",
+        "Vinyl, played properly. No algorithms. No skips. The full album, the way the artist meant it. A return to the analogue way of listening.",
     },
   ]
 
@@ -25,14 +25,16 @@ export function PillarsSection() {
       {/* Header */}
       <div className="text-center max-w-[680px] mx-auto mb-20">
         <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
-          The Philosophy
+          Our Approach
         </p>
         <h2 className="font-display text-[clamp(36px,5vw,56px)] text-cream leading-[1.05] mb-6">
-          The Experience
+          Three Words.
+          <br />
+          One <span className="text-orange">Room</span>.
         </h2>
         <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
         <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
-          Three pillars guide everything we do at The Analogue Room — from the records we spin to the wine we pour.
+          Everything we do is anchored in three principles. They&apos;re our compass, our standard, and our invitation to slow down.
         </p>
       </div>
 

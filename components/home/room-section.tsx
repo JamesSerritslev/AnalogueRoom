@@ -8,14 +8,14 @@ export function RoomSection() {
             The Space
           </p>
           <h2 className="font-display text-[clamp(36px,5vw,56px)] text-coal leading-[1.05] mb-6">
-            The Room
+            A Place to <span className="text-orange">Slow Down</span>
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">
-            Backlit shelves lined with vinyl. Vintage hi-fi gear humming with warmth. Leather seating, low light, and the crackle of a needle finding its groove.
+            The Analogue Room is a vinyl bar and record lounge in Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.
           </p>
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px]">
-            The Analogue Room is designed to feel like the listening space you always wanted — a place where the music matters and the world outside fades away.
+            We&apos;re not a club. We&apos;re not a museum. We&apos;re a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.
           </p>
         </div>
 

@@ -30,7 +30,10 @@ export function HeroSection() {
         />
 
         <h1 className="font-display text-[clamp(36px,5vw,58px)] text-cream leading-[1.1] mb-7 drop-shadow-lg">
-          A Room for <em className="not-italic text-orange">Listening</em>
+          <span className="block">
+            Curation. <em className="not-italic text-orange">Intention.</em>
+          </span>
+          <span className="block">Analogue.</span>
         </h1>
 
         {/* Divider */}
@@ -41,28 +44,28 @@ export function HeroSection() {
         </div>
 
         <p className="font-body text-sm font-normal leading-relaxed text-cream/85 max-w-[540px] mx-auto mb-10 drop-shadow-md">
-          A curated vinyl bar in the heart of Solvang. Hand-selected records, thoughtful drinks, and a room designed for slowing down and tuning in.
+          A vinyl bar &amp; record lounge in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard.
         </p>
 
         {/* Meta info */}
         <div className="flex justify-center gap-12 flex-wrap pt-8 border-t border-cream/20 mt-8">
           <div className="text-center">
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
+              Hours
+            </p>
+            <p className="font-display text-sm text-cream">Thu-Sun · 4-10pm</p>
+          </div>
+          <div className="text-center">
+            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
               Location
             </p>
-            <p className="font-display text-sm text-cream">Solvang, CA</p>
+            <p className="font-display text-sm text-cream">1693 Mission Dr, Solvang</p>
           </div>
           <div className="text-center">
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
-              Experience
+              Follow
             </p>
-            <p className="font-display text-sm text-cream">Vinyl & Wine</p>
-          </div>
-          <div className="text-center">
-            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
-              Sister Property
-            </p>
-            <p className="font-display text-sm text-cream">Standing Sun</p>
+            <p className="font-display text-sm text-cream">@analogueroomsyv</p>
           </div>
         </div>
       </div>

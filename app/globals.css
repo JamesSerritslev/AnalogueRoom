@@ -19,6 +19,11 @@
   --sage: #b8bc8c;
   --hammock: #c3b398;
   --earth: #302725;
+
+  /* Web fonts (--font-display / --font-label / --font-body) load via link in app/layout.tsx; stacks work offline during build */
+  --font-display: 'Special Elite', Georgia, 'Times New Roman', serif;
+  --font-label: 'Oswald', Arial, Helvetica, sans-serif;
+  --font-body: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
   /* shadcn compatibility tokens */
   --background: var(--cream);
@@ -44,9 +49,9 @@
 }
 
 @theme inline {
-  --font-display: var(--font-display);
-  --font-label: var(--font-label);
-  --font-body: var(--font-body);
+  --font-display: 'Special Elite', Georgia, serif;
+  --font-label: 'Oswald', Arial, sans-serif;
+  --font-body: Inter, system-ui, sans-serif;
   
   --color-cream: var(--cream);
   --color-parched: var(--parched);
@@ -118,18 +123,18 @@
 
 /* Typography Utilities */
 .font-display {
-  font-family: var(--font-display), 'Special Elite', serif;
+  font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0.02em;
 }
 
 .font-label {
-  font-family: var(--font-label), 'Oswald', sans-serif;
+  font-family: var(--font-label);
   font-weight: 500;
 }
 
 .font-body {
-  font-family: var(--font-body), 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-weight: 400;
 }
 

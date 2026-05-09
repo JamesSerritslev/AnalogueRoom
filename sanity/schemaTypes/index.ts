@@ -1,4 +1,6 @@
-import type { SchemaTypeDefinition } from "sanity"
+import { type SchemaTypeDefinition } from "sanity"
 import { eventType } from "./event"
 
-export const schemaTypes: SchemaTypeDefinition[] = [eventType]
+export const schema: { types: SchemaTypeDefinition[] } = {
+  types: [eventType],
+}

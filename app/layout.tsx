@@ -1,22 +1,7 @@
 import type { Metadata } from 'next'
-import { Special_Elite, Oswald, Inter } from 'next/font/google'
 import './globals.css'
 
-const specialElite = Special_Elite({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-display',
-})
-
-const oswald = Oswald({
-  subsets: ['latin'],
-  variable: '--font-label',
-})
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-body',
-})
+/** Fonts load at runtime via <link> — avoids build failures when fonts.googleapis.com is unreachable (offline / firewall). */
 
 export const metadata: Metadata = {
   title: 'The Analogue Room | Vinyl Bar & Listening Lounge | Solvang, CA',
@@ -48,7 +33,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${specialElite.variable} ${oswald.variable} ${inter.variable}`}>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oswald:wght@200..700&family=Special+Elite&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="font-body antialiased bg-cream text-coal">
         {children}
       </body>

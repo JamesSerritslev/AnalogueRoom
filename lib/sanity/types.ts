@@ -1,3 +1,5 @@
+import type { PortableTextBlock } from "@portabletext/types"
+
 export interface Event {
   _id: string
   title: string
@@ -8,7 +10,7 @@ export interface Event {
   date: string
   time: string
   description: string
-  longDescription?: string
+  longDescription?: PortableTextBlock[]
   image?: {
     asset: {
       _ref: string
