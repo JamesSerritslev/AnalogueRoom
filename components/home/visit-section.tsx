@@ -1,3 +1,5 @@
+import { VisitSectionMap } from "@/components/home/visit-section-map"
+
 export function VisitSection() {
   const hours = [
     { day: "Monday", time: "Closed", closed: true },
@@ -102,6 +104,8 @@ export function VisitSection() {
           </div>
         </div>
       </div>
+
+      <VisitSectionMap />
     </section>
   )
 }
