@@ -14,7 +14,7 @@ export function Footer() {
                 alt="The Analogue Room"
                 width={80}
                 height={80}
-                className="h-20 w-auto"
+                className="h-20 w-20 object-contain"
               />
             </Link>
           </div>

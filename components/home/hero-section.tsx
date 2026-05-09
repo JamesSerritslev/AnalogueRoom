@@ -25,7 +25,7 @@ export function HeroSection() {
           alt="The Analogue Room"
           width={260}
           height={260}
-          className="w-[min(260px,55vw)] h-auto mx-auto mb-10 drop-shadow-xl"
+          className="mx-auto mb-10 w-[min(260px,55vw)] aspect-square object-contain drop-shadow-xl"
           priority
         />
 

@@ -22,7 +22,7 @@ export function Navigation() {
           alt="The Analogue Room"
           width={60}
           height={60}
-          className="h-[60px] w-auto"
+          className="h-[60px] w-[60px] object-contain"
         />
       </Link>
       
