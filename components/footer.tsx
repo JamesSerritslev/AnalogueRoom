@@ -8,13 +8,16 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-8 md:gap-16 items-start mb-14">
           {/* Logo */}
           <div>
-            <Link href="/">
+            <Link
+              href="/"
+              className="inline-flex shrink-0 rounded-full outline outline-2 outline-orange outline-offset-4"
+            >
               <Image
                 src="/images/ar-logo.png"
                 alt="The Analogue Room"
                 width={80}
                 height={80}
-                className="h-20 w-20 object-contain"
+                className="h-20 w-20 object-contain rounded-full"
               />
             </Link>
           </div>

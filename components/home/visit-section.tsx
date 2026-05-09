@@ -18,11 +18,15 @@ export function VisitSection() {
             Hours
           </p>
           <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-coal leading-[1.05] mb-6">
-            When We&apos;re Open
+            When We&apos;re <span className="text-orange">Spinning</span>
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
-          
-          <div className="mt-6 border-t-2 border-coal">
+          <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">
+            Doors open Thursday through Sunday. Come early to grab a corner,
+            stay late to find your favorite record on the shelf.
+          </p>
+
+          <div className="border-t-2 border-coal">
             {hours.map((item) => (
               <div
                 key={item.day}
@@ -44,12 +48,12 @@ export function VisitSection() {
         </div>
 
         {/* Visit Info */}
-        <div className="bg-coal text-cream p-12">
+        <div className="bg-coal text-cream p-12 text-left">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             Visit
           </p>
           <h2 className="font-display text-[32px] text-cream mb-6">
-            Find Us
+            Stop By.
           </h2>
 
           <div className="mb-7">
@@ -57,41 +61,15 @@ export function VisitSection() {
               Address
             </p>
             <p className="font-display text-base text-cream leading-normal">
-              1693 Mission Drive, Ste D2
+              1693 Mission Drive
+              <br />
+              Suite D2
               <br />
               Solvang, CA 93463
             </p>
           </div>
 
           <div className="mb-7">
-            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
-              Phone
-            </p>
-            <p className="font-display text-base text-cream">
-              <a
-                href="tel:+18056865005"
-                className="border-b border-orange/50 hover:text-orange transition-colors"
-              >
-                (805) 686-5005
-              </a>
-            </p>
-          </div>
-
-          <div className="mb-7">
-            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
-              Email
-            </p>
-            <p className="font-display text-base text-cream">
-              <a
-                href="mailto:hello@analogueroom.com"
-                className="border-b border-orange/50 hover:text-orange transition-colors"
-              >
-                hello@analogueroom.com
-              </a>
-            </p>
-          </div>
-
-          <div>
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
               Social
             </p>
@@ -103,6 +81,22 @@ export function VisitSection() {
                 className="border-b border-orange/50 hover:text-orange transition-colors"
               >
                 @analogueroomsyv
+              </a>
+            </p>
+          </div>
+
+          <div>
+            <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
+              Sister Property
+            </p>
+            <p className="font-display text-base text-cream">
+              <a
+                href="https://www.standingsunwines.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-b border-orange/50 hover:text-orange transition-colors"
+              >
+                Standing Sun Wines →
               </a>
             </p>
           </div>

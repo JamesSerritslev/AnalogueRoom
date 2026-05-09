@@ -5,9 +5,10 @@ export function OfferingsSection() {
       description:
         "A rotating selection of local Santa Barbara County labels alongside imported pours from regions worth knowing. Curated for the moment, the music, and the mood.",
       icon: (
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
-          <path d="M8 2 L16 2 L16 6 C16 8 14.5 9 14 11 L14 21 L10 21 L10 11 C9.5 9 8 8 8 6 Z"/>
-          <line x1="10" y1="13" x2="14" y2="13"/>
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M7 3h10c0 4-2 7-5 8-3-1-5-4-5-8Z" />
+          <path d="M12 11v7" />
+          <path d="M9 21h6" />
         </svg>
       ),
     },
@@ -16,12 +17,11 @@ export function OfferingsSection() {
       description:
         "A thoughtful list of craft beers, both local and from further afield. Cold, fresh, and chosen to complement everything from a quiet evening to a packed Friday night.",
       icon: (
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
-          <path d="M7 7h7a2 2 0 012 2v8a3 3 0 01-3 3H8a3 3 0 01-3-3V9a2 2 0 012-2z" />
-          <path d="M16 10h2a2 2 0 010 4h-2" />
-          <line x1="8.5" y1="4" x2="8.5" y2="7" />
-          <line x1="11" y1="4" x2="11" y2="7" />
-          <line x1="13.5" y1="4" x2="13.5" y2="7" />
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M7 4h10l-1.1 15.5A2 2 0 0 1 13.9 21h-3.8a2 2 0 0 1-1.99-1.5L7 4Z" />
+          <path d="M8.5 8h7" />
+          <path d="M9.2 11h5.6" />
+          <path d="M9.8 14h4.4" />
         </svg>
       ),
     },
@@ -30,10 +30,10 @@ export function OfferingsSection() {
       description:
         "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers — because the experience matters more than the alcohol.",
       icon: (
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
-          <path d="M7.5 3h9l-1.2 5.8c-.3 1.3-1.4 2.2-2.7 2.2h-1.2c-1.3 0-2.4-.9-2.7-2.2L7.5 3Z" />
-          <path d="M9 11v6.5a3.5 3.5 0 0 0 7 0V11" />
-          <line x1="6" y1="21" x2="18" y2="21" />
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M7 7 17 17" strokeWidth="1.1" />
+          <path d="M12 6.8c2 2.5 3.3 4.2 3.3 6.2a3.3 3.3 0 1 1-6.6 0c0-2 1.3-3.7 3.3-6.2Z" />
         </svg>
       ),
     },
