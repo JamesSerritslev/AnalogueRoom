@@ -39,7 +39,7 @@ export function InquiryForm() {
             type="text"
             name="firstName"
             required
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream font-body text-[13px] outline-none focus:border-orange transition-colors"
+            className="min-h-11 w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
             placeholder="First Name"
           />
         </div>
@@ -51,7 +51,7 @@ export function InquiryForm() {
             type="text"
             name="lastName"
             required
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream font-body text-[13px] outline-none focus:border-orange transition-colors"
+            className="min-h-11 w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
             placeholder="Last Name"
           />
         </div>
@@ -66,7 +66,7 @@ export function InquiryForm() {
             type="email"
             name="email"
             required
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream font-body text-[13px] outline-none focus:border-orange transition-colors"
+            className="min-h-11 w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
             placeholder="you@email.com"
           />
         </div>
@@ -77,7 +77,7 @@ export function InquiryForm() {
           <input
             type="tel"
             name="phone"
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream font-body text-[13px] outline-none focus:border-orange transition-colors"
+            className="min-h-11 w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
             placeholder="(555) 555-5555"
           />
         </div>
@@ -91,7 +91,7 @@ export function InquiryForm() {
           <select
             name="eventType"
             required
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream/70 font-body text-[13px] outline-none focus:border-orange transition-colors cursor-pointer"
+            className="min-h-11 w-full cursor-pointer border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream/70 outline-none transition-colors focus:border-orange sm:text-[13px]"
           >
             <option value="">Select an event type</option>
             <option value="birthday">Birthday Party</option>
@@ -109,7 +109,7 @@ export function InquiryForm() {
           <select
             name="guestCount"
             required
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream/70 font-body text-[13px] outline-none focus:border-orange transition-colors cursor-pointer"
+            className="min-h-11 w-full cursor-pointer border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream/70 outline-none transition-colors focus:border-orange sm:text-[13px]"
           >
             <option value="">Estimated guests</option>
             <option value="1-10">1–10 guests</option>
@@ -129,7 +129,7 @@ export function InquiryForm() {
           <input
             type="date"
             name="preferredDate"
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream font-body text-[13px] outline-none focus:border-orange transition-colors"
+            className="min-h-11 w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
           />
         </div>
         <div>
@@ -138,7 +138,7 @@ export function InquiryForm() {
           </label>
           <select
             name="preferredTime"
-            className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream/70 font-body text-[13px] outline-none focus:border-orange transition-colors cursor-pointer"
+            className="min-h-11 w-full cursor-pointer border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream/70 outline-none transition-colors focus:border-orange sm:text-[13px]"
           >
             <option value="">Select a time</option>
             <option value="afternoon">Afternoon (12pm–4pm)</option>
@@ -156,7 +156,7 @@ export function InquiryForm() {
         <textarea
           name="message"
           rows={4}
-          className="w-full bg-cream/4 border border-cream/18 px-4 py-3 text-cream font-body text-[13px] outline-none focus:border-orange transition-colors resize-y"
+          className="min-h-[5.5rem] w-full resize-y border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:min-h-0 sm:text-[13px]"
           placeholder="What's the occasion? Any special requests?"
         />
       </div>
@@ -165,7 +165,7 @@ export function InquiryForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full font-label text-[11px] tracking-[0.3em] uppercase bg-orange text-cream px-8 py-4 hover:bg-spanish transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="min-h-12 w-full bg-orange px-8 py-4 font-label text-[11px] tracking-[0.28em] uppercase text-cream transition-colors hover:bg-spanish disabled:cursor-not-allowed disabled:opacity-50 sm:tracking-[0.3em]"
         >
           {isSubmitting ? "Sending..." : "Submit Inquiry"}
         </button>

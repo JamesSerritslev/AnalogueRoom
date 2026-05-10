@@ -42,7 +42,7 @@ export default async function EventDetailPage({ params }: PageProps) {
     <>
       <Navigation />
       <main>
-        <section className="min-h-[38vh] relative flex flex-col justify-end px-6 md:px-12 pb-12 pt-32 overflow-hidden">
+        <section className="relative flex min-h-[36vh] flex-col justify-end overflow-hidden px-4 pb-10 pt-page-hero sm:min-h-[38vh] sm:px-6 sm:pb-12 md:px-10 lg:px-12">
           <div
             className="absolute inset-0 z-0 bg-cover bg-center"
             style={{
@@ -54,7 +54,7 @@ export default async function EventDetailPage({ params }: PageProps) {
           <div className="relative z-2 max-w-[880px]">
             <Link
               href="/events"
-              className="inline-block font-label text-[10px] tracking-[0.35em] uppercase text-orange/90 hover:text-cream mb-6 transition-colors"
+              className="-mx-1 mb-6 inline-flex min-h-10 items-center px-1 font-label text-[10px] tracking-[0.3em] uppercase text-orange/90 transition-colors hover:text-cream sm:tracking-[0.35em]"
             >
               ← Back to events
             </Link>
@@ -69,7 +69,7 @@ export default async function EventDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        <section className="py-16 px-6 md:px-12 max-w-[720px] mx-auto">
+        <section className="mx-auto max-w-[720px] px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:px-12">
           {imageUrl ? (
             <div className="relative aspect-[21/9] w-full mb-12 border border-coal/10 overflow-hidden rounded-sm bg-coal/5">
               <Image

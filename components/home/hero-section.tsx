@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export function HeroSection() {
   return (
-    <section className="min-h-screen relative flex flex-col items-center justify-center px-8 py-30 text-center overflow-hidden">
+    <section className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center sm:px-6 sm:py-24 md:px-8 md:py-30">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center"
@@ -15,8 +15,8 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-2 max-w-[880px]">
-        <p className="font-label text-[11px] tracking-[0.5em] uppercase text-orange mb-8 drop-shadow-lg">
+      <div className="relative z-2 mx-auto w-full max-w-[880px] pt-[calc(3.5rem+env(safe-area-inset-top,0px))] sm:pt-[calc(4rem+env(safe-area-inset-top,0px))] lg:pt-[calc(4.5rem+env(safe-area-inset-top,0px))]">
+        <p className="font-label mb-6 text-[10px] tracking-[0.35em] text-orange drop-shadow-lg sm:mb-8 sm:text-[11px] sm:tracking-[0.45em] md:tracking-[0.5em] uppercase">
           Solvang · California · Est. 2025
         </p>
 
@@ -29,7 +29,7 @@ export function HeroSection() {
           priority
         />
 
-        <h1 className="font-display text-[clamp(36px,5vw,58px)] text-cream leading-[1.1] mb-7 drop-shadow-lg">
+        <h1 className="font-display mb-6 text-[clamp(32px,6vw,58px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-7">
           <span className="block">
             Curation. <em className="not-italic text-orange">Intention.</em>
           </span>
@@ -48,7 +48,7 @@ export function HeroSection() {
         </p>
 
         {/* Meta info */}
-        <div className="flex justify-center gap-12 flex-wrap pt-8 border-t border-cream/20 mt-8">
+        <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-6 border-t border-cream/20 pt-8 sm:gap-x-10 sm:gap-y-7 md:gap-x-12">
           <div className="text-center">
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-1.5">
               Hours

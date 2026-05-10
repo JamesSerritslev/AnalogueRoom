@@ -13,7 +13,7 @@ export default function AboutPage() {
       <Navigation />
       <main>
         {/* Hero */}
-        <section className="min-h-[55vh] relative flex items-end px-6 md:px-12 pb-18 overflow-hidden pt-35">
+        <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div
             className="absolute inset-0 bg-cover bg-center z-0"
             style={{ backgroundImage: `url('/images/interior.jpg')` }}
@@ -32,7 +32,7 @@ export default function AboutPage() {
         </section>
 
         {/* Story Section */}
-        <section className="py-25 px-6 md:px-12 max-w-[920px] mx-auto">
+        <section className="mx-auto max-w-[920px] px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             The Analogue Room
           </p>
@@ -59,7 +59,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Section */}
-        <section className="bg-coal text-cream py-25 px-6 md:px-12">
+        <section className="bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
           <div className="text-center max-w-[680px] mx-auto mb-16">
             <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
               The People
@@ -73,9 +73,9 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-[1000px] mx-auto">
+          <div className="mx-auto grid max-w-[1000px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2 md:gap-12">
             {/* Team Member 1 */}
-            <div className="bg-cream/4 border border-cream/10 px-9 py-10 text-center hover:border-orange hover:bg-orange/6 transition-all duration-300">
+            <div className="border border-cream/10 bg-cream/4 px-6 py-8 text-center transition-all duration-300 hover:border-orange hover:bg-orange/6 sm:px-8 sm:py-9 md:px-9 md:py-10">
               <div className="w-35 h-35 rounded-full bg-cream/5 border border-dashed border-cream/20 flex items-center justify-center mx-auto mb-6">
                 <svg
                   width="40"
@@ -102,7 +102,7 @@ export default function AboutPage() {
             </div>
 
             {/* Team Member 2 */}
-            <div className="bg-cream/4 border border-cream/10 px-9 py-10 text-center hover:border-orange hover:bg-orange/6 transition-all duration-300">
+            <div className="border border-cream/10 bg-cream/4 px-6 py-8 text-center transition-all duration-300 hover:border-orange hover:bg-orange/6 sm:px-8 sm:py-9 md:px-9 md:py-10">
               <div className="w-35 h-35 rounded-full bg-cream/5 border border-dashed border-cream/20 flex items-center justify-center mx-auto mb-6">
                 <svg
                   width="40"

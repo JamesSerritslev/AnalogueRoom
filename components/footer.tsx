@@ -3,9 +3,9 @@ import Image from "next/image"
 
 export function Footer() {
   return (
-    <footer className="bg-coal text-cream py-20 px-6 md:px-12 relative z-2">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-8 md:gap-16 items-start mb-14">
+    <footer className="relative z-2 bg-coal px-4 py-16 text-cream sm:px-6 sm:py-20 md:px-10 md:py-22 lg:px-12">
+      <div className="mx-auto max-w-[1200px]">
+        <div className="mb-12 grid grid-cols-1 items-start gap-10 sm:gap-12 md:mb-14 md:grid-cols-[auto_1fr_auto] md:gap-14 lg:gap-16">
           {/* Logo */}
           <div>
             <Link
@@ -32,7 +32,7 @@ export function Footer() {
                 href="https://www.instagram.com/analogueroomsyv"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-label text-[11px] tracking-[0.3em] uppercase text-orange border border-orange px-5 py-2.5 hover:bg-orange hover:text-coal transition-colors"
+                className="inline-flex min-h-11 items-center justify-center gap-2 border border-orange px-5 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-orange transition-colors hover:bg-orange hover:text-coal sm:min-h-0 sm:py-2.5 sm:tracking-[0.3em]"
               >
                 Follow @analogueroomsyv
               </a>

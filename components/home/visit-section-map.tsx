@@ -8,7 +8,7 @@ const VenueMap = dynamic(() => import("@/components/VenueMap"), {
 
 export function VisitSectionMap() {
   return (
-    <div className="mt-16 max-w-[1100px] mx-auto w-full overflow-hidden border-2 border-coal/10">
+    <div className="mx-auto mt-12 w-full max-w-[1100px] overflow-hidden rounded-sm border-2 border-coal/10 sm:mt-14 md:mt-16">
       <VenueMap />
     </div>
   )

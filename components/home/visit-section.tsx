@@ -12,8 +12,8 @@ export function VisitSection() {
   ]
 
   return (
-    <section className="bg-cream py-30 px-6 md:px-12 relative z-2">
-      <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+    <section className="relative z-2 bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
+      <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
         {/* Hours */}
         <div className="py-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
@@ -32,13 +32,13 @@ export function VisitSection() {
             {hours.map((item) => (
               <div
                 key={item.day}
-                className="flex justify-between items-center py-4 border-b border-coal/12"
+                className="flex items-start justify-between gap-3 border-b border-coal/12 py-3.5 sm:items-center sm:py-4"
               >
-                <span className="font-label text-[11px] tracking-[0.25em] uppercase text-coal">
+                <span className="shrink-0 font-label text-[10px] tracking-[0.2em] text-coal uppercase sm:text-[11px] sm:tracking-[0.25em]">
                   {item.day}
                 </span>
                 <span
-                  className={`font-display text-sm ${
+                  className={`min-w-0 text-right font-display text-xs sm:text-sm ${
                     item.closed ? "text-folder-dk italic" : "text-coal"
                   }`}
                 >
@@ -50,7 +50,7 @@ export function VisitSection() {
         </div>
 
         {/* Visit Info */}
-        <div className="bg-coal text-cream p-12 text-left">
+        <div className="bg-coal p-6 text-cream text-left sm:p-8 md:p-10 lg:p-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             Visit
           </p>

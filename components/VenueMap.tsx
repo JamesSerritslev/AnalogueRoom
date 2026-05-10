@@ -36,73 +36,44 @@ export default function VenueMap() {
       .addTo(map.current)
 
     map.current.on("load", () => {
-      // Comment out the real geolocation
-      // navigator.geolocation.getCurrentPosition(
-      //   (pos) => {
-      //     const user: [number, number] = [
-      //       pos.coords.longitude,
-      //       pos.coords.latitude,
-      //     ]
-      //     new mapboxgl.Marker({ color: "#185FA5" })
-      //       .setLngLat(user)
-      //       .addTo(map.current!)
-      //     fetch(
-      //       `https://api.mapbox.com/directions/v5/mapbox/walking/${user[0]},${user[1]};${DESTINATION[0]},${DESTINATION[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
-      //     )
-      //       .then((r) => r.json())
-      //       .then((data) => {
-      //         const route = data.routes?.[0]?.geometry
-      //         if (!route || !map.current) return
-      //         map.current.addSource("route", {
-      //           type: "geojson",
-      //           data: { type: "Feature", geometry: route, properties: {} },
-      //         })
-      //         map.current.addLayer({
-      //           id: "route",
-      //           type: "line",
-      //           source: "route",
-      //           paint: {
-      //             "line-color": "#185FA5",
-      //             "line-width": 4,
-      //             "line-opacity": 0.8,
-      //           },
-      //         })
-      //       })
-      //   },
-      //   () => {
-      //     /* geolocation denied or unavailable */
-      //   }
-      // )
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const user: [number, number] = [
+            pos.coords.longitude,
+            pos.coords.latitude,
+          ]
 
-      // Paste this instead for testing — Solvang Park, Solvang, CA
-      const user: [number, number] = [-120.139661, 34.595739]
+          new mapboxgl.Marker({ color: "#185FA5" })
+            .setLngLat(user)
+            .addTo(map.current!)
 
-      new mapboxgl.Marker({ color: "#185FA5" })
-        .setLngLat(user)
-        .addTo(map.current!)
-
-      fetch(
-        `https://api.mapbox.com/directions/v5/mapbox/walking/${user[0]},${user[1]};${DESTINATION[0]},${DESTINATION[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+          fetch(
+            `https://api.mapbox.com/directions/v5/mapbox/walking/${user[0]},${user[1]};${DESTINATION[0]},${DESTINATION[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+          )
+            .then((r) => r.json())
+            .then((data) => {
+              const route = data.routes?.[0]?.geometry
+              if (!route || !map.current) return
+              map.current.addSource("route", {
+                type: "geojson",
+                data: { type: "Feature", geometry: route, properties: {} },
+              })
+              map.current.addLayer({
+                id: "route",
+                type: "line",
+                source: "route",
+                paint: {
+                  "line-color": "#185FA5",
+                  "line-width": 4,
+                  "line-opacity": 0.8,
+                },
+              })
+            })
+        },
+        () => {
+          /* geolocation denied or unavailable */
+        }
       )
-        .then((r) => r.json())
-        .then((data) => {
-          const route = data.routes?.[0]?.geometry
-          if (!route || !map.current) return
-          map.current.addSource("route", {
-            type: "geojson",
-            data: { type: "Feature", geometry: route, properties: {} },
-          })
-          map.current.addLayer({
-            id: "route",
-            type: "line",
-            source: "route",
-            paint: {
-              "line-color": "#185FA5",
-              "line-width": 4,
-              "line-opacity": 0.8,
-            },
-          })
-        })
     })
 
     return () => {
@@ -111,5 +82,10 @@ export default function VenueMap() {
     }
   }, [])
 
-  return <div ref={mapContainer} style={{ width: "100%", height: "500px" }} />
+  return (
+    <div
+      ref={mapContainer}
+      className="h-[min(52dvh,420px)] w-full sm:h-[min(48dvh,460px)] md:h-[480px] lg:h-[500px]"
+    />
+  )
 }

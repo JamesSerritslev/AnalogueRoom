@@ -40,9 +40,9 @@ export function OfferingsSection() {
   ]
 
   return (
-    <section className="bg-earth text-cream py-30 px-6 md:px-12 relative z-2">
+    <section className="relative z-2 bg-earth px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
       {/* Header */}
-      <div className="text-center max-w-[680px] mx-auto mb-16">
+      <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-14 md:mb-16">
         <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
           Drinks & Listening
         </p>
@@ -56,11 +56,11 @@ export function OfferingsSection() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
+      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
         {offerings.map((offering) => (
           <div
             key={offering.title}
-            className="bg-cream/4 border border-cream/10 px-8 py-10 hover:bg-orange/8 hover:border-orange transition-all duration-300"
+            className="border border-cream/10 bg-cream/4 px-6 py-8 transition-all duration-300 hover:border-orange hover:bg-orange/8 sm:px-8 sm:py-10"
           >
             <div className="text-orange mb-6">{offering.icon}</div>
             <h3 className="font-display text-[22px] text-cream mb-3">

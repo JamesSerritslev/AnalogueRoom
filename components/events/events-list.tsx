@@ -28,7 +28,7 @@ export function EventsList({ events }: EventsListProps) {
 
 function detailsButtonClasses(link: boolean) {
   return [
-    "inline-block font-label text-[11px] tracking-[0.3em] uppercase px-8 py-3.5 transition-colors",
+    "inline-flex w-full min-h-11 items-center justify-center px-6 py-3 font-label text-[11px] tracking-[0.28em] uppercase transition-colors sm:min-h-0 sm:w-auto sm:px-8 sm:py-3.5 sm:tracking-[0.3em]",
     link
       ? "border border-coal text-coal hover:bg-coal hover:text-cream cursor-pointer"
       : "border border-coal/30 text-coal/50 cursor-default",
@@ -44,7 +44,7 @@ function EventCard({ event, isPlaceholder }: { event: Event; isPlaceholder?: boo
 
   return (
     <div
-      className={`grid grid-cols-1 md:grid-cols-[180px_1fr_auto] gap-6 md:gap-9 bg-coal/4 border-l-[3px] border-orange px-6 md:px-10 py-9 items-center transition-all duration-300 hover:bg-orange/6 hover:translate-x-1 ${
+      className={`grid grid-cols-1 items-center gap-6 border-l-[3px] border-orange bg-coal/4 px-4 py-7 transition-all duration-300 hover:translate-x-1 hover:bg-orange/6 sm:px-6 sm:py-8 md:grid-cols-[180px_1fr_auto] md:gap-9 md:px-10 md:py-9 ${
         isPlaceholder ? "opacity-55" : ""
       }`}
     >
@@ -72,7 +72,7 @@ function EventCard({ event, isPlaceholder }: { event: Event; isPlaceholder?: boo
       </div>
 
       {/* CTA */}
-      <div className="text-center md:text-right">
+      <div className="text-center md:text-right md:justify-self-end">
         {slug ? (
           <Link href={`/events/${encodeURIComponent(slug)}`} className={detailsButtonClasses(true)}>
             Details

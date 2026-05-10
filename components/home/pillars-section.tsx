@@ -21,9 +21,9 @@ export function PillarsSection() {
   ]
 
   return (
-    <section className="bg-coal text-cream py-30 px-6 md:px-12 relative z-2">
+    <section className="relative z-2 bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
       {/* Header */}
-      <div className="text-center max-w-[680px] mx-auto mb-20">
+      <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-16 md:mb-20">
         <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
           Our Approach
         </p>
@@ -39,11 +39,11 @@ export function PillarsSection() {
       </div>
 
       {/* Pillars Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-[1200px] mx-auto">
+      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-12">
         {pillars.map((pillar) => (
           <div
             key={pillar.num}
-            className="text-center px-6 py-10 border border-cream/12 hover:border-orange hover:bg-orange/4 transition-all duration-300 hover:-translate-y-1"
+            className="border border-cream/12 px-4 py-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-orange hover:bg-orange/4 sm:px-6 sm:py-10"
           >
             <p className="font-display text-5xl text-orange/80 leading-none mb-4">
               {pillar.num}

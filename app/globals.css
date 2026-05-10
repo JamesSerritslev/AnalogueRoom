@@ -100,11 +100,23 @@
   
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
   
   body {
     @apply bg-cream text-coal overflow-x-hidden;
     font-weight: 400;
+  }
+
+  :where(a, button, input, select, textarea):focus-visible {
+    @apply outline-2 outline-offset-2 outline-orange;
   }
   
   /* Paper texture overlay */
@@ -146,4 +158,21 @@
 
 .animate-spin-slow {
   animation: spin 30s linear infinite;
+}
+
+@layer utilities {
+  /* Clears fixed nav + notch on inner-page heroes (events, about, host-event) */
+  .pt-page-hero {
+    padding-top: max(7rem, calc(3.65rem + env(safe-area-inset-top, 0px)));
+  }
+  @media (min-width: 640px) {
+    .pt-page-hero {
+      padding-top: max(7.5rem, calc(4.1rem + env(safe-area-inset-top, 0px)));
+    }
+  }
+  @media (min-width: 1024px) {
+    .pt-page-hero {
+      padding-top: max(8.75rem, calc(5.65rem + env(safe-area-inset-top, 0px)));
+    }
+  }
 }
