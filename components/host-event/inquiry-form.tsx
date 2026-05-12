@@ -2,6 +2,9 @@
 
 import { useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
+import { formatHostInquiryPlain } from "@/lib/host-inquiry-plain"
+
+const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit"
 
 const EVENT_OPTIONS = [
   { value: "birthday", label: "Birthday Party" },
@@ -27,7 +30,12 @@ const TIME_OPTIONS = [
   { value: "flexible", label: "Flexible" },
 ] as const
 
-export function InquiryForm() {
+export type InquiryFormProps = {
+  /** `WEB3FORMS_ACCESS_KEY` from the server environment (see `.env.example`). */
+  web3formsAccessKey: string
+}
+
+export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [eventType, setEventType] = useState("")
@@ -41,13 +49,21 @@ export function InquiryForm() {
       setFormError("Please select an event type and guest count.")
       return
     }
+    if (!web3formsAccessKey.trim()) {
+      setFormError("Inquiry delivery is not configured.")
+      return
+    }
     setFormError("")
 
     const form = e.currentTarget
     const fd = new FormData(form)
-    const payload = {
-      firstName: String(fd.get("firstName") ?? "").trim(),
-      lastName: String(fd.get("lastName") ?? "").trim(),
+    const first = String(fd.get("firstName") ?? "").trim()
+    const last = String(fd.get("lastName") ?? "").trim()
+    const subjectText = `New AR Event Inquiry from ${first} ${last}`.trim()
+
+    const inquiryFields = {
+      firstName: first,
+      lastName: last,
       email: String(fd.get("email") ?? "").trim(),
       phone: String(fd.get("phone") ?? "").trim(),
       eventType,
@@ -57,36 +73,38 @@ export function InquiryForm() {
       message: String(fd.get("message") ?? "").trim(),
     }
 
+    const payload = new FormData()
+    payload.append("access_key", web3formsAccessKey)
+    payload.append("subject", subjectText)
+    payload.append("from_name", "The Analogue Room")
+    payload.append("email", inquiryFields.email)
+    payload.append("message", formatHostInquiryPlain(inquiryFields))
+
     setIsSubmitting(true)
 
     try {
-      const res = await fetch("/api/host-inquiry", {
+      const res = await fetch(WEB3FORMS_SUBMIT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const data = (await res.json()) as {
-        error?: string
-        missingEnv?: string[]
-        hint?: string
-      }
-
-      if (!res.ok) {
-        let msg = data.error || "Something went wrong. Please try again."
-        if (
-          process.env.NODE_ENV === "development" &&
-          Array.isArray(data.missingEnv) &&
-          data.missingEnv.length > 0
-        ) {
-          msg += ` Missing env: ${data.missingEnv.join(", ")}.`
-          if (data.hint) msg += ` ${data.hint}`
-        }
-        setFormError(msg)
+      let data: { success?: boolean; message?: string }
+      try {
+        data = (await res.json()) as { success?: boolean; message?: string }
+      } catch {
+        setFormError("Something went wrong. Please try again.")
         setIsSubmitting(false)
         return
       }
 
-      setSubmitted(true)
+      if (res.ok && data.success) {
+        setSubmitted(true)
+      } else {
+        setFormError(
+          typeof data.message === "string" && data.message
+            ? data.message
+            : "Something went wrong. Please try again.",
+        )
+      }
     } catch {
       setFormError("Network error. Please check your connection and try again.")
     }
@@ -106,12 +124,13 @@ export function InquiryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-      <input type="hidden" name="eventType" value={eventType} />
-      <input type="hidden" name="guestCount" value={guestCount} />
-      <input type="hidden" name="preferredTime" value={preferredTime} />
+    <form
+      onSubmit={handleSubmit}
+      className="flex min-w-0 max-w-full flex-col gap-3.5"
+    >
+      <input type="hidden" name="access_key" value={web3formsAccessKey} />
 
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>
           <label className="mb-1.5 block font-label text-[9px] tracking-[0.3em] text-orange uppercase">
             First Name
@@ -138,7 +157,7 @@ export function InquiryForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>
           <label className="mb-1.5 block font-label text-[9px] tracking-[0.3em] text-orange uppercase">
             Email
@@ -164,7 +183,7 @@ export function InquiryForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>
           <label
             id="event-type-label"
@@ -203,7 +222,7 @@ export function InquiryForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>
           <label className="mb-1.5 block font-label text-[9px] tracking-[0.3em] text-orange uppercase">
             Preferred Date
@@ -211,7 +230,7 @@ export function InquiryForm() {
           <input
             type="date"
             name="preferredDate"
-            className="min-h-11 w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
+            className="min-h-11 min-w-0 max-w-full box-border w-full border border-cream/18 bg-cream/4 px-4 py-3 font-body text-base text-cream outline-none transition-colors focus:border-orange sm:text-[13px]"
           />
         </div>
         <div>
@@ -231,7 +250,7 @@ export function InquiryForm() {
         </div>
       </div>
 
-      <div>
+      <div className="min-w-0">
         <label className="mb-1.5 block font-label text-[9px] tracking-[0.3em] text-orange uppercase">
           Tell Us About Your Event
         </label>
