@@ -1,10 +1,10 @@
 /**
- * Host event inquiry → email via Resend.
+ * Host event inquiry → email via Resend (one API call per address in `HOST_INQUIRY_TO_EMAIL`).
  *
- * Add to `.env.local` (and hosting):
+ * `.env.local` / Vercel:
  *   RESEND_API_KEY=re_...
- *   RESEND_FROM="The Analogue Room <onboarding@resend.dev>"   // or verified domain sender
- *   HOST_INQUIRY_TO_EMAIL=jamesserritslev@gmail.com
+ *   RESEND_FROM="The Analogue Room <events@yourdomain.com>"   // verified domain for multi-recipient
+ *   HOST_INQUIRY_TO_EMAIL=you@example.com,other@example.com   // comma-separated
  */
 
 import { NextResponse } from "next/server"
@@ -22,7 +22,6 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;")
 }
 
-/** Brand palette — matches site globals (email-safe hex only). */
 const BRAND = {
   coal: "#282b2e",
   cream: "#f8e9d0",
@@ -113,7 +112,6 @@ function buildInquiryEmailHtml(fields: {
 `.trim()
 }
 
-/** Trim and strip one layer of matching quotes (common .env typo). */
 function readEnv(key: string): string | undefined {
   const raw = process.env[key]
   if (raw == null) return undefined
@@ -126,6 +124,18 @@ function readEnv(key: string): string | undefined {
     v = v.slice(1, -1).trim()
   }
   return v || undefined
+}
+
+function parseInquiryRecipients(raw: string): string[] {
+  const seen = new Set<string>()
+  const out: string[] = []
+  for (const part of raw.split(",")) {
+    const e = part.trim()
+    if (!e || seen.has(e)) continue
+    seen.add(e)
+    out.push(e)
+  }
+  return out
 }
 
 export async function POST(req: Request) {
@@ -169,13 +179,14 @@ export async function POST(req: Request) {
 
   const apiKey = readEnv("RESEND_API_KEY")
   const from = readEnv("RESEND_FROM")
-  const to = readEnv("HOST_INQUIRY_TO_EMAIL")
+  const toRaw = readEnv("HOST_INQUIRY_TO_EMAIL")
+  const recipients = toRaw ? parseInquiryRecipients(toRaw) : []
 
-  if (!apiKey || !from || !to) {
+  if (!apiKey || !from || recipients.length === 0) {
     const missing = [
       !apiKey && "RESEND_API_KEY",
       !from && "RESEND_FROM",
-      !to && "HOST_INQUIRY_TO_EMAIL",
+      recipients.length === 0 && "HOST_INQUIRY_TO_EMAIL",
     ].filter(Boolean) as string[]
     const dev = process.env.NODE_ENV === "development"
     return NextResponse.json(
@@ -184,7 +195,7 @@ export async function POST(req: Request) {
         ...(dev
           ? {
               missingEnv: missing,
-              hint: "Set these in .env.local at the project root, then restart `next dev`.",
+              hint: "Set these in `.env.local` at the project root, then restart `next dev`.",
             }
           : {}),
       },
@@ -224,29 +235,35 @@ export async function POST(req: Request) {
   })
 
   const resend = new Resend(apiKey)
-  const { error } = await resend.emails.send({
+  const subject = `Host event inquiry — ${eventType} (${lastName})`
+  const sendPayload = {
     from,
-    to: [to],
     replyTo: email,
-    subject: `Host event inquiry — ${eventType} (${lastName})`,
+    subject,
     text,
     html,
-  })
+  } as const
 
-  if (error) {
-    console.error("[host-inquiry] Resend error:", error)
-    const dev = process.env.NODE_ENV === "development"
-    return NextResponse.json(
-      {
-        error: "Could not send your inquiry. Please try again later.",
-        ...(dev
-          ? {
-              resendError: { message: error.message, name: error.name },
-            }
-          : {}),
-      },
-      { status: 502 },
-    )
+  for (const to of recipients) {
+    const { error } = await resend.emails.send({
+      ...sendPayload,
+      to,
+    })
+    if (error) {
+      console.error("[host-inquiry] Resend error:", { to, error })
+      const dev = process.env.NODE_ENV === "development"
+      return NextResponse.json(
+        {
+          error: "Could not send your inquiry. Please try again later.",
+          ...(dev
+            ? {
+                resendError: { message: error.message, name: error.name, to },
+              }
+            : {}),
+        },
+        { status: 502 },
+      )
+    }
   }
 
   return NextResponse.json({ success: true }, { status: 200 })

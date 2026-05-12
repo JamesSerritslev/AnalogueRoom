@@ -69,7 +69,7 @@ export function InquiryForm() {
         error?: string
         missingEnv?: string[]
         hint?: string
-        resendError?: { message?: string; name?: string }
+        resendError?: { message?: string; name?: string; to?: string }
       }
 
       if (!res.ok) {
@@ -80,7 +80,7 @@ export function InquiryForm() {
             if (data.hint) msg += ` ${data.hint}`
           }
           if (data.resendError?.message) {
-            msg += ` (${data.resendError.message})`
+            msg += ` (${data.resendError.to ? `${data.resendError.to}: ` : ""}${data.resendError.message})`
           }
         }
         setFormError(msg)
