@@ -10,7 +10,7 @@ export function PillarsSection() {
       num: "02",
       title: "Intention",
       description:
-        "Nothing here is by accident. The lighting, the volume, the pour. We design a room that asks you to be present, to listen, to settle in.",
+        "Nothing here is by accident. The lighting, the volume, the pour. We designed a room that asks you to be present, to listen, to settle in.",
     },
     {
       num: "03",

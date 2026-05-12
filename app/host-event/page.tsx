@@ -183,8 +183,11 @@ export default async function HostEventPage() {
           </div>
         </section>
 
-        {/* Inquiry Form */}
-        <section className="bg-earth px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
+        {/* Inquiry Form — scroll target id used after successful submit */}
+        <section
+          id="host-event-inquiry-section"
+          className="scroll-mt-40 bg-earth px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12"
+        >
           <div className="mx-auto w-full min-w-0 max-w-[760px] border border-cream/10 bg-cream/4 px-4 py-10 sm:px-8 sm:py-12 md:px-10 md:py-14 lg:px-12">
             <div className="text-center mb-8">
               <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">

@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
 import { formatHostInquiryPlain } from "@/lib/host-inquiry-plain"
 
 const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit"
+const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 
 const EVENT_OPTIONS = [
   { value: "birthday", label: "Birthday Party" },
@@ -42,6 +43,14 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
   const [guestCount, setGuestCount] = useState("")
   const [preferredTime, setPreferredTime] = useState("")
   const [formError, setFormError] = useState("")
+
+  useEffect(() => {
+    if (!submitted) return
+    document.getElementById(INQUIRY_SCROLL_TARGET_ID)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    })
+  }, [submitted])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

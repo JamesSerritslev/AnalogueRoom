@@ -12,7 +12,7 @@ export function RoomSection() {
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">
-            The Analogue Room is a vinyl bar and record lounge in Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.
+            The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.
           </p>
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px]">
             We&apos;re not a club. We&apos;re not a museum. We&apos;re a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.

@@ -3,11 +3,19 @@ import type { HostEventVenueStats } from "@/lib/sanity/types"
 export type VenueStatDisplay = { value: string; label: string }
 
 export const DEFAULT_HOST_EVENT_VENUE_STATS: VenueStatDisplay[] = [
-  { value: "TBD", label: "Standing Capacity" },
-  { value: "TBD", label: "Seated Capacity" },
-  { value: "TBD", label: "Square Footage" },
+  { value: "60", label: "Standing Capacity" },
+  { value: "40", label: "Seated Capacity" },
+  { value: "500", label: "Square Footage" },
   { value: "4hr+", label: "Min Booking" },
 ]
+
+/** Treat as “no value” so code defaults (or Sanity later) can win. */
+function isPlaceholderStatValue(value: string | undefined): boolean {
+  const v = value?.trim() ?? ""
+  if (!v) return true
+  const lower = v.toLowerCase()
+  return lower === "tbd" || lower === "n/a" || lower === "na" || v === "—"
+}
 
 /** Merge Sanity singleton with defaults when fields are empty or doc missing. */
 export function resolveHostEventVenueStats(
@@ -23,7 +31,8 @@ export function resolveHostEventVenueStats(
       | undefined,
     i: number,
   ): VenueStatDisplay => {
-    const v = pair?.value?.trim()
+    const rawValue = pair?.value?.trim()
+    const v = isPlaceholderStatValue(rawValue) ? "" : (rawValue ?? "")
     const L = pair?.label?.trim()
     return {
       value: v || defs[i]!.value,
