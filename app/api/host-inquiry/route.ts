@@ -234,8 +234,17 @@ export async function POST(req: Request) {
   })
 
   if (error) {
+    console.error("[host-inquiry] Resend error:", error)
+    const dev = process.env.NODE_ENV === "development"
     return NextResponse.json(
-      { error: "Could not send your inquiry. Please try again later." },
+      {
+        error: "Could not send your inquiry. Please try again later.",
+        ...(dev
+          ? {
+              resendError: { message: error.message, name: error.name },
+            }
+          : {}),
+      },
       { status: 502 },
     )
   }

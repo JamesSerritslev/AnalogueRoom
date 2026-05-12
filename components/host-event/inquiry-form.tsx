@@ -69,17 +69,19 @@ export function InquiryForm() {
         error?: string
         missingEnv?: string[]
         hint?: string
+        resendError?: { message?: string; name?: string }
       }
 
       if (!res.ok) {
         let msg = data.error || "Something went wrong. Please try again."
-        if (
-          process.env.NODE_ENV === "development" &&
-          Array.isArray(data.missingEnv) &&
-          data.missingEnv.length > 0
-        ) {
-          msg += ` Missing env: ${data.missingEnv.join(", ")}.`
-          if (data.hint) msg += ` ${data.hint}`
+        if (process.env.NODE_ENV === "development") {
+          if (Array.isArray(data.missingEnv) && data.missingEnv.length > 0) {
+            msg += ` Missing env: ${data.missingEnv.join(", ")}.`
+            if (data.hint) msg += ` ${data.hint}`
+          }
+          if (data.resendError?.message) {
+            msg += ` (${data.resendError.message})`
+          }
         }
         setFormError(msg)
         setIsSubmitting(false)
