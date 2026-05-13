@@ -1,3 +1,5 @@
+const MENU_SECTION_BG = "/images/on-the-menu.png"
+
 export function OfferingsSection() {
   const offerings = [
     {
@@ -40,38 +42,48 @@ export function OfferingsSection() {
   ]
 
   return (
-    <section className="relative z-2 bg-earth px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
-      {/* Header */}
-      <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-14 md:mb-16">
-        <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
-          Drinks & Listening
-        </p>
-        <h2 className="font-display text-[clamp(36px,5vw,56px)] text-cream leading-[1.05] mb-6">
-          What&apos;s <span className="text-orange">On the Menu</span>
-        </h2>
-        <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
-        <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
-          A rotating menu, always evolving. Local where we can, imported where it makes sense, and never anything we wouldn&apos;t pour for ourselves.
-        </p>
+    <section className="relative z-2 overflow-hidden px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${MENU_SECTION_BG}')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-earth/80 via-earth/88 to-earth/92" />
       </div>
 
-      {/* Grid */}
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
-        {offerings.map((offering) => (
-          <div
-            key={offering.title}
-            className="border border-cream/10 bg-cream/4 px-6 py-8 transition-all duration-300 hover:border-orange hover:bg-orange/8 sm:px-8 sm:py-10"
-          >
-            <div className="text-orange mb-6">{offering.icon}</div>
-            <h3 className="font-display text-[22px] text-cream mb-3">
-              {offering.title}
-            </h3>
-            <div className="w-6 h-px bg-orange mb-3.5" />
-            <p className="font-body text-[13px] leading-relaxed text-cream/70">
-              {offering.description}
-            </p>
-          </div>
-        ))}
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-14 md:mb-16">
+          <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
+            Drinks & Listening
+          </p>
+          <h2 className="font-display text-[clamp(36px,5vw,56px)] text-cream leading-[1.05] mb-6">
+            What&apos;s <span className="text-orange">On the Menu</span>
+          </h2>
+          <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
+          <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
+            A rotating menu, always evolving. Local where we can, imported where it makes sense, and never anything we wouldn&apos;t pour for ourselves.
+          </p>
+        </div>
+
+        {/* Grid */}
+        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
+          {offerings.map((offering) => (
+            <div
+              key={offering.title}
+              className="border border-cream/14 bg-cream/8 px-6 py-8 shadow-lg shadow-black/20 backdrop-blur-[2px] transition-all duration-300 hover:border-orange hover:bg-cream/12 sm:px-8 sm:py-10"
+            >
+              <div className="text-orange mb-6">{offering.icon}</div>
+              <h3 className="font-display text-[22px] text-cream mb-3">
+                {offering.title}
+              </h3>
+              <div className="w-6 h-px bg-orange mb-3.5" />
+              <p className="font-body text-[13px] leading-relaxed text-cream/70">
+                {offering.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

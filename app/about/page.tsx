@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
-import { Navigation } from "@/components/navigation"
+import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
-import { INTERIOR_HERO_SRC } from "@/lib/interior-hero"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
 
 const TEAM = [
   { name: "John Wright", role: "Owner" },
@@ -14,16 +14,20 @@ export const metadata: Metadata = {
   description: "The story of The Analogue Room - a curated vinyl bar and listening lounge in Solvang, California.",
 }
 
-export default function AboutPage() {
+export const revalidate = 60
+
+export default async function AboutPage() {
+  const { innerPageHeroUrl } = await getSiteImagery()
+
   return (
     <>
-      <Navigation />
+      <SiteNavigation />
       <main>
         {/* Hero */}
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div
             className="interior-hero-photo absolute inset-0 z-0"
-            style={{ backgroundImage: `url('${INTERIOR_HERO_SRC}')` }}
+            style={{ backgroundImage: `url('${innerPageHeroUrl}')` }}
           >
             <div className="interior-hero-scrim" aria-hidden />
           </div>

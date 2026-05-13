@@ -15,7 +15,13 @@ const navLinks = [
 const NAV_LINK_CLASS =
   "font-label text-[11px] tracking-[0.22em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase transition-colors duration-200"
 
-export function Navigation() {
+const DEFAULT_LOGO_SRC = "/images/ar-logo.png"
+
+type NavigationProps = {
+  logoSrc?: string
+}
+
+export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -45,7 +51,7 @@ export function Navigation() {
       >
         <Link href="/" className="z-50 flex shrink-0 items-center" onClick={() => setMenuOpen(false)}>
           <Image
-            src="/images/ar-logo.png"
+            src={logoSrc}
             alt="The Analogue Room"
             width={60}
             height={60}

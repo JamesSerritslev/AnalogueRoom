@@ -1,12 +1,14 @@
 import Image from "next/image"
-import { INTERIOR_HERO_SRC } from "@/lib/interior-hero"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
 
-export function HeroSection() {
+export async function HeroSection() {
+  const { homeHeroUrl, siteLogoUrl } = await getSiteImagery()
+
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-20 text-center">
       <div
         className="hero-bg-photo"
-        style={{ backgroundImage: `url(${INTERIOR_HERO_SRC})` }}
+        style={{ backgroundImage: `url(${homeHeroUrl})` }}
         aria-hidden
       />
 
@@ -17,7 +19,7 @@ export function HeroSection() {
         </p>
 
         <Image
-          src="/images/ar-logo.png"
+          src={siteLogoUrl}
           alt="The Analogue Room"
           width={260}
           height={260}

@@ -1,8 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { NewsletterSignupForm } from "@/components/newsletter-signup-form"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
 
-export function Footer() {
+export async function Footer() {
+  const { siteLogoUrl } = await getSiteImagery()
+
   return (
     <footer className="relative z-2 min-w-0 max-w-full overflow-x-hidden bg-coal px-4 py-16 text-cream sm:px-6 sm:py-20 md:px-10 md:py-22 lg:px-12">
       <div className="mx-auto max-w-[1200px]">
@@ -14,7 +17,7 @@ export function Footer() {
               className="inline-flex shrink-0 rounded-full outline outline-2 outline-orange outline-offset-2 md:outline-offset-4"
             >
               <Image
-                src="/images/ar-logo.png"
+                src={siteLogoUrl}
                 alt="The Analogue Room"
                 width={80}
                 height={80}
