@@ -3,8 +3,9 @@ import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { InquiryForm } from "@/components/host-event/inquiry-form"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveHostEventVenueStats } from "@/lib/host-event-venue-stats"
-import { getHostEventVenueStats } from "@/lib/sanity/queries"
+import { DEFAULT_HOST_EVENT_INTRO } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
   title: "Host Your Event | The Analogue Room",
@@ -77,9 +78,12 @@ const features = [
 ]
 
 export default async function HostEventPage() {
-  const venueStatsDoc = await getHostEventVenueStats()
-  const venueStats = resolveHostEventVenueStats(venueStatsDoc)
-  const { innerPageHeroUrl } = await getSiteImagery()
+  const [{ innerPageHeroUrl }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
+  const venueStats = resolveHostEventVenueStats(L.host)
+  const introBlurb = L.host?.introBlurb?.trim() || DEFAULT_HOST_EVENT_INTRO
 
   return (
     <>
@@ -114,7 +118,7 @@ export default async function HostEventPage() {
           </h2>
           <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
           <p className="font-body text-base font-normal leading-relaxed text-coal/85 max-w-[640px] mx-auto">
-            From intimate birthday gatherings to listening parties and corporate retreats — The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together.
+            {introBlurb}
           </p>
         </section>
 

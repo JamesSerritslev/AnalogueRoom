@@ -1,6 +1,34 @@
 import { NextResponse } from "next/server"
 
+/** Simple in-memory rate limiter: max 5 requests per IP per 60 s. */
+const ipHits = new Map<string, { count: number; resetAt: number }>()
+const RATE_LIMIT = 5
+const RATE_WINDOW_MS = 60_000
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entry = ipHits.get(ip)
+  if (!entry || now > entry.resetAt) {
+    ipHits.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS })
+    return false
+  }
+  if (entry.count >= RATE_LIMIT) return true
+  entry.count++
+  return false
+}
+
 export async function POST(req: Request) {
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown"
+
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again shortly." },
+      { status: 429 },
+    )
+  }
   let body: unknown
   try {
     body = await req.json()

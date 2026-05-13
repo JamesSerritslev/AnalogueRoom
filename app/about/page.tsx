@@ -1,13 +1,15 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
-
-const TEAM = [
-  { name: "John Wright", role: "Owner" },
-  { name: "Blake Economus", role: "General Manager" },
-  { name: "Ray Fortune", role: "Bar Manager, Vinyl Curator" },
-] as const
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
+import { sanityImageUrl } from "@/lib/sanity/image-url"
+import {
+  DEFAULT_ABOUT_STORY_PARAGRAPHS,
+  DEFAULT_TEAM_INTRO,
+  DEFAULT_TEAM_MEMBERS,
+} from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
   title: "About | The Analogue Room",
@@ -17,7 +19,26 @@ export const metadata: Metadata = {
 export const revalidate = 60
 
 export default async function AboutPage() {
-  const { innerPageHeroUrl } = await getSiteImagery()
+  const [{ innerPageHeroUrl }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
+
+  const storyParagraphs =
+    L.about?.storyParagraphs?.filter((p) => p?.trim())?.length ?? 0
+      ? (L.about!.storyParagraphs!.filter((p) => p?.trim()) as string[])
+      : [...DEFAULT_ABOUT_STORY_PARAGRAPHS]
+
+  const splitIdx = storyParagraphs.length >= 5 ? 3 : storyParagraphs.length
+  const storyBeforeQuote = storyParagraphs.slice(0, splitIdx)
+  const storyAfterQuote = storyParagraphs.slice(splitIdx)
+
+  const teamMembers =
+    L.about?.teamMembers?.filter((m) => m?.name?.trim())?.length ?? 0
+      ? L.about!.teamMembers!.filter((m) => m?.name?.trim())!
+      : DEFAULT_TEAM_MEMBERS
+
+  const teamIntro = L.about?.teamIntro?.trim() || DEFAULT_TEAM_INTRO
 
   return (
     <>
@@ -53,36 +74,26 @@ export default async function AboutPage() {
           <div className="w-12 h-0.5 bg-orange mb-6" />
 
           <div className="font-body text-base leading-relaxed text-coal/85 mb-6">
-            <p className="mb-4">
-              Analogue Room is a small, intimate listening bar where wine, music,
-              and conversation come together.
-            </p>
-            <p className="mb-4">
-              Built around a deep love for vinyl, the space invites guests to slow
-              down, share a bottle, and listen the way music was meant to be heard.
-            </p>
-            <p>
-              The program features a thoughtful selection of wines alongside a
-              rotating vinyl collection curated by the house and guest selectors.
-            </p>
+            {storyBeforeQuote.map((text, i) => (
+              <p key={`story-a-${i}`} className={i < storyBeforeQuote.length - 1 ? "mb-4" : ""}>
+                {text}
+              </p>
+            ))}
           </div>
 
           <blockquote className="font-display text-[clamp(22px,3vw,30px)] text-orange leading-snug my-12 py-8 border-t-2 border-b-2 border-coal text-center">
             &ldquo;Curation. Intention. Analogue.&rdquo;
           </blockquote>
 
-          <div className="font-body text-base leading-relaxed text-coal/85">
-            <p className="mb-4">
-              Evenings often unfold through records played from start to finish,
-              creating a warm and immersive atmosphere that feels both nostalgic and
-              alive.
-            </p>
-            <p>
-              Part listening room, part wine bar, Analogue Room is a place for people
-              who appreciate craftsmanship, culture, and the simple pleasure of
-              gathering around great music and great wine.
-            </p>
-          </div>
+          {storyAfterQuote.length > 0 ? (
+            <div className="font-body text-base leading-relaxed text-coal/85">
+              {storyAfterQuote.map((text, i) => (
+                <p key={`story-b-${i}`} className={i < storyAfterQuote.length - 1 ? "mb-4" : ""}>
+                  {text}
+                </p>
+              ))}
+            </div>
+          ) : null}
         </section>
 
         {/* Team Section */}
@@ -96,37 +107,64 @@ export default async function AboutPage() {
             </h2>
             <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
             <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70">
-              A small team with a clear vision — to build a room that feels like home.
+              {teamIntro}
             </p>
           </div>
 
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-            {TEAM.map((member) => (
+            {teamMembers.map((member, idx) => {
+              const photoUrl = sanityImageUrl(member.photo, 560)
+              const name = member.name ?? "Team member"
+              return (
               <div
-                key={member.name}
+                key={`${member.name ?? "member"}-${idx}`}
                 className="border border-cream/10 bg-cream/4 px-6 py-8 text-center transition-all duration-300 hover:border-orange hover:bg-orange/6 sm:px-8 sm:py-9 md:px-9 md:py-10"
               >
-                <div className="w-35 h-35 rounded-full bg-cream/5 border border-dashed border-cream/20 flex items-center justify-center mx-auto mb-6">
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                    className="text-cream/30"
-                  >
-                    <circle cx="12" cy="8" r="4" />
-                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                  </svg>
+                <div
+                  className={`relative mx-auto mb-6 h-35 w-35 overflow-hidden rounded-full ${
+                    photoUrl
+                      ? "border border-cream/10"
+                      : "border border-dashed border-cream/20 bg-cream/5"
+                  }`}
+                >
+                  {photoUrl ? (
+                    <Image
+                      src={photoUrl}
+                      alt={name}
+                      fill
+                      className="object-cover"
+                      sizes="140px"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        className="text-cream/30"
+                      >
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
                 <p className="font-label text-[10px] tracking-[0.4em] uppercase text-orange mb-2">
                   {member.role}
                 </p>
                 <h3 className="font-display text-2xl text-cream">{member.name}</h3>
+                {member.bio ? (
+                  <p className="font-body text-[13px] leading-relaxed text-cream/60 mt-3">
+                    {member.bio}
+                  </p>
+                ) : null}
               </div>
-            ))}
+              )
+            })}
           </div>
         </section>
       </main>

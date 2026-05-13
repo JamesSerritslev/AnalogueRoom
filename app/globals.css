@@ -244,4 +244,19 @@
       padding-top: max(8.75rem, calc(5.65rem + env(safe-area-inset-top, 0px)));
     }
   }
+
+  /* Vertical offset for fixed UI (e.g. menu "Back to home") — matches `.pt-page-hero`. */
+  .top-under-site-nav {
+    top: max(5.25rem, calc(3.65rem + env(safe-area-inset-top, 0px)));
+  }
+  @media (min-width: 640px) {
+    .top-under-site-nav {
+      top: max(5.75rem, calc(4.1rem + env(safe-area-inset-top, 0px)));
+    }
+  }
+  @media (min-width: 1024px) {
+    .top-under-site-nav {
+      top: max(7rem, calc(5.65rem + env(safe-area-inset-top, 0px)));
+    }
+  }
 }

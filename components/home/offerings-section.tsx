@@ -1,8 +1,18 @@
-const MENU_SECTION_BG = "/images/on-the-menu.png"
+import type { ReactNode } from "react"
+import { OfferingsMenuLink } from "@/components/home/offerings-menu-link"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import type { MenuSlug } from "@/lib/menu-defaults"
 
-export function OfferingsSection() {
-  const offerings = [
+export async function OfferingsSection() {
+  const { offeringsSectionBgUrl } = await getSiteImagery()
+  const offerings: {
+    slug: MenuSlug
+    title: string
+    description: string
+    icon: ReactNode
+  }[] = [
     {
+      slug: "wines",
       title: "Wines",
       description:
         "A rotating selection of local Santa Barbara County labels alongside imported pours from regions worth knowing. Curated for the moment, the music, and the mood.",
@@ -15,6 +25,7 @@ export function OfferingsSection() {
       ),
     },
     {
+      slug: "beer",
       title: "Beer",
       description:
         "A thoughtful list of craft beers, both local and from further afield. Cold, fresh, and chosen to complement everything from a quiet evening to a packed Friday night.",
@@ -28,6 +39,7 @@ export function OfferingsSection() {
       ),
     },
     {
+      slug: "zero-proof",
       title: "Zero Proof",
       description:
         "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers — because the experience matters more than the alcohol.",
@@ -42,11 +54,14 @@ export function OfferingsSection() {
   ]
 
   return (
-    <section className="relative z-2 overflow-hidden px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
+    <section
+      id="offerings"
+      className="relative z-2 scroll-mt-28 overflow-hidden px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30"
+    >
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('${MENU_SECTION_BG}')` }}
+          style={{ backgroundImage: `url('${offeringsSectionBgUrl}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-earth/80 via-earth/88 to-earth/92" />
       </div>
@@ -69,11 +84,31 @@ export function OfferingsSection() {
         {/* Grid */}
         <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3">
           {offerings.map((offering) => (
-            <div
-              key={offering.title}
-              className="border border-cream/14 bg-cream/8 px-6 py-8 shadow-lg shadow-black/20 backdrop-blur-[2px] transition-all duration-300 hover:border-orange hover:bg-cream/12 sm:px-8 sm:py-10"
+            <OfferingsMenuLink
+              key={offering.slug}
+              slug={offering.slug}
+              className="group block border border-cream/14 bg-cream/8 px-6 pt-5 pb-8 shadow-lg shadow-black/20 backdrop-blur-[2px] transition-all duration-300 hover:border-orange hover:bg-cream/12 sm:px-8 sm:pt-6 sm:pb-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
             >
-              <div className="text-orange mb-6">{offering.icon}</div>
+              <div className="-mt-1 mb-4 flex items-center justify-end gap-2 sm:-mt-1.5">
+                <span className="font-label text-[10px] tracking-[0.35em] uppercase text-cream/55 transition-colors group-hover:text-orange">
+                  View menu
+                </span>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="shrink-0 text-cream/45 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-orange"
+                  aria-hidden
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </div>
+              <div className="text-orange mb-6 transition-colors group-hover:text-orange">{offering.icon}</div>
               <h3 className="font-display text-[22px] text-cream mb-3">
                 {offering.title}
               </h3>
@@ -81,7 +116,7 @@ export function OfferingsSection() {
               <p className="font-body text-[13px] leading-relaxed text-cream/70">
                 {offering.description}
               </p>
-            </div>
+            </OfferingsMenuLink>
           ))}
         </div>
       </div>

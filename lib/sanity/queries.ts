@@ -1,7 +1,5 @@
-import { client } from "./client"
-import type { Event, HostEventVenueStats } from "./types"
-
-export const HOST_EVENT_VENUE_STATS_DOC_ID = "hostEventVenueStats"
+import { getClientForRequest } from "./client"
+import type { Event } from "./types"
 
 /** Same-day events expire at 11:59 PM America/Los_Angeles. */
 const LA_TEST_EXPIRY_TIME = "23:59"
@@ -32,6 +30,7 @@ function getLosAngelesNowParts(): { todayInLA: string; currentTimeInLA: string }
 }
 
 export async function getEvents(): Promise<Event[]> {
+  const client = await getClientForRequest()
   if (!client) {
     return []
   }
@@ -68,6 +67,7 @@ export async function getEvents(): Promise<Event[]> {
 }
 
 export async function getEventBySlug(slug: string): Promise<Event | null> {
+  const client = await getClientForRequest()
   if (!client) {
     return null
   }
@@ -96,30 +96,8 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
   }
 }
 
-/** Singleton: Host /event venue stat tiles — create in Studio → Host Event · Venue stats */
-export async function getHostEventVenueStats(): Promise<HostEventVenueStats | null> {
-  if (!client) {
-    return null
-  }
-
-  try {
-    return await client.fetch<HostEventVenueStats | null>(
-      `*[_type == "hostEventVenueStats" && _id == $docId][0] {
-        _id,
-        standing { value, label },
-        seated { value, label },
-        squareFootage { value, label },
-        minBooking { value, label }
-      }`,
-      { docId: HOST_EVENT_VENUE_STATS_DOC_ID },
-    )
-  } catch (error) {
-    console.error("Error fetching host event venue stats from Sanity:", error)
-    return null
-  }
-}
-
 export async function getFeaturedEvents(): Promise<Event[]> {
+  const client = await getClientForRequest()
   if (!client) {
     return []
   }

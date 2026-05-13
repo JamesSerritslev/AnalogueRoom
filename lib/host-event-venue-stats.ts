@@ -1,4 +1,4 @@
-import type { HostEventVenueStats } from "@/lib/sanity/types"
+import type { PageHostEventDoc } from "@/lib/sanity/types"
 
 export type VenueStatDisplay = { value: string; label: string }
 
@@ -17,26 +17,26 @@ function isPlaceholderStatValue(value: string | undefined): boolean {
   return lower === "tbd" || lower === "n/a" || lower === "na" || v === "—"
 }
 
-/** Merge Sanity singleton with defaults when fields are empty or doc missing. */
+/** Merge Sanity `pageHostEvent` stat tiles with defaults when fields are empty. */
 export function resolveHostEventVenueStats(
-  doc: HostEventVenueStats | null | undefined,
+  doc:
+    | Pick<
+        PageHostEventDoc,
+        "standing" | "seated" | "squareFootage" | "minBooking"
+      >
+    | null
+    | undefined,
 ): VenueStatDisplay[] {
   const defs = DEFAULT_HOST_EVENT_VENUE_STATS
   const pick = (
-    pair:
-      | {
-          value?: string
-          label?: string
-        }
-      | undefined,
+    pair: { value?: string } | undefined,
     i: number,
   ): VenueStatDisplay => {
     const rawValue = pair?.value?.trim()
     const v = isPlaceholderStatValue(rawValue) ? "" : (rawValue ?? "")
-    const L = pair?.label?.trim()
     return {
       value: v || defs[i]!.value,
-      label: L || defs[i]!.label,
+      label: defs[i]!.label,
     }
   }
 

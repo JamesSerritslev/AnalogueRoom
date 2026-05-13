@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { draftMode } from "next/headers"
+import { VisualEditing } from "next-sanity/visual-editing"
+import { SanityLive } from "@/sanity/lib/live"
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -34,11 +37,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { isEnabled } = await draftMode()
+
   return (
     <html lang="en">
       <head>
@@ -49,10 +54,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased">
+      <body suppressHydrationWarning className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased">
         <div className="relative z-[1] min-h-dvh min-w-0 w-full max-w-full overflow-x-hidden">
           {children}
         </div>
+        {isEnabled ? <VisualEditing /> : null}
+        <SanityLive />
       </body>
     </html>
   )

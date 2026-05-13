@@ -1,60 +1,48 @@
 import { cache } from "react"
-import { client } from "@/lib/sanity/client"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
-import type { SiteImagery } from "@/lib/sanity/types"
-
-export const SITE_IMAGERY_DOC_ID = "siteImagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 /** Fallback assets when Studio fields are empty */
 export const DEFAULT_INTERIOR_HERO = "/images/interior.jpeg"
 export const DEFAULT_SITE_LOGO = "/images/ar-logo.png"
+export const DEFAULT_OFFERINGS_SECTION_BG = "/images/on-the-menu.png"
 
 export type ResolvedSiteImagery = {
   homeHeroUrl: string
   innerPageHeroUrl: string
   siteLogoUrl: string
-  /** When null, Room section keeps the CSS vinyl graphic */
   roomTheSpaceUrl: string | null
+  /** “What’s On the Menu” section background */
+  offeringsSectionBgUrl: string
+  /** Home hero lead; empty in Studio → use `DEFAULT_HERO_LEAD` in UI */
+  heroLead: string | null
 }
 
-function resolve(doc: SiteImagery | null | undefined): ResolvedSiteImagery {
+function resolveFromLayout(L: Awaited<ReturnType<typeof getLayoutSingletons>>): ResolvedSiteImagery {
   const homeHeroUrl =
-    sanityImageUrl(doc?.homeHero, 2400) ?? DEFAULT_INTERIOR_HERO
+    sanityImageUrl(L.home?.heroBackground, 2400) ?? DEFAULT_INTERIOR_HERO
   const innerPageHeroUrl =
-    sanityImageUrl(doc?.innerPageHero, 2400) ?? homeHeroUrl
-  const siteLogoUrl = sanityImageUrl(doc?.logo, 520) ?? DEFAULT_SITE_LOGO
-  const roomTheSpaceUrl = sanityImageUrl(doc?.roomTheSpace, 1200) ?? null
+    sanityImageUrl(L.brand?.innerHero, 2400) ?? homeHeroUrl
+  const siteLogoUrl = sanityImageUrl(L.brand?.logo, 520) ?? DEFAULT_SITE_LOGO
+  const roomTheSpaceUrl = sanityImageUrl(L.home?.roomSectionImage, 1200) ?? null
+  const offeringsSectionBgUrl =
+    sanityImageUrl(L.home?.offeringsBackground, 2400) ?? DEFAULT_OFFERINGS_SECTION_BG
+  const heroLead = L.home?.heroLead || null
   return {
     homeHeroUrl,
     innerPageHeroUrl,
     siteLogoUrl,
     roomTheSpaceUrl,
+    offeringsSectionBgUrl,
+    heroLead,
   }
 }
 
 /**
- * Singleton `siteImagery` — heroes, logo, optional “The Space” photo.
- * Cached per request so nav + footer + sections share one fetch.
+ * Resolved logo + hero URLs from Studio singletons (`siteBrand`, `pageHome`).
+ * Cached per request with `getLayoutSingletons`.
  */
 export const getSiteImagery = cache(async (): Promise<ResolvedSiteImagery> => {
-  if (!client) {
-    return resolve(null)
-  }
-
-  try {
-    const doc = await client.fetch<SiteImagery | null>(
-      `*[_type == "siteImagery" && _id == $id][0]{
-        _id,
-        homeHero,
-        innerPageHero,
-        logo,
-        roomTheSpace
-      }`,
-      { id: SITE_IMAGERY_DOC_ID },
-    )
-    return resolve(doc)
-  } catch (error) {
-    console.error("Error fetching site imagery from Sanity:", error)
-    return resolve(null)
-  }
+  const L = await getLayoutSingletons()
+  return resolveFromLayout(L)
 })

@@ -1,8 +1,11 @@
 import Image from "next/image"
+import { DEFAULT_HERO_LEAD } from "@/lib/content-defaults"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 
 export async function HeroSection() {
-  const { homeHeroUrl, siteLogoUrl } = await getSiteImagery()
+  const { homeHeroUrl, siteLogoUrl, heroLead } = await getSiteImagery()
+
+  const lead = heroLead || DEFAULT_HERO_LEAD
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-20 text-center">
@@ -43,7 +46,7 @@ export async function HeroSection() {
         </div>
 
         <p className="font-body mx-auto mb-10 max-w-[540px] text-sm font-normal leading-relaxed text-cream/85 drop-shadow-md">
-          A vinyl lounge and wine bar in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard.
+          {lead}
         </p>
 
         {/* Meta info */}
