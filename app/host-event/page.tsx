@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import { Navigation } from "@/components/navigation"
+import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { InquiryForm } from "@/components/host-event/inquiry-form"
-import { INTERIOR_HERO_SRC } from "@/lib/interior-hero"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { resolveHostEventVenueStats } from "@/lib/host-event-venue-stats"
 import { getHostEventVenueStats } from "@/lib/sanity/queries"
 
@@ -79,16 +79,17 @@ const features = [
 export default async function HostEventPage() {
   const venueStatsDoc = await getHostEventVenueStats()
   const venueStats = resolveHostEventVenueStats(venueStatsDoc)
+  const { innerPageHeroUrl } = await getSiteImagery()
 
   return (
     <>
-      <Navigation />
+      <SiteNavigation />
       <main>
         {/* Hero */}
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div
             className="interior-hero-photo absolute inset-0 z-0"
-            style={{ backgroundImage: `url('${INTERIOR_HERO_SRC}')` }}
+            style={{ backgroundImage: `url('${innerPageHeroUrl}')` }}
           >
             <div className="interior-hero-scrim" aria-hidden />
           </div>
@@ -183,8 +184,11 @@ export default async function HostEventPage() {
           </div>
         </section>
 
-        {/* Inquiry Form */}
-        <section className="bg-earth px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
+        {/* Inquiry Form — scroll target id used after successful submit */}
+        <section
+          id="host-event-inquiry-section"
+          className="scroll-mt-40 bg-earth px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12"
+        >
           <div className="mx-auto w-full min-w-0 max-w-[760px] border border-cream/10 bg-cream/4 px-4 py-10 sm:px-8 sm:py-12 md:px-10 md:py-14 lg:px-12">
             <div className="text-center mb-8">
               <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">

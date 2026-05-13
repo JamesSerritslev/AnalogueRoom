@@ -1,12 +1,14 @@
 import Image from "next/image"
-import { INTERIOR_HERO_SRC } from "@/lib/interior-hero"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
 
-export function HeroSection() {
+export async function HeroSection() {
+  const { homeHeroUrl, siteLogoUrl } = await getSiteImagery()
+
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-20 text-center">
       <div
         className="hero-bg-photo"
-        style={{ backgroundImage: `url(${INTERIOR_HERO_SRC})` }}
+        style={{ backgroundImage: `url(${homeHeroUrl})` }}
         aria-hidden
       />
 
@@ -17,7 +19,7 @@ export function HeroSection() {
         </p>
 
         <Image
-          src="/images/ar-logo.png"
+          src={siteLogoUrl}
           alt="The Analogue Room"
           width={260}
           height={260}
@@ -41,7 +43,7 @@ export function HeroSection() {
         </div>
 
         <p className="font-body mx-auto mb-10 max-w-[540px] text-sm font-normal leading-relaxed text-cream/85 drop-shadow-md">
-          A vinyl bar &amp; record lounge in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard.
+          A vinyl lounge and wine bar in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard.
         </p>
 
         {/* Meta info */}
@@ -50,7 +52,7 @@ export function HeroSection() {
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
               Hours
             </p>
-            <p className="font-display text-sm text-cream">Thu-Sun · 4-10pm</p>
+            <p className="font-display text-sm text-cream">Thu–Mon · 4pm–10pm</p>
           </div>
           <div className="text-center">
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">

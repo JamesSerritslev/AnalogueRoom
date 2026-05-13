@@ -2,13 +2,13 @@ import { VisitSectionMap } from "@/components/home/visit-section-map"
 
 export function VisitSection() {
   const hours = [
-    { day: "Monday", time: "Closed", closed: true },
+    { day: "Monday", time: "4pm – 10pm", closed: false },
     { day: "Tuesday", time: "Closed", closed: true },
-    { day: "Wednesday", time: "4pm – 10pm", closed: false },
+    { day: "Wednesday", time: "Closed", closed: true },
     { day: "Thursday", time: "4pm – 10pm", closed: false },
-    { day: "Friday", time: "3pm – 11pm", closed: false },
-    { day: "Saturday", time: "12pm – 11pm", closed: false },
-    { day: "Sunday", time: "12pm – 8pm", closed: false },
+    { day: "Friday", time: "4pm – 10pm", closed: false },
+    { day: "Saturday", time: "4pm – 10pm", closed: false },
+    { day: "Sunday", time: "4pm – 10pm", closed: false },
   ]
 
   return (
@@ -24,7 +24,7 @@ export function VisitSection() {
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">
-            Doors open Thursday through Sunday. Come early to grab a corner,
+            Doors open Thursday through Monday. Come early to grab a corner,
             stay late to find your favorite record on the shelf.
           </p>
 

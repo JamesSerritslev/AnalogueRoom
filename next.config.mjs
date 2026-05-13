@@ -6,7 +6,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
     qualities: [90, 75],
-    formats: ['image/webp'],
+    formats: ["image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        pathname: "/**",
+      },
+    ],
   },
 }
 

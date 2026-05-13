@@ -3,11 +3,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
+import { SiteNavigation } from "@/components/site-navigation"
 import { EventBody } from "@/components/events/event-body"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import { getEventBySlug } from "@/lib/sanity/queries"
-import { INTERIOR_HERO_SRC } from "@/lib/interior-hero"
+import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { parseCalendarDate } from "@/lib/utils"
 
 export const revalidate = 60
@@ -38,16 +38,17 @@ export default async function EventDetailPage({ params }: PageProps) {
   const cal = event.date ? parseCalendarDate(event.date) : null
   const dateLine = cal ? cal.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" }) : "Date TBD"
   const imageUrl = sanityImageUrl(event.image, 1400)
+  const { innerPageHeroUrl } = await getSiteImagery()
 
   return (
     <>
-      <Navigation />
+      <SiteNavigation />
       <main>
         <section className="relative flex min-h-[36vh] flex-col justify-end overflow-hidden px-4 pb-10 pt-page-hero sm:min-h-[38vh] sm:px-6 sm:pb-12 md:px-10 lg:px-12">
           <div
             className="interior-hero-photo absolute inset-0 z-0"
             style={{
-              backgroundImage: `url('${INTERIOR_HERO_SRC}')`,
+              backgroundImage: `url('${innerPageHeroUrl}')`,
             }}
           >
             <div className="interior-hero-scrim" aria-hidden />
