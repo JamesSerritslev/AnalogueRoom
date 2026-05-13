@@ -12,7 +12,13 @@ import { apiVersion, dataset, projectId } from "./sanity/env"
 import { schema } from "./sanity/schemaTypes"
 import { structure } from "./sanity/structure"
 
-const previewOrigin = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+// NEXT_PUBLIC_VERCEL_URL is injected automatically by Vercel on every deployment.
+// NEXT_PUBLIC_SITE_URL is the canonical override (set this in Vercel env vars for production).
+const previewOrigin =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : "http://localhost:3000")
 
 export default defineConfig({
   basePath: "/studio",
