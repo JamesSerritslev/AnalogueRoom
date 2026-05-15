@@ -81,7 +81,7 @@ export async function POST(req: Request) {
   }
   if (phone) mergeFields.PHONE = phone
   if (city || state) {
-    mergeFields.MMERGE9 = [city, state, zip].filter(Boolean).join(", ")
+    mergeFields.MMERGE5 = [city, state, zip].filter(Boolean).join(", ")
   }
 
   const payload: Record<string, unknown> = {
