@@ -30,9 +30,91 @@ const IDS = {
   pageHostEvent: "pageHostEvent",
 }
 
+// ── Site Brand ───────────────────────────────────────────────────────────────
+const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
+const DEFAULT_COPYRIGHT_LINE = "© 2025 The Analogue Room · Solvang, California"
+const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
+const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
+const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
+const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
+const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
+
+// ── Home · Hero ───────────────────────────────────────────────────────────────
+const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2025"
+const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
+const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 const DEFAULT_HERO_LEAD =
   "A vinyl lounge and wine bar in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard."
+const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
+const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
 
+// ── Home · Pillars ────────────────────────────────────────────────────────────
+const DEFAULT_PILLARS_EYEBROW = "Our Approach"
+const DEFAULT_PILLARS_HEADLINE = "Three Words. One Room."
+const DEFAULT_PILLARS_BODY =
+  "Everything we do is anchored in three principles. They're our compass, our standard, and our invitation to slow down."
+const DEFAULT_PILLARS = [
+  {
+    _key: "p0",
+    _type: "pillar",
+    title: "Curation",
+    description:
+      "A rotating selection of wines, beers, and non-alcoholic offerings — chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
+  },
+  {
+    _key: "p1",
+    _type: "pillar",
+    title: "Intention",
+    description:
+      "Nothing here is by accident. The lighting, the volume, the pour. We designed a room that asks you to be present, to listen, to settle in.",
+  },
+  {
+    _key: "p2",
+    _type: "pillar",
+    title: "Analogue",
+    description:
+      "Vinyl, played properly. No algorithms. No skips. The full album, the way the artist meant it. A return to the analogue way of listening.",
+  },
+]
+
+// ── Home · Room ───────────────────────────────────────────────────────────────
+const DEFAULT_ROOM_EYEBROW = "The Space"
+const DEFAULT_ROOM_HEADLINE = "A Place to Slow Down"
+const DEFAULT_ROOM_BODY = [
+  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
+  "We're not a club. We're not a museum. We're a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.",
+]
+
+// ── Home · Offerings ──────────────────────────────────────────────────────────
+const DEFAULT_OFFERINGS_EYEBROW = "Drinks & Listening"
+const DEFAULT_OFFERINGS_HEADLINE = "What's On the Menu"
+const DEFAULT_OFFERINGS_BODY =
+  "A rotating menu, always evolving. Local where we can, imported where it makes sense, and never anything we wouldn't pour for ourselves."
+const DEFAULT_OFFERINGS_WINES_TITLE = "Wines"
+const DEFAULT_OFFERINGS_WINES_DESCRIPTION =
+  "A rotating selection of local Santa Barbara County labels alongside imported pours from regions worth knowing. Curated for the moment, the music, and the mood."
+const DEFAULT_OFFERINGS_BEER_TITLE = "Beer"
+const DEFAULT_OFFERINGS_BEER_DESCRIPTION =
+  "A thoughtful list of craft beers, both local and from further afield. Cold, fresh, and chosen to complement everything from a quiet evening to a packed Friday night."
+const DEFAULT_OFFERINGS_ZERO_PROOF_TITLE = "Zero Proof"
+const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
+  "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers — because the experience matters more than the alcohol."
+
+// ── Home · Visit ──────────────────────────────────────────────────────────────
+const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
+const DEFAULT_VISIT_BODY =
+  "Doors open Thursday through Monday. Come early to grab a corner, stay late to find your favorite record on the shelf."
+const DEFAULT_HOURS = [
+  { _key: "h0", _type: "hoursRow", day: "Monday",    time: "4pm – 10pm", closed: false },
+  { _key: "h1", _type: "hoursRow", day: "Tuesday",   time: "Closed",     closed: true  },
+  { _key: "h2", _type: "hoursRow", day: "Wednesday", time: "Closed",     closed: true  },
+  { _key: "h3", _type: "hoursRow", day: "Thursday",  time: "4pm – 10pm", closed: false },
+  { _key: "h4", _type: "hoursRow", day: "Friday",    time: "4pm – 10pm", closed: false },
+  { _key: "h5", _type: "hoursRow", day: "Saturday",  time: "4pm – 10pm", closed: false },
+  { _key: "h6", _type: "hoursRow", day: "Sunday",    time: "4pm – 10pm", closed: false },
+]
+
+// ── About ─────────────────────────────────────────────────────────────────────
 const STORY_PARAS = [
   "Analogue Room is a small, intimate listening bar where wine, music, and conversation come together.",
   "Built around a deep love for vinyl, the space invites guests to slow down, share a bottle, and listen the way music was meant to be heard.",
@@ -326,10 +408,17 @@ async function main() {
 
   await withRetries("Save siteBrand", () =>
     client.createOrReplace({
-    _id: IDS.siteBrand,
-    _type: "siteBrand",
-    logo: logoImg,
-    innerHero: interiorImg,
+      _id: IDS.siteBrand,
+      _type: "siteBrand",
+      logo: logoImg,
+      innerHero: interiorImg,
+      tagline: DEFAULT_TAGLINE,
+      copyrightLine: DEFAULT_COPYRIGHT_LINE,
+      address: DEFAULT_ADDRESS,
+      instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
+      instagramUrl: DEFAULT_INSTAGRAM_URL,
+      sisterPropertyName: DEFAULT_SISTER_PROPERTY_NAME,
+      sisterPropertyUrl: DEFAULT_SISTER_PROPERTY_URL,
     }),
   )
 
@@ -345,12 +434,41 @@ async function main() {
 
   await withRetries("Save pageHome", () =>
     client.createOrReplace({
-    _id: IDS.pageHome,
-    _type: "pageHome",
-    heroBackground: interiorImg,
-    heroLead: DEFAULT_HERO_LEAD,
-    roomSectionImage: interiorImg,
-    ...(menuBgImg ? { offeringsBackground: menuBgImg } : {}),
+      _id: IDS.pageHome,
+      _type: "pageHome",
+      // Hero
+      heroBackground: interiorImg,
+      heroEyebrow: DEFAULT_HERO_EYEBROW,
+      heroHeadlineLine1: DEFAULT_HERO_HEADLINE_LINE1,
+      heroHeadlineLine2: DEFAULT_HERO_HEADLINE_LINE2,
+      heroLead: DEFAULT_HERO_LEAD,
+      heroMetaHours: DEFAULT_HERO_META_HOURS,
+      heroMetaLocation: DEFAULT_HERO_META_LOCATION,
+      // Pillars
+      pillarsEyebrow: DEFAULT_PILLARS_EYEBROW,
+      pillarsHeadline: DEFAULT_PILLARS_HEADLINE,
+      pillarsBody: DEFAULT_PILLARS_BODY,
+      pillars: DEFAULT_PILLARS,
+      // The Space
+      roomSectionImage: interiorImg,
+      roomEyebrow: DEFAULT_ROOM_EYEBROW,
+      roomHeadline: DEFAULT_ROOM_HEADLINE,
+      roomBody: DEFAULT_ROOM_BODY,
+      // Offerings
+      ...(menuBgImg ? { offeringsBackground: menuBgImg } : {}),
+      offeringsEyebrow: DEFAULT_OFFERINGS_EYEBROW,
+      offeringsHeadline: DEFAULT_OFFERINGS_HEADLINE,
+      offeringsBody: DEFAULT_OFFERINGS_BODY,
+      offeringsWinesTitle: DEFAULT_OFFERINGS_WINES_TITLE,
+      offeringsWinesDescription: DEFAULT_OFFERINGS_WINES_DESCRIPTION,
+      offeringsBeerTitle: DEFAULT_OFFERINGS_BEER_TITLE,
+      offeringsBeerDescription: DEFAULT_OFFERINGS_BEER_DESCRIPTION,
+      offeringsZeroProofTitle: DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
+      offeringsZeroProofDescription: DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
+      // Visit / Hours
+      visitHeadline: DEFAULT_VISIT_HEADLINE,
+      visitBody: DEFAULT_VISIT_BODY,
+      hours: DEFAULT_HOURS,
     }),
   )
 
@@ -362,9 +480,9 @@ async function main() {
     teamIntro:
       "A small team with a clear vision — to build a room that feels like home.",
     teamMembers: [
-      { _key: "t0", name: "John Wright", role: "Owner" },
-      { _key: "t1", name: "Blake Economus", role: "General Manager" },
-      { _key: "t2", name: "Ray Fortune", role: "Bar Manager, Vinyl Curator" },
+      { _key: "t0", _type: "aboutTeamMember", name: "John Wright", role: "Owner" },
+      { _key: "t1", _type: "aboutTeamMember", name: "Blake Economus", role: "General Manager" },
+      { _key: "t2", _type: "aboutTeamMember", name: "Ray Fortune", role: "Bar Manager, Vinyl Curator" },
     ],
     }),
   )

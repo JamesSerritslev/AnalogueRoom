@@ -1,3 +1,4 @@
+import { cache } from "react"
 import { getClientForRequest } from "./client"
 import type { Event } from "./types"
 
@@ -66,7 +67,7 @@ export async function getEvents(): Promise<Event[]> {
   }
 }
 
-export async function getEventBySlug(slug: string): Promise<Event | null> {
+export const getEventBySlug = cache(async function getEventBySlug(slug: string): Promise<Event | null> {
   const client = await getClientForRequest()
   if (!client) {
     return null
@@ -94,41 +95,4 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
     console.error("Error fetching event from Sanity:", error)
     return null
   }
-}
-
-export async function getFeaturedEvents(): Promise<Event[]> {
-  const client = await getClientForRequest()
-  if (!client) {
-    return []
-  }
-
-  try {
-    const { todayInLA, currentTimeInLA } = getLosAngelesNowParts()
-    const events = await client.fetch<Event[]>(
-      `*[
-        _type == "event" &&
-        featured == true &&
-        (
-          date > $todayInLA ||
-          (date == $todayInLA && $currentTimeInLA <= $sameDayCutoff)
-        )
-      ] | order(date asc)[0...3] {
-        _id,
-        title,
-        slug,
-        eventType,
-        date,
-        time,
-        description,
-        image,
-        ticketUrl,
-        featured
-      }`,
-      { todayInLA, currentTimeInLA, sameDayCutoff: LA_TEST_EXPIRY_TIME }
-    )
-    return events
-  } catch (error) {
-    console.error("Error fetching featured events from Sanity:", error)
-    return []
-  }
-}
+})

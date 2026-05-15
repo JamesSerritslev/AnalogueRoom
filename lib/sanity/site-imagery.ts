@@ -3,11 +3,11 @@ import { sanityImageUrl } from "@/lib/sanity/image-url"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 /** Fallback assets when Studio fields are empty */
-export const DEFAULT_INTERIOR_HERO = "/images/interior.jpeg"
-export const DEFAULT_SITE_LOGO = "/images/ar-logo.png"
-export const DEFAULT_OFFERINGS_SECTION_BG = "/images/on-the-menu.png"
+const DEFAULT_INTERIOR_HERO = "/images/interior.jpeg"
+const DEFAULT_SITE_LOGO = "/images/ar-logo.png"
+const DEFAULT_OFFERINGS_SECTION_BG = "/images/on-the-menu.png"
 
-export type ResolvedSiteImagery = {
+type ResolvedSiteImagery = {
   homeHeroUrl: string
   innerPageHeroUrl: string
   siteLogoUrl: string

@@ -28,7 +28,7 @@ const nextConfig = {
           // Disable browser features this site doesn't use
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+            value: "camera=(), microphone=(), geolocation=(self), interest-cohort=()",
           },
           // Allow framing only from same origin AND Sanity Studio (required for Presentation tool)
           // frame-ancestors supersedes X-Frame-Options in modern browsers; both are set for older ones.

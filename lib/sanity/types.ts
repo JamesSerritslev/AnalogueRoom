@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/types"
 
-/** Minimal Sanity `image` field for `urlFor` / `sanityImageUrl` */
+/** Minimal Sanity `image` field shape used by `sanityImageUrl` */
 export interface SanityImageField {
   _type?: string
   asset?: {
@@ -17,13 +17,55 @@ export interface VenueStatPair {
 export interface SiteBrandDoc {
   logo?: SanityImageField
   innerHero?: SanityImageField
+  tagline?: string
+  copyrightLine?: string
+  address?: string
+  instagramHandle?: string
+  instagramUrl?: string
+  sisterPropertyName?: string
+  sisterPropertyUrl?: string
+}
+
+export interface PillarItem {
+  title?: string
+  description?: string
+}
+
+export interface HoursRow {
+  day?: string
+  time?: string
+  closed?: boolean
 }
 
 export interface PageHomeDoc {
   heroBackground?: SanityImageField
+  heroEyebrow?: string
+  heroHeadlineLine1?: string
+  heroHeadlineLine2?: string
   heroLead?: string
+  heroMetaHours?: string
+  heroMetaLocation?: string
+  pillarsEyebrow?: string
+  pillarsHeadline?: string
+  pillarsBody?: string
+  pillars?: PillarItem[]
   roomSectionImage?: SanityImageField
+  roomEyebrow?: string
+  roomHeadline?: string
+  roomBody?: string[]
   offeringsBackground?: SanityImageField
+  offeringsEyebrow?: string
+  offeringsHeadline?: string
+  offeringsBody?: string
+  offeringsWinesTitle?: string
+  offeringsWinesDescription?: string
+  offeringsBeerTitle?: string
+  offeringsBeerDescription?: string
+  offeringsZeroProofTitle?: string
+  offeringsZeroProofDescription?: string
+  visitHeadline?: string
+  visitBody?: string
+  hours?: HoursRow[]
 }
 
 export interface AboutTeamMember {

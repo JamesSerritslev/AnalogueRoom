@@ -2,14 +2,10 @@
 
 import { useEffect } from "react"
 import { usePathname } from "next/navigation"
-import { MENU_SLUGS, type MenuSlug } from "@/lib/menu-defaults"
-
-function isMenuHash(id: string): id is MenuSlug {
-  return (MENU_SLUGS as readonly string[]).includes(id)
-}
+import { isMenuSlug } from "@/lib/menu-defaults"
 
 function scrollToId(id: string) {
-  if (!isMenuHash(id)) return
+  if (!isMenuSlug(id)) return
   const el = document.getElementById(id)
   if (!el) return
   el.scrollIntoView({ behavior: "smooth", block: "start" })

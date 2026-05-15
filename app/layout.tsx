@@ -14,26 +14,23 @@ export const viewport: Viewport = {
 /** Fonts load at runtime via <link> — avoids build failures when fonts.googleapis.com is unreachable (offline / firewall). */
 
 export const metadata: Metadata = {
-  title: 'The Analogue Room | Vinyl Bar & Listening Lounge | Solvang, CA',
-  description: 'A curated vinyl bar and listening lounge in Solvang, California. Experience hand-selected records, thoughtful drinks, and a space designed for listening.',
-  keywords: ['vinyl bar', 'listening lounge', 'Solvang', 'Santa Ynez Valley', 'wine bar', 'records', 'hi-fi'],
+  title: 'The Analogue Room | Vinyl Lounge & Wine Bar | Solvang, CA',
+  description: 'A curated vinyl lounge and wine bar in the heart of Solvang, California. Hand-selected records, thoughtful drinks, and a space designed for listening.',
+  keywords: ['vinyl lounge', 'wine bar', 'listening lounge', 'Solvang', 'Santa Ynez Valley', 'records', 'hi-fi'],
   openGraph: {
-    title: 'The Analogue Room | Vinyl Bar & Listening Lounge',
-    description: 'A curated vinyl bar and listening lounge in Solvang, California.',
+    title: 'The Analogue Room | Vinyl Lounge & Wine Bar',
+    description: 'A curated vinyl lounge and wine bar in the heart of Solvang, California.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Analogue Room | Vinyl Bar & Listening Lounge',
-    description: 'A curated vinyl bar and listening lounge in Solvang, California.',
+    title: 'The Analogue Room | Vinyl Lounge & Wine Bar',
+    description: 'A curated vinyl lounge and wine bar in the heart of Solvang, California.',
   },
   robots: {
     index: true,
     follow: true,
-  },
-  icons: {
-    icon: '/icon.svg',
   },
 }
 
@@ -45,7 +42,7 @@ export default async function RootLayout({
   const { isEnabled } = await draftMode()
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

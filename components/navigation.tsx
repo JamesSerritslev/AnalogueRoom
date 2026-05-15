@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/menu", label: "Menu" },
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },
   { href: "/host-event", label: "Host Your Event" },
@@ -66,7 +67,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
               <Link
                 href={link.href}
                 className={`${NAV_LINK_CLASS} inline-flex min-h-10 items-center border-b pb-0.5 ${
-                  pathname === link.href
+                  pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"))
                     ? "border-orange text-orange"
                     : "border-transparent text-coal hover:text-orange"
                 }`}
@@ -151,7 +152,9 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
                 key={link.href}
                 href={link.href}
                 className={`rounded-sm px-3 py-3.5 font-label text-[12px] tracking-[0.25em] uppercase transition-colors ${
-                  pathname === link.href ? "bg-orange/12 text-orange" : "text-coal active:bg-coal/8"
+                  pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"))
+                    ? "bg-orange/12 text-orange"
+                    : "text-coal active:bg-coal/8"
                 }`}
               >
                 {link.label}

@@ -1,14 +1,33 @@
 import Image from "next/image"
-import { DEFAULT_HERO_LEAD } from "@/lib/content-defaults"
+import { HeroScrollDown } from "@/components/home/hero-scroll-down"
+import {
+  DEFAULT_HERO_EYEBROW,
+  DEFAULT_HERO_HEADLINE_LINE1,
+  DEFAULT_HERO_HEADLINE_LINE2,
+  DEFAULT_HERO_LEAD,
+  DEFAULT_HERO_META_HOURS,
+  DEFAULT_HERO_META_LOCATION,
+  DEFAULT_INSTAGRAM_HANDLE,
+} from "@/lib/content-defaults"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 export async function HeroSection() {
-  const { homeHeroUrl, siteLogoUrl, heroLead } = await getSiteImagery()
+  const [{ homeHeroUrl, siteLogoUrl, heroLead }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
 
+  const eyebrow = L.home?.heroEyebrow || DEFAULT_HERO_EYEBROW
+  const line1 = L.home?.heroHeadlineLine1 || DEFAULT_HERO_HEADLINE_LINE1
+  const line2 = L.home?.heroHeadlineLine2 || DEFAULT_HERO_HEADLINE_LINE2
   const lead = heroLead || DEFAULT_HERO_LEAD
+  const metaHours = L.home?.heroMetaHours || DEFAULT_HERO_META_HOURS
+  const metaLocation = L.home?.heroMetaLocation || DEFAULT_HERO_META_LOCATION
+  const instagramHandle = L.brand?.instagramHandle || DEFAULT_INSTAGRAM_HANDLE
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-20 text-center">
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-28 text-center">
       <div
         className="hero-bg-photo"
         style={{ backgroundImage: `url(${homeHeroUrl})` }}
@@ -18,7 +37,7 @@ export async function HeroSection() {
       {/* Content */}
       <div className="relative z-2 mx-auto w-full max-w-[880px]">
         <p className="font-label mb-6 text-[10px] tracking-[0.35em] text-orange drop-shadow-lg sm:mb-8 sm:text-[11px] sm:tracking-[0.45em] md:tracking-[0.5em] uppercase">
-          Solvang · California · Est. 2025
+          {eyebrow}
         </p>
 
         <Image
@@ -32,10 +51,8 @@ export async function HeroSection() {
         />
 
         <h1 className="font-display mb-6 text-[clamp(32px,6vw,58px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-7">
-          <span className="block">
-            Curation. <em className="not-italic text-orange">Intention.</em>
-          </span>
-          <span className="block">Analogue.</span>
+          <span className="block">{line1}</span>
+          <span className="block">{line2}</span>
         </h1>
 
         {/* Divider */}
@@ -55,22 +72,24 @@ export async function HeroSection() {
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
               Hours
             </p>
-            <p className="font-display text-sm text-cream">Thu–Mon · 4pm–10pm</p>
+            <p className="font-display text-sm text-cream">{metaHours}</p>
           </div>
           <div className="text-center">
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
               Location
             </p>
-            <p className="font-display text-sm text-cream">1693 Mission Dr, Solvang</p>
+            <p className="font-display text-sm text-cream">{metaLocation}</p>
           </div>
           <div className="text-center">
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
               Follow
             </p>
-            <p className="font-display text-sm text-cream">@analogueroomsyv</p>
+            <p className="font-display text-sm text-cream">{instagramHandle}</p>
           </div>
         </div>
       </div>
+
+      <HeroScrollDown />
     </section>
   )
 }

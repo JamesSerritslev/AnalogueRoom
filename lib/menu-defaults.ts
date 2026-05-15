@@ -3,7 +3,7 @@
 export const MENU_SLUGS = ["wines", "beer", "zero-proof"] as const
 export type MenuSlug = (typeof MENU_SLUGS)[number]
 
-export type MenuItemRow = {
+type MenuItemRow = {
   title: string
   description?: string
   price?: string
