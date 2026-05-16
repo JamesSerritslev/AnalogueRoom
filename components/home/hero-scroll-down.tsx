@@ -7,7 +7,7 @@ export function HeroScrollDown() {
       onClick={() =>
         document.getElementById("pillars")?.scrollIntoView({ behavior: "smooth", block: "start" })
       }
-      className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/40 transition-colors duration-300 hover:text-orange group"
+      className="hero-intro hero-intro-d7 absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/40 transition-colors duration-300 hover:text-orange group"
       aria-label="Scroll to content"
     >
       <span className="font-label text-[8px] tracking-[0.45em] uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100">

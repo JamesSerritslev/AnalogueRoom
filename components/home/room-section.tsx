@@ -4,6 +4,7 @@ import {
   DEFAULT_ROOM_EYEBROW,
   DEFAULT_ROOM_HEADLINE,
 } from "@/lib/content-defaults"
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
@@ -24,7 +25,8 @@ export async function RoomSection() {
     <section id="room" className="relative z-2 scroll-mt-20 bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
       <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
         {/* Text */}
-        <div>
+        <RevealOnScroll>
+          <div>
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             {eyebrow}
           </p>
@@ -41,15 +43,17 @@ export async function RoomSection() {
             </p>
           ))}
         </div>
+        </RevealOnScroll>
 
         {/* Photo from Sanity, or default vinyl visual */}
+        <RevealOnScroll delay={140}>
         {roomTheSpaceUrl ? (
-          <div className="relative aspect-square w-full max-w-[min(100%,420px)] mx-auto md:mx-0 md:justify-self-end overflow-hidden rounded-sm border border-coal/10 shadow-xl shadow-coal/15">
+          <div className="group relative aspect-square w-full max-w-[min(100%,420px)] mx-auto md:mx-0 md:justify-self-end overflow-hidden rounded-sm border border-coal/10 shadow-xl shadow-coal/15">
             <Image
               src={roomTheSpaceUrl}
               alt="The Analogue Room"
               fill
-              className="object-cover"
+              className="object-cover motion-safe:transition-transform motion-safe:duration-[1.05s] motion-safe:ease-out group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 420px"
             />
           </div>
@@ -73,6 +77,7 @@ export async function RoomSection() {
             </div>
           </div>
         )}
+        </RevealOnScroll>
       </div>
     </section>
   )

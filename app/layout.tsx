@@ -3,6 +3,7 @@ import './globals.css'
 import { draftMode } from "next/headers"
 import { VisualEditing } from "next-sanity/visual-editing"
 import { SanityLive } from "@/sanity/lib/live"
+import { PageTransition } from "@/components/page-transition"
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -52,9 +53,7 @@ export default async function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased">
-        <div className="relative z-[1] min-h-dvh min-w-0 w-full max-w-full overflow-x-hidden">
-          {children}
-        </div>
+        <PageTransition>{children}</PageTransition>
         {isEnabled ? <VisualEditing /> : null}
         <SanityLive />
       </body>

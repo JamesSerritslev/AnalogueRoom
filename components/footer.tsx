@@ -12,6 +12,7 @@ import {
   DEFAULT_SISTER_PROPERTY_URL,
   DEFAULT_TAGLINE,
 } from "@/lib/content-defaults"
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
 
 export async function Footer() {
   const [{ siteLogoUrl }, L] = await Promise.all([
@@ -31,7 +32,7 @@ export async function Footer() {
 
   return (
     <footer className="relative z-2 min-w-0 max-w-full overflow-x-hidden bg-coal px-4 py-16 text-cream sm:px-6 sm:py-20 md:px-10 md:py-22 lg:px-12">
-      <div className="mx-auto max-w-[1200px]">
+      <RevealOnScroll className="mx-auto max-w-[1200px]">
         <div className="mb-12 grid max-md:grid-cols-[auto_auto] max-md:items-center max-md:justify-center max-md:gap-x-2.5 max-md:gap-y-8 md:mb-14 md:grid-cols-[auto_1fr_auto] md:items-start md:justify-normal md:gap-14 lg:gap-16">
           {/* Logo */}
           <div className="max-md:col-start-1 max-md:row-start-1 max-md:justify-self-center md:col-start-1 md:row-start-1 md:justify-self-start">
@@ -100,7 +101,7 @@ export async function Footer() {
         <p className="text-center font-label text-[10px] tracking-[0.3em] uppercase text-cream/40 border-t border-cream/10 pt-6">
           {copyrightLine}
         </p>
-      </div>
+      </RevealOnScroll>
     </footer>
   )
 }

@@ -14,7 +14,7 @@ const navLinks = [
 ]
 
 const NAV_LINK_CLASS =
-  "font-label text-[11px] tracking-[0.22em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase transition-colors duration-200"
+  "font-label text-[11px] tracking-[0.22em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase motion-safe:transition-[color,transform,border-color] motion-safe:duration-300 motion-safe:ease-out"
 
 const DEFAULT_LOGO_SRC = "/images/ar-logo.png"
 
@@ -50,7 +50,33 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
         className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-3 border-b border-coal/8 bg-cream/92 px-4 py-3 backdrop-blur-md sm:px-6 md:px-10 lg:px-12 lg:py-4"
         style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
       >
-        <Link href="/" className="z-50 flex shrink-0 items-center" onClick={() => setMenuOpen(false)}>
+        <Link
+          href="/"
+          className="motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:opacity-90 motion-safe:active:scale-[0.98] z-50 flex shrink-0 items-center"
+          onClick={(e) => {
+            setMenuOpen(false)
+            // Already on home: SPA won't navigate — scroll & clear fragment so hero is at top.
+            if (pathname === "/") {
+              e.preventDefault()
+              if (
+                typeof window !== "undefined" &&
+                typeof window.history.replaceState === "function"
+              ) {
+                const next = `${window.location.pathname}${window.location.search}`
+                window.history.replaceState(null, "", next || "/")
+              }
+              window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior:
+                  typeof window !== "undefined" &&
+                  window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                    ? "auto"
+                    : "smooth",
+              })
+            }
+          }}
+        >
           <Image
             src={logoSrc}
             alt="The Analogue Room"
@@ -66,7 +92,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`${NAV_LINK_CLASS} inline-flex min-h-10 items-center border-b pb-0.5 ${
+                className={`${NAV_LINK_CLASS} inline-flex min-h-10 items-center border-b pb-0.5 motion-safe:hover:-translate-y-px ${
                   pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"))
                     ? "border-orange text-orange"
                     : "border-transparent text-coal hover:text-orange"
@@ -91,7 +117,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
               href="https://www.instagram.com/analogueroomsyv"
               target="_blank"
               rel="noopener noreferrer"
-              className={`${NAV_LINK_CLASS} inline-flex min-h-10 items-center bg-orange px-4 py-2.5 text-cream hover:bg-spanish sm:px-5`}
+              className={`${NAV_LINK_CLASS} inline-flex min-h-10 items-center bg-orange px-4 py-2.5 text-cream shadow-sm shadow-coal/10 motion-safe:transition-colors motion-safe:duration-300 hover:bg-spanish hover:shadow-md sm:px-5`}
             >
               Instagram
             </a>

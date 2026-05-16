@@ -186,6 +186,123 @@
   animation: spin 30s linear infinite;
 }
 
+/* ── Scroll reveal (RevealOnScroll) ───────────────────────────────────── */
+.reveal-scope {
+  opacity: 0;
+  transform: translateY(1.65rem);
+}
+.reveal-scope-visible {
+  animation: reveal-soft 0.88s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes reveal-soft {
+  from {
+    opacity: 0;
+    transform: translateY(1.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Home hero: staggered intro + slow background drift ───────────────── */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.15rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-intro {
+  opacity: 0;
+  animation: hero-fade-up 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-intro-d1 { animation-delay: 0.06s; }
+.hero-intro-d2 { animation-delay: 0.16s; }
+.hero-intro-d3 { animation-delay: 0.28s; }
+.hero-intro-d4 { animation-delay: 0.42s; }
+.hero-intro-d5 { animation-delay: 0.52s; }
+.hero-intro-d6 { animation-delay: 0.64s; }
+.hero-intro-d7 { animation-delay: 0.76s; }
+
+@keyframes hero-bg-drift {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.045); }
+}
+
+.hero-bg-photo.hero-bg-drift-pulse {
+  transform-origin: center center;
+}
+
+/* ── Inner pages: ultra-slow hero parallax-ish zoom ────────────────────── */
+@keyframes interior-hero-drift {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.07); }
+}
+
+.interior-hero-photo.interior-hero-drift {
+  transform-origin: center 25%;
+}
+
+/* Route transition — opacity ONLY. Do not use translate/transform here:
+   transforms on this ancestor capture `position: fixed` descendants (nav, menu
+   “Back to home”), so they would scroll away with the page instead of the viewport. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-page-enter {
+  animation: page-enter 0.38s ease-out both;
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-scope,
+  .reveal-scope-visible {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-intro {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-bg-photo.hero-bg-drift-pulse,
+  .interior-hero-photo.interior-hero-drift {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .animate-page-enter {
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-bg-photo.hero-bg-drift-pulse {
+    animation: hero-bg-drift 22s ease-in-out infinite alternate;
+  }
+
+  .interior-hero-photo.interior-hero-drift {
+    animation: interior-hero-drift 36s ease-in-out infinite alternate;
+  }
+}
+
 /* Home hero: same as analogueroom_index.html — CSS background + ::after scrim */
 .hero-bg-photo {
   position: absolute;

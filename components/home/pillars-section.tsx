@@ -4,6 +4,7 @@ import {
   DEFAULT_PILLARS_EYEBROW,
   DEFAULT_PILLARS_HEADLINE,
 } from "@/lib/content-defaults"
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 export async function PillarsSection() {
@@ -19,8 +20,7 @@ export async function PillarsSection() {
 
   return (
     <section id="pillars" className="relative z-2 scroll-mt-20 bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
-      {/* Header */}
-      <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-16 md:mb-20">
+      <RevealOnScroll className="mx-auto mb-12 max-w-[680px] text-center sm:mb-16 md:mb-20" eager>
         <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
           {eyebrow}
         </p>
@@ -31,26 +31,23 @@ export async function PillarsSection() {
         <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
           {body}
         </p>
-      </div>
+      </RevealOnScroll>
 
       {/* Pillars Grid */}
       <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-12">
         {pillars.map((pillar, idx) => (
-          <div
-            key={idx}
-            className="border border-cream/12 px-4 py-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-orange hover:bg-orange/4 sm:px-6 sm:py-10"
-          >
-            <p className="font-display text-5xl text-orange/80 leading-none mb-4">
-              {String(idx + 1).padStart(2, "0")}
-            </p>
-            <h3 className="font-display text-2xl text-cream mb-3.5">
-              {pillar.title}
-            </h3>
-            <div className="w-8 h-px bg-orange mx-auto mb-4" />
-            <p className="font-body text-[13px] leading-relaxed text-cream/70">
-              {pillar.description}
-            </p>
-          </div>
+          <RevealOnScroll key={idx} delay={idx * 110}>
+            <div className="border border-cream/12 px-4 py-8 text-center motion-safe:transition-all motion-safe:duration-300 hover:-translate-y-1 hover:border-orange hover:bg-orange/4 hover:shadow-lg hover:shadow-black/25 sm:px-6 sm:py-10">
+              <p className="font-display text-5xl text-orange/80 leading-none mb-4">
+                {String(idx + 1).padStart(2, "0")}
+              </p>
+              <h3 className="font-display text-2xl text-cream mb-3.5">{pillar.title}</h3>
+              <div className="w-8 h-px bg-orange mx-auto mb-4" />
+              <p className="font-body text-[13px] leading-relaxed text-cream/70">
+                {pillar.description}
+              </p>
+            </div>
+          </RevealOnScroll>
         ))}
       </div>
     </section>

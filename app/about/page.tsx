@@ -47,7 +47,7 @@ export default async function AboutPage() {
         {/* Hero */}
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div
-            className="interior-hero-photo absolute inset-0 z-0"
+            className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
             style={{ backgroundImage: `url('${innerPageHeroUrl}')` }}
           >
             <div className="interior-hero-scrim" aria-hidden />

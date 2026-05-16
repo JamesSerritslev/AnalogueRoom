@@ -29,14 +29,14 @@ export async function HeroSection() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-28 text-center">
       <div
-        className="hero-bg-photo"
+        className="hero-bg-photo hero-bg-drift-pulse"
         style={{ backgroundImage: `url(${homeHeroUrl})` }}
         aria-hidden
       />
 
       {/* Content */}
       <div className="relative z-2 mx-auto w-full max-w-[880px]">
-        <p className="font-label mb-6 text-[10px] tracking-[0.35em] text-orange drop-shadow-lg sm:mb-8 sm:text-[11px] sm:tracking-[0.45em] md:tracking-[0.5em] uppercase">
+        <p className="hero-intro hero-intro-d1 font-label mb-6 text-[10px] tracking-[0.35em] text-orange drop-shadow-lg sm:mb-8 sm:text-[11px] sm:tracking-[0.45em] md:tracking-[0.5em] uppercase">
           {eyebrow}
         </p>
 
@@ -45,29 +45,29 @@ export async function HeroSection() {
           alt="The Analogue Room"
           width={260}
           height={260}
-          className="mx-auto mb-10 w-[min(260px,55vw)] aspect-square object-contain drop-shadow-xl"
+          className="hero-intro hero-intro-d2 mx-auto mb-10 w-[min(260px,55vw)] aspect-square object-contain drop-shadow-xl"
           priority
           quality={90}
         />
 
-        <h1 className="font-display mb-6 text-[clamp(32px,6vw,58px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-7">
+        <h1 className="hero-intro hero-intro-d3 font-display mb-6 text-[clamp(32px,6vw,58px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-7">
           <span className="block">{line1}</span>
           <span className="block">{line2}</span>
         </h1>
 
         {/* Divider */}
-        <div className="my-8 flex items-center justify-center gap-3.5">
+        <div className="hero-intro hero-intro-d4 my-8 flex items-center justify-center gap-3.5">
           <div className="w-15 h-px bg-cream/40" />
           <span className="text-orange text-sm">★</span>
           <div className="w-15 h-px bg-cream/40" />
         </div>
 
-        <p className="font-body mx-auto mb-10 max-w-[540px] text-sm font-normal leading-relaxed text-cream/85 drop-shadow-md">
+        <p className="hero-intro hero-intro-d5 font-body mx-auto mb-10 max-w-[540px] text-sm font-normal leading-relaxed text-cream/85 drop-shadow-md">
           {lead}
         </p>
 
         {/* Meta info */}
-        <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-6 border-t border-cream/20 pt-8 sm:gap-x-10 sm:gap-y-7 md:gap-x-12">
+        <div className="hero-intro hero-intro-d6 mt-8 flex flex-wrap justify-center gap-x-8 gap-y-6 border-t border-cream/20 pt-8 sm:gap-x-10 sm:gap-y-7 md:gap-x-12">
           <div className="text-center">
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
               Hours

@@ -51,7 +51,7 @@ export function MenuFullPageView({ menus, heroImageUrl }: MenuFullPageViewProps)
     <>
       <section className="relative flex min-h-[36vh] flex-col justify-end overflow-hidden px-4 pb-10 pt-page-hero sm:min-h-[38vh] sm:px-6 sm:pb-12 md:px-10 lg:px-12">
         <div
-          className="interior-hero-photo absolute inset-0 z-0"
+          className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
           style={{ backgroundImage: `url('${heroImageUrl}')` }}
         >
           <div className="interior-hero-scrim" aria-hidden />
