@@ -5,6 +5,8 @@ import {
   DEFAULT_ROOM_HEADLINE,
 } from "@/lib/content-defaults"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
+import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
@@ -31,7 +33,7 @@ export async function RoomSection() {
             {eyebrow}
           </p>
           <h2 className="font-display text-[clamp(36px,5vw,56px)] text-coal leading-[1.05] mb-6">
-            {headline}
+            {renderHeadlineAccent(headline, HOME_HEADLINE_ACCENTS.room)}
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
           {bodyParagraphs.map((para, idx) => (

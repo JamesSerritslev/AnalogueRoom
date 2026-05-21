@@ -9,6 +9,8 @@ import {
   DEFAULT_HERO_META_LOCATION,
   DEFAULT_INSTAGRAM_HANDLE,
 } from "@/lib/content-defaults"
+import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
+import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
@@ -51,7 +53,9 @@ export async function HeroSection() {
         />
 
         <h1 className="hero-intro hero-intro-d3 font-display mb-6 text-[clamp(32px,6vw,58px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-7">
-          <span className="block">{line1}</span>
+          <span className="block">
+            {renderHeadlineAccent(line1, HOME_HEADLINE_ACCENTS.heroLine1)}
+          </span>
           <span className="block">{line2}</span>
         </h1>
 

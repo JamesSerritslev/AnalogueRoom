@@ -9,6 +9,8 @@ import {
   DEFAULT_VISIT_BODY,
   DEFAULT_VISIT_HEADLINE,
 } from "@/lib/content-defaults"
+import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
+import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
@@ -39,7 +41,7 @@ export async function VisitSection() {
             Hours
           </p>
           <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-coal leading-[1.05] mb-6">
-            {headline}
+            {renderHeadlineAccent(headline, HOME_HEADLINE_ACCENTS.visit)}
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">

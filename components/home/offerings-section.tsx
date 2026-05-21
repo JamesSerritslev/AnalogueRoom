@@ -5,6 +5,8 @@ import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { MenuSlug } from "@/lib/menu-defaults"
 import { HOME_MENU_SCROLL_TARGET_ID } from "@/lib/menu-scroll-storage"
+import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
+import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import {
   DEFAULT_OFFERINGS_BEER_DESCRIPTION,
   DEFAULT_OFFERINGS_BEER_TITLE,
@@ -96,7 +98,7 @@ export async function OfferingsSection() {
             {eyebrow}
           </p>
           <h2 className="font-display text-[clamp(36px,5vw,56px)] text-cream leading-[1.05] mb-6">
-            {headline}
+            {renderHeadlineAccent(headline, HOME_HEADLINE_ACCENTS.offerings)}
           </h2>
           <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
