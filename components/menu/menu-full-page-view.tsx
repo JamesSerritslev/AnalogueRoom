@@ -7,6 +7,10 @@ type MenusBySlug = Record<MenuSlug, ResolvedMenuPage>
 type MenuFullPageViewProps = {
   menus: MenusBySlug
   heroImageUrl: string
+  /** Pulled from `pageHome` offerings in Studio — no fallback menu chrome in repo. */
+  heroEyebrow?: string | null
+  heroTitle?: string | null
+  heroLead?: string | null
 }
 
 function MenuCategoryBlock({ menu }: { menu: ResolvedMenuPage }) {
@@ -46,7 +50,17 @@ function MenuCategoryBlock({ menu }: { menu: ResolvedMenuPage }) {
   )
 }
 
-export function MenuFullPageView({ menus, heroImageUrl }: MenuFullPageViewProps) {
+export function MenuFullPageView({
+  menus,
+  heroImageUrl,
+  heroEyebrow,
+  heroTitle,
+  heroLead,
+}: MenuFullPageViewProps) {
+  const eyebrow = heroEyebrow?.trim()
+  const title = (heroTitle?.trim() || "Menu")
+  const lead = heroLead?.trim()
+
   return (
     <>
       <section className="relative flex min-h-[36vh] flex-col justify-end overflow-hidden px-4 pb-10 pt-page-hero sm:min-h-[38vh] sm:px-6 sm:pb-12 md:px-10 lg:px-12">
@@ -57,11 +71,13 @@ export function MenuFullPageView({ menus, heroImageUrl }: MenuFullPageViewProps)
           <div className="interior-hero-scrim" aria-hidden />
         </div>
         <div className="relative z-2">
-          <p className="font-label text-[11px] tracking-[0.5em] uppercase text-orange mb-4">
-            Drinks & Listening
-          </p>
+          {eyebrow ? (
+            <p className="font-label text-[11px] tracking-[0.5em] uppercase text-orange mb-4">
+              {eyebrow}
+            </p>
+          ) : null}
           <h1 className="font-display text-[clamp(36px,5.5vw,56px)] text-cream leading-[1.05] mb-3.5">
-            Menu
+            {title}
           </h1>
           <div className="w-15 h-0.5 bg-orange mt-5" />
         </div>
@@ -70,10 +86,11 @@ export function MenuFullPageView({ menus, heroImageUrl }: MenuFullPageViewProps)
       <section className="relative bg-cream px-4 py-16 text-coal sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
         <div id={MENU_CREAM_SENTINEL_ID} aria-hidden className="absolute left-0 right-0 top-0 h-px" />
         <div className="mx-auto max-w-[720px]">
-          <p className="font-body text-[15px] leading-relaxed text-coal/80 mb-16 text-center">
-            Wines, beer, and zero-proof — all in one place. Jump to a section from the home page,
-            or scroll through the full list.
-          </p>
+          {lead ? (
+            <p className="font-body text-[15px] leading-relaxed text-coal/80 mb-16 text-center">
+              {lead}
+            </p>
+          ) : null}
 
           {MENU_SLUGS.map((slug, idx) => {
             const menu = menus[slug]
@@ -81,15 +98,17 @@ export function MenuFullPageView({ menus, heroImageUrl }: MenuFullPageViewProps)
               <section
                 key={slug}
                 id={slug}
-                className={`scroll-mt-28 ${idx > 0 ? "mt-16 border-t border-coal/10 pt-16 sm:mt-20 sm:pt-20" : ""}`}
+                className={`scroll-mt-28 ${idx > 0 ? "mt-16 border-t border-coal/10 pt-16 sm:mt-20 sm:pt-20" : ""} ${idx === 0 && !lead ? "pt-8 sm:pt-10" : ""}`}
               >
                 <h2 className="font-display text-[clamp(26px,4vw,36px)] text-coal leading-[1.05] mb-3">
                   {menu.pageTitle}
                 </h2>
                 <div className="w-12 h-0.5 bg-orange mb-6" />
-                <p className="font-body text-[15px] leading-relaxed text-coal/80 mb-10">
-                  {menu.intro}
-                </p>
+                {menu.intro.trim() ? (
+                  <p className="font-body text-[15px] leading-relaxed text-coal/80 mb-10">
+                    {menu.intro}
+                  </p>
+                ) : null}
                 <MenuCategoryBlock menu={menu} />
               </section>
             )

@@ -1,5 +1,5 @@
 import type { MenuSlug, MenuSection, ResolvedMenuPage } from "@/lib/menu-defaults"
-import { getDefaultMenuForSlug } from "@/lib/menu-defaults"
+import { MENU_SECTION_PAGE_TITLE } from "@/lib/menu-defaults"
 import type { PageMenusCategory, PageMenusDoc, PageMenusMenuItem } from "@/lib/sanity/types"
 
 function normalizeItem(it: PageMenusMenuItem | undefined | null) {
@@ -14,8 +14,8 @@ function normalizeItem(it: PageMenusMenuItem | undefined | null) {
 
 function normalizeCategories(
   raw: PageMenusCategory[] | undefined | null,
-): MenuSection[] | null {
-  if (!raw?.length) return null
+): MenuSection[] {
+  if (!raw?.length) return []
   const out: MenuSection[] = []
   for (const block of raw) {
     const title = block?.title?.trim()
@@ -28,21 +28,25 @@ function normalizeCategories(
       out.push({ title, items: items as MenuSection["items"] })
     }
   }
-  return out.length ? out : null
+  return out
 }
 
-function mergeResolved(
+function docMenuKey(slug: MenuSlug): keyof PageMenusDoc {
+  if (slug === "beer") return "beer"
+  if (slug === "zero-proof") return "zeroProof"
+  return "wines"
+}
+
+function resolveOne(
   slug: MenuSlug,
   doc: PageMenusDoc | null | undefined,
 ): ResolvedMenuPage {
-  const base = getDefaultMenuForSlug(slug)
-  const key =
-    slug === "wines" ? "wines" : slug === "beer" ? "beer" : "zeroProof"
-  const fromDoc = normalizeCategories(doc?.[key])
-  if (!fromDoc) return base
+  const sections = normalizeCategories(doc?.[docMenuKey(slug)])
   return {
-    ...base,
-    sections: fromDoc,
+    slug,
+    pageTitle: MENU_SECTION_PAGE_TITLE[slug],
+    intro: "",
+    sections,
   }
 }
 
@@ -50,15 +54,15 @@ export function resolveMenuForSlug(
   slug: MenuSlug,
   doc: PageMenusDoc | null | undefined,
 ): ResolvedMenuPage {
-  return mergeResolved(slug, doc)
+  return resolveOne(slug, doc)
 }
 
 export function resolveAllMenus(
   doc: PageMenusDoc | null | undefined,
 ): Record<MenuSlug, ResolvedMenuPage> {
   return {
-    wines: resolveMenuForSlug("wines", doc),
-    beer: resolveMenuForSlug("beer", doc),
-    "zero-proof": resolveMenuForSlug("zero-proof", doc),
+    wines: resolveOne("wines", doc),
+    beer: resolveOne("beer", doc),
+    "zero-proof": resolveOne("zero-proof", doc),
   }
 }
