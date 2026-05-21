@@ -1,6 +1,6 @@
 /** Plain-text body for Web3Forms `message` (structured inquiry copy). */
 
-export type HostInquiryFields = {
+type HostInquiryFields = {
   firstName: string
   lastName: string
   email: string

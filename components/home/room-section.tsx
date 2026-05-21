@@ -1,37 +1,61 @@
 import Image from "next/image"
+import {
+  DEFAULT_ROOM_BODY,
+  DEFAULT_ROOM_EYEBROW,
+  DEFAULT_ROOM_HEADLINE,
+} from "@/lib/content-defaults"
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
+import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 export async function RoomSection() {
-  const { roomTheSpaceUrl } = await getSiteImagery()
+  const [{ roomTheSpaceUrl }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
+
+  const eyebrow = L.home?.roomEyebrow || DEFAULT_ROOM_EYEBROW
+  const headline = L.home?.roomHeadline || DEFAULT_ROOM_HEADLINE
+  const bodyParagraphs =
+    L.home?.roomBody?.filter((p) => p?.trim())?.length
+      ? L.home.roomBody
+      : DEFAULT_ROOM_BODY
 
   return (
-    <section className="relative z-2 bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
+    <section id="room" className="relative z-2 scroll-mt-20 bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
       <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
         {/* Text */}
-        <div>
+        <RevealOnScroll>
+          <div>
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
-            The Space
+            {eyebrow}
           </p>
           <h2 className="font-display text-[clamp(36px,5vw,56px)] text-coal leading-[1.05] mb-6">
-            A Place to <span className="text-orange">Slow Down</span>
+            {renderHeadlineAccent(headline, HOME_HEADLINE_ACCENTS.room)}
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
-          <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">
-            The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.
-          </p>
-          <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px]">
-            We&apos;re not a club. We&apos;re not a museum. We&apos;re a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.
-          </p>
+          {bodyParagraphs.map((para, idx) => (
+            <p
+              key={idx}
+              className={`font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px]${idx < bodyParagraphs.length - 1 ? " mb-6" : ""}`}
+            >
+              {para}
+            </p>
+          ))}
         </div>
+        </RevealOnScroll>
 
         {/* Photo from Sanity, or default vinyl visual */}
+        <RevealOnScroll delay={140}>
         {roomTheSpaceUrl ? (
-          <div className="relative aspect-square w-full max-w-[min(100%,420px)] mx-auto md:mx-0 md:justify-self-end overflow-hidden rounded-sm border border-coal/10 shadow-xl shadow-coal/15">
+          <div className="group relative aspect-square w-full max-w-[min(100%,420px)] mx-auto md:mx-0 md:justify-self-end overflow-hidden rounded-sm border border-coal/10 shadow-xl shadow-coal/15">
             <Image
               src={roomTheSpaceUrl}
               alt="The Analogue Room"
               fill
-              className="object-cover"
+              className="object-cover motion-safe:transition-transform motion-safe:duration-[1.05s] motion-safe:ease-out group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 420px"
             />
           </div>
@@ -55,6 +79,7 @@ export async function RoomSection() {
             </div>
           </div>
         )}
+        </RevealOnScroll>
       </div>
     </section>
   )

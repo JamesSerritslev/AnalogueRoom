@@ -1,14 +1,22 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { type LocationState, requestLocation } from "@/lib/geolocation"
 
 export function NewsletterSignupForm() {
   const [email, setEmail] = useState("")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [location, setLocation] = useState<LocationState>({ status: "idle" })
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const [messageIsError, setMessageIsError] = useState(false)
+
+  useEffect(() => {
+    setLocation({ status: "loading" })
+    requestLocation(setLocation)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -16,10 +24,20 @@ export function NewsletterSignupForm() {
     setMessage("")
     setMessageIsError(false)
 
+    const body: Record<string, string | number> = { email, firstName, lastName }
+    if (phone.trim()) body.phone = phone.trim()
+    if (location.status === "granted") {
+      if (location.city) body.city = location.city
+      if (location.state) body.state = location.state
+      if (location.zip) body.zip = location.zip
+      body.lat = location.lat
+      body.lng = location.lng
+    }
+
     const res = await fetch("/api/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, firstName, lastName }),
+      body: JSON.stringify(body),
     })
 
     const data = (await res.json()) as { error?: string }
@@ -30,6 +48,8 @@ export function NewsletterSignupForm() {
       setEmail("")
       setFirstName("")
       setLastName("")
+      setPhone("")
+      setLocation({ status: "idle" })
     } else {
       setMessage(data.error || "Something went wrong.")
       setMessageIsError(true)
@@ -76,6 +96,16 @@ export function NewsletterSignupForm() {
         placeholder="Email"
         className="min-h-10 w-full border border-cream/20 bg-cream/5 px-3 py-2 font-body text-sm text-cream placeholder:text-cream/40 outline-none focus:border-orange"
       />
+      <input
+        type="tel"
+        name="phone"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        autoComplete="tel"
+        placeholder="Phone (optional)"
+        className="min-h-10 w-full border border-cream/20 bg-cream/5 px-3 py-2 font-body text-sm text-cream placeholder:text-cream/40 outline-none focus:border-orange"
+      />
+
       <button
         type="submit"
         disabled={loading}

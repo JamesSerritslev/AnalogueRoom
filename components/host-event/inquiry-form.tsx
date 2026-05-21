@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
 import { formatHostInquiryPlain } from "@/lib/host-inquiry-plain"
+import { type LocationState, requestLocation } from "@/lib/geolocation"
 
 const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit"
 const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
@@ -43,6 +44,12 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
   const [guestCount, setGuestCount] = useState("")
   const [preferredTime, setPreferredTime] = useState("")
   const [formError, setFormError] = useState("")
+  const [location, setLocation] = useState<LocationState>({ status: "idle" })
+
+  useEffect(() => {
+    setLocation({ status: "loading" })
+    requestLocation(setLocation)
+  }, [])
 
   useEffect(() => {
     if (!submitted) return
@@ -106,6 +113,24 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
       }
 
       if (res.ok && data.success) {
+        // Silently add to Mailchimp — don't block the success screen on failure
+        fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: inquiryFields.email,
+            firstName: inquiryFields.firstName,
+            lastName: inquiryFields.lastName,
+            ...(inquiryFields.phone ? { phone: inquiryFields.phone } : {}),
+            ...(location.status === "granted" ? {
+              city: location.city,
+              state: location.state,
+              zip: location.zip,
+              lat: location.lat,
+              lng: location.lng,
+            } : {}),
+          }),
+        }).catch(() => {/* silent */})
         setSubmitted(true)
       } else {
         setFormError(
@@ -137,8 +162,6 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
       onSubmit={handleSubmit}
       className="flex min-w-0 max-w-full flex-col gap-3.5"
     >
-      <input type="hidden" name="access_key" value={web3formsAccessKey} />
-
       <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>
           <label className="mb-1.5 block font-label text-[9px] tracking-[0.3em] text-orange uppercase">

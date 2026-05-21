@@ -3,8 +3,9 @@ import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { InquiryForm } from "@/components/host-event/inquiry-form"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveHostEventVenueStats } from "@/lib/host-event-venue-stats"
-import { getHostEventVenueStats } from "@/lib/sanity/queries"
+import { DEFAULT_HOST_EVENT_INTRO } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
   title: "Host Your Event | The Analogue Room",
@@ -77,9 +78,12 @@ const features = [
 ]
 
 export default async function HostEventPage() {
-  const venueStatsDoc = await getHostEventVenueStats()
-  const venueStats = resolveHostEventVenueStats(venueStatsDoc)
-  const { innerPageHeroUrl } = await getSiteImagery()
+  const [{ innerPageHeroUrl }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
+  const venueStats = resolveHostEventVenueStats(L.host)
+  const introBlurb = L.host?.introBlurb?.trim() || DEFAULT_HOST_EVENT_INTRO
 
   return (
     <>
@@ -88,7 +92,7 @@ export default async function HostEventPage() {
         {/* Hero */}
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div
-            className="interior-hero-photo absolute inset-0 z-0"
+            className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
             style={{ backgroundImage: `url('${innerPageHeroUrl}')` }}
           >
             <div className="interior-hero-scrim" aria-hidden />
@@ -114,7 +118,7 @@ export default async function HostEventPage() {
           </h2>
           <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
           <p className="font-body text-base font-normal leading-relaxed text-coal/85 max-w-[640px] mx-auto">
-            From intimate birthday gatherings to listening parties and corporate retreats — The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together.
+            {introBlurb}
           </p>
         </section>
 

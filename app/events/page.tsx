@@ -3,7 +3,9 @@ import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { EventsList } from "@/components/events/events-list"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { getEvents } from "@/lib/sanity/queries"
+import { DEFAULT_EVENTS_INDEX_INTRO } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
   title: "Events | The Analogue Room",
@@ -13,8 +15,12 @@ export const metadata: Metadata = {
 export const revalidate = 60 // Revalidate every 60 seconds
 
 export default async function EventsPage() {
-  const events = await getEvents()
-  const { innerPageHeroUrl } = await getSiteImagery()
+  const [events, { innerPageHeroUrl }, L] = await Promise.all([
+    getEvents(),
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
+  const eventsIntro = L.eventsIndex?.introBody?.trim() || DEFAULT_EVENTS_INDEX_INTRO
 
   return (
     <>
@@ -23,7 +29,7 @@ export default async function EventsPage() {
         {/* Hero */}
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div
-            className="interior-hero-photo absolute inset-0 z-0"
+            className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
             style={{ backgroundImage: `url('${innerPageHeroUrl}')` }}
           >
             <div className="interior-hero-scrim" aria-hidden />
@@ -49,7 +55,7 @@ export default async function EventsPage() {
           </h2>
           <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mx-auto">
-            From listening parties and album releases to special pours and pop-ups — here&apos;s what&apos;s on at The Analogue Room.
+            {eventsIntro}
           </p>
         </section>
 

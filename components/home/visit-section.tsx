@@ -1,37 +1,57 @@
 import { VisitSectionMap } from "@/components/home/visit-section-map"
+import {
+  DEFAULT_ADDRESS,
+  DEFAULT_HOURS,
+  DEFAULT_INSTAGRAM_HANDLE,
+  DEFAULT_INSTAGRAM_URL,
+  DEFAULT_SISTER_PROPERTY_NAME,
+  DEFAULT_SISTER_PROPERTY_URL,
+  DEFAULT_VISIT_BODY,
+  DEFAULT_VISIT_HEADLINE,
+} from "@/lib/content-defaults"
+import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
+import { renderHeadlineAccent } from "@/lib/render-headline-accent"
+import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
-export function VisitSection() {
-  const hours = [
-    { day: "Monday", time: "4pm – 10pm", closed: false },
-    { day: "Tuesday", time: "Closed", closed: true },
-    { day: "Wednesday", time: "Closed", closed: true },
-    { day: "Thursday", time: "4pm – 10pm", closed: false },
-    { day: "Friday", time: "4pm – 10pm", closed: false },
-    { day: "Saturday", time: "4pm – 10pm", closed: false },
-    { day: "Sunday", time: "4pm – 10pm", closed: false },
-  ]
+export async function VisitSection() {
+  const L = await getLayoutSingletons()
+
+  const headline = L.home?.visitHeadline || DEFAULT_VISIT_HEADLINE
+  const body = L.home?.visitBody || DEFAULT_VISIT_BODY
+  const hours =
+    L.home?.hours?.filter((h) => h?.day?.trim())?.length
+      ? L.home.hours
+      : DEFAULT_HOURS
+
+  const address = L.brand?.address || DEFAULT_ADDRESS
+  const instagramHandle = L.brand?.instagramHandle || DEFAULT_INSTAGRAM_HANDLE
+  const instagramUrl = L.brand?.instagramUrl || DEFAULT_INSTAGRAM_URL
+  const sisterPropertyName = L.brand?.sisterPropertyName || DEFAULT_SISTER_PROPERTY_NAME
+  const sisterPropertyUrl = L.brand?.sisterPropertyUrl || DEFAULT_SISTER_PROPERTY_URL
+
+  const addressLines = address.split("\n").filter(Boolean)
 
   return (
-    <section className="relative z-2 min-w-0 max-w-full bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
+    <section id="visit" className="relative z-2 scroll-mt-20 min-w-0 max-w-full bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
       <div className="mx-auto grid min-w-0 max-w-[1100px] grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
         {/* Hours */}
-        <div className="py-12">
+        <RevealOnScroll className="py-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             Hours
           </p>
           <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-coal leading-[1.05] mb-6">
-            When We&apos;re <span className="text-orange">Spinning</span>
+            {renderHeadlineAccent(headline, HOME_HEADLINE_ACCENTS.visit)}
           </h2>
           <div className="w-12 h-0.5 bg-orange mb-6" />
           <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mb-6">
-            Doors open Thursday through Monday. Come early to grab a corner,
-            stay late to find your favorite record on the shelf.
+            {body}
           </p>
 
           <div className="border-t-2 border-coal">
-            {hours.map((item) => (
+            {hours.map((item, idx) => (
               <div
-                key={item.day}
+                key={`${item.day}-${idx}`}
                 className="flex items-start justify-between gap-3 border-b border-coal/12 py-3.5 sm:items-center sm:py-4"
               >
                 <span className="shrink-0 font-label text-[10px] tracking-[0.2em] text-coal uppercase sm:text-[11px] sm:tracking-[0.25em]">
@@ -47,9 +67,10 @@ export function VisitSection() {
               </div>
             ))}
           </div>
-        </div>
+        </RevealOnScroll>
 
         {/* Visit Info */}
+        <RevealOnScroll delay={120}>
         <div className="bg-coal p-6 text-cream text-left sm:p-8 md:p-10 lg:p-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             Visit
@@ -63,11 +84,12 @@ export function VisitSection() {
               Address
             </p>
             <p className="font-display text-base text-cream leading-normal">
-              1693 Mission Drive
-              <br />
-              Suite D2
-              <br />
-              Solvang, CA 93463
+              {addressLines.map((line, idx) => (
+                <span key={idx}>
+                  {line}
+                  {idx < addressLines.length - 1 && <br />}
+                </span>
+              ))}
             </p>
           </div>
 
@@ -77,12 +99,12 @@ export function VisitSection() {
             </p>
             <p className="font-display text-base text-cream">
               <a
-                href="https://www.instagram.com/analogueroomsyv"
+                href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-b border-orange/50 hover:text-orange transition-colors"
               >
-                @analogueroomsyv
+                {instagramHandle}
               </a>
             </p>
           </div>
@@ -93,19 +115,22 @@ export function VisitSection() {
             </p>
             <p className="font-display text-base text-cream">
               <a
-                href="https://www.standingsunwines.com"
+                href={sisterPropertyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-b border-orange/50 hover:text-orange transition-colors"
               >
-                Standing Sun Wines →
+                {sisterPropertyName} →
               </a>
             </p>
           </div>
         </div>
+        </RevealOnScroll>
       </div>
 
-      <VisitSectionMap />
+      <RevealOnScroll delay={180} eager className="w-full">
+        <VisitSectionMap />
+      </RevealOnScroll>
     </section>
   )
 }

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "seed:pages": "node scripts/seed-pages.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -66,6 +67,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@sanity/client": "^7.22.0",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/node": "^22",
     "@types/react": "^19",

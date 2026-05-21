@@ -1,3 +1,4 @@
+import { HomeScrollRestore } from "@/components/home/home-scroll-restore"
 import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { HeroSection } from "@/components/home/hero-section"
@@ -11,6 +12,7 @@ export const revalidate = 60
 export default function HomePage() {
   return (
     <>
+      <HomeScrollRestore />
       <SiteNavigation />
       <main>
         <HeroSection />

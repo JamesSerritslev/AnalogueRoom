@@ -1,8 +1,22 @@
 import { type SchemaTypeDefinition } from "sanity"
 import { eventType } from "./event"
-import { hostEventVenueStatsType } from "./hostEventVenueStats"
-import { siteImageryType } from "./siteImagery"
+import { pageAboutType } from "./pageAbout"
+import { pageEventsIndexType } from "./pageEventsIndex"
+import { pageHomeType } from "./pageHome"
+import { pageHostEventType } from "./pageHostEvent"
+import { menuCategoryType, menuItemType, pageMenusType } from "./pageMenus"
+import { siteBrandType } from "./siteBrand"
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [siteImageryType, eventType, hostEventVenueStatsType],
+  types: [
+    siteBrandType,
+    menuItemType,
+    menuCategoryType,
+    pageMenusType,
+    pageHomeType,
+    pageAboutType,
+    pageEventsIndexType,
+    pageHostEventType,
+    eventType,
+  ],
 }
