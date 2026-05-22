@@ -20,7 +20,7 @@ export async function HeroSection() {
     getLayoutSingletons(),
   ])
 
-  const eyebrow = L.home?.heroEyebrow || DEFAULT_HERO_EYEBROW
+  const eyebrow = DEFAULT_HERO_EYEBROW
   const line1 = L.home?.heroHeadlineLine1 || DEFAULT_HERO_HEADLINE_LINE1
   const line2 = L.home?.heroHeadlineLine2 || DEFAULT_HERO_HEADLINE_LINE2
   const lead = heroLead || DEFAULT_HERO_LEAD

@@ -32,7 +32,7 @@ const IDS = {
 
 // ── Site Brand ───────────────────────────────────────────────────────────────
 const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
-const DEFAULT_COPYRIGHT_LINE = "© 2025 The Analogue Room · Solvang, California"
+const DEFAULT_COPYRIGHT_LINE = "© 2026 The Analogue Room · Solvang, California"
 const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
 const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
 const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
@@ -40,7 +40,7 @@ const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ───────────────────────────────────────────────────────────────
-const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2025"
+const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
 const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
 const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 const DEFAULT_HERO_LEAD =
@@ -413,7 +413,6 @@ async function main() {
       logo: logoImg,
       innerHero: interiorImg,
       tagline: DEFAULT_TAGLINE,
-      copyrightLine: DEFAULT_COPYRIGHT_LINE,
       address: DEFAULT_ADDRESS,
       instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
       instagramUrl: DEFAULT_INSTAGRAM_URL,
@@ -438,7 +437,6 @@ async function main() {
       _type: "pageHome",
       // Hero
       heroBackground: interiorImg,
-      heroEyebrow: DEFAULT_HERO_EYEBROW,
       heroHeadlineLine1: DEFAULT_HERO_HEADLINE_LINE1,
       heroHeadlineLine2: DEFAULT_HERO_HEADLINE_LINE2,
       heroLead: DEFAULT_HERO_LEAD,

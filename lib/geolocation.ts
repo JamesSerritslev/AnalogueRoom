@@ -62,3 +62,10 @@ export function requestLocation(
     },
   )
 }
+
+/** Same as {@link requestLocation}, but awaited (e.g. on form submit instead of mount). */
+export function requestLocationOnce(): Promise<LocationState> {
+  return new Promise((resolve) => {
+    requestLocation(resolve)
+  })
+}

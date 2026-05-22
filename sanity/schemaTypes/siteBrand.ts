@@ -6,7 +6,7 @@ export const siteBrandType = defineType({
   name: "siteBrand",
   title: "Site · Brand",
   type: "document",
-  description: "Logo, hero photo, tagline, address, social links, and footer copy.",
+  description: "Logo, hero photo, tagline, address, social links. Copyright and hero location line are fixed in code.",
   groups: [
     { name: "assets", title: "Visual Assets" },
     { name: "identity", title: "Identity & Copy" },
@@ -29,13 +29,6 @@ export const siteBrandType = defineType({
       type: "string",
       group: "identity",
       description: "Short brand line shown in the footer centre. E.g. \"Curation. Intention. Analogue.\"",
-    }),
-    defineField({
-      name: "copyrightLine",
-      title: "Copyright line",
-      type: "string",
-      group: "identity",
-      description: "Footer copyright text. E.g. \"© 2025 The Analogue Room · Solvang, California\"",
     }),
     defineField({
       name: "address",

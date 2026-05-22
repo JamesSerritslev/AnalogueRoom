@@ -21,7 +21,6 @@ export async function Footer() {
   ])
 
   const tagline = L.brand?.tagline || DEFAULT_TAGLINE
-  const copyrightLine = L.brand?.copyrightLine || DEFAULT_COPYRIGHT_LINE
   const address = L.brand?.address || DEFAULT_ADDRESS
   const instagramHandle = L.brand?.instagramHandle || DEFAULT_INSTAGRAM_HANDLE
   const instagramUrl = L.brand?.instagramUrl || DEFAULT_INSTAGRAM_URL
@@ -99,7 +98,7 @@ export async function Footer() {
 
         {/* Copyright */}
         <p className="text-center font-label text-[10px] tracking-[0.3em] uppercase text-cream/40 border-t border-cream/10 pt-6">
-          {copyrightLine}
+          {DEFAULT_COPYRIGHT_LINE}
         </p>
       </RevealOnScroll>
     </footer>

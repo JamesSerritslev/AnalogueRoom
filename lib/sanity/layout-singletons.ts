@@ -7,7 +7,6 @@ const LAYOUT_QUERY = `{
     logo,
     innerHero,
     tagline,
-    copyrightLine,
     address,
     instagramHandle,
     instagramUrl,
@@ -16,7 +15,6 @@ const LAYOUT_QUERY = `{
   },
   "home": *[_id == "pageHome"][0]{
     heroBackground,
-    heroEyebrow,
     heroHeadlineLine1,
     heroHeadlineLine2,
     heroLead,

@@ -4,7 +4,7 @@ import type { AboutTeamMember, HoursRow, PillarItem } from "@/lib/sanity/types"
 
 // ── Site Brand ──────────────────────────────────────────────────────────────
 export const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
-export const DEFAULT_COPYRIGHT_LINE = "© 2025 The Analogue Room · Solvang, California"
+export const DEFAULT_COPYRIGHT_LINE = "© 2026 The Analogue Room · Solvang, California"
 export const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
 export const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
 export const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
@@ -12,7 +12,7 @@ export const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 export const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ──────────────────────────────────────────────────────────────
-export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2025"
+export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
 export const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
 export const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 export const DEFAULT_HERO_LEAD =
