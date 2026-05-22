@@ -117,7 +117,7 @@ export async function POST(req: Request) {
   }
 
   if (!response.ok) {
-    // Permanently deleted contacts can't be re-added via API — treat as success from the user's perspective
+    // Permanently deleted contacts can't be re-added via API; treat as success from the user's perspective
     if (typeof data.detail === "string" && data.detail.includes("permanently deleted")) {
       return NextResponse.json({ success: true }, { status: 200 })
     }

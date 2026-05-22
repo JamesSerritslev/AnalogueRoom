@@ -4,6 +4,7 @@ import { draftMode } from "next/headers"
 import { VisualEditing } from "next-sanity/visual-editing"
 import { SanityLive } from "@/sanity/lib/live"
 import { PageTransition } from "@/components/page-transition"
+import { NewsletterHashScroll } from "@/components/newsletter-hash-scroll"
 
 /** Canonical site URL for absolute metadata (OG, etc.). Matches `sanity.config` preview origin logic. */
 function getMetadataBaseUrl(): string {
@@ -22,7 +23,7 @@ const ogImage = {
   height: 492,
   type: "image/png" as const,
   alt:
-    "The Analogue Room — minimalist illustration of analog audio equipment with the ANALOGUE ROOM wordmark",
+    "The Analogue Room: minimalist illustration of analog audio equipment with the ANALOGUE ROOM wordmark",
 }
 
 export const viewport: Viewport = {
@@ -32,7 +33,7 @@ export const viewport: Viewport = {
   themeColor: '#282b2e',
 }
 
-/** Fonts load at runtime via <link> — avoids build failures when fonts.googleapis.com is unreachable (offline / firewall). */
+/** Fonts load at runtime via `<link>`; avoids build failures when fonts.googleapis.com is unreachable (offline / firewall). */
 
 export const metadata: Metadata = {
   metadataBase: new URL(getMetadataBaseUrl()),
@@ -77,6 +78,7 @@ export default async function RootLayout({
       </head>
       <body suppressHydrationWarning className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased">
         <PageTransition>{children}</PageTransition>
+        <NewsletterHashScroll />
         {isEnabled ? <VisualEditing /> : null}
         <SanityLive />
       </body>

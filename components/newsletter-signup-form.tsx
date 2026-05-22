@@ -1,37 +1,39 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { type LocationState, requestLocation } from "@/lib/geolocation"
+import { useState } from "react"
+import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
 
 export function NewsletterSignupForm() {
   const [email, setEmail] = useState("")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
-  const [location, setLocation] = useState<LocationState>({ status: "idle" })
+  const { resolveLocation } = useDedupedLocationResolution()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const [messageIsError, setMessageIsError] = useState(false)
 
-  useEffect(() => {
-    setLocation({ status: "loading" })
-    requestLocation(setLocation)
-  }, [])
+  const requestGeolocationOnce = () => {
+    void resolveLocation()
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setMessage("")
     setMessageIsError(false)
 
+    const loc = await resolveLocation()
+
+    setLoading(true)
+
     const body: Record<string, string | number> = { email, firstName, lastName }
     if (phone.trim()) body.phone = phone.trim()
-    if (location.status === "granted") {
-      if (location.city) body.city = location.city
-      if (location.state) body.state = location.state
-      if (location.zip) body.zip = location.zip
-      body.lat = location.lat
-      body.lng = location.lng
+    if (loc.status === "granted") {
+      if (loc.city) body.city = loc.city
+      if (loc.state) body.state = loc.state
+      if (loc.zip) body.zip = loc.zip
+      body.lat = loc.lat
+      body.lng = loc.lng
     }
 
     const res = await fetch("/api/subscribe", {
@@ -49,7 +51,6 @@ export function NewsletterSignupForm() {
       setFirstName("")
       setLastName("")
       setPhone("")
-      setLocation({ status: "idle" })
     } else {
       setMessage(data.error || "Something went wrong.")
       setMessageIsError(true)
@@ -59,7 +60,12 @@ export function NewsletterSignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3"
+      onFocusCapture={requestGeolocationOnce}
+      onInputCapture={requestGeolocationOnce}
+    >
       <p className="font-label text-[9px] tracking-[0.35em] text-orange uppercase">
         Updates
       </p>

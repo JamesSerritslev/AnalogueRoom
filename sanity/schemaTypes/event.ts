@@ -113,7 +113,7 @@ export const eventType = defineType({
       const { title, date, eventType, media } = selection
       return {
         title: title ?? "",
-        subtitle: `${eventType ?? ""} — ${date ?? ""}`,
+        subtitle: `${[eventType, date].filter(Boolean).join(" · ")}`,
         media,
       }
     },

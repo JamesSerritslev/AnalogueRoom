@@ -4,7 +4,7 @@ import type { AboutTeamMember, HoursRow, PillarItem } from "@/lib/sanity/types"
 
 // ── Site Brand ──────────────────────────────────────────────────────────────
 export const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
-export const DEFAULT_COPYRIGHT_LINE = "© 2025 The Analogue Room · Solvang, California"
+export const DEFAULT_COPYRIGHT_LINE = "© 2026 The Analogue Room · Solvang, California"
 export const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
 export const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
 export const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
@@ -12,11 +12,11 @@ export const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 export const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ──────────────────────────────────────────────────────────────
-export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2025"
+export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
 export const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
 export const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 export const DEFAULT_HERO_LEAD =
-  "A vinyl lounge and wine bar in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard."
+  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 export const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
 export const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
 
@@ -29,7 +29,7 @@ export const DEFAULT_PILLARS: PillarItem[] = [
   {
     title: "Curation",
     description:
-      "A rotating selection of wines, beers, and non-alcoholic offerings — chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
+      "A rotating selection of wines, beers, and non-alcoholic offerings, chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
   },
   {
     title: "Intention",
@@ -47,7 +47,7 @@ export const DEFAULT_PILLARS: PillarItem[] = [
 export const DEFAULT_ROOM_EYEBROW = "The Space"
 export const DEFAULT_ROOM_HEADLINE = "A Place to Slow Down"
 export const DEFAULT_ROOM_BODY = [
-  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
+  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California, a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
   "We're not a club. We're not a museum. We're a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.",
 ]
 
@@ -64,7 +64,7 @@ export const DEFAULT_OFFERINGS_BEER_DESCRIPTION =
   "A thoughtful list of craft beers, both local and from further afield. Cold, fresh, and chosen to complement everything from a quiet evening to a packed Friday night."
 export const DEFAULT_OFFERINGS_ZERO_PROOF_TITLE = "Zero Proof"
 export const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
-  "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers — because the experience matters more than the alcohol."
+  "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers, because the experience matters more than the alcohol."
 
 // ── Home · Visit ─────────────────────────────────────────────────────────────
 export const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
@@ -90,7 +90,7 @@ export const DEFAULT_ABOUT_STORY_PARAGRAPHS = [
 ] as const
 
 export const DEFAULT_TEAM_INTRO =
-  "A small team with a clear vision — to build a room that feels like home."
+  "A small team with a clear vision: to build a room that feels like home."
 
 export const DEFAULT_TEAM_MEMBERS: AboutTeamMember[] = [
   { name: "John Wright", role: "Owner" },
@@ -99,7 +99,7 @@ export const DEFAULT_TEAM_MEMBERS: AboutTeamMember[] = [
 ]
 
 export const DEFAULT_EVENTS_INDEX_INTRO =
-  "From listening parties and album releases to special pours and pop-ups — here's what's on at The Analogue Room."
+  "From listening parties and album releases to special pours and pop-ups. Here's what's on at The Analogue Room."
 
 export const DEFAULT_HOST_EVENT_INTRO =
-  "From intimate birthday gatherings to listening parties and corporate retreats — The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."
+  "From intimate birthday gatherings to listening parties and corporate retreats, The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."

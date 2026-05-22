@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
 import { formatHostInquiryPlain } from "@/lib/host-inquiry-plain"
-import { type LocationState, requestLocation } from "@/lib/geolocation"
+import { scrollToAnchorById } from "@/lib/anchor-scroll"
+
+const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
+import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
 
 const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit"
-const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 
 const EVENT_OPTIONS = [
   { value: "birthday", label: "Birthday Party" },
@@ -44,19 +46,15 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
   const [guestCount, setGuestCount] = useState("")
   const [preferredTime, setPreferredTime] = useState("")
   const [formError, setFormError] = useState("")
-  const [location, setLocation] = useState<LocationState>({ status: "idle" })
+  const { resolveLocation } = useDedupedLocationResolution()
 
-  useEffect(() => {
-    setLocation({ status: "loading" })
-    requestLocation(setLocation)
-  }, [])
+  const requestGeolocationOnce = () => {
+    void resolveLocation()
+  }
 
   useEffect(() => {
     if (!submitted) return
-    document.getElementById(INQUIRY_SCROLL_TARGET_ID)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
+    scrollToAnchorById(INQUIRY_SCROLL_TARGET_ID)
   }, [submitted])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -96,6 +94,8 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
     payload.append("email", inquiryFields.email)
     payload.append("message", formatHostInquiryPlain(inquiryFields))
 
+    const loc = await resolveLocation()
+
     setIsSubmitting(true)
 
     try {
@@ -113,7 +113,7 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
       }
 
       if (res.ok && data.success) {
-        // Silently add to Mailchimp — don't block the success screen on failure
+        // Silently add to Mailchimp; don't block the success screen on failure
         fetch("/api/subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -122,12 +122,12 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
             firstName: inquiryFields.firstName,
             lastName: inquiryFields.lastName,
             ...(inquiryFields.phone ? { phone: inquiryFields.phone } : {}),
-            ...(location.status === "granted" ? {
-              city: location.city,
-              state: location.state,
-              zip: location.zip,
-              lat: location.lat,
-              lng: location.lng,
+            ...(loc.status === "granted" ? {
+              city: loc.city,
+              state: loc.state,
+              zip: loc.zip,
+              lat: loc.lat,
+              lng: loc.lng,
             } : {}),
           }),
         }).catch(() => {/* silent */})
@@ -161,6 +161,8 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
     <form
       onSubmit={handleSubmit}
       className="flex min-w-0 max-w-full flex-col gap-3.5"
+      onFocusCapture={requestGeolocationOnce}
+      onInputCapture={requestGeolocationOnce}
     >
       <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>

@@ -18,7 +18,6 @@ export interface SiteBrandDoc {
   logo?: SanityImageField
   innerHero?: SanityImageField
   tagline?: string
-  copyrightLine?: string
   address?: string
   instagramHandle?: string
   instagramUrl?: string
@@ -39,7 +38,6 @@ export interface HoursRow {
 
 export interface PageHomeDoc {
   heroBackground?: SanityImageField
-  heroEyebrow?: string
   heroHeadlineLine1?: string
   heroHeadlineLine2?: string
   heroLead?: string

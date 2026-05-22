@@ -1,5 +1,7 @@
 /**
- * One-time seed: uploads public images and creates all page singletons + text defaults.
+ * One-time seed: uploads shared site images and creates all page singletons + text defaults.
+ * Team headshots are not uploaded here: if `pageAbout` already has team rows, the roster
+ * (photos, bios, intro) is left as-is so Studio stays the source of truth.
  *
  *   SANITY_API_TOKEN=sk... npm run seed:pages
  *
@@ -9,7 +11,7 @@
  * present so Studio shows the published document (otherwise an empty stale draft can
  * hide seeded menu rows and other fields).
  *
- * If you see HTTP 502 from the asset API, wait a minute and run again — that is
+ * If you see HTTP 502 from the asset API, wait a minute and run again; that is
  * usually a temporary Sanity gateway issue. This script retries automatically.
  */
 
@@ -32,7 +34,7 @@ const IDS = {
 
 // ── Site Brand ───────────────────────────────────────────────────────────────
 const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
-const DEFAULT_COPYRIGHT_LINE = "© 2025 The Analogue Room · Solvang, California"
+const DEFAULT_COPYRIGHT_LINE = "© 2026 The Analogue Room · Solvang, California"
 const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
 const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
 const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
@@ -40,11 +42,11 @@ const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ───────────────────────────────────────────────────────────────
-const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2025"
+const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
 const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
 const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 const DEFAULT_HERO_LEAD =
-  "A vinyl lounge and wine bar in the heart of Solvang. A rotating selection of local and imported wines, beers, and non-alcoholic options — all paired with the warmth of music played the way it was meant to be heard."
+  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
 const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
 
@@ -59,7 +61,7 @@ const DEFAULT_PILLARS = [
     _type: "pillar",
     title: "Curation",
     description:
-      "A rotating selection of wines, beers, and non-alcoholic offerings — chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
+      "A rotating selection of wines, beers, and non-alcoholic offerings, chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
   },
   {
     _key: "p1",
@@ -81,7 +83,7 @@ const DEFAULT_PILLARS = [
 const DEFAULT_ROOM_EYEBROW = "The Space"
 const DEFAULT_ROOM_HEADLINE = "A Place to Slow Down"
 const DEFAULT_ROOM_BODY = [
-  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California — a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
+  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California, a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
   "We're not a club. We're not a museum. We're a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.",
 ]
 
@@ -98,7 +100,7 @@ const DEFAULT_OFFERINGS_BEER_DESCRIPTION =
   "A thoughtful list of craft beers, both local and from further afield. Cold, fresh, and chosen to complement everything from a quiet evening to a packed Friday night."
 const DEFAULT_OFFERINGS_ZERO_PROOF_TITLE = "Zero Proof"
 const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
-  "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers — because the experience matters more than the alcohol."
+  "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers, because the experience matters more than the alcohol."
 
 // ── Home · Visit ──────────────────────────────────────────────────────────────
 const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
@@ -108,9 +110,9 @@ const DEFAULT_HOURS = [
   { _key: "h0", _type: "hoursRow", day: "Monday",    time: "4pm – 10pm", closed: false },
   { _key: "h1", _type: "hoursRow", day: "Tuesday",   time: "Closed",     closed: true  },
   { _key: "h2", _type: "hoursRow", day: "Wednesday", time: "Closed",     closed: true  },
-  { _key: "h3", _type: "hoursRow", day: "Thursday",  time: "4pm – 10pm", closed: false },
+  { _key: "h3", _type: "hoursRow", day: "Thursday", time: "4pm – 10pm", closed: false },
   { _key: "h4", _type: "hoursRow", day: "Friday",    time: "4pm – 10pm", closed: false },
-  { _key: "h5", _type: "hoursRow", day: "Saturday",  time: "4pm – 10pm", closed: false },
+  { _key: "h5", _type: "hoursRow", day: "Saturday", time: "4pm – 10pm", closed: false },
   { _key: "h6", _type: "hoursRow", day: "Sunday",    time: "4pm – 10pm", closed: false },
 ]
 
@@ -123,11 +125,20 @@ const STORY_PARAS = [
   "Part listening room, part wine bar, Analogue Room is a place for people who appreciate craftsmanship, culture, and the simple pleasure of gathering around great music and great wine.",
 ]
 
+/** Names/roles only (no assets). Used only when `pageAbout` has no team rows yet; headshots live in Studio. */
+const DEFAULT_ABOUT_TEAM_INTRO =
+  "A small team with a clear vision: to build a room that feels like home."
+const DEFAULT_ABOUT_TEAM_MEMBERS = [
+  { _key: "t0", _type: "aboutTeamMember", name: "John Wright", role: "Owner" },
+  { _key: "t1", _type: "aboutTeamMember", name: "Blake Economus", role: "General Manager" },
+  { _key: "t2", _type: "aboutTeamMember", name: "Ray Fortune", role: "Bar Manager, Vinyl Curator" },
+]
+
 const DEFAULT_EVENTS_INTRO =
-  "From listening parties and album releases to special pours and pop-ups — here's what's on at The Analogue Room."
+  "From listening parties and album releases to special pours and pop-ups. Here's what's on at The Analogue Room."
 
 const DEFAULT_HOST_INTRO =
-  "From intimate birthday gatherings to listening parties and corporate retreats — The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."
+  "From intimate birthday gatherings to listening parties and corporate retreats, The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."
 
 function loadEnvLocal() {
   const p = path.join(ROOT, ".env.local")
@@ -243,17 +254,17 @@ const SEED_MENU_WINES = menuCategoriesWithKeys([
     title: "By the glass",
     items: [
       {
-        title: "Santa Barbara County — rotating white",
+        title: "Santa Barbara County: rotating white",
         description: "Pours change often; ask what’s open.",
         price: "14",
       },
       {
-        title: "Santa Barbara County — rotating red",
+        title: "Santa Barbara County: rotating red",
         description: "Local reds on rotation.",
         price: "15",
       },
       {
-        title: "Import — sommelier’s pick",
+        title: "Import: sommelier’s pick",
         description: "A rotating import pour. Changes weekly.",
         price: "16",
       },
@@ -268,17 +279,17 @@ const SEED_MENU_WINES = menuCategoriesWithKeys([
     title: "Bottles",
     items: [
       {
-        title: "Local favorite — chilled rosé",
+        title: "Local favorite: chilled rosé",
         description: "Santa Barbara County.",
         price: "42",
       },
       {
-        title: "Old World red — medium body",
+        title: "Old World red: medium body",
         description: "Classic European profile.",
         price: "58",
       },
       {
-        title: "Sparkling — celebratory pour",
+        title: "Sparkling: celebratory pour",
         description: "750ml bottle service.",
         price: "64",
       },
@@ -302,7 +313,7 @@ const SEED_MENU_BEER = menuCategoriesWithKeys([
     items: [
       { title: "House lager", description: "Crisp and easy.", price: "7" },
       { title: "West Coast IPA", description: "Hoppy and bright.", price: "9" },
-      { title: "Seasonal tap — ask", description: "Rotating handle.", price: "9" },
+      { title: "Seasonal tap (ask bartender)", description: "Rotating handle.", price: "9" },
     ],
   },
   {
@@ -350,7 +361,7 @@ const SEED_MENU_ZERO = menuCategoriesWithKeys([
       },
       {
         title: "Seasonal shrub",
-        description: "Fruit and vinegar cordial — ask for today’s flavor.",
+        description: "Fruit and vinegar cordial; ask for today’s flavor.",
         price: "11",
       },
     ],
@@ -359,11 +370,11 @@ const SEED_MENU_ZERO = menuCategoriesWithKeys([
     title: "NA wine & beer",
     items: [
       {
-        title: "Rotating NA wine — glass",
+        title: "Rotating NA wine (glass)",
         description: "Thoughtful alcohol-free wine pours.",
         price: "12",
       },
-      { title: "NA beer — bottle", description: "Crisp and familiar.", price: "8" },
+      { title: "NA beer (bottle)", description: "Crisp and familiar.", price: "8" },
     ],
   },
 ])
@@ -413,7 +424,6 @@ async function main() {
       logo: logoImg,
       innerHero: interiorImg,
       tagline: DEFAULT_TAGLINE,
-      copyrightLine: DEFAULT_COPYRIGHT_LINE,
       address: DEFAULT_ADDRESS,
       instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
       instagramUrl: DEFAULT_INSTAGRAM_URL,
@@ -438,7 +448,6 @@ async function main() {
       _type: "pageHome",
       // Hero
       heroBackground: interiorImg,
-      heroEyebrow: DEFAULT_HERO_EYEBROW,
       heroHeadlineLine1: DEFAULT_HERO_HEADLINE_LINE1,
       heroHeadlineLine2: DEFAULT_HERO_HEADLINE_LINE2,
       heroLead: DEFAULT_HERO_LEAD,
@@ -472,18 +481,34 @@ async function main() {
     }),
   )
 
+  const prevAbout = await client.fetch(
+    `*[_id == $id][0]{ teamMembers, teamIntro }`,
+    { id: IDS.pageAbout },
+  )
+  const keepStudioTeam =
+    Array.isArray(prevAbout?.teamMembers) && prevAbout.teamMembers.length > 0
+
+  const aboutTeamMembers = keepStudioTeam
+    ? prevAbout.teamMembers
+    : DEFAULT_ABOUT_TEAM_MEMBERS
+  const aboutTeamIntro =
+    keepStudioTeam && typeof prevAbout.teamIntro === "string"
+      ? prevAbout.teamIntro
+      : DEFAULT_ABOUT_TEAM_INTRO
+
+  if (keepStudioTeam) {
+    console.log(
+      "Preserving About page team roster from Studio (skipping name/role-only seed so photos stay attached).",
+    )
+  }
+
   await withRetries("Save pageAbout", () =>
     client.createOrReplace({
-    _id: IDS.pageAbout,
-    _type: "pageAbout",
-    storyParagraphs: STORY_PARAS,
-    teamIntro:
-      "A small team with a clear vision — to build a room that feels like home.",
-    teamMembers: [
-      { _key: "t0", _type: "aboutTeamMember", name: "John Wright", role: "Owner" },
-      { _key: "t1", _type: "aboutTeamMember", name: "Blake Economus", role: "General Manager" },
-      { _key: "t2", _type: "aboutTeamMember", name: "Ray Fortune", role: "Bar Manager, Vinyl Curator" },
-    ],
+      _id: IDS.pageAbout,
+      _type: "pageAbout",
+      storyParagraphs: STORY_PARAS,
+      teamIntro: aboutTeamIntro,
+      teamMembers: aboutTeamMembers,
     }),
   )
 

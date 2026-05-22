@@ -19,7 +19,7 @@ export function EventsList({ events }: EventsListProps) {
         </h3>
         <div className="mx-auto mb-6 h-px w-12 bg-orange" />
         <p className="mx-auto max-w-md font-body text-[15px] leading-relaxed text-coal/80">
-          Upcoming nights and specials aren&apos;t listed yet—check back soon. We usually share new dates on{" "}
+          Upcoming nights and specials aren&apos;t listed yet, but check back soon. We usually share new dates on{" "}
           <a
             href={DEFAULT_INSTAGRAM_URL}
             target="_blank"

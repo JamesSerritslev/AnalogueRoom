@@ -80,9 +80,9 @@ export const pageMenusType = defineType({
   description:
     "Wine, beer, and zero-proof lists. Each menu uses categories; each item has a title, description, and price.",
   fields: [
-    menuCategoriesField("wines", "Wines — categories"),
-    menuCategoriesField("beer", "Beer — categories"),
-    menuCategoriesField("zeroProof", "Zero proof — categories"),
+    menuCategoriesField("wines", "Wines: categories"),
+    menuCategoriesField("beer", "Beer: categories"),
+    menuCategoriesField("zeroProof", "Zero proof: categories"),
   ],
   preview: {
     prepare() {
