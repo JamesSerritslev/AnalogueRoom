@@ -17,7 +17,8 @@ export const revalidate = 60
 const features = [
   {
     title: "Vinyl Library",
-    description: "Full access to our curated record collection. Bring your own or pick from ours — we'll spin what you choose.",
+    description:
+      "Full access to our curated record collection. Bring your own or pick from ours; we'll spin what you choose.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
         <circle cx="12" cy="12" r="10"/>
@@ -58,7 +59,8 @@ const features = [
   },
   {
     title: "Flexible Layout",
-    description: "Bar seating, lounge areas, and standing room — we configure the space to fit your event.",
+    description:
+      "Bar seating, lounge areas, and standing room: we configure the space to fit your event.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
         <rect x="4" y="6" width="16" height="14" rx="1"/>
@@ -68,7 +70,8 @@ const features = [
   },
   {
     title: "Personal Touch",
-    description: "Our team works with you to make every detail right — from playlists to drink pairings.",
+    description:
+      "Our team works with you to make every detail right, from playlists to drink pairings.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
         <path d="M12 2 L15 8 L22 9 L17 14 L18 21 L12 17 L6 21 L7 14 L2 9 L9 8 Z"/>
@@ -134,7 +137,8 @@ export default async function HostEventPage() {
               </h2>
               <div className="w-12 h-0.5 bg-orange mb-6" />
               <p className="font-body text-[15px] font-normal leading-relaxed text-cream/85">
-                A vinyl bar and lounge purpose-built for slow nights and good company. Backlit shelves of records, vintage hi-fi gear, leather seating, and warm pendant lighting — every detail tuned for atmosphere.
+                A vinyl bar and lounge purpose-built for slow nights and good company. Backlit shelves of records,
+                vintage hi-fi gear, leather seating, and warm pendant lighting, with every detail tuned for atmosphere.
               </p>
             </div>
 
@@ -188,12 +192,12 @@ export default async function HostEventPage() {
           </div>
         </section>
 
-        {/* Inquiry Form — scroll target id used after successful submit */}
-        <section
-          id="host-event-inquiry-section"
-          className="scroll-mt-40 bg-earth px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12"
-        >
-          <div className="mx-auto w-full min-w-0 max-w-[760px] border border-cream/10 bg-cream/4 px-4 py-10 sm:px-8 sm:py-12 md:px-10 md:py-14 lg:px-12">
+        {/* Inquiry form: scroll target id used after successful submit */}
+        <section className="bg-earth px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
+          <div
+            id="host-event-inquiry-section"
+            className="mx-auto w-full min-w-0 max-w-[760px] scroll-mt-28 border border-cream/10 bg-cream/4 px-4 py-10 sm:scroll-mt-32 sm:px-8 sm:py-12 md:px-10 md:py-14 lg:scroll-mt-36 lg:px-12"
+          >
             <div className="text-center mb-8">
               <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
                 Begin Planning

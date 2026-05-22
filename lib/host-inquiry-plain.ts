@@ -24,9 +24,9 @@ export function formatHostInquiryPlain(fields: HostInquiryFields): string {
     preferredTime,
     message,
   } = fields
-  const dash = "—"
+  const dash = ""
   return [
-    "THE ANALOGUE ROOM — Host event inquiry",
+    "THE ANALOGUE ROOM - Host event inquiry",
     "═".repeat(42),
     "",
     "GUEST NAME",
@@ -53,7 +53,7 @@ export function formatHostInquiryPlain(fields: HostInquiryFields): string {
     "MESSAGE",
     message.trim() || dash,
     "",
-    "—",
+    "",
     "Reply using the guest email above.",
   ].join("\n")
 }

@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-padding-top: max(7.5rem, calc(env(safe-area-inset-top, 0px) + 5.75rem));
+}
+
 :root {
   /* Analogue Room Brand Palette */
   --cream: #f8e9d0;
@@ -251,7 +255,7 @@
   transform-origin: center 25%;
 }
 
-/* Route transition — opacity ONLY. Do not use translate/transform here:
+/* Route transition (opacity ONLY). Do not use translate/transform here:
    transforms on this ancestor capture `position: fixed` descendants (nav, menu
    “Back to home”), so they would scroll away with the page instead of the viewport. */
 @keyframes page-enter {
@@ -303,7 +307,7 @@
   }
 }
 
-/* Home hero: same as analogueroom_index.html — CSS background + ::after scrim */
+/* Home hero: same as analogueroom_index.html; CSS background + ::after scrim */
 .hero-bg-photo {
   position: absolute;
   inset: 0;
@@ -327,7 +331,7 @@
   background: var(--interior-hero-scrim-bg);
 }
 
-/* Inner-page heroes only — bias crop lower than home (.hero-bg-photo stays center) */
+/* Inner-page heroes only; bias crop lower than home (.hero-bg-photo stays center) */
 .interior-hero-photo {
   position: absolute;
   inset: 0;
@@ -337,7 +341,7 @@
   image-rendering: auto;
 }
 
-/* Same scrim as home hero — about, events list, event detail, host-event */
+/* Same scrim as home hero (about, events list, event detail, host-event) */
 .interior-hero-scrim {
   position: absolute;
   inset: 0;
@@ -362,7 +366,7 @@
     }
   }
 
-  /* Vertical offset for fixed UI (e.g. menu "Back to home") — matches `.pt-page-hero`. */
+  /* Vertical offset for fixed UI (e.g. menu "Back to home"); matches `.pt-page-hero`. */
   .top-under-site-nav {
     top: max(5.25rem, calc(3.65rem + env(safe-area-inset-top, 0px)));
   }

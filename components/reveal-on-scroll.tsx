@@ -13,7 +13,7 @@ type RevealOnScrollProps = {
   className?: string
   /** Stagger siblings with different delays (ms). */
   delay?: number
-  /** Larger root margin — fires when element is farther from viewport bottom. */
+  /** Larger root margin; fires when element is farther from viewport bottom. */
   eager?: boolean
 }
 

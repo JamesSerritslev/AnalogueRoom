@@ -14,7 +14,7 @@ function isPlaceholderStatValue(value: string | undefined): boolean {
   const v = value?.trim() ?? ""
   if (!v) return true
   const lower = v.toLowerCase()
-  return lower === "tbd" || lower === "n/a" || lower === "na" || v === "—"
+  return lower === "tbd" || lower === "n/a" || lower === "na" || v === ""
 }
 
 /** Merge Sanity `pageHostEvent` stat tiles with defaults when fields are empty. */

@@ -39,7 +39,7 @@ export default function VenueMap() {
       .setLngLat(DESTINATION)
       .setPopup(
         new mapboxgl.Popup().setText(
-          "Suite D2 — enter under the 2nd floor overhang"
+          "Suite D2, enter under the 2nd-floor overhang"
         )
       )
       .addTo(mapInstance)

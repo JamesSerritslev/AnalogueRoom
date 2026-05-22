@@ -23,14 +23,14 @@ export const pageHomeType = defineType({
     ),
     defineField({
       name: "heroHeadlineLine1",
-      title: "Headline — line 1",
+      title: "Headline: line 1",
       type: "string",
       group: "hero",
       description: "First line of the hero headline. E.g. \"Curation. Intention.\"",
     }),
     defineField({
       name: "heroHeadlineLine2",
-      title: "Headline — line 2",
+      title: "Headline: line 2",
       type: "string",
       group: "hero",
       description: "Second line of the hero headline. E.g. \"Analogue.\"",
@@ -45,14 +45,14 @@ export const pageHomeType = defineType({
     }),
     defineField({
       name: "heroMetaHours",
-      title: "Meta — hours summary",
+      title: "Meta: hours summary",
       type: "string",
       group: "hero",
       description: "Compact hours shown in the hero footer strip. E.g. \"Thu–Mon · 4pm–10pm\"",
     }),
     defineField({
       name: "heroMetaLocation",
-      title: "Meta — location summary",
+      title: "Meta: location summary",
       type: "string",
       group: "hero",
       description: "Compact address shown in the hero footer strip. E.g. \"1693 Mission Dr, Solvang\"",
@@ -101,7 +101,7 @@ export const pageHomeType = defineType({
     // ── The Space ────────────────────────────────────────────────────────
     imageField(
       "roomSectionImage",
-      "The Space — photo (optional)",
+      "The Space: photo (optional)",
       "Replaces the spinning record graphic. Leave empty to keep the record visual.",
     ),
     defineField({
@@ -153,39 +153,39 @@ export const pageHomeType = defineType({
     }),
     defineField({
       name: "offeringsWinesTitle",
-      title: "Wines card — title",
+      title: "Wines card: title",
       type: "string",
       group: "offerings",
     }),
     defineField({
       name: "offeringsWinesDescription",
-      title: "Wines card — description",
+      title: "Wines card: description",
       type: "text",
       rows: 3,
       group: "offerings",
     }),
     defineField({
       name: "offeringsBeerTitle",
-      title: "Beer card — title",
+      title: "Beer card: title",
       type: "string",
       group: "offerings",
     }),
     defineField({
       name: "offeringsBeerDescription",
-      title: "Beer card — description",
+      title: "Beer card: description",
       type: "text",
       rows: 3,
       group: "offerings",
     }),
     defineField({
       name: "offeringsZeroProofTitle",
-      title: "Zero Proof card — title",
+      title: "Zero Proof card: title",
       type: "string",
       group: "offerings",
     }),
     defineField({
       name: "offeringsZeroProofDescription",
-      title: "Zero Proof card — description",
+      title: "Zero Proof card: description",
       type: "text",
       rows: 3,
       group: "offerings",

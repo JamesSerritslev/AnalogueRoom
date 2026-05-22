@@ -7,7 +7,7 @@ const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION?.trim() || "2024-0
 const studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || "/studio"
 const previewToken = process.env.SANITY_API_READ_TOKEN?.trim() || process.env.SANITY_API_TOKEN?.trim()
 
-/** Only constructed when a project id exists — avoids next-sanity throwing at import time during builds without env. */
+/** Only constructed when a project id exists; avoids next-sanity throwing at import time during builds without env. */
 const client =
   projectId.length > 0
     ? createClient({

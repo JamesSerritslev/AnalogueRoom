@@ -1,4 +1,4 @@
-/** Menu anchors on `/menu#…` — line items load only from Studio `pageMenus`. */
+/** Menu anchors on `/menu#…`; line items load only from Studio `pageMenus`. */
 
 export const MENU_SLUGS = ["wines", "beer", "zero-proof"] as const
 export type MenuSlug = (typeof MENU_SLUGS)[number]

@@ -5,7 +5,6 @@ import {
   DEFAULT_HERO_HEADLINE_LINE1,
   DEFAULT_HERO_HEADLINE_LINE2,
   DEFAULT_HERO_LEAD,
-  DEFAULT_HERO_META_HOURS,
   DEFAULT_HERO_META_LOCATION,
   DEFAULT_INSTAGRAM_HANDLE,
 } from "@/lib/content-defaults"
@@ -24,7 +23,6 @@ export async function HeroSection() {
   const line1 = L.home?.heroHeadlineLine1 || DEFAULT_HERO_HEADLINE_LINE1
   const line2 = L.home?.heroHeadlineLine2 || DEFAULT_HERO_HEADLINE_LINE2
   const lead = heroLead || DEFAULT_HERO_LEAD
-  const metaHours = L.home?.heroMetaHours || DEFAULT_HERO_META_HOURS
   const metaLocation = L.home?.heroMetaLocation || DEFAULT_HERO_META_LOCATION
   const instagramHandle = L.brand?.instagramHandle || DEFAULT_INSTAGRAM_HANDLE
 
@@ -76,7 +74,7 @@ export async function HeroSection() {
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
               Hours
             </p>
-            <p className="font-display text-sm text-cream">{metaHours}</p>
+            <p className="font-display text-sm text-cream">Coming soon</p>
           </div>
           <div className="text-center">
             <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">

@@ -26,7 +26,7 @@ const optionClass =
   "w-full cursor-pointer border-0 bg-transparent px-3 py-2.5 text-left font-body text-[13px] text-cream/90 outline-none hover:bg-orange/15 focus-visible:bg-orange/15 aria-selected:bg-orange/20"
 
 /**
- * Custom listbox for host-event only — avoids Radix Select’s react-remove-scroll
+ * Custom listbox for host-event only; avoids Radix Select’s react-remove-scroll
  * (body margin + overflow lock) which caused layout shift / phantom right margin.
  */
 export function HostSelect({

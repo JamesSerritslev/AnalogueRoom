@@ -15,10 +15,14 @@ import { resolveAllMenus } from "@/lib/menu-resolve"
 
 export const revalidate = 60
 
+/** Set to `false` when menus are ready to publish. */
+const MENU_PAGE_COMING_SOON = true
+
 export const metadata: Metadata = {
   title: "Menu | The Analogue Room",
-  description:
-    "Wine, beer, and zero-proof menus — The Analogue Room, Solvang.",
+  description: MENU_PAGE_COMING_SOON
+    ? "Menu coming soon — wine, beer, and zero‑proof menus from The Analogue Room, Solvang."
+    : "Wine, beer, and zero-proof menus from The Analogue Room, Solvang.",
 }
 
 export default async function MenuPage() {
@@ -43,6 +47,7 @@ export default async function MenuPage() {
           heroEyebrow={heroEyebrow}
           heroTitle={heroTitle}
           heroLead={heroLead}
+          comingSoon={MENU_PAGE_COMING_SOON}
         />
       </main>
       <Footer />

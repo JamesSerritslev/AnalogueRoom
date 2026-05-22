@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
 import { formatHostInquiryPlain } from "@/lib/host-inquiry-plain"
+import { scrollToAnchorById } from "@/lib/anchor-scroll"
+
+const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
 
 const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit"
-const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 
 const EVENT_OPTIONS = [
   { value: "birthday", label: "Birthday Party" },
@@ -52,10 +54,7 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
 
   useEffect(() => {
     if (!submitted) return
-    document.getElementById(INQUIRY_SCROLL_TARGET_ID)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
+    scrollToAnchorById(INQUIRY_SCROLL_TARGET_ID)
   }, [submitted])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -114,7 +113,7 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
       }
 
       if (res.ok && data.success) {
-        // Silently add to Mailchimp — don't block the success screen on failure
+        // Silently add to Mailchimp; don't block the success screen on failure
         fetch("/api/subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

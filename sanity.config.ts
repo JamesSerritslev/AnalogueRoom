@@ -37,7 +37,7 @@ export default defineConfig({
       },
       resolve: {
         locations: {
-          /** Site-wide brand / identity — every page shows it */
+          /** Site-wide brand / identity; every page shows it */
           siteBrand: defineLocations({
             select: {},
             resolve: () => ({
@@ -83,7 +83,7 @@ export default defineConfig({
             }),
           }),
 
-          /** Menus (drinks) — full-page menu */
+          /** Menus (drinks); full-page menu */
           pageMenus: defineLocations({
             select: {},
             resolve: () => ({
@@ -109,7 +109,7 @@ export default defineConfig({
         },
       },
     }),
-    // GROQ playground — uses same apiVersion as `sanity/env.ts` (invalid dates break Fetch)
+    // GROQ playground: uses same apiVersion as `sanity/env.ts` (invalid dates break Fetch)
     visionTool({
       defaultApiVersion: apiVersion,
       defaultDataset: dataset,
