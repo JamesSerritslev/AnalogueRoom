@@ -4,6 +4,11 @@ import { Footer } from "@/components/footer"
 import { MenuBackToHomeFixed } from "@/components/menu/menu-back-to-home-fixed"
 import { MenuFullPageView } from "@/components/menu/menu-full-page-view"
 import { MenuHashScroll } from "@/components/menu/menu-hash-scroll"
+import {
+  DEFAULT_OFFERINGS_BODY,
+  DEFAULT_OFFERINGS_EYEBROW,
+  DEFAULT_OFFERINGS_HEADLINE,
+} from "@/lib/content-defaults"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveAllMenus } from "@/lib/menu-resolve"
@@ -22,6 +27,9 @@ export default async function MenuPage() {
     getLayoutSingletons(),
   ])
   const menus = resolveAllMenus(L.menus)
+  const heroEyebrow = L.home?.offeringsEyebrow ?? DEFAULT_OFFERINGS_EYEBROW
+  const heroTitle = L.home?.offeringsHeadline ?? DEFAULT_OFFERINGS_HEADLINE
+  const heroLead = L.home?.offeringsBody ?? DEFAULT_OFFERINGS_BODY
 
   return (
     <>
@@ -29,7 +37,13 @@ export default async function MenuPage() {
       <MenuBackToHomeFixed />
       <MenuHashScroll />
       <main>
-        <MenuFullPageView menus={menus} heroImageUrl={innerPageHeroUrl} />
+        <MenuFullPageView
+          menus={menus}
+          heroImageUrl={innerPageHeroUrl}
+          heroEyebrow={heroEyebrow}
+          heroTitle={heroTitle}
+          heroLead={heroLead}
+        />
       </main>
       <Footer />
     </>
