@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react"
 import mapboxgl from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
+import { VENUE_LNG_LAT } from "@/lib/venue-location"
 
-// Nudged south 0.0001° lat (~11 m); use smaller steps by changing this delta.
-const DESTINATION: [number, number] = [-120.138116 + 0.000005, 34.59649 - 0.0002]
+const DESTINATION = VENUE_LNG_LAT
 
 function whenStyleReady(map: mapboxgl.Map, fn: () => void) {
   if (map.isStyleLoaded()) fn()
