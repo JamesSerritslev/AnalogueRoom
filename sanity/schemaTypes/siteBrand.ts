@@ -6,11 +6,10 @@ export const siteBrandType = defineType({
   name: "siteBrand",
   title: "Site · Brand",
   type: "document",
-  description: "Logo, hero photo, tagline, address, social links. Copyright and hero location line are fixed in code.",
+  description: "Logo, hero photo, and tagline. Address, social links, and copyright are fixed in code.",
   groups: [
     { name: "assets", title: "Visual Assets" },
     { name: "identity", title: "Identity & Copy" },
-    { name: "contact", title: "Address & Social" },
   ],
   fields: [
     imageField(
@@ -30,44 +29,10 @@ export const siteBrandType = defineType({
       group: "identity",
       description: "Short brand line shown in the footer centre. E.g. \"Curation. Intention. Analogue.\"",
     }),
-    defineField({
-      name: "address",
-      title: "Address",
-      type: "text",
-      rows: 3,
-      group: "contact",
-      description: "Venue address shown in the footer and Visit section. Use line breaks for multi-line.",
-    }),
-    defineField({
-      name: "instagramHandle",
-      title: "Instagram handle",
-      type: "string",
-      group: "contact",
-      description: "Display handle, e.g. @analogueroomsyv",
-    }),
-    defineField({
-      name: "instagramUrl",
-      title: "Instagram URL",
-      type: "url",
-      group: "contact",
-    }),
-    defineField({
-      name: "sisterPropertyName",
-      title: "Sister property name",
-      type: "string",
-      group: "contact",
-      description: "E.g. \"Standing Sun Wines\"",
-    }),
-    defineField({
-      name: "sisterPropertyUrl",
-      title: "Sister property URL",
-      type: "url",
-      group: "contact",
-    }),
   ],
   preview: {
     prepare() {
-      return { title: "Site · Brand", subtitle: "Logo · Identity · Contact" }
+      return { title: "Site · Brand", subtitle: "Logo · Identity" }
     },
   },
 })

@@ -7,11 +7,13 @@ import {
   DEFAULT_HERO_LEAD,
   DEFAULT_HERO_META_LOCATION,
   DEFAULT_INSTAGRAM_HANDLE,
+  DEFAULT_INSTAGRAM_URL,
 } from "@/lib/content-defaults"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
+import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
 
 export async function HeroSection() {
   const [{ homeHeroUrl, siteLogoUrl, heroLead }, L] = await Promise.all([
@@ -20,11 +22,18 @@ export async function HeroSection() {
   ])
 
   const eyebrow = DEFAULT_HERO_EYEBROW
-  const line1 = L.home?.heroHeadlineLine1 || DEFAULT_HERO_HEADLINE_LINE1
-  const line2 = L.home?.heroHeadlineLine2 || DEFAULT_HERO_HEADLINE_LINE2
+  const line1 = DEFAULT_HERO_HEADLINE_LINE1
+  const line2 = DEFAULT_HERO_HEADLINE_LINE2
   const lead = heroLead || DEFAULT_HERO_LEAD
   const metaLocation = L.home?.heroMetaLocation || DEFAULT_HERO_META_LOCATION
-  const instagramHandle = L.brand?.instagramHandle || DEFAULT_INSTAGRAM_HANDLE
+  const instagramHandle = DEFAULT_INSTAGRAM_HANDLE
+
+  const metaLabelClass =
+    "font-label text-[9px] tracking-[0.4em] uppercase text-orange"
+  const metaValueClass =
+    "font-display text-sm leading-5 text-cream"
+  const metaLinkClass =
+    "font-display inline-flex items-center justify-center text-sm leading-5 text-cream transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-28 text-center">
@@ -69,24 +78,32 @@ export async function HeroSection() {
         </p>
 
         {/* Meta info */}
-        <div className="hero-intro hero-intro-d6 mt-8 flex flex-wrap justify-center gap-x-8 gap-y-6 border-t border-cream/20 pt-8 sm:gap-x-10 sm:gap-y-7 md:gap-x-12">
-          <div className="text-center">
-            <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
-              Hours
-            </p>
-            <p className="font-display text-sm text-cream">Coming soon</p>
+        <div className="hero-intro hero-intro-d6 mt-8 grid grid-cols-3 items-start gap-x-4 border-t border-cream/20 pt-8 sm:gap-x-10 md:gap-x-12">
+          <div className="flex min-w-0 flex-col items-center text-center">
+            <p className={`${metaLabelClass} min-h-[14px]`}>Hours</p>
+            <p className={`${metaValueClass} mt-1.5`}>Coming soon</p>
           </div>
-          <div className="text-center">
-            <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
-              Location
-            </p>
-            <p className="font-display text-sm text-cream">{metaLocation}</p>
+          <div className="flex min-w-0 flex-col items-center text-center">
+            <p className={`${metaLabelClass} min-h-[14px]`}>Location</p>
+            <a
+              href={VENUE_APPLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${metaLinkClass} mt-1.5 text-center`}
+            >
+              {metaLocation}
+            </a>
           </div>
-          <div className="text-center">
-            <p className="font-label mb-1.5 text-[9px] tracking-[0.4em] uppercase text-orange">
-              Follow
-            </p>
-            <p className="font-display text-sm text-cream">{instagramHandle}</p>
+          <div className="flex min-w-0 flex-col items-center text-center">
+            <p className={`${metaLabelClass} min-h-[14px]`}>Follow</p>
+            <a
+              href={DEFAULT_INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${metaLinkClass} mt-1.5`}
+            >
+              {instagramHandle}
+            </a>
           </div>
         </div>
       </div>

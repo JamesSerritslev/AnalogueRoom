@@ -5,17 +5,8 @@ export const pageAboutType = defineType({
   name: "pageAbout",
   title: "Page · About",
   type: "document",
-  description: "Story copy and team list. Headlines stay in the site design.",
+  description: "Team roster and intro. Story copy and headlines stay in the site design.",
   fields: [
-    defineField({
-      name: "storyParagraphs",
-      title: "Story paragraphs",
-      type: "array",
-      description:
-        "In order: first entries appear before the quote, the rest after (split after 3rd line if you have 5+).",
-      of: [{ type: "string" }],
-      validation: (Rule) => Rule.min(1).max(8),
-    }),
     defineField({
       name: "teamIntro",
       title: "Team section intro (optional)",
@@ -67,7 +58,7 @@ export const pageAboutType = defineType({
   ],
   preview: {
     prepare() {
-      return { title: "Page · About", subtitle: "Story · Team" }
+      return { title: "Page · About", subtitle: "Team" }
     },
   },
 })

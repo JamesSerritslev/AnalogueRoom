@@ -18,11 +18,6 @@ export interface SiteBrandDoc {
   logo?: SanityImageField
   innerHero?: SanityImageField
   tagline?: string
-  address?: string
-  instagramHandle?: string
-  instagramUrl?: string
-  sisterPropertyName?: string
-  sisterPropertyUrl?: string
 }
 
 export interface PillarItem {
@@ -38,8 +33,6 @@ export interface HoursRow {
 
 export interface PageHomeDoc {
   heroBackground?: SanityImageField
-  heroHeadlineLine1?: string
-  heroHeadlineLine2?: string
   heroLead?: string
   heroMetaHours?: string
   heroMetaLocation?: string
@@ -74,7 +67,6 @@ export interface AboutTeamMember {
 }
 
 export interface PageAboutDoc {
-  storyParagraphs?: string[]
   teamIntro?: string
   teamMembers?: AboutTeamMember[]
 }

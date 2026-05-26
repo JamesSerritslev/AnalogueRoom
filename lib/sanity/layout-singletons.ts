@@ -6,17 +6,10 @@ const LAYOUT_QUERY = `{
   "brand": *[_id == "siteBrand"][0]{
     logo,
     innerHero,
-    tagline,
-    address,
-    instagramHandle,
-    instagramUrl,
-    sisterPropertyName,
-    sisterPropertyUrl
+    tagline
   },
   "home": *[_id == "pageHome"][0]{
     heroBackground,
-    heroHeadlineLine1,
-    heroHeadlineLine2,
     heroLead,
     heroMetaHours,
     heroMetaLocation,
@@ -42,7 +35,7 @@ const LAYOUT_QUERY = `{
     visitBody,
     hours[]{ day, time, closed }
   },
-  "about": *[_id == "pageAbout"][0]{ storyParagraphs, teamIntro, teamMembers[]{ name, role, photo, bio } },
+  "about": *[_id == "pageAbout"][0]{ teamIntro, teamMembers[]{ name, role, photo, bio } },
   "eventsIndex": *[_id == "pageEventsIndex"][0]{ introBody },
   "host": *[_id == "pageHostEvent"][0]{
     introBlurb,

@@ -75,7 +75,7 @@ function menuCategoriesField(name: string, title: string) {
 
 export const pageMenusType = defineType({
   name: "pageMenus",
-  title: "Menus",
+  title: "Menu Manager",
   type: "document",
   description:
     "Wine, beer, and zero-proof lists. Each menu uses categories; each item has a title, description, and price.",
@@ -86,7 +86,7 @@ export const pageMenusType = defineType({
   ],
   preview: {
     prepare() {
-      return { title: "Menus", subtitle: "Wine · Beer · Zero proof" }
+      return { title: "Menu Manager", subtitle: "Wine · Beer · Zero proof" }
     },
   },
 })

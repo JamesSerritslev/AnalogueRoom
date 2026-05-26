@@ -6,7 +6,7 @@ export const pageHomeType = defineType({
   title: "Page · Home",
   type: "document",
   description:
-    "Text and images on the home page. The small line above the hero logo (location / est. year) is set in code, not here.",
+    "Text and images on the home page. Hero headline, location line, and eyebrow are set in code, not here.",
   groups: [
     { name: "hero", title: "Hero" },
     { name: "pillars", title: "Pillars" },
@@ -21,20 +21,6 @@ export const pageHomeType = defineType({
       "Hero background photo",
       "Full-bleed image behind the home hero. Empty = built-in default.",
     ),
-    defineField({
-      name: "heroHeadlineLine1",
-      title: "Headline: line 1",
-      type: "string",
-      group: "hero",
-      description: "First line of the hero headline. E.g. \"Curation. Intention.\"",
-    }),
-    defineField({
-      name: "heroHeadlineLine2",
-      title: "Headline: line 2",
-      type: "string",
-      group: "hero",
-      description: "Second line of the hero headline. E.g. \"Analogue.\"",
-    }),
     defineField({
       name: "heroLead",
       title: "Hero lead paragraph",
