@@ -34,17 +34,8 @@ const IDS = {
 
 // ── Site Brand ───────────────────────────────────────────────────────────────
 const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
-const DEFAULT_COPYRIGHT_LINE = "© 2026 The Analogue Room · Solvang, California"
-const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
-const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
-const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
-const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
-const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ───────────────────────────────────────────────────────────────
-const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
-const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
-const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 const DEFAULT_HERO_LEAD =
   "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
@@ -117,14 +108,6 @@ const DEFAULT_HOURS = [
 ]
 
 // ── About ─────────────────────────────────────────────────────────────────────
-const STORY_PARAS = [
-  "Analogue Room is a small, intimate listening bar where wine, music, and conversation come together.",
-  "Built around a deep love for vinyl, the space invites guests to slow down, share a bottle, and listen the way music was meant to be heard.",
-  "The program features a thoughtful selection of wines alongside a rotating vinyl collection curated by the house and guest selectors.",
-  "Evenings often unfold through records played from start to finish, creating a warm and immersive atmosphere that feels both nostalgic and alive.",
-  "Part listening room, part wine bar, Analogue Room is a place for people who appreciate craftsmanship, culture, and the simple pleasure of gathering around great music and great wine.",
-]
-
 /** Names/roles only (no assets). Used only when `pageAbout` has no team rows yet; headshots live in Studio. */
 const DEFAULT_ABOUT_TEAM_INTRO =
   "A small team with a clear vision: to build a room that feels like home."
@@ -424,11 +407,6 @@ async function main() {
       logo: logoImg,
       innerHero: interiorImg,
       tagline: DEFAULT_TAGLINE,
-      address: DEFAULT_ADDRESS,
-      instagramHandle: DEFAULT_INSTAGRAM_HANDLE,
-      instagramUrl: DEFAULT_INSTAGRAM_URL,
-      sisterPropertyName: DEFAULT_SISTER_PROPERTY_NAME,
-      sisterPropertyUrl: DEFAULT_SISTER_PROPERTY_URL,
     }),
   )
 
@@ -448,8 +426,6 @@ async function main() {
       _type: "pageHome",
       // Hero
       heroBackground: interiorImg,
-      heroHeadlineLine1: DEFAULT_HERO_HEADLINE_LINE1,
-      heroHeadlineLine2: DEFAULT_HERO_HEADLINE_LINE2,
       heroLead: DEFAULT_HERO_LEAD,
       heroMetaHours: DEFAULT_HERO_META_HOURS,
       heroMetaLocation: DEFAULT_HERO_META_LOCATION,
@@ -506,7 +482,6 @@ async function main() {
     client.createOrReplace({
       _id: IDS.pageAbout,
       _type: "pageAbout",
-      storyParagraphs: STORY_PARAS,
       teamIntro: aboutTeamIntro,
       teamMembers: aboutTeamMembers,
     }),

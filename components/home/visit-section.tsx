@@ -7,16 +7,14 @@ import {
   DEFAULT_SISTER_PROPERTY_URL,
 } from "@/lib/content-defaults"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
+import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
 
 export async function VisitSection() {
-  const L = await getLayoutSingletons()
-
-  const address = L.brand?.address || DEFAULT_ADDRESS
-  const instagramHandle = L.brand?.instagramHandle || DEFAULT_INSTAGRAM_HANDLE
-  const instagramUrl = L.brand?.instagramUrl || DEFAULT_INSTAGRAM_URL
-  const sisterPropertyName = L.brand?.sisterPropertyName || DEFAULT_SISTER_PROPERTY_NAME
-  const sisterPropertyUrl = L.brand?.sisterPropertyUrl || DEFAULT_SISTER_PROPERTY_URL
+  const address = DEFAULT_ADDRESS
+  const instagramHandle = DEFAULT_INSTAGRAM_HANDLE
+  const instagramUrl = DEFAULT_INSTAGRAM_URL
+  const sisterPropertyName = DEFAULT_SISTER_PROPERTY_NAME
+  const sisterPropertyUrl = DEFAULT_SISTER_PROPERTY_URL
 
   const addressLines = address.split("\n").filter(Boolean)
 
@@ -60,14 +58,19 @@ export async function VisitSection() {
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
               Address
             </p>
-            <p className="font-display text-base text-cream leading-normal">
+            <a
+              href={VENUE_APPLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-display inline-block text-base text-cream leading-normal transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+            >
               {addressLines.map((line, idx) => (
                 <span key={idx}>
                   {line}
                   {idx < addressLines.length - 1 && <br />}
                 </span>
               ))}
-            </p>
+            </a>
           </div>
 
           <div className="mb-7">

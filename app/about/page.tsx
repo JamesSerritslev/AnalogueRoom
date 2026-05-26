@@ -24,10 +24,7 @@ export default async function AboutPage() {
     getLayoutSingletons(),
   ])
 
-  const storyParagraphs =
-    L.about?.storyParagraphs?.filter((p) => p?.trim())?.length ?? 0
-      ? (L.about!.storyParagraphs!.filter((p) => p?.trim()) as string[])
-      : [...DEFAULT_ABOUT_STORY_PARAGRAPHS]
+  const storyParagraphs = [...DEFAULT_ABOUT_STORY_PARAGRAPHS]
 
   const splitIdx = storyParagraphs.length >= 5 ? 3 : storyParagraphs.length
   const storyBeforeQuote = storyParagraphs.slice(0, splitIdx)
