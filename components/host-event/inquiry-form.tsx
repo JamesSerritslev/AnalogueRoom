@@ -2,13 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
-import { formatHostInquiryPlain } from "@/lib/host-inquiry-plain"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
-
-const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
 
-const WEB3FORMS_SUBMIT_URL = "https://api.web3forms.com/submit"
+const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 
 const EVENT_OPTIONS = [
   { value: "birthday", label: "Birthday Party" },
@@ -34,12 +31,7 @@ const TIME_OPTIONS = [
   { value: "flexible", label: "Flexible" },
 ] as const
 
-export type InquiryFormProps = {
-  /** `WEB3FORMS_ACCESS_KEY` from the server environment (see `.env.example`). */
-  web3formsAccessKey: string
-}
-
-export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
+export function InquiryForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [eventType, setEventType] = useState("")
@@ -63,21 +55,13 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
       setFormError("Please select an event type and guest count.")
       return
     }
-    if (!web3formsAccessKey.trim()) {
-      setFormError("Inquiry delivery is not configured.")
-      return
-    }
     setFormError("")
 
     const form = e.currentTarget
     const fd = new FormData(form)
-    const first = String(fd.get("firstName") ?? "").trim()
-    const last = String(fd.get("lastName") ?? "").trim()
-    const subjectText = `New AR Event Inquiry from ${first} ${last}`.trim()
-
     const inquiryFields = {
-      firstName: first,
-      lastName: last,
+      firstName: String(fd.get("firstName") ?? "").trim(),
+      lastName: String(fd.get("lastName") ?? "").trim(),
       email: String(fd.get("email") ?? "").trim(),
       phone: String(fd.get("phone") ?? "").trim(),
       eventType,
@@ -87,58 +71,58 @@ export function InquiryForm({ web3formsAccessKey }: InquiryFormProps) {
       message: String(fd.get("message") ?? "").trim(),
     }
 
-    const payload = new FormData()
-    payload.append("access_key", web3formsAccessKey)
-    payload.append("subject", subjectText)
-    payload.append("from_name", "The Analogue Room")
-    payload.append("email", inquiryFields.email)
-    payload.append("message", formatHostInquiryPlain(inquiryFields))
-
     const loc = await resolveLocation()
 
     setIsSubmitting(true)
 
     try {
-      const res = await fetch(WEB3FORMS_SUBMIT_URL, {
+      const res = await fetch("/api/host-inquiry", {
         method: "POST",
-        body: payload,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(inquiryFields),
       })
-      let data: { success?: boolean; message?: string }
-      try {
-        data = (await res.json()) as { success?: boolean; message?: string }
-      } catch {
-        setFormError("Something went wrong. Please try again.")
+      const data = (await res.json()) as {
+        error?: string
+        missingEnv?: string[]
+        hint?: string
+        resendError?: { message?: string; name?: string; to?: string }
+      }
+
+      if (!res.ok) {
+        let msg = data.error || "Something went wrong. Please try again."
+        if (process.env.NODE_ENV === "development") {
+          if (Array.isArray(data.missingEnv) && data.missingEnv.length > 0) {
+            msg += ` Missing env: ${data.missingEnv.join(", ")}.`
+            if (data.hint) msg += ` ${data.hint}`
+          }
+          if (data.resendError?.message) {
+            msg += ` (${data.resendError.to ? `${data.resendError.to}: ` : ""}${data.resendError.message})`
+          }
+        }
+        setFormError(msg)
         setIsSubmitting(false)
         return
       }
 
-      if (res.ok && data.success) {
-        // Silently add to Mailchimp; don't block the success screen on failure
-        fetch("/api/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: inquiryFields.email,
-            firstName: inquiryFields.firstName,
-            lastName: inquiryFields.lastName,
-            ...(inquiryFields.phone ? { phone: inquiryFields.phone } : {}),
-            ...(loc.status === "granted" ? {
-              city: loc.city,
-              state: loc.state,
-              zip: loc.zip,
-              lat: loc.lat,
-              lng: loc.lng,
-            } : {}),
-          }),
-        }).catch(() => {/* silent */})
-        setSubmitted(true)
-      } else {
-        setFormError(
-          typeof data.message === "string" && data.message
-            ? data.message
-            : "Something went wrong. Please try again.",
-        )
-      }
+      // Silently add to Mailchimp; don't block the success screen on failure
+      fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: inquiryFields.email,
+          firstName: inquiryFields.firstName,
+          lastName: inquiryFields.lastName,
+          ...(inquiryFields.phone ? { phone: inquiryFields.phone } : {}),
+          ...(loc.status === "granted" ? {
+            city: loc.city,
+            state: loc.state,
+            zip: loc.zip,
+            lat: loc.lat,
+            lng: loc.lng,
+          } : {}),
+        }),
+      }).catch(() => {/* silent */})
+      setSubmitted(true)
     } catch {
       setFormError("Network error. Please check your connection and try again.")
     }

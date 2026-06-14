@@ -210,7 +210,7 @@ export default async function HostEventPage() {
                 Tell us about your event and we&apos;ll be in touch within 48 hours.
               </p>
             </div>
-            <InquiryForm web3formsAccessKey={process.env.WEB3FORMS_ACCESS_KEY ?? ""} />
+            <InquiryForm />
           </div>
         </section>
       </main>
