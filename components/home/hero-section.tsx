@@ -37,11 +37,18 @@ export async function HeroSection() {
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-28 text-center">
-      <div
-        className="hero-bg-photo hero-bg-drift-pulse"
-        style={{ backgroundImage: `url(${homeHeroUrl})` }}
-        aria-hidden
-      />
+      <div className="hero-bg-photo hero-bg-drift-pulse" aria-hidden>
+        <Image
+          src={homeHeroUrl}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          className="object-cover"
+          quality={85}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative z-2 mx-auto w-full max-w-[880px]">
@@ -54,8 +61,8 @@ export async function HeroSection() {
           alt="The Analogue Room"
           width={260}
           height={260}
+          sizes="(max-width: 640px) 55vw, 260px"
           className="hero-intro hero-intro-d2 mx-auto mb-10 w-[min(260px,55vw)] aspect-square object-contain drop-shadow-xl"
-          priority
           quality={90}
         />
 

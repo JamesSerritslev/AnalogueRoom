@@ -12,6 +12,6 @@ export function sanityImageUrl(
   width?: number
 ): string | undefined {
   if (!builder || !source) return undefined
-  const chain = builder.image(source).fit("max")
+  const chain = builder.image(source).fit("max").format("webp")
   return typeof width === "number" ? chain.width(width).url() : chain.url()
 }

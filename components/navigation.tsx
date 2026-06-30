@@ -111,7 +111,6 @@ export function Navigation({
               width={60}
               height={60}
               className="h-11 w-11 object-contain sm:h-12 sm:w-12 lg:h-[60px] lg:w-[60px]"
-              priority
             />
           </Link>
           {showComingSoonLabel ? (

@@ -9,7 +9,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   return (
     <div
       key={pathname}
-      className="relative z-[1] min-h-dvh min-w-0 w-full max-w-full overflow-x-hidden animate-page-enter"
+      className="relative z-[1] min-h-dvh min-w-0 w-full max-w-full overflow-x-hidden"
     >
       {children}
     </div>

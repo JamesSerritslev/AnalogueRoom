@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { NewsletterSignupForm } from "@/components/newsletter-signup-form"
+import { NewsletterSignupLazy } from "@/components/newsletter-signup-lazy"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import {
@@ -121,7 +121,7 @@ export async function Footer() {
         id="newsletter"
         className={`${footerCenterColumn} mb-12 scroll-mt-[9.5rem] border-t border-cream/10 pt-10 md:scroll-mt-[10.5rem]`}
       >
-        <NewsletterSignupForm />
+        <NewsletterSignupLazy />
       </div>
 
       <RevealOnScroll eager className="mx-auto max-w-[1200px]">
