@@ -20,13 +20,13 @@ type ResolvedSiteImagery = {
 
 function resolveFromLayout(L: Awaited<ReturnType<typeof getLayoutSingletons>>): ResolvedSiteImagery {
   const homeHeroUrl =
-    sanityImageUrl(L.home?.heroBackground, 2400) ?? DEFAULT_INTERIOR_HERO
+    sanityImageUrl(L.home?.heroBackground, 1920) ?? DEFAULT_INTERIOR_HERO
   const innerPageHeroUrl =
-    sanityImageUrl(L.brand?.innerHero, 2400) ?? homeHeroUrl
+    sanityImageUrl(L.brand?.innerHero, 1920) ?? homeHeroUrl
   const siteLogoUrl = sanityImageUrl(L.brand?.logo, 520) ?? DEFAULT_SITE_LOGO
   const roomTheSpaceUrl = sanityImageUrl(L.home?.roomSectionImage, 1200) ?? null
   const offeringsSectionBgUrl =
-    sanityImageUrl(L.home?.offeringsBackground, 2400) ?? DEFAULT_OFFERINGS_SECTION_BG
+    sanityImageUrl(L.home?.offeringsBackground, 1600) ?? DEFAULT_OFFERINGS_SECTION_BG
   const heroLead = L.home?.heroLead || null
   return {
     homeHeroUrl,

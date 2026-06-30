@@ -38,10 +38,10 @@ html {
       transparent 70%
     );
 
-  /* Web fonts (--font-display / --font-label / --font-body) load via link in app/layout.tsx; stacks work offline during build */
-  --font-display: 'Special Elite', Georgia, 'Times New Roman', serif;
-  --font-label: 'Oswald', Arial, Helvetica, sans-serif;
-  --font-body: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Fonts via next/font (see lib/fonts.ts) */
+  --font-display: var(--font-special-elite), Georgia, 'Times New Roman', serif;
+  --font-label: var(--font-oswald), Arial, Helvetica, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
   /* shadcn compatibility tokens */
   --background: var(--cream);
@@ -67,9 +67,9 @@ html {
 }
 
 @theme inline {
-  --font-display: 'Special Elite', Georgia, serif;
-  --font-label: 'Oswald', Arial, sans-serif;
-  --font-body: Inter, system-ui, sans-serif;
+  --font-display: var(--font-special-elite), Georgia, serif;
+  --font-label: var(--font-oswald), Arial, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
   
   --color-cream: var(--cream);
   --color-parched: var(--parched);
@@ -214,17 +214,15 @@ html {
 /* ── Home hero: staggered intro + slow background drift ───────────────── */
 @keyframes hero-fade-up {
   from {
-    opacity: 0;
-    transform: translateY(1.15rem);
+    transform: translateY(0.75rem);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 
 .hero-intro {
-  opacity: 0;
+  opacity: 1;
   animation: hero-fade-up 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
@@ -255,22 +253,6 @@ html {
   transform-origin: center 25%;
 }
 
-/* Route transition (opacity ONLY). Do not use translate/transform here:
-   transforms on this ancestor capture `position: fixed` descendants (nav, menu
-   “Back to home”), so they would scroll away with the page instead of the viewport. */
-@keyframes page-enter {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-page-enter {
-  animation: page-enter 0.38s ease-out both;
-}
-
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .reveal-scope,
@@ -290,10 +272,6 @@ html {
   .interior-hero-photo.interior-hero-drift {
     animation: none !important;
     transform: none !important;
-  }
-
-  .animate-page-enter {
-    animation: none !important;
   }
 }
 
