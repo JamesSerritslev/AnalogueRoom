@@ -9,7 +9,7 @@ import {
   DEFAULT_OFFERINGS_EYEBROW,
   DEFAULT_OFFERINGS_HEADLINE,
 } from "@/lib/content-defaults"
-import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveAllMenus } from "@/lib/menu-resolve"
 
@@ -26,10 +26,11 @@ export const metadata: Metadata = {
 }
 
 export default async function MenuPage() {
-  const [{ innerPageHeroUrl }, L] = await Promise.all([
+  const [{ homeHeroUrl }, L] = await Promise.all([
     getSiteImagery(),
     getLayoutSingletons(),
   ])
+  const pageHeroUrl = resolvePageHeroUrl(L.menus?.heroBackground, homeHeroUrl)
   const menus = resolveAllMenus(L.menus)
   const heroEyebrow = L.home?.offeringsEyebrow ?? DEFAULT_OFFERINGS_EYEBROW
   const heroTitle = L.home?.offeringsHeadline ?? DEFAULT_OFFERINGS_HEADLINE
@@ -43,7 +44,7 @@ export default async function MenuPage() {
       <main>
         <MenuFullPageView
           menus={menus}
-          heroImageUrl={innerPageHeroUrl}
+          heroImageUrl={pageHeroUrl}
           heroEyebrow={heroEyebrow}
           heroTitle={heroTitle}
           heroLead={heroLead}

@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity"
+import { imageField } from "./_imageField"
 
 export const eventType = defineType({
   name: "event",
@@ -75,7 +76,13 @@ export const eventType = defineType({
       options: {
         hotspot: true,
       },
+      description: "Photo shown in listings and on the event detail page body.",
     }),
+    imageField(
+      "heroBackground",
+      "Hero background",
+      "Full-bleed strip at the top of this event’s detail page. Empty = Events page hero, then Home hero.",
+    ),
     defineField({
       name: "ticketUrl",
       title: "Ticket URL",

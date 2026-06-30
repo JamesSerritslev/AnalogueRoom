@@ -405,7 +405,6 @@ async function main() {
       _id: IDS.siteBrand,
       _type: "siteBrand",
       logo: logoImg,
-      innerHero: interiorImg,
       tagline: DEFAULT_TAGLINE,
     }),
   )
@@ -417,6 +416,7 @@ async function main() {
       wines: SEED_MENU_WINES,
       beer: SEED_MENU_BEER,
       zeroProof: SEED_MENU_ZERO,
+      ...(menuBgImg ? { heroBackground: menuBgImg } : { heroBackground: interiorImg }),
     }),
   )
 
@@ -482,6 +482,7 @@ async function main() {
     client.createOrReplace({
       _id: IDS.pageAbout,
       _type: "pageAbout",
+      heroBackground: interiorImg,
       teamIntro: aboutTeamIntro,
       teamMembers: aboutTeamMembers,
     }),
@@ -491,6 +492,7 @@ async function main() {
     client.createOrReplace({
     _id: IDS.pageEventsIndex,
     _type: "pageEventsIndex",
+    heroBackground: interiorImg,
     introBody: DEFAULT_EVENTS_INTRO,
     }),
   )
@@ -499,6 +501,7 @@ async function main() {
     client.createOrReplace({
     _id: IDS.pageHostEvent,
     _type: "pageHostEvent",
+    heroBackground: interiorImg,
     introBlurb: DEFAULT_HOST_INTRO,
     standing: { value: "60" },
     seated: { value: "40" },

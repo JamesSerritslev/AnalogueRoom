@@ -5,7 +5,6 @@ import type { LayoutSingletons } from "@/lib/sanity/types"
 const LAYOUT_QUERY = `{
   "brand": *[_id == "siteBrand"][0]{
     logo,
-    innerHero,
     tagline
   },
   "home": *[_id == "pageHome"][0]{
@@ -35,9 +34,10 @@ const LAYOUT_QUERY = `{
     visitBody,
     hours[]{ day, time, closed }
   },
-  "about": *[_id == "pageAbout"][0]{ teamIntro, teamMembers[]{ name, role, photo, bio } },
-  "eventsIndex": *[_id == "pageEventsIndex"][0]{ introBody },
+  "about": *[_id == "pageAbout"][0]{ heroBackground, teamIntro, teamMembers[]{ name, role, photo, bio } },
+  "eventsIndex": *[_id == "pageEventsIndex"][0]{ heroBackground, introBody },
   "host": *[_id == "pageHostEvent"][0]{
+    heroBackground,
     introBlurb,
     standing { value },
     seated { value },
@@ -45,6 +45,7 @@ const LAYOUT_QUERY = `{
     minBooking { value }
   },
   "menus": *[_id == "pageMenus"][0]{
+    heroBackground,
     wines[]{ title, items[]{ title, description, price, name, note } },
     beer[]{ title, items[]{ title, description, price, name, note } },
     zeroProof[]{ title, items[]{ title, description, price, name, note } }

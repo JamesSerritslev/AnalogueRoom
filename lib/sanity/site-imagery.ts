@@ -1,6 +1,7 @@
 import { cache } from "react"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
+import type { SanityImageField } from "@/lib/sanity/types"
 
 /** Fallback assets when Studio fields are empty */
 const DEFAULT_INTERIOR_HERO = "/images/interior.jpeg"
@@ -9,7 +10,6 @@ const DEFAULT_OFFERINGS_SECTION_BG = "/images/on-the-menu.png"
 
 type ResolvedSiteImagery = {
   homeHeroUrl: string
-  innerPageHeroUrl: string
   siteLogoUrl: string
   roomTheSpaceUrl: string | null
   /** “What’s On the Menu” section background */
@@ -21,8 +21,6 @@ type ResolvedSiteImagery = {
 function resolveFromLayout(L: Awaited<ReturnType<typeof getLayoutSingletons>>): ResolvedSiteImagery {
   const homeHeroUrl =
     sanityImageUrl(L.home?.heroBackground, 1920) ?? DEFAULT_INTERIOR_HERO
-  const innerPageHeroUrl =
-    sanityImageUrl(L.brand?.innerHero, 1920) ?? homeHeroUrl
   const siteLogoUrl = sanityImageUrl(L.brand?.logo, 520) ?? DEFAULT_SITE_LOGO
   const roomTheSpaceUrl = sanityImageUrl(L.home?.roomSectionImage, 1200) ?? null
   const offeringsSectionBgUrl =
@@ -30,12 +28,28 @@ function resolveFromLayout(L: Awaited<ReturnType<typeof getLayoutSingletons>>): 
   const heroLead = L.home?.heroLead || null
   return {
     homeHeroUrl,
-    innerPageHeroUrl,
     siteLogoUrl,
     roomTheSpaceUrl,
     offeringsSectionBgUrl,
     heroLead,
   }
+}
+
+/**
+ * Resolve a page-specific hero background URL.
+ * Uses the page image when set, otherwise falls back through `fallbacks` then `homeHeroUrl`.
+ */
+export function resolvePageHeroUrl(
+  pageHero: SanityImageField | undefined,
+  homeHeroUrl: string,
+  ...fallbacks: Array<SanityImageField | undefined>
+): string {
+  const candidates = [pageHero, ...fallbacks]
+  for (const source of candidates) {
+    const url = sanityImageUrl(source, 1920)
+    if (url) return url
+  }
+  return homeHeroUrl
 }
 
 /**

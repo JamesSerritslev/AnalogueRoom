@@ -17,11 +17,6 @@ export const siteBrandType = defineType({
       "Logo",
       "Nav, footer, and home hero. Square PNG or JPG works best.",
     ),
-    imageField(
-      "innerHero",
-      "Inner pages hero background",
-      "Full-bleed strip on About, Events list, each Event page, and Host Your Event. Empty = falls back to Home hero image.",
-    ),
     defineField({
       name: "tagline",
       title: "Tagline",
