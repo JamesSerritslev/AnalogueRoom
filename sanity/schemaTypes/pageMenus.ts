@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity"
+import { imageField } from "./_imageField"
 
 /** Reusable line on a menu (used inside categories). */
 export const menuItemType = defineType({
@@ -83,6 +84,11 @@ export const pageMenusType = defineType({
     menuCategoriesField("wines", "Wines: categories"),
     menuCategoriesField("beer", "Beer: categories"),
     menuCategoriesField("zeroProof", "Zero proof: categories"),
+    imageField(
+      "heroBackground",
+      "Hero background",
+      "Full-bleed strip at the top of the Menu page. Empty = falls back to the Home hero image.",
+    ),
   ],
   preview: {
     prepare() {

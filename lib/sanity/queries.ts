@@ -55,6 +55,7 @@ export async function getEvents(): Promise<Event[]> {
         description,
         longDescription,
         image,
+        heroBackground,
         ticketUrl,
         featured
       }`,
@@ -85,6 +86,7 @@ export const getEventBySlug = cache(async function getEventBySlug(slug: string):
         description,
         longDescription,
         image,
+        heroBackground,
         ticketUrl,
         featured
       }`,

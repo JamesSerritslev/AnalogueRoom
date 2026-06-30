@@ -7,6 +7,11 @@ export const pageAboutType = defineType({
   type: "document",
   description: "Team roster and intro. Story copy and headlines stay in the site design.",
   fields: [
+    imageField(
+      "heroBackground",
+      "Hero background",
+      "Full-bleed strip at the top of the About page. Empty = falls back to the Home hero image.",
+    ),
     defineField({
       name: "teamIntro",
       title: "Team section intro (optional)",

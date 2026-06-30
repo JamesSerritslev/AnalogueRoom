@@ -7,7 +7,8 @@ import { SiteNavigation } from "@/components/site-navigation"
 import { EventBody } from "@/components/events/event-body"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import { getEventBySlug } from "@/lib/sanity/queries"
-import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
+import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
 import { parseCalendarDate } from "@/lib/utils"
 
 export const revalidate = 60
@@ -38,7 +39,12 @@ export default async function EventDetailPage({ params }: PageProps) {
   const cal = event.date ? parseCalendarDate(event.date) : null
   const dateLine = cal ? cal.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" }) : "Date TBD"
   const imageUrl = sanityImageUrl(event.image, 1400)
-  const { innerPageHeroUrl } = await getSiteImagery()
+  const [{ homeHeroUrl }, L] = await Promise.all([getSiteImagery(), getLayoutSingletons()])
+  const pageHeroUrl = resolvePageHeroUrl(
+    event.heroBackground,
+    homeHeroUrl,
+    L.eventsIndex?.heroBackground,
+  )
 
   return (
     <>
@@ -48,7 +54,7 @@ export default async function EventDetailPage({ params }: PageProps) {
           <div
             className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
             style={{
-              backgroundImage: `url('${innerPageHeroUrl}')`,
+              backgroundImage: `url('${pageHeroUrl}')`,
             }}
           >
             <div className="interior-hero-scrim" aria-hidden />

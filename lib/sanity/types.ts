@@ -16,7 +16,6 @@ export interface VenueStatPair {
 
 export interface SiteBrandDoc {
   logo?: SanityImageField
-  innerHero?: SanityImageField
   tagline?: string
 }
 
@@ -67,15 +66,18 @@ export interface AboutTeamMember {
 }
 
 export interface PageAboutDoc {
+  heroBackground?: SanityImageField
   teamIntro?: string
   teamMembers?: AboutTeamMember[]
 }
 
 export interface PageEventsIndexDoc {
+  heroBackground?: SanityImageField
   introBody?: string
 }
 
 export interface PageHostEventDoc {
+  heroBackground?: SanityImageField
   introBlurb?: string
   standing?: VenueStatPair
   seated?: VenueStatPair
@@ -98,6 +100,7 @@ export interface PageMenusCategory {
 }
 
 export interface PageMenusDoc {
+  heroBackground?: SanityImageField
   wines?: PageMenusCategory[]
   beer?: PageMenusCategory[]
   zeroProof?: PageMenusCategory[]
@@ -124,6 +127,7 @@ export interface Event {
   description: string
   longDescription?: PortableTextBlock[]
   image?: SanityImageField
+  heroBackground?: SanityImageField
   ticketUrl?: string
   featured?: boolean
 }
