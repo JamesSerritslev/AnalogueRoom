@@ -4,6 +4,7 @@ import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/draft-mode-loader"
 import { PageTransition } from "@/components/page-transition"
 import { fontVariables } from "@/lib/fonts"
+import { SanityLive } from "@/sanity/lib/live"
 
 /** Canonical site URL for absolute metadata (OG, etc.). Matches `sanity.config` preview origin logic. */
 function getMetadataBaseUrl(): string {
@@ -79,7 +80,12 @@ export default async function RootLayout({
         className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased"
       >
         <PageTransition>{children}</PageTransition>
-        {isEnabled ? <DraftModeLoader enabled /> : null}
+        {isEnabled ? (
+          <>
+            <SanityLive />
+            <DraftModeLoader />
+          </>
+        ) : null}
       </body>
     </html>
   )

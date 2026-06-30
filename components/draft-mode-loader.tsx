@@ -2,12 +2,12 @@
 
 import dynamic from "next/dynamic"
 
-const DraftModeTools = dynamic(
-  () => import("@/components/draft-mode-tools").then((m) => m.DraftModeTools),
+const DraftVisualEditing = dynamic(
+  () =>
+    import("@/components/draft-visual-editing").then((m) => m.DraftVisualEditing),
   { ssr: false },
 )
 
-export function DraftModeLoader({ enabled }: { enabled: boolean }) {
-  if (!enabled) return null
-  return <DraftModeTools />
+export function DraftModeLoader() {
+  return <DraftVisualEditing />
 }
