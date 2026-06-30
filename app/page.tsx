@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic"
-import { HomeScrollRestore } from "@/components/home/home-scroll-restore"
+import { HomePageClientScripts } from "@/components/home/home-page-client-scripts"
 import { SiteNavigation } from "@/components/site-navigation"
 import { HeroSection } from "@/components/home/hero-section"
 
@@ -36,7 +36,7 @@ export const revalidate = 60
 export default function HomePage() {
   return (
     <>
-      <HomeScrollRestore />
+      <HomePageClientScripts />
       <SiteNavigation />
       <main>
         <HeroSection />

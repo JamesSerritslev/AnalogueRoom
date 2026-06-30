@@ -43,6 +43,7 @@ export async function HeroSection() {
           alt=""
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
           quality={85}
@@ -60,8 +61,8 @@ export async function HeroSection() {
           alt="The Analogue Room"
           width={260}
           height={260}
+          sizes="(max-width: 640px) 55vw, 260px"
           className="hero-intro hero-intro-d2 mx-auto mb-10 w-[min(260px,55vw)] aspect-square object-contain drop-shadow-xl"
-          priority
           quality={90}
         />
 
