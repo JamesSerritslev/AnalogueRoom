@@ -3,7 +3,6 @@ import { OfferingsMenuLink } from "@/components/home/offerings-menu-link"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
-import type { MenuSlug } from "@/lib/menu-defaults"
 import { HOME_MENU_SCROLL_TARGET_ID } from "@/lib/menu-scroll-storage"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/lib/render-headline-accent"
@@ -12,6 +11,8 @@ import {
   DEFAULT_OFFERINGS_BEER_TITLE,
   DEFAULT_OFFERINGS_BODY,
   DEFAULT_OFFERINGS_EYEBROW,
+  DEFAULT_OFFERINGS_FOOD_DESCRIPTION,
+  DEFAULT_OFFERINGS_FOOD_TITLE,
   DEFAULT_OFFERINGS_HEADLINE,
   DEFAULT_OFFERINGS_WINES_DESCRIPTION,
   DEFAULT_OFFERINGS_WINES_TITLE,
@@ -44,6 +45,17 @@ const ZERO_PROOF_ICON: ReactNode = (
   </svg>
 )
 
+const FOOD_ICON: ReactNode = (
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="6" width="16" height="12" rx="1" />
+    <path d="M4 10h16M8 6V4M16 6V4" />
+    <path d="M9 14h2M13 14h2" />
+  </svg>
+)
+
+const CARD_CLASS =
+  "group flex h-full min-h-0 flex-col border border-cream/14 bg-cream/8 px-6 pt-5 pb-8 shadow-lg shadow-black/20 backdrop-blur-[2px] motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-out hover:-translate-y-1.5 hover:border-orange hover:bg-cream/12 hover:shadow-2xl hover:shadow-black/35 sm:px-8 sm:pt-6 sm:pb-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+
 export async function OfferingsSection() {
   const [{ offeringsSectionBgUrl }, L] = await Promise.all([
     getSiteImagery(),
@@ -54,24 +66,31 @@ export async function OfferingsSection() {
   const headline = L.home?.offeringsHeadline || DEFAULT_OFFERINGS_HEADLINE
   const body = L.home?.offeringsBody || DEFAULT_OFFERINGS_BODY
 
-  const offerings: { slug: MenuSlug; title: string; description: string; icon: ReactNode }[] = [
+  const offerings: { href: string; title: string; description: string; icon: ReactNode }[] = [
     {
-      slug: "wines",
+      href: "/menu#wines",
       title: L.home?.offeringsWinesTitle || DEFAULT_OFFERINGS_WINES_TITLE,
       description: L.home?.offeringsWinesDescription || DEFAULT_OFFERINGS_WINES_DESCRIPTION,
       icon: WINES_ICON,
     },
     {
-      slug: "beer",
+      href: "/menu#beer",
       title: L.home?.offeringsBeerTitle || DEFAULT_OFFERINGS_BEER_TITLE,
       description: L.home?.offeringsBeerDescription || DEFAULT_OFFERINGS_BEER_DESCRIPTION,
       icon: BEER_ICON,
     },
     {
-      slug: "zero-proof",
+      href: "/menu#zero-proof",
       title: L.home?.offeringsZeroProofTitle || DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
-      description: L.home?.offeringsZeroProofDescription || DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
+      description:
+        L.home?.offeringsZeroProofDescription || DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
       icon: ZERO_PROOF_ICON,
+    },
+    {
+      href: "/food",
+      title: DEFAULT_OFFERINGS_FOOD_TITLE,
+      description: DEFAULT_OFFERINGS_FOOD_DESCRIPTION,
+      icon: FOOD_ICON,
     },
   ]
 
@@ -89,7 +108,6 @@ export async function OfferingsSection() {
       </div>
 
       <div className="relative z-10">
-        {/* Header */}
         <RevealOnScroll className="mx-auto mb-12 max-w-[680px] text-center sm:mb-14 md:mb-16" eager>
           <p
             id={HOME_MENU_SCROLL_TARGET_ID}
@@ -106,46 +124,44 @@ export async function OfferingsSection() {
           </p>
         </RevealOnScroll>
 
-        {/* Grid */}
-        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3 md:items-stretch">
+        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:items-stretch">
           {offerings.map((offering, idx) => (
             <RevealOnScroll
-              key={offering.slug}
+              key={offering.href}
               delay={idx * 100}
               className="min-h-0 md:h-full"
             >
-              <OfferingsMenuLink
-                slug={offering.slug}
-                className="group flex h-full min-h-0 flex-col border border-cream/14 bg-cream/8 px-6 pt-5 pb-8 shadow-lg shadow-black/20 backdrop-blur-[2px] motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-out hover:-translate-y-1.5 hover:border-orange hover:bg-cream/12 hover:shadow-2xl hover:shadow-black/35 sm:px-8 sm:pt-6 sm:pb-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-              >
-              <div className="-mt-1 mb-4 flex shrink-0 items-center justify-end gap-2 sm:-mt-1.5">
-                <span className="font-label text-[10px] tracking-[0.35em] uppercase text-cream/55 transition-colors group-hover:text-orange">
-                  View menu
-                </span>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="shrink-0 text-cream/45 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-orange"
-                  aria-hidden
-                >
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </div>
-              <div className="mb-6 shrink-0 text-orange transition-colors group-hover:text-orange">{offering.icon}</div>
-              <h3 className="mb-3 shrink-0 font-display text-[22px] text-cream">
-                {offering.title}
-              </h3>
-              <div className="mb-3.5 h-px w-6 shrink-0 bg-orange" />
-              <p className="min-h-0 flex-1 font-body text-[13px] leading-relaxed text-cream/70">
-                {offering.description}
-              </p>
-            </OfferingsMenuLink>
+              <OfferingsMenuLink href={offering.href} className={CARD_CLASS}>
+                <div className="-mt-1 mb-4 flex shrink-0 items-center justify-end gap-2 sm:-mt-1.5">
+                  <span className="font-label text-[10px] tracking-[0.35em] uppercase text-cream/55 transition-colors group-hover:text-orange">
+                    View menu
+                  </span>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="shrink-0 text-cream/45 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-orange"
+                    aria-hidden
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </div>
+                <div className="mb-6 shrink-0 text-orange transition-colors group-hover:text-orange">
+                  {offering.icon}
+                </div>
+                <h3 className="mb-3 shrink-0 font-display text-[22px] text-cream">
+                  {offering.title}
+                </h3>
+                <div className="mb-3.5 h-px w-6 shrink-0 bg-orange" />
+                <p className="min-h-0 flex-1 font-body text-[13px] leading-relaxed text-cream/70">
+                  {offering.description}
+                </p>
+              </OfferingsMenuLink>
             </RevealOnScroll>
           ))}
         </div>
