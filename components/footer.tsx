@@ -15,7 +15,7 @@ import {
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
 
-/** Shared center axis with `#newsletter` — both use the same max width and mx-auto. */
+/** Shared center axis with `#newsletter` - both use the same max width and mx-auto. */
 const footerCenterColumn = "mx-auto w-full max-w-md md:max-w-lg"
 
 export async function Footer() {
@@ -92,7 +92,7 @@ export async function Footer() {
           {/* Mobile: logo above the centered column */}
           <div className="mb-10 flex justify-center md:hidden">{logoLink}</div>
 
-          {/* Tagline & social — same center line as #newsletter below */}
+          {/* Tagline & social - same center line as #newsletter below */}
           <div
             className={`${footerCenterColumn} flex flex-col items-center gap-6 text-center`}
           >

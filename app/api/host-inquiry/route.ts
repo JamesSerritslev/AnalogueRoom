@@ -58,7 +58,7 @@ function buildInquiryEmailHtml(
     preferredTime,
     message,
   } = fields
-  const dash = "—"
+  const dash = "-"
   const phoneDisp = phone || dash
   const dateDisp = preferredDate || dash
   const timeDisp = preferredTime || dash
@@ -214,16 +214,16 @@ export async function POST(req: Request) {
     "",
     `Name:        ${firstName} ${lastName}`,
     `Email:       ${email}`,
-    `Phone:       ${phone || "—"}`,
+    `Phone:       ${phone || "-"}`,
     `Event type:  ${eventType}`,
     `Guests:      ${guestCount}`,
-    `Date:        ${preferredDate || "—"}`,
-    `Time:        ${preferredTime || "—"}`,
+    `Date:        ${preferredDate || "-"}`,
+    `Time:        ${preferredTime || "-"}`,
     "",
     "Message:",
-    message || "—",
+    message || "-",
     "",
-    "—",
+    "-",
     "Reply to this email to reach the guest directly.",
   ].join("\n")
 

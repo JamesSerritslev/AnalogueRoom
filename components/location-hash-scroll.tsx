@@ -14,7 +14,7 @@ function tryScrollToLocation(): void {
 
 /**
  * After navigating to `/#location` (e.g. from nav “Find Us”), scroll the map
- * into view — Next client nav often skips hash scrolling.
+ * into view - Next client nav often skips hash scrolling.
  */
 export function LocationHashScroll() {
   const pathname = usePathname() ?? ""
