@@ -7,9 +7,12 @@ import { HOME_MENU_SECTION_HASH, HOME_SCROLL_STORAGE_KEY } from "@/lib/menu-scro
 /** Sentinel element rendered at the top of the cream menu section. */
 export const MENU_CREAM_SENTINEL_ID = "menu-cream-sentinel"
 
+/** Pixels scrolled before the control may appear (avoids flash at page top). */
+const SCROLL_SHOW_AFTER_PX = 120
+
 /**
- * Fixed under the site nav on `/menu`. Hidden until the cream menu section reaches
- * the nav line, then stays visible while scrolling. Mobile: right. md+: left.
+ * Fixed under the site nav on menu pages. Hidden until the user scrolls down
+ * a bit and the section sentinel reaches the nav line. Mobile: right. md+: left.
  */
 export function MenuBackToHomeFixed() {
   const [visible, setVisible] = useState(false)
@@ -22,9 +25,10 @@ export function MenuBackToHomeFixed() {
     let raf = 0
     const update = () => {
       raf = 0
+      const scrolledEnough = window.scrollY >= SCROLL_SHOW_AFTER_PX
       const sentinelTop = sentinel.getBoundingClientRect().top
       const navBottom = nav?.getBoundingClientRect().bottom ?? 80
-      setVisible(sentinelTop <= navBottom)
+      setVisible(scrolledEnough && sentinelTop <= navBottom)
     }
     const onScroll = () => {
       if (raf) return

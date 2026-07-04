@@ -11,7 +11,8 @@ const HOST_EVENT_HREF = "/host-event"
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/menu", label: "Menu" },
+  { href: "/menu", label: "Drinks" },
+  { href: "/food", label: "Food" },
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },
 ]

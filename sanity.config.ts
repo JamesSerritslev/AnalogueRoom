@@ -45,7 +45,8 @@ export default defineConfig({
                 { title: "Home", href: "/" },
                 { title: "About", href: "/about" },
                 { title: "Events", href: "/events" },
-                { title: "Menu", href: "/menu" },
+                { title: "Drinks", href: "/menu" },
+                { title: "Food", href: "/food" },
                 { title: "Host Your Event", href: "/host-event" },
               ],
             }),
@@ -87,7 +88,10 @@ export default defineConfig({
           pageMenus: defineLocations({
             select: {},
             resolve: () => ({
-              locations: [{ title: "Menu", href: "/menu" }],
+              locations: [
+                { title: "Drinks", href: "/menu" },
+                { title: "Food", href: "/food" },
+              ],
             }),
           }),
 

@@ -46,9 +46,19 @@ const LAYOUT_QUERY = `{
   },
   "menus": *[_id == "pageMenus"][0]{
     heroBackground,
-    wines[]{ title, items[]{ title, description, price, name, note } },
-    beer[]{ title, items[]{ title, description, price, name, note } },
-    zeroProof[]{ title, items[]{ title, description, price, name, note } }
+    sections[]{
+      title,
+      note,
+      slug,
+      categories[]{
+        title,
+        columns,
+        items[]{ title, description, glassPrice, bottlePrice, price, name, note }
+      }
+    },
+    wines[]{ title, columns, items[]{ title, description, glassPrice, bottlePrice, price, name, note } },
+    beer[]{ title, columns, items[]{ title, description, glassPrice, bottlePrice, price, name, note } },
+    zeroProof[]{ title, columns, items[]{ title, description, glassPrice, bottlePrice, price, name, note } }
   }
 }`
 

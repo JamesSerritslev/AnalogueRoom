@@ -2,18 +2,16 @@
 
 import { useEffect } from "react"
 import { usePathname } from "next/navigation"
-import { isMenuSlug } from "@/lib/menu-defaults"
 
 function scrollToId(id: string) {
-  if (!isMenuSlug(id)) return
   const el = document.getElementById(id)
   if (!el) return
   el.scrollIntoView({ behavior: "smooth", block: "start" })
 }
 
 /**
- * When landing on `/menu` with `#wines` | `#beer` | `#zero-proof`, scroll that
- * section into view (after layout; works with fixed nav via `scroll-mt-*` on targets).
+ * When landing on `/menu` with a hash (e.g. `#wines`, `#beer`, `#zero-proof`),
+ * scroll that section into view (after layout; works with fixed nav via `scroll-mt-*`).
  */
 export function MenuHashScroll() {
   const pathname = usePathname()

@@ -11,18 +11,18 @@ import {
 } from "@/lib/content-defaults"
 import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
-import { resolveAllMenus } from "@/lib/menu-resolve"
+import { resolveMenuSections } from "@/lib/menu-resolve"
 
 export const revalidate = 60
 
 /** Set to `false` when menus are ready to publish. */
-const MENU_PAGE_COMING_SOON = true
+const MENU_PAGE_COMING_SOON = false
 
 export const metadata: Metadata = {
   title: "Menu | The Analogue Room",
   description: MENU_PAGE_COMING_SOON
     ? "Menu coming soon — wine, beer, and zero‑proof menus from The Analogue Room, Solvang."
-    : "Wine, beer, and zero-proof menus from The Analogue Room, Solvang.",
+    : "Wines by the glass and bottle, beer, and zero-proof drinks at The Analogue Room, Solvang.",
 }
 
 export default async function MenuPage() {
@@ -31,7 +31,7 @@ export default async function MenuPage() {
     getLayoutSingletons(),
   ])
   const pageHeroUrl = resolvePageHeroUrl(L.menus?.heroBackground, homeHeroUrl)
-  const menus = resolveAllMenus(L.menus)
+  const sections = resolveMenuSections(L.menus)
   const heroEyebrow = L.home?.offeringsEyebrow ?? DEFAULT_OFFERINGS_EYEBROW
   const heroTitle = L.home?.offeringsHeadline ?? DEFAULT_OFFERINGS_HEADLINE
   const heroLead = L.home?.offeringsBody ?? DEFAULT_OFFERINGS_BODY
@@ -43,7 +43,7 @@ export default async function MenuPage() {
       <MenuHashScroll />
       <main>
         <MenuFullPageView
-          menus={menus}
+          sections={sections}
           heroImageUrl={pageHeroUrl}
           heroEyebrow={heroEyebrow}
           heroTitle={heroTitle}

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "seed:pages": "node scripts/seed-pages.mjs"
+    "seed:pages": "node scripts/seed-pages.mjs",
+    "seed:menu": "node scripts/seed-menu.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

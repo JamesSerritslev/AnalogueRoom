@@ -4,7 +4,12 @@ import { pageAboutType } from "./pageAbout"
 import { pageEventsIndexType } from "./pageEventsIndex"
 import { pageHomeType } from "./pageHome"
 import { pageHostEventType } from "./pageHostEvent"
-import { menuCategoryType, menuItemType, pageMenusType } from "./pageMenus"
+import {
+  menuCategoryType,
+  menuItemType,
+  menuSectionType,
+  pageMenusType,
+} from "./pageMenus"
 import { siteBrandType } from "./siteBrand"
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -12,6 +17,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     siteBrandType,
     menuItemType,
     menuCategoryType,
+    menuSectionType,
     pageMenusType,
     pageHomeType,
     pageAboutType,

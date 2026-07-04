@@ -85,22 +85,38 @@ export interface PageHostEventDoc {
   minBooking?: VenueStatPair
 }
 
-export interface PageMenusMenuItem {
+export interface PageMenusItem {
   title?: string
   description?: string
+  glassPrice?: string
+  bottlePrice?: string
   price?: string
   /** Legacy fields (pre–title/description); resolver still reads these. */
   name?: string
   note?: string
 }
 
+/** @deprecated Use PageMenusItem */
+export type PageMenusMenuItem = PageMenusItem
+
 export interface PageMenusCategory {
   title?: string
-  items?: PageMenusMenuItem[]
+  columns?: string
+  items?: PageMenusItem[]
+}
+
+export interface PageMenusSection {
+  title?: string
+  note?: string
+  slug?: { current?: string }
+  categories?: PageMenusCategory[]
 }
 
 export interface PageMenusDoc {
   heroBackground?: SanityImageField
+  /** Print-order menu (preferred). */
+  sections?: PageMenusSection[]
+  /** Legacy three-column shape. */
   wines?: PageMenusCategory[]
   beer?: PageMenusCategory[]
   zeroProof?: PageMenusCategory[]

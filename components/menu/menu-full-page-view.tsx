@@ -1,60 +1,137 @@
 import { MENU_CREAM_SENTINEL_ID } from "@/components/menu/menu-back-to-home-fixed"
-import type { MenuSlug, ResolvedMenuPage } from "@/lib/menu-defaults"
-import { MENU_SLUGS } from "@/lib/menu-defaults"
+import type { MenuCategory, MenuItemRow, MenuSection } from "@/lib/menu-defaults"
 import { DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 
-type MenusBySlug = Record<MenuSlug, ResolvedMenuPage>
-
 type MenuFullPageViewProps = {
-  menus: MenusBySlug
+  sections: MenuSection[]
   heroImageUrl: string
-  /** Pulled from `pageHome` offerings in Studio; no fallback menu chrome in repo. */
   heroEyebrow?: string | null
   heroTitle?: string | null
   heroLead?: string | null
-  /** When true, shows a Coming Soon state and hides all menu listings. */
   comingSoon?: boolean
 }
 
-function MenuCategoryBlock({ menu }: { menu: ResolvedMenuPage }) {
+/** Print-style money: "$13", "$12 / 15", "$3 / 6" */
+function formatMoney(value: string): string {
+  const t = value.trim()
+  if (!t) return ""
+  if (t.startsWith("$")) return t
+  return `$${t}`
+}
+
+const priceCellClass =
+  "shrink-0 text-right font-body text-[14px] tabular-nums leading-none text-orange sm:text-[15px]"
+
+function CategoryPriceHeaders({ columns }: { columns: MenuCategory["columns"] }) {
+  if (columns === "glass-bottle") {
+    return (
+      <div className="mb-2 flex items-end justify-end gap-4 sm:gap-6">
+        <span className="font-label w-[4.75rem] text-right text-[9px] tracking-[0.2em] uppercase text-coal/45 sm:w-[5.5rem]">
+          Glass
+        </span>
+        <span className="font-label w-10 text-right text-[9px] tracking-[0.2em] uppercase text-coal/45 sm:w-12">
+          Bottle
+        </span>
+      </div>
+    )
+  }
+  if (columns === "bottle-can") {
+    return (
+      <div className="mb-2 flex items-end justify-end">
+        <span className="font-label w-[4.75rem] text-right text-[9px] tracking-[0.16em] uppercase text-coal/45 sm:w-[5.5rem]">
+          Bottle/Can
+        </span>
+      </div>
+    )
+  }
+  return null
+}
+
+function ItemPrices({
+  row,
+  columns,
+}: {
+  row: MenuItemRow
+  columns: MenuCategory["columns"]
+}) {
+  if (columns === "glass-bottle") {
+    return (
+      <div className="flex shrink-0 items-baseline justify-end gap-4 sm:gap-6">
+        <span className={`${priceCellClass} w-[4.75rem] sm:w-[5.5rem]`}>
+          {row.glassPrice ? formatMoney(row.glassPrice) : "\u00a0"}
+        </span>
+        <span className={`${priceCellClass} w-10 sm:w-12`}>
+          {row.bottlePrice ? formatMoney(row.bottlePrice) : "\u00a0"}
+        </span>
+      </div>
+    )
+  }
+  if (columns === "bottle-can") {
+    const value = row.bottlePrice || row.price
+    return (
+      <div className="flex shrink-0 items-baseline justify-end">
+        <span className={`${priceCellClass} w-[4.75rem] sm:w-[5.5rem]`}>
+          {value ? formatMoney(value) : "\u00a0"}
+        </span>
+      </div>
+    )
+  }
+  const value = row.price || row.bottlePrice || row.glassPrice
+  if (!value) return null
+  return <span className={`${priceCellClass} ml-4`}>{formatMoney(value)}</span>
+}
+
+function categoryAnchorId(sectionSlug: string | undefined, categoryTitle: string): string | undefined {
+  const t = categoryTitle.trim().toLowerCase()
+  if (t === "zero proof" || t.startsWith("zero proof")) return "zero-proof"
+  if (sectionSlug === "wines" && t === "spritz") return "spritz"
+  return undefined
+}
+
+function MenuCategoryBlock({
+  category,
+  sectionSlug,
+}: {
+  category: MenuCategory
+  sectionSlug?: string
+}) {
+  const anchorId = categoryAnchorId(sectionSlug, category.title)
+
   return (
-    <div className="space-y-14">
-      {menu.sections.map((section, secIdx) => (
-        <div key={`${menu.slug}-${section.title}-${secIdx}`}>
-          <h3 className="font-display text-[clamp(20px,2.8vw,26px)] text-coal mb-1">
-            {section.title}
-          </h3>
-          <div className="h-px w-12 bg-orange mb-6" />
-          <ul className="divide-y divide-coal/10 border-t border-b border-coal/10">
-            {section.items.map((row, rowIdx) => (
-              <li
-                key={`${section.title}-${rowIdx}-${row.title}`}
-                className="flex flex-col gap-1 py-4 md:flex-row md:items-baseline md:justify-between md:gap-6"
-              >
-                <div className="min-w-0 flex-1">
-                  <p className="font-body text-[15px] font-medium text-coal">{row.title}</p>
-                  {row.description ? (
-                    <p className="font-body text-[13px] text-coal/65 mt-1 leading-relaxed">
-                      {row.description}
-                    </p>
-                  ) : null}
-                </div>
-                {row.price ? (
-                  <p className="font-label shrink-0 text-[11px] tracking-[0.2em] uppercase text-orange md:text-right">
-                    {row.price.startsWith("$") ? row.price : `$${row.price}`}
-                  </p>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+    <div id={anchorId} className={anchorId ? "scroll-mt-28" : undefined}>
+      <div className="mb-1 flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+        <h3 className="font-label text-[11px] tracking-[0.28em] uppercase text-coal">
+          {category.title}
+        </h3>
+      </div>
+      <div className="mb-4 h-px w-10 bg-orange" />
+      <CategoryPriceHeaders columns={category.columns} />
+      <ul className="divide-y divide-coal/10 border-t border-b border-coal/10">
+        {category.items.map((row, rowIdx) => (
+          <li
+            key={`${category.title}-${rowIdx}-${row.title}`}
+            className="flex items-baseline justify-between gap-4 py-3.5 sm:gap-6"
+          >
+            <div className="min-w-0 flex-1 pr-2">
+              <p className="font-body text-[15px] font-medium leading-snug text-coal">
+                {row.title}
+              </p>
+              {row.description ? (
+                <p className="mt-1 font-body text-[13px] leading-relaxed text-coal/65">
+                  {row.description}
+                </p>
+              ) : null}
+            </div>
+            <ItemPrices row={row} columns={category.columns} />
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
 
 export function MenuFullPageView({
-  menus,
+  sections,
   heroImageUrl,
   heroEyebrow,
   heroTitle,
@@ -62,7 +139,7 @@ export function MenuFullPageView({
   comingSoon = false,
 }: MenuFullPageViewProps) {
   const eyebrow = heroEyebrow?.trim()
-  const title = (heroTitle?.trim() || "Menu")
+  const title = heroTitle?.trim() || "Menu"
   const lead = heroLead?.trim()
 
   return (
@@ -76,25 +153,27 @@ export function MenuFullPageView({
         </div>
         <div className="relative z-2">
           {eyebrow ? (
-            <p className="font-label text-[11px] tracking-[0.5em] uppercase text-orange mb-4">
+            <p className="font-label mb-4 text-[11px] tracking-[0.5em] text-orange uppercase">
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="font-display text-[clamp(36px,5.5vw,56px)] text-cream leading-[1.05] mb-3.5">
+          <h1 className="font-display mb-3.5 text-[clamp(36px,5.5vw,56px)] leading-[1.05] text-cream">
             {title}
           </h1>
-          <div className="w-15 h-0.5 bg-orange mt-5" />
+          <div className="mt-5 h-0.5 w-15 bg-orange" />
         </div>
       </section>
 
       <section className="relative bg-cream px-4 py-16 text-coal sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
-        <div id={MENU_CREAM_SENTINEL_ID} aria-hidden className="absolute left-0 right-0 top-0 h-px" />
+        <div
+          id={MENU_CREAM_SENTINEL_ID}
+          aria-hidden
+          className="absolute top-0 right-0 left-0 h-px"
+        />
         <div className="mx-auto max-w-[720px]">
           {comingSoon ? (
             <div className="flex flex-col items-center py-12 text-center sm:py-16">
-              <p
-                className="font-label border border-orange/40 bg-orange/10 px-3 py-2 text-[9px] leading-tight tracking-[0.35em] text-orange uppercase sm:px-3.5 sm:text-[10px] sm:tracking-[0.4em]"
-              >
+              <p className="font-label border border-orange/40 bg-orange/10 px-3 py-2 text-[9px] leading-tight tracking-[0.35em] text-orange uppercase sm:px-3.5 sm:text-[10px] sm:tracking-[0.4em]">
                 Coming Soon
               </p>
               <p className="font-body mt-8 max-w-[440px] text-[15px] leading-relaxed text-coal/75">
@@ -118,27 +197,36 @@ export function MenuFullPageView({
                 </p>
               ) : null}
 
-              {MENU_SLUGS.map((slug, idx) => {
-                const menu = menus[slug]
-                return (
+              <div className={`space-y-16 sm:space-y-20 ${lead ? "" : "pt-8 sm:pt-10"}`}>
+                {sections.map((section, idx) => (
                   <section
-                    key={slug}
-                    id={slug}
-                    className={`scroll-mt-28 ${idx > 0 ? "mt-16 border-t border-coal/10 pt-16 sm:mt-20 sm:pt-20" : ""} ${idx === 0 && !lead ? "pt-8 sm:pt-10" : ""}`}
+                    key={`${section.title}-${idx}`}
+                    id={section.slug}
+                    className={`scroll-mt-28 ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
                   >
-                    <h2 className="font-display text-[clamp(26px,4vw,36px)] text-coal leading-[1.05] mb-3">
-                      {menu.pageTitle}
+                    <h2 className="font-display mb-2 text-[clamp(26px,4vw,36px)] leading-[1.05] text-coal">
+                      {section.title}
                     </h2>
-                    <div className="w-12 h-0.5 bg-orange mb-6" />
-                    {menu.intro.trim() ? (
-                      <p className="font-body text-[15px] leading-relaxed text-coal/80 mb-10">
-                        {menu.intro}
+                    <div className="mb-4 h-0.5 w-12 bg-orange" />
+                    {section.note ? (
+                      <p className="font-label mb-10 text-[10px] tracking-[0.22em] text-coal/55 uppercase">
+                        {section.note}
                       </p>
-                    ) : null}
-                    <MenuCategoryBlock menu={menu} />
+                    ) : (
+                      <div className="mb-10" />
+                    )}
+                    <div className="space-y-12">
+                      {section.categories.map((category, cIdx) => (
+                        <MenuCategoryBlock
+                          key={`${section.title}-${category.title}-${cIdx}`}
+                          category={category}
+                          sectionSlug={section.slug}
+                        />
+                      ))}
+                    </div>
                   </section>
-                )
-              })}
+                ))}
+              </div>
             </>
           )}
         </div>
