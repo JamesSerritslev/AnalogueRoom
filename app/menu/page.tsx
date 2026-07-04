@@ -21,7 +21,7 @@ const MENU_PAGE_COMING_SOON = false
 export const metadata: Metadata = {
   title: "Menu | The Analogue Room",
   description: MENU_PAGE_COMING_SOON
-    ? "Menu coming soon — wine, beer, and zero‑proof menus from The Analogue Room, Solvang."
+    ? "Menu coming soon - wine, beer, and zero-proof menus from The Analogue Room, Solvang."
     : "Wines by the glass and bottle, beer, and zero-proof drinks at The Analogue Room, Solvang.",
 }
 

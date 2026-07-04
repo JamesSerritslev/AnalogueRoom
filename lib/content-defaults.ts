@@ -67,7 +67,7 @@ export const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
   "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers, because the experience matters more than the alcohol."
 export const DEFAULT_OFFERINGS_FOOD_TITLE = "Food"
 export const DEFAULT_OFFERINGS_FOOD_DESCRIPTION =
-  "Squares pizza by the slice or pan, powered by Revolver Pizza — plus simple salads. Made to share between records."
+  "Squares pizza by the slice or pan, powered by Revolver Pizza, plus simple salads. Made to share between records."
 
 // ── Home · Visit ─────────────────────────────────────────────────────────────
 export const DEFAULT_VISIT_HEADLINE = "When We're Spinning"

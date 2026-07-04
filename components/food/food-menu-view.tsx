@@ -30,7 +30,7 @@ export function FoodMenuView() {
         <div className="relative min-h-0 w-full flex-1">
           <Image
             src={FOOD_MENU_IMAGE}
-            alt="Analogue Room food menu — Squares pizza powered by Revolver Pizza"
+            alt="Analogue Room food menu - Squares pizza powered by Revolver Pizza"
             fill
             priority
             className="object-contain object-center"

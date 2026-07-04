@@ -14,7 +14,7 @@ function tryScrollToNewsletter(): void {
 
 /**
  * After navigating to `/#newsletter` (e.g. from “Join our List”), scroll the
- * footer signup into view — Next client nav often skips hash scrolling.
+ * footer signup into view - Next client nav often skips hash scrolling.
  */
 export function NewsletterHashScroll() {
   const pathname = usePathname() ?? ""
