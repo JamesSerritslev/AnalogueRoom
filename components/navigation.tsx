@@ -30,14 +30,9 @@ const DEFAULT_LOGO_SRC = "/images/ar-logo.png"
 
 type NavigationProps = {
   logoSrc?: string
-  /** When false (set `NEXT_PUBLIC_COMING_SOON=false`), hides the Coming Soon pill. Defaults true. */
-  showComingSoonLabel?: boolean
 }
 
-export function Navigation({
-  logoSrc = DEFAULT_LOGO_SRC,
-  showComingSoonLabel = true,
-}: NavigationProps) {
+export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -114,13 +109,6 @@ export function Navigation({
               className="h-11 w-11 object-contain sm:h-12 sm:w-12 lg:h-[60px] lg:w-[60px]"
             />
           </Link>
-          {showComingSoonLabel ? (
-            <span
-              className="font-label whitespace-nowrap border border-orange/40 bg-orange/10 px-2 py-1 text-[8px] leading-tight tracking-[0.28em] text-orange uppercase sm:px-2.5 sm:text-[9px] sm:tracking-[0.3em]"
-            >
-              Coming Soon
-            </span>
-          ) : null}
         </div>
 
         <ul className="hidden min-w-0 flex-1 items-center justify-end gap-2 xl:gap-4 2xl:gap-6 lg:flex">

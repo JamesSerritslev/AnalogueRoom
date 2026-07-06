@@ -5,6 +5,7 @@ import {
   DEFAULT_HERO_HEADLINE_LINE1,
   DEFAULT_HERO_HEADLINE_LINE2,
   DEFAULT_HERO_LEAD,
+  DEFAULT_HERO_META_HOURS,
   DEFAULT_HERO_META_LOCATION,
   DEFAULT_INSTAGRAM_HANDLE,
   DEFAULT_INSTAGRAM_URL,
@@ -26,6 +27,7 @@ export async function HeroSection() {
   const line2 = DEFAULT_HERO_HEADLINE_LINE2
   const lead = heroLead || DEFAULT_HERO_LEAD
   const metaLocation = L.home?.heroMetaLocation || DEFAULT_HERO_META_LOCATION
+  const metaHours = L.home?.heroMetaHours || DEFAULT_HERO_META_HOURS
   const instagramHandle = DEFAULT_INSTAGRAM_HANDLE
 
   const metaLabelClass =
@@ -88,7 +90,7 @@ export async function HeroSection() {
         <div className="hero-intro hero-intro-d6 mt-8 grid grid-cols-3 items-start gap-x-4 border-t border-cream/20 pt-8 sm:gap-x-10 md:gap-x-12">
           <div className="flex min-w-0 flex-col items-center text-center">
             <p className={`${metaLabelClass} min-h-[14px]`}>Hours</p>
-            <p className={`${metaValueClass} mt-1.5`}>Coming soon</p>
+            <p className={`${metaValueClass} mt-1.5`}>{metaHours}</p>
           </div>
           <div className="flex min-w-0 flex-col items-center text-center">
             <p className={`${metaLabelClass} min-h-[14px]`}>Location</p>
