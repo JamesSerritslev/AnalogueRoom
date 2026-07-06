@@ -1,6 +1,5 @@
 import { MENU_CREAM_SENTINEL_ID } from "@/components/menu/menu-back-to-home-fixed"
 import type { MenuCategory, MenuItemRow, MenuSection } from "@/lib/menu-defaults"
-import { DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 
 type MenuFullPageViewProps = {
   sections: MenuSection[]
@@ -8,7 +7,6 @@ type MenuFullPageViewProps = {
   heroEyebrow?: string | null
   heroTitle?: string | null
   heroLead?: string | null
-  comingSoon?: boolean
 }
 
 /** Print-style money: "$13", "$12 / 15", "$3 / 6" */
@@ -136,7 +134,6 @@ export function MenuFullPageView({
   heroEyebrow,
   heroTitle,
   heroLead,
-  comingSoon = false,
 }: MenuFullPageViewProps) {
   const eyebrow = heroEyebrow?.trim()
   const title = heroTitle?.trim() || "Menu"
@@ -171,64 +168,42 @@ export function MenuFullPageView({
           className="absolute top-0 right-0 left-0 h-px"
         />
         <div className="mx-auto max-w-[720px]">
-          {comingSoon ? (
-            <div className="flex flex-col items-center py-12 text-center sm:py-16">
-              <p className="font-label border border-orange/40 bg-orange/10 px-3 py-2 text-[9px] leading-tight tracking-[0.35em] text-orange uppercase sm:px-3.5 sm:text-[10px] sm:tracking-[0.4em]">
-                Coming Soon
-              </p>
-              <p className="font-body mt-8 max-w-[440px] text-[15px] leading-relaxed text-coal/75">
-                Wine, beer, and zero‑proof menus will go here before we open. Follow our{" "}
-                <a
-                  href={DEFAULT_INSTAGRAM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-b border-orange/50 text-orange transition-colors hover:border-orange hover:text-coal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-                >
-                  Instagram
-                </a>{" "}
-                page for updates.
-              </p>
-            </div>
-          ) : (
-            <>
-              {lead ? (
-                <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
-                  {lead}
-                </p>
-              ) : null}
+          {lead ? (
+            <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
+              {lead}
+            </p>
+          ) : null}
 
-              <div className={`space-y-16 sm:space-y-20 ${lead ? "" : "pt-8 sm:pt-10"}`}>
-                {sections.map((section, idx) => (
-                  <section
-                    key={`${section.title}-${idx}`}
-                    id={section.slug}
-                    className={`scroll-mt-28 ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
-                  >
-                    <h2 className="font-display mb-2 text-[clamp(26px,4vw,36px)] leading-[1.05] text-coal">
-                      {section.title}
-                    </h2>
-                    <div className="mb-4 h-0.5 w-12 bg-orange" />
-                    {section.note ? (
-                      <p className="font-label mb-10 text-[10px] tracking-[0.22em] text-coal/55 uppercase">
-                        {section.note}
-                      </p>
-                    ) : (
-                      <div className="mb-10" />
-                    )}
-                    <div className="space-y-12">
-                      {section.categories.map((category, cIdx) => (
-                        <MenuCategoryBlock
-                          key={`${section.title}-${category.title}-${cIdx}`}
-                          category={category}
-                          sectionSlug={section.slug}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </>
-          )}
+          <div className={`space-y-16 sm:space-y-20 ${lead ? "" : "pt-8 sm:pt-10"}`}>
+            {sections.map((section, idx) => (
+              <section
+                key={`${section.title}-${idx}`}
+                id={section.slug}
+                className={`scroll-mt-28 ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
+              >
+                <h2 className="font-display mb-2 text-[clamp(26px,4vw,36px)] leading-[1.05] text-coal">
+                  {section.title}
+                </h2>
+                <div className="mb-4 h-0.5 w-12 bg-orange" />
+                {section.note ? (
+                  <p className="font-label mb-10 text-[10px] tracking-[0.22em] text-coal/55 uppercase">
+                    {section.note}
+                  </p>
+                ) : (
+                  <div className="mb-10" />
+                )}
+                <div className="space-y-12">
+                  {section.categories.map((category, cIdx) => (
+                    <MenuCategoryBlock
+                      key={`${section.title}-${category.title}-${cIdx}`}
+                      category={category}
+                      sectionSlug={section.slug}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
         </div>
       </section>
     </>
