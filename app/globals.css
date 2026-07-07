@@ -331,11 +331,11 @@ html {
 @layer utilities {
   /* Clears fixed nav + notch on inner-page heroes (events, about, host-event) */
   .pt-page-hero {
-    padding-top: max(7rem, calc(3.65rem + env(safe-area-inset-top, 0px)));
+    padding-top: max(7rem, calc(3.25rem + env(safe-area-inset-top, 0px)));
   }
   @media (min-width: 640px) {
     .pt-page-hero {
-      padding-top: max(7.5rem, calc(4.1rem + env(safe-area-inset-top, 0px)));
+      padding-top: max(7.5rem, calc(4.5rem + env(safe-area-inset-top, 0px)));
     }
   }
   @media (min-width: 1024px) {
@@ -344,13 +344,23 @@ html {
     }
   }
 
+  /* Mobile slide-over menu: sits flush under the fixed nav bar */
+  .mobile-nav-panel-top {
+    top: calc(3.25rem + max(0.5rem, env(safe-area-inset-top, 0px)));
+  }
+  @media (min-width: 640px) {
+    .mobile-nav-panel-top {
+      top: calc(4.5rem + max(0.75rem, env(safe-area-inset-top, 0px)));
+    }
+  }
+
   /* Vertical offset for fixed UI (e.g. menu "Back to home"); matches `.pt-page-hero`. */
   .top-under-site-nav {
-    top: max(5.25rem, calc(3.65rem + env(safe-area-inset-top, 0px)));
+    top: max(4.75rem, calc(3.25rem + env(safe-area-inset-top, 0px)));
   }
   @media (min-width: 640px) {
     .top-under-site-nav {
-      top: max(5.75rem, calc(4.1rem + env(safe-area-inset-top, 0px)));
+      top: max(5.75rem, calc(4.5rem + env(safe-area-inset-top, 0px)));
     }
   }
   @media (min-width: 1024px) {

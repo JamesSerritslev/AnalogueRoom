@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 
 const JOIN_LIST_HREF = "/#newsletter"
@@ -35,6 +35,8 @@ type NavigationProps = {
 export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [navHidden, setNavHidden] = useState(false)
+  const lastScrollY = useRef(0)
 
   /** Home + `/#newsletter`: Next often skips scrolling when pathname is unchanged */
   function handleJoinListClick(e: React.MouseEvent<HTMLAnchorElement>) {
@@ -54,6 +56,47 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
   }, [pathname])
 
   useEffect(() => {
+    if (menuOpen) setNavHidden(false)
+  }, [menuOpen])
+
+  useEffect(() => {
+    const desktopMq = window.matchMedia("(min-width: 1024px)")
+
+    const onScroll = () => {
+      if (desktopMq.matches) {
+        setNavHidden(false)
+        return
+      }
+
+      const y = window.scrollY
+      const diff = y - lastScrollY.current
+
+      if (y <= 16) {
+        setNavHidden(false)
+      } else if (diff > 10) {
+        setNavHidden(true)
+      } else if (diff < -10) {
+        setNavHidden(false)
+      }
+
+      lastScrollY.current = y
+    }
+
+    const onMqChange = () => {
+      if (desktopMq.matches) setNavHidden(false)
+    }
+
+    lastScrollY.current = window.scrollY
+    window.addEventListener("scroll", onScroll, { passive: true })
+    desktopMq.addEventListener("change", onMqChange)
+
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      desktopMq.removeEventListener("change", onMqChange)
+    }
+  }, [])
+
+  useEffect(() => {
     if (!menuOpen) return
     const prev = document.body.style.overflow
     document.body.style.overflow = "hidden"
@@ -70,8 +113,9 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-3 border-b border-coal/8 bg-cream/92 px-4 py-3 backdrop-blur-md sm:px-6 md:px-10 lg:px-12 lg:py-4"
-        style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
+        className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-2 border-b border-coal/8 bg-cream/92 px-4 py-2 backdrop-blur-md motion-safe:transition-transform motion-safe:duration-300 sm:gap-3 sm:px-6 sm:py-3 md:px-10 lg:translate-y-0 lg:py-4 ${
+          navHidden ? "-translate-y-full" : "translate-y-0"
+        } pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-[max(0.75rem,env(safe-area-inset-top))]`}
       >
         <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 lg:gap-4">
           <Link
@@ -106,7 +150,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
               alt="The Analogue Room"
               width={60}
               height={60}
-              className="h-11 w-11 object-contain sm:h-12 sm:w-12 lg:h-[60px] lg:w-[60px]"
+              className="h-9 w-9 object-contain sm:h-12 sm:w-12 lg:h-[60px] lg:w-[60px]"
             />
           </Link>
         </div>
@@ -162,7 +206,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
 
         <button
           type="button"
-          className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-sm border border-coal/15 text-coal lg:hidden"
+          className="inline-flex min-h-9 min-w-9 shrink-0 items-center justify-center rounded-sm border border-coal/15 text-coal sm:min-h-11 sm:min-w-11 lg:hidden"
           aria-expanded={menuOpen}
           aria-controls="site-mobile-nav"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -187,21 +231,19 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
       >
         <button
           type="button"
-          className={`absolute inset-0 bg-coal/45 transition-opacity duration-200 ${
+          className={`mobile-nav-panel-top absolute inset-0 bg-coal/45 transition-opacity duration-200 ${
             menuOpen ? "opacity-100" : "opacity-0"
           }`}
-          style={{ top: "max(5.25rem, calc(3.5rem + env(safe-area-inset-top)))" }}
           aria-label="Close menu"
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         />
         <div
           id="site-mobile-nav"
-          className={`absolute bottom-0 right-0 z-[95] flex w-[min(100%,20rem)] flex-col border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
+          className={`mobile-nav-panel-top absolute bottom-0 right-0 z-[95] flex w-[min(100%,20rem)] flex-col border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
           style={{
-            top: "max(5.25rem, calc(3.5rem + env(safe-area-inset-top)))",
             paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))",
           }}
         >
