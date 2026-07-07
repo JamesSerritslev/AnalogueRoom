@@ -1,20 +1,41 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import mapboxgl from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { VENUE_LNG_LAT } from "@/lib/venue-location"
 
 const DESTINATION = VENUE_LNG_LAT
 
+type TravelTimes = {
+  walkMinutes: number
+  driveMinutes: number
+}
+
 function whenStyleReady(map: mapboxgl.Map, fn: () => void) {
   if (map.isStyleLoaded()) fn()
   else map.once("load", fn)
 }
 
+function durationToMinutes(seconds: number): number {
+  return Math.max(1, Math.round(seconds / 60))
+}
+
+function directionsUrl(
+  token: string,
+  profile: "walking" | "driving",
+  coords: string,
+  withGeometry: boolean,
+) {
+  const params = new URLSearchParams({ access_token: token })
+  if (withGeometry) params.set("geometries", "geojson")
+  return `https://api.mapbox.com/directions/v5/mapbox/${profile}/${coords}?${params}`
+}
+
 export default function VenueMap() {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
+  const [travelTimes, setTravelTimes] = useState<TravelTimes | null>(null)
 
   useEffect(() => {
     if (map.current) return
@@ -72,13 +93,31 @@ export default function VenueMap() {
               .setLngLat(user)
               .addTo(map.current)
 
-            fetch(
-              `https://api.mapbox.com/directions/v5/mapbox/walking/${user[0]},${user[1]};${DESTINATION[0]},${DESTINATION[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`
-            )
-              .then((r) => r.json())
-              .then((data) => {
+            const coords = `${user[0]},${user[1]};${DESTINATION[0]},${DESTINATION[1]}`
+
+            Promise.all([
+              fetch(directionsUrl(token, "walking", coords, true)).then((r) => r.json()),
+              fetch(directionsUrl(token, "driving", coords, false)).then((r) => r.json()),
+            ])
+              .then(([walkData, driveData]) => {
                 if (unmounted || !map.current) return
-                const route = data.routes?.[0]?.geometry
+
+                const walkRoute = walkData.routes?.[0]
+                const driveRoute = driveData.routes?.[0]
+                const walkDuration = walkRoute?.duration
+                const driveDuration = driveRoute?.duration
+
+                if (
+                  typeof walkDuration === "number" &&
+                  typeof driveDuration === "number"
+                ) {
+                  setTravelTimes({
+                    walkMinutes: durationToMinutes(walkDuration),
+                    driveMinutes: durationToMinutes(driveDuration),
+                  })
+                }
+
+                const route = walkRoute?.geometry
                 if (!route) return
                 if (map.current.getSource("route")) return
 
@@ -96,6 +135,9 @@ export default function VenueMap() {
                     "line-opacity": 0.8,
                   },
                 })
+              })
+              .catch(() => {
+                /* directions unavailable */
               })
           }
 
@@ -124,9 +166,25 @@ export default function VenueMap() {
   }, [])
 
   return (
-    <div
-      ref={mapContainer}
-      className="h-[min(52dvh,420px)] max-w-full min-w-0 overflow-hidden sm:h-[min(48dvh,460px)] md:h-[480px] lg:h-[500px]"
-    />
+    <>
+      <div
+        ref={mapContainer}
+        className="h-[min(52dvh,420px)] max-w-full min-w-0 overflow-hidden sm:h-[min(48dvh,460px)] md:h-[480px] lg:h-[500px]"
+      />
+      {travelTimes ? (
+        <div className="border-t border-coal/10 bg-cream px-4 py-3 text-center sm:px-6">
+          <p className="font-label text-[9px] tracking-[0.35em] text-orange uppercase">
+            From your location
+          </p>
+          <p className="mt-1.5 font-body text-[14px] text-coal/85 sm:text-[15px]">
+            <span>{travelTimes.walkMinutes} min walk</span>
+            <span aria-hidden className="mx-2 text-coal/30">
+              ·
+            </span>
+            <span>{travelTimes.driveMinutes} min drive</span>
+          </p>
+        </div>
+      ) : null}
+    </>
   )
 }
