@@ -69,6 +69,8 @@ export function InquiryForm() {
       preferredDate: String(fd.get("preferredDate") ?? "").trim(),
       preferredTime,
       message: String(fd.get("message") ?? "").trim(),
+      // Honeypot — must stay empty for real submissions
+      website: String(fd.get("website") ?? "").trim(),
     }
 
     const loc = await resolveLocation()
@@ -148,6 +150,21 @@ export function InquiryForm() {
       onFocusCapture={requestGeolocationOnce}
       onInputCapture={requestGeolocationOnce}
     >
+      {/* Honeypot — hidden from users; bots that autofill it get a silent reject */}
+      <div
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0"
+      >
+        <label htmlFor="inquiry-website">Website</label>
+        <input
+          id="inquiry-website"
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div className="grid min-w-0 grid-cols-1 gap-3.5 md:grid-cols-2 [&>*]:min-w-0">
         <div>
           <label className="mb-1.5 block font-label text-[9px] tracking-[0.3em] text-orange uppercase">
