@@ -8,6 +8,7 @@ import {
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 /** Splits after the first `. ` (e.g. "Three Words. One Room.") so each phrase is its own line. */
 function renderPillarsHeadline(headline: string): ReactNode {
@@ -26,10 +27,15 @@ function renderPillarsHeadline(headline: string): ReactNode {
 }
 
 export async function PillarsSection() {
-  const eyebrow = DEFAULT_PILLARS_EYEBROW
-  const headline = DEFAULT_PILLARS_HEADLINE
-  const body = DEFAULT_PILLARS_BODY
-  const pillars = DEFAULT_PILLARS
+  const L = await getLayoutSingletons()
+
+  const eyebrow = L.home?.pillarsEyebrow || DEFAULT_PILLARS_EYEBROW
+  const headline = L.home?.pillarsHeadline || DEFAULT_PILLARS_HEADLINE
+  const body = L.home?.pillarsBody || DEFAULT_PILLARS_BODY
+  const pillars =
+    L.home?.pillars?.filter((p) => p?.title?.trim())?.length
+      ? L.home.pillars
+      : DEFAULT_PILLARS
 
   return (
     <section id="pillars" className="relative z-2 scroll-mt-20 bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">

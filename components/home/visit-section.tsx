@@ -12,8 +12,20 @@ import {
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { HoursRow } from "@/lib/sanity/types"
-import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
+
+function VisitHeadline({ text }: { text: string }) {
+  const accent = "Spinning"
+  if (text.endsWith(accent)) {
+    return (
+      <>
+        {text.slice(0, -accent.length)}
+        <span className="text-orange">{accent}</span>
+      </>
+    )
+  }
+  return text
+}
 
 export async function VisitSection() {
   const L = await getLayoutSingletons()
@@ -22,8 +34,8 @@ export async function VisitSection() {
   const instagramUrl = DEFAULT_INSTAGRAM_URL
   const sisterPropertyName = DEFAULT_SISTER_PROPERTY_NAME
   const sisterPropertyUrl = DEFAULT_SISTER_PROPERTY_URL
-  const visitHeadline = DEFAULT_VISIT_HEADLINE
-  const visitBody = DEFAULT_VISIT_BODY
+  const visitHeadline = L.home?.visitHeadline || DEFAULT_VISIT_HEADLINE
+  const visitBody = L.home?.visitBody || DEFAULT_VISIT_BODY
   const hours: HoursRow[] =
     L.home?.hours && L.home.hours.length > 0 ? L.home.hours : DEFAULT_HOURS
 
@@ -38,7 +50,7 @@ export async function VisitSection() {
             Hours
           </p>
           <h2 className="mb-6 font-display text-[clamp(34px,4.5vw,52px)] leading-[1.05] text-coal">
-            {renderHeadlineAccent(visitHeadline, "Location")}
+            <VisitHeadline text={visitHeadline} />
           </h2>
           <div className="mb-6 h-0.5 w-12 bg-orange" />
           <p className="mb-6 max-w-[560px] font-body text-[15px] font-normal leading-relaxed text-coal/85">

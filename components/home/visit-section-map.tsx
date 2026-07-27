@@ -17,7 +17,10 @@ const mapPlaceholder = (
 
 export function VisitSectionMap() {
   return (
-    <div className="mx-auto mt-12 w-full min-w-0 max-w-[1100px] sm:mt-14 md:mt-16">
+    <div
+      id="location"
+      className="mx-auto mt-12 w-full min-w-0 max-w-[1100px] scroll-mt-28 sm:mt-14 md:mt-16 sm:scroll-mt-32 lg:scroll-mt-36"
+    >
       <div className="overflow-hidden rounded-sm border-2 border-coal/10">
         <LazyWhenVisible placeholder={mapPlaceholder}>
           <VenueMap />

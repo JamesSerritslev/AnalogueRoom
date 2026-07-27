@@ -2,11 +2,15 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
+import { Wine, MapPin } from "lucide-react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
+import { requestLocationOnce } from "@/lib/geolocation"
 
 const JOIN_LIST_HREF = "/#newsletter"
+const OFFERINGS_HREF = "/#offerings"
+const LOCATION_HREF = "/#location"
 const HOST_EVENT_HREF = "/host-event"
 
 const navLinks = [
@@ -26,6 +30,9 @@ const NAV_MOBILE_CTA_OUTLINE_CLASS =
 const NAV_LINK_CLASS =
   "font-label text-[11px] tracking-[0.22em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase motion-safe:transition-[color,transform,border-color] motion-safe:duration-300 motion-safe:ease-out"
 
+const NAV_MOBILE_ICON_CLASS =
+  "inline-flex h-9 w-9 shrink-0 items-center justify-center text-coal transition-colors hover:text-orange active:opacity-70"
+
 const DEFAULT_LOGO_SRC = "/images/ar-logo.png"
 
 type NavigationProps = {
@@ -34,21 +41,55 @@ type NavigationProps = {
 
 export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
   const pathname = usePathname()
+  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [navHidden, setNavHidden] = useState(false)
   const lastScrollY = useRef(0)
 
+  function goHomeAnchor(
+    anchorId: string,
+    href: string,
+    scrollOptions?: Parameters<typeof scrollToAnchorById>[1],
+  ) {
+    setMenuOpen(false)
+    setNavHidden(false)
+    if (pathname === "/") {
+      scrollToAnchorById(anchorId, scrollOptions)
+      if (typeof window !== "undefined" && typeof window.history.replaceState === "function") {
+        window.history.replaceState(null, "", href)
+      }
+      return
+    }
+    router.push(href)
+  }
+
   /** Home + `/#newsletter`: Next often skips scrolling when pathname is unchanged */
   function handleJoinListClick(e: React.MouseEvent<HTMLAnchorElement>) {
-    setMenuOpen(false)
-    if (pathname !== "/") return
-    if (typeof document === "undefined") return
-    if (!document.getElementById("newsletter")) return
     e.preventDefault()
-    scrollToAnchorById("newsletter")
-    if (typeof window !== "undefined" && typeof window.history.replaceState === "function") {
-      window.history.replaceState(null, "", "/#newsletter")
-    }
+    goHomeAnchor("newsletter", JOIN_LIST_HREF)
+  }
+
+  function handleOfferingsClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault()
+    // Land a bit further into the section so the drink cards sit more in view.
+    goHomeAnchor("offerings", OFFERINGS_HREF, { extraOffsetPx: -140 })
+  }
+
+  async function handleLocationClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault()
+    setMenuOpen(false)
+    setNavHidden(false)
+    // Prompt for location first, then take them to the map (whether granted or denied).
+    void requestLocationOnce().finally(() => {
+      if (pathname === "/") {
+        scrollToAnchorById("location", { extraOffsetPx: -72 })
+        if (typeof window !== "undefined" && typeof window.history.replaceState === "function") {
+          window.history.replaceState(null, "", LOCATION_HREF)
+        }
+        return
+      }
+      router.push(LOCATION_HREF)
+    })
   }
 
   useEffect(() => {
@@ -204,24 +245,44 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
           </li>
         </ul>
 
-        <button
-          type="button"
-          className="inline-flex min-h-9 min-w-9 shrink-0 items-center justify-center rounded-sm border border-coal/15 text-coal sm:min-h-11 sm:min-w-11 lg:hidden"
-          aria-expanded={menuOpen}
-          aria-controls="site-mobile-nav"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((o) => !o)}
-        >
-          {menuOpen ? (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-            </svg>
-          ) : (
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-            </svg>
-          )}
-        </button>
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
+          <div className="mr-1.5 flex items-center gap-1.5 sm:mr-2 sm:gap-2">
+            <a
+              href={OFFERINGS_HREF}
+              onClick={handleOfferingsClick}
+              className={NAV_MOBILE_ICON_CLASS}
+              aria-label="Drinks and food on the home page"
+            >
+              <Wine className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
+            </a>
+            <button
+              type="button"
+              onClick={handleLocationClick}
+              className={NAV_MOBILE_ICON_CLASS}
+              aria-label="Share your location and view the map"
+            >
+              <MapPin className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
+            </button>
+          </div>
+          <button
+            type="button"
+            className="inline-flex min-h-9 min-w-9 shrink-0 items-center justify-center rounded-sm border border-coal/15 text-coal sm:min-h-11 sm:min-w-11"
+            aria-expanded={menuOpen}
+            aria-controls="site-mobile-nav"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            {menuOpen ? (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile / small tablet: slide-over menu */}

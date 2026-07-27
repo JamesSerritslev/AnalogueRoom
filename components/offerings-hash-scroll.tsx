@@ -4,19 +4,20 @@ import { useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 
-const LOCATION_ID = "location"
+const OFFERINGS_ID = "offerings"
 
-function tryScrollToLocation(): void {
+function tryScrollToOfferings(): void {
   if (typeof window === "undefined") return
-  if (window.location.hash.replace(/^#/, "") !== LOCATION_ID) return
-  scrollToAnchorById(LOCATION_ID, { extraOffsetPx: -72 })
+  if (window.location.hash.replace(/^#/, "") !== OFFERINGS_ID) return
+  // Match mobile drink icon: sit a bit further into the section.
+  scrollToAnchorById(OFFERINGS_ID, { extraOffsetPx: -140 })
 }
 
 /**
- * After navigating to `/#location` (e.g. from nav “Find Us”), scroll the map
- * into view - Next client nav often skips hash scrolling.
+ * After navigating to `/#offerings` (e.g. from mobile nav drink icon),
+ * scroll the drinks/food section into view.
  */
-export function LocationHashScroll() {
+export function OfferingsHashScroll() {
   const pathname = usePathname() ?? ""
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function LocationHashScroll() {
     let cancelled = false
     const run = () => {
       if (cancelled) return
-      tryScrollToLocation()
+      tryScrollToOfferings()
     }
 
     run()
@@ -49,7 +50,7 @@ export function LocationHashScroll() {
 
   useEffect(() => {
     if (pathname !== "/") return
-    const onHash = () => tryScrollToLocation()
+    const onHash = () => tryScrollToOfferings()
     window.addEventListener("hashchange", onHash)
     return () => window.removeEventListener("hashchange", onHash)
   }, [pathname])

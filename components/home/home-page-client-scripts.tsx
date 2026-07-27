@@ -14,11 +14,25 @@ const NewsletterHashScroll = dynamic(
   { ssr: false },
 )
 
+const LocationHashScroll = dynamic(
+  () =>
+    import("@/components/location-hash-scroll").then((m) => m.LocationHashScroll),
+  { ssr: false },
+)
+
+const OfferingsHashScroll = dynamic(
+  () =>
+    import("@/components/offerings-hash-scroll").then((m) => m.OfferingsHashScroll),
+  { ssr: false },
+)
+
 export function HomePageClientScripts() {
   return (
     <>
       <HomeScrollRestore />
       <NewsletterHashScroll />
+      <LocationHashScroll />
+      <OfferingsHashScroll />
     </>
   )
 }

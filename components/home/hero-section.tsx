@@ -15,7 +15,7 @@ import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
 
 export async function HeroSection() {
-  const [{ homeHeroUrl, siteLogoUrl }, L] = await Promise.all([
+  const [{ homeHeroUrl, siteLogoUrl, heroLead }, L] = await Promise.all([
     getSiteImagery(),
     getLayoutSingletons(),
   ])
@@ -23,7 +23,7 @@ export async function HeroSection() {
   const eyebrow = DEFAULT_HERO_EYEBROW
   const line1 = DEFAULT_HERO_HEADLINE_LINE1
   const line2 = DEFAULT_HERO_HEADLINE_LINE2
-  const lead = DEFAULT_HERO_LEAD
+  const lead = heroLead || DEFAULT_HERO_LEAD
   const metaLocation = L.home?.heroMetaLocation || DEFAULT_HERO_META_LOCATION
   const metaHours = L.home?.heroMetaHours || DEFAULT_HERO_META_HOURS
 

@@ -8,13 +8,20 @@ import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 
 export async function RoomSection() {
-  const { roomTheSpaceUrl } = await getSiteImagery()
+  const [{ roomTheSpaceUrl }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
 
-  const eyebrow = DEFAULT_ROOM_EYEBROW
-  const headline = DEFAULT_ROOM_HEADLINE
-  const bodyParagraphs = DEFAULT_ROOM_BODY
+  const eyebrow = L.home?.roomEyebrow || DEFAULT_ROOM_EYEBROW
+  const headline = L.home?.roomHeadline || DEFAULT_ROOM_HEADLINE
+  const bodyParagraphs =
+    L.home?.roomBody?.filter((p) => p?.trim())?.length
+      ? L.home.roomBody
+      : DEFAULT_ROOM_BODY
 
   return (
     <section id="room" className="relative z-2 scroll-mt-20 bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
@@ -46,7 +53,7 @@ export async function RoomSection() {
           <div className="group relative aspect-square w-full max-w-[min(100%,420px)] mx-auto md:mx-0 md:justify-self-end overflow-hidden rounded-sm border border-coal/10 shadow-xl shadow-coal/15">
             <Image
               src={roomTheSpaceUrl}
-              alt="Interior of The Analogue Room vinyl lounge in Solvang"
+              alt="The Analogue Room"
               fill
               className="object-cover motion-safe:transition-transform motion-safe:duration-[1.05s] motion-safe:ease-out group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 420px"

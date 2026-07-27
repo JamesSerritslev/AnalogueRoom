@@ -27,12 +27,6 @@ const VisitSection = dynamic(() =>
   })),
 )
 
-const HomeFaqSection = dynamic(() =>
-  import("@/components/home/home-faq-section").then((m) => ({
-    default: m.HomeFaqSection,
-  })),
-)
-
 const Footer = dynamic(() =>
   import("@/components/footer").then((m) => ({ default: m.Footer })),
 )
@@ -50,7 +44,6 @@ export default function HomePage() {
         <RoomSection />
         <OfferingsSection />
         <VisitSection />
-        <HomeFaqSection />
       </main>
       <Footer />
     </>

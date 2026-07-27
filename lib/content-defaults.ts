@@ -12,67 +12,67 @@ export const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 export const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ──────────────────────────────────────────────────────────────
-export const DEFAULT_HERO_EYEBROW = "Vinyl Lounge · Solvang · Est. 2026"
-export const DEFAULT_HERO_HEADLINE_LINE1 = "Vinyl Lounge in Solvang"
-export const DEFAULT_HERO_HEADLINE_LINE2 = "Wine, Beer & Vinyl"
+export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
+export const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
+export const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 export const DEFAULT_HERO_LEAD =
-  "The Analogue Room is a vinyl lounge, wine bar, and beer bar on Mission Drive in downtown Solvang. Curated wine and craft beer are served with vinyl spinning in the room. Open Thursday through Monday, 4pm to 10pm."
+  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 export const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
 export const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
 
 // ── Home · Pillars ───────────────────────────────────────────────────────────
-export const DEFAULT_PILLARS_EYEBROW = "Why Visit"
-export const DEFAULT_PILLARS_HEADLINE = "What Sets Us Apart"
+export const DEFAULT_PILLARS_EYEBROW = "Our Approach"
+export const DEFAULT_PILLARS_HEADLINE = "Three Words. One Room."
 export const DEFAULT_PILLARS_BODY =
-  "Solvang has plenty of tasting rooms and bars. The Analogue Room treats music as equal to the pour, with vinyl, wine, and craft beer under one roof."
+  "Everything we do is anchored in three principles. They're our compass, our standard, and our invitation to slow down."
 export const DEFAULT_PILLARS: PillarItem[] = [
   {
     title: "Curation",
     description:
-      "Every record and bottle is chosen with care. A rotating selection of wine, craft beer, and zero-proof drinks, not an oversized cocktail list.",
+      "A rotating selection of wines, beers, and non-alcoholic offerings, chosen with care, served with context. Every record on the wall, every bottle on the shelf.",
   },
   {
     title: "Intention",
     description:
-      "Warm lighting and conversation-friendly volume. An intimate room built for listening, talking, and staying present.",
+      "Nothing here is by accident. The lighting, the volume, the pour. We designed a room that asks you to be present, to listen, to settle in.",
   },
   {
     title: "Analogue",
     description:
-      "Music plays on vinyl, not streaming. Albums set the pace of the evening, with a warm analogue sound you will not get from a playlist.",
+      "Vinyl, played properly. No algorithms. No skips. The full album, the way the artist meant it. A return to the analogue way of listening.",
   },
 ]
 
 // ── Home · Room ──────────────────────────────────────────────────────────────
-export const DEFAULT_ROOM_EYEBROW = "Your Visit"
-export const DEFAULT_ROOM_HEADLINE = "Come Settle In"
+export const DEFAULT_ROOM_EYEBROW = "The Space"
+export const DEFAULT_ROOM_HEADLINE = "A Place to Slow Down"
 export const DEFAULT_ROOM_BODY = [
-  "Arrive early for a corner seat on busy nights, especially Friday and Saturday. Indoor seating and an outdoor courtyard give you options for the evening.",
-  "Ask staff what is spinning or what pairs with your pour. Stay awhile, browse vinyl on the walls, and let the records set the pace.",
+  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California, a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
+  "We're not a club. We're not a museum. We're a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.",
 ]
 
 // ── Home · Offerings ─────────────────────────────────────────────────────────
-export const DEFAULT_OFFERINGS_EYEBROW = "Drinks & Food"
-export const DEFAULT_OFFERINGS_HEADLINE = "Wine Bar, Beer Bar & Pizza"
+export const DEFAULT_OFFERINGS_EYEBROW = "Drinks & Listening"
+export const DEFAULT_OFFERINGS_HEADLINE = "What's On the Menu"
 export const DEFAULT_OFFERINGS_BODY =
-  "A rotating selection of local and imported wines, craft beer, and zero-proof options, with pizza from Side Hustle Pizza."
+  "A rotating menu, always evolving. Local where we can, imported where it makes sense, and never anything we wouldn't pour for ourselves."
 export const DEFAULT_OFFERINGS_WINES_TITLE = "Wines"
 export const DEFAULT_OFFERINGS_WINES_DESCRIPTION =
-  "Local Santa Barbara County labels and imported bottles, chosen for the music and the mood."
+  "A rotating selection of local Santa Barbara County labels alongside imported pours from regions worth knowing. Curated for the moment, the music, and the mood."
 export const DEFAULT_OFFERINGS_BEER_TITLE = "Beer"
 export const DEFAULT_OFFERINGS_BEER_DESCRIPTION =
-  "Craft beer from local breweries and farther afield, poured to complement the room and the records."
+  "A thoughtful list of craft beers, both local and from further afield. Cold, fresh, and chosen to complement everything from a quiet evening to a packed Friday night."
 export const DEFAULT_OFFERINGS_ZERO_PROOF_TITLE = "Zero Proof"
 export const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
-  "Mocktails, alcohol-free wines, and zero-proof beers so everyone has something to enjoy."
-export const DEFAULT_OFFERINGS_FOOD_TITLE = "Pizza Kitchen"
+  "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers, because the experience matters more than the alcohol."
+export const DEFAULT_OFFERINGS_FOOD_TITLE = "Food"
 export const DEFAULT_OFFERINGS_FOOD_DESCRIPTION =
-  "Pizza from Side Hustle Pizza by the slice or pan, plus simple salads and small plates made to share."
+  "Squares pizza by the slice or pan, powered by Revolver Pizza, plus simple salads. Made to share between records."
 
 // ── Home · Visit ─────────────────────────────────────────────────────────────
-export const DEFAULT_VISIT_HEADLINE = "Hours & Location"
+export const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
 export const DEFAULT_VISIT_BODY =
-  "Open Thursday to Monday, 4pm to 10pm. Closed Tuesday and Wednesday. 1693 Mission Drive, Suite D2, Solvang, CA 93463, steps from the Little Mermaid Fountain. Downtown parking lots make it easy to park once and walk."
+  "Doors open Thursday through Monday. Come early to grab a corner, stay late to find your favorite record on the shelf."
 export const DEFAULT_HOURS: HoursRow[] = [
   { day: "Monday", time: "4pm – 10pm", closed: false },
   { day: "Tuesday", time: "Closed", closed: true },
@@ -81,34 +81,6 @@ export const DEFAULT_HOURS: HoursRow[] = [
   { day: "Friday", time: "4pm – 10pm", closed: false },
   { day: "Saturday", time: "4pm – 10pm", closed: false },
   { day: "Sunday", time: "4pm – 10pm", closed: false },
-]
-
-// ── Home · FAQ ───────────────────────────────────────────────────────────────
-export type HomeFaqItem = { question: string; answer: string }
-
-export const DEFAULT_HOME_FAQ_EYEBROW = "FAQ"
-export const DEFAULT_HOME_FAQ_HEADLINE = "Common Questions"
-export const DEFAULT_HOME_FAQ: HomeFaqItem[] = [
-  {
-    question: "Do I need reservations?",
-    answer:
-      "Most nights you can walk in. Arrive early for the best seats on Friday and Saturday. Reservation options may be offered in the future.",
-  },
-  {
-    question: "Can I request specific music?",
-    answer:
-      "Music is curated by Bar Manager and Vinyl Curator Ray Fortune, with guest selectors. The program centers on vinyl playback. Ask staff what is spinning.",
-  },
-  {
-    question: "What are your hours?",
-    answer:
-      "Thursday to Monday, 4pm to 10pm. Closed Tuesday and Wednesday.",
-  },
-  {
-    question: "Do you serve food?",
-    answer:
-      "Yes. Our pizza kitchen features pizza from Side Hustle Pizza by the slice or pan, plus salads and small shareable plates.",
-  },
 ]
 
 // ── About ────────────────────────────────────────────────────────────────────

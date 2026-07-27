@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { OfferingsMenuLink } from "@/components/home/offerings-menu-link"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
+import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { HOME_MENU_SCROLL_TARGET_ID } from "@/lib/menu-scroll-storage"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/lib/render-headline-accent"
@@ -56,29 +57,33 @@ const CARD_CLASS =
   "group flex h-full min-h-0 flex-col border border-cream/14 bg-cream/8 px-6 pt-5 pb-8 shadow-lg shadow-black/20 backdrop-blur-[2px] motion-safe:transition-all motion-safe:duration-300 motion-safe:ease-out hover:-translate-y-1.5 hover:border-orange hover:bg-cream/12 hover:shadow-2xl hover:shadow-black/35 sm:px-8 sm:pt-6 sm:pb-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
 
 export async function OfferingsSection() {
-  const { offeringsSectionBgUrl } = await getSiteImagery()
+  const [{ offeringsSectionBgUrl }, L] = await Promise.all([
+    getSiteImagery(),
+    getLayoutSingletons(),
+  ])
 
-  const eyebrow = DEFAULT_OFFERINGS_EYEBROW
-  const headline = DEFAULT_OFFERINGS_HEADLINE
-  const body = DEFAULT_OFFERINGS_BODY
+  const eyebrow = L.home?.offeringsEyebrow || DEFAULT_OFFERINGS_EYEBROW
+  const headline = L.home?.offeringsHeadline || DEFAULT_OFFERINGS_HEADLINE
+  const body = L.home?.offeringsBody || DEFAULT_OFFERINGS_BODY
 
   const offerings: { href: string; title: string; description: string; icon: ReactNode }[] = [
     {
       href: "/menu#wines",
-      title: DEFAULT_OFFERINGS_WINES_TITLE,
-      description: DEFAULT_OFFERINGS_WINES_DESCRIPTION,
+      title: L.home?.offeringsWinesTitle || DEFAULT_OFFERINGS_WINES_TITLE,
+      description: L.home?.offeringsWinesDescription || DEFAULT_OFFERINGS_WINES_DESCRIPTION,
       icon: WINES_ICON,
     },
     {
       href: "/menu#beer",
-      title: DEFAULT_OFFERINGS_BEER_TITLE,
-      description: DEFAULT_OFFERINGS_BEER_DESCRIPTION,
+      title: L.home?.offeringsBeerTitle || DEFAULT_OFFERINGS_BEER_TITLE,
+      description: L.home?.offeringsBeerDescription || DEFAULT_OFFERINGS_BEER_DESCRIPTION,
       icon: BEER_ICON,
     },
     {
       href: "/menu#zero-proof",
-      title: DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
-      description: DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
+      title: L.home?.offeringsZeroProofTitle || DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
+      description:
+        L.home?.offeringsZeroProofDescription || DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
       icon: ZERO_PROOF_ICON,
     },
     {
