@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next"
+import Script from "next/script"
 import "./globals.css"
 import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/draft-mode-loader"
 import { PageTransition } from "@/components/page-transition"
 import { fontVariables } from "@/lib/fonts"
 import { SanityLive } from "@/sanity/lib/live"
+
+const GA_MEASUREMENT_ID = "G-Q2DC27H5DK"
 
 /** Canonical site URL for absolute metadata (OG, etc.). Matches `sanity.config` preview origin logic. */
 function getMetadataBaseUrl(): string {
@@ -79,6 +82,18 @@ export default async function RootLayout({
         suppressHydrationWarning
         className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased"
       >
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <PageTransition>{children}</PageTransition>
         {isEnabled ? (
           <>
