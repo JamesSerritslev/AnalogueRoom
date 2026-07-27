@@ -38,29 +38,32 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(getMetadataBaseUrl()),
-  title: "The Analogue Room | Vinyl Lounge & Wine Bar | Solvang, CA",
+  title: "The Analogue Room | Vinyl Lounge Wine & Beer Bar | Solvang, CA",
   description:
-    "A curated vinyl lounge and wine bar in the heart of Solvang, California. Hand-selected records, thoughtful drinks, and a space designed for listening.",
+    "Vinyl lounge, wine bar, and beer bar on Mission Drive in downtown Solvang. Full albums on vinyl with curated wine, craft beer, and pizza. Open Thursday through Monday, 4pm to 10pm.",
   keywords: [
-    "vinyl lounge",
-    "wine bar",
+    "vinyl lounge Solvang",
+    "wine bar Solvang",
+    "beer bar Solvang",
     "listening lounge",
     "Solvang",
     "Santa Ynez Valley",
-    "records",
+    "vinyl",
     "hi-fi",
   ],
   openGraph: {
-    title: "The Analogue Room | Vinyl Lounge & Wine Bar",
-    description: "A curated vinyl lounge and wine bar in the heart of Solvang, California.",
+    title: "The Analogue Room | Vinyl Lounge in Solvang",
+    description:
+      "Vinyl lounge, wine bar, and beer bar in downtown Solvang. Full albums, curated drinks, and pizza.",
     type: "website",
     locale: "en_US",
     images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Analogue Room | Vinyl Lounge & Wine Bar",
-    description: "A curated vinyl lounge and wine bar in the heart of Solvang, California.",
+    title: "The Analogue Room | Vinyl Lounge in Solvang",
+    description:
+      "Vinyl lounge, wine bar, and beer bar in downtown Solvang. Full albums, curated drinks, and pizza.",
     images: [ogImage.url],
   },
   robots: {
