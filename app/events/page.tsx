@@ -8,8 +8,9 @@ import { getEvents } from "@/lib/sanity/queries"
 import { DEFAULT_EVENTS_INDEX_INTRO } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
-  title: "Events | The Analogue Room",
-  description: "Upcoming events at The Analogue Room - listening parties, album releases, special pours, and curated nights in Solvang, CA.",
+  title: "Events | Analogue Room in Solvang",
+  description:
+    "Upcoming nights at The Analogue Room in Solvang: listening parties, album spins, special pours, and easygoing nightlife.",
 }
 
 export const revalidate = 60 // Revalidate every 60 seconds

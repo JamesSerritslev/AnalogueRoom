@@ -13,7 +13,7 @@ import {
   DEFAULT_TAGLINE,
 } from "@/lib/content-defaults"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
+import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
 
 /** Shared center axis with `#newsletter` - both use the same max width and mx-auto. */
 const footerCenterColumn = "mx-auto w-full max-w-md md:max-w-lg"
@@ -32,6 +32,8 @@ export async function Footer() {
   const sisterPropertyUrl = DEFAULT_SISTER_PROPERTY_URL
 
   const addressLines = address.split("\n").filter(Boolean)
+  const phoneDisplay = getVenuePhoneDisplay()
+  const phoneTel = getVenuePhoneTelHref()
 
   const logoLink = (
     <Link
@@ -40,7 +42,7 @@ export async function Footer() {
     >
       <Image
         src={siteLogoUrl}
-        alt="The Analogue Room"
+        alt="The Analogue Room logo"
         width={80}
         height={80}
         className="h-16 w-16 rounded-full object-contain md:h-20 md:w-20"
@@ -67,6 +69,17 @@ export async function Footer() {
             </span>
           ))}
         </a>
+        {phoneDisplay && phoneTel ? (
+          <>
+            <br />
+            <a
+              href={phoneTel}
+              className="mt-2 inline-block transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+            >
+              {phoneDisplay}
+            </a>
+          </>
+        ) : null}
       </p>
       <a
         href={sisterPropertyUrl}

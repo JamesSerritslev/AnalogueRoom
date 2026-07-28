@@ -8,6 +8,8 @@ import { Wine, MapPin } from "lucide-react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 import { requestLocationOnce } from "@/lib/geolocation"
 
+import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
+
 const JOIN_LIST_HREF = "/#newsletter"
 const OFFERINGS_HREF = "/#offerings"
 const LOCATION_HREF = "/#location"
@@ -15,8 +17,8 @@ const HOST_EVENT_HREF = "/host-event"
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/menu", label: "Drinks" },
-  { href: "/food", label: "Food" },
+  { href: DRINKS_MENU_PATH, label: "Drinks" },
+  { href: FOOD_MENU_PATH, label: "Food" },
   { href: "/about", label: "About" },
   { href: "/events", label: "Events" },
 ]
@@ -82,7 +84,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
     // Prompt for location first, then take them to the map (whether granted or denied).
     void requestLocationOnce().finally(() => {
       if (pathname === "/") {
-        scrollToAnchorById("location", { extraOffsetPx: -72 })
+        scrollToAnchorById("location", { extraOffsetPx: -80 })
         if (typeof window !== "undefined" && typeof window.history.replaceState === "function") {
           window.history.replaceState(null, "", LOCATION_HREF)
         }
@@ -188,7 +190,7 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
           >
             <Image
               src={logoSrc}
-              alt="The Analogue Room"
+              alt="The Analogue Room logo"
               width={60}
               height={60}
               className="h-9 w-9 object-contain sm:h-12 sm:w-12 lg:h-[60px] lg:w-[60px]"

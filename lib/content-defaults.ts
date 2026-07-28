@@ -16,9 +16,9 @@ export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
 export const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
 export const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 export const DEFAULT_HERO_LEAD =
-  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
+  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non-alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 export const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
-export const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
+export const DEFAULT_HERO_META_LOCATION = "1693 Mission Drive, Suite D2, Solvang, CA 93463"
 
 // ── Home · Pillars ───────────────────────────────────────────────────────────
 export const DEFAULT_PILLARS_EYEBROW = "Our Approach"
@@ -67,12 +67,12 @@ export const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
   "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers, because the experience matters more than the alcohol."
 export const DEFAULT_OFFERINGS_FOOD_TITLE = "Food"
 export const DEFAULT_OFFERINGS_FOOD_DESCRIPTION =
-  "Squares pizza by the slice or pan, powered by Revolver Pizza, plus simple salads. Made to share between records."
+  "Pizza by the slice or pan, powered by Revolver Pizza, plus simple salads. Made to share between records."
 
 // ── Home · Visit ─────────────────────────────────────────────────────────────
 export const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
 export const DEFAULT_VISIT_BODY =
-  "Doors open Thursday through Monday. Come early to grab a corner, stay late to find your favorite record on the shelf."
+  "Doors open Thursday through Monday for easygoing Solvang nightlife. Come early to grab a corner, stay late to find your favorite record on the shelf."
 export const DEFAULT_HOURS: HoursRow[] = [
   { day: "Monday", time: "4pm – 10pm", closed: false },
   { day: "Tuesday", time: "Closed", closed: true },

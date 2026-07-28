@@ -19,6 +19,7 @@ import {
   DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
   DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
 } from "@/lib/content-defaults"
+import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
 
 const WINES_ICON: ReactNode = (
   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -68,26 +69,26 @@ export async function OfferingsSection() {
 
   const offerings: { href: string; title: string; description: string; icon: ReactNode }[] = [
     {
-      href: "/menu#wines",
+      href: `${DRINKS_MENU_PATH}#wines`,
       title: L.home?.offeringsWinesTitle || DEFAULT_OFFERINGS_WINES_TITLE,
       description: L.home?.offeringsWinesDescription || DEFAULT_OFFERINGS_WINES_DESCRIPTION,
       icon: WINES_ICON,
     },
     {
-      href: "/menu#beer",
+      href: `${DRINKS_MENU_PATH}#beer`,
       title: L.home?.offeringsBeerTitle || DEFAULT_OFFERINGS_BEER_TITLE,
       description: L.home?.offeringsBeerDescription || DEFAULT_OFFERINGS_BEER_DESCRIPTION,
       icon: BEER_ICON,
     },
     {
-      href: "/menu#zero-proof",
+      href: `${DRINKS_MENU_PATH}#zero-proof`,
       title: L.home?.offeringsZeroProofTitle || DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
       description:
         L.home?.offeringsZeroProofDescription || DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
       icon: ZERO_PROOF_ICON,
     },
     {
-      href: "/food",
+      href: FOOD_MENU_PATH,
       title: DEFAULT_OFFERINGS_FOOD_TITLE,
       description: DEFAULT_OFFERINGS_FOOD_DESCRIPTION,
       icon: FOOD_ICON,

@@ -1,14 +1,15 @@
 import { redirect } from "next/navigation"
 import { isMenuSlug } from "@/lib/menu-defaults"
+import { DRINKS_MENU_PATH } from "@/lib/site-routes"
 
 type PageProps = { params: Promise<{ slug: string }> }
 
-/** Old URLs `/menu/wines` → `/menu#wines` */
+/** Legacy `/menu/wines` → `/wine-and-beer-menu#wines` */
 export default async function LegacyMenuSlugRedirect({ params }: PageProps) {
   const { slug: raw } = await params
   const slug = decodeURIComponent(raw)
   if (isMenuSlug(slug)) {
-    redirect(`/menu#${slug}`)
+    redirect(`${DRINKS_MENU_PATH}#${slug}`)
   }
-  redirect("/menu")
+  redirect(DRINKS_MENU_PATH)
 }

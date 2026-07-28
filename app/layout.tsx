@@ -3,22 +3,13 @@ import Script from "next/script"
 import "./globals.css"
 import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/draft-mode-loader"
+import { LocalBusinessJsonLd } from "@/components/local-business-json-ld"
 import { PageTransition } from "@/components/page-transition"
 import { fontVariables } from "@/lib/fonts"
+import { getSiteUrl } from "@/lib/site-url"
 import { SanityLive } from "@/sanity/lib/live"
 
 const GA_MEASUREMENT_ID = "G-Q2DC27H5DK"
-
-/** Canonical site URL for absolute metadata (OG, etc.). Matches `sanity.config` preview origin logic. */
-function getMetadataBaseUrl(): string {
-  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim()
-  if (explicit) return explicit.replace(/\/$/, "")
-  const vercel = process.env.VERCEL_URL?.trim()
-  if (vercel) return `https://${vercel.replace(/^https?:\/\//, "")}`
-  const vercelPublic = process.env.NEXT_PUBLIC_VERCEL_URL?.trim()
-  if (vercelPublic) return `https://${vercelPublic.replace(/^https?:\/\//, "")}`
-  return "http://localhost:3000"
-}
 
 const ogImage = {
   url: "/images/og.png",
@@ -37,30 +28,34 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getMetadataBaseUrl()),
-  title: "The Analogue Room | Vinyl Lounge & Wine Bar | Solvang, CA",
+  metadataBase: new URL(getSiteUrl()),
+  title: {
+    default: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    template: "%s | The Analogue Room",
+  },
   description:
-    "A curated vinyl lounge and wine bar in the heart of Solvang, California. Hand-selected records, thoughtful drinks, and a space designed for listening.",
+    "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
   keywords: [
+    "bars in Solvang",
+    "Solvang nightlife",
     "vinyl lounge",
-    "wine bar",
-    "listening lounge",
-    "Solvang",
-    "Santa Ynez Valley",
-    "records",
-    "hi-fi",
+    "wine bar Solvang",
+    "beer bar Solvang",
+    "1693 Mission Drive",
   ],
   openGraph: {
-    title: "The Analogue Room | Vinyl Lounge & Wine Bar",
-    description: "A curated vinyl lounge and wine bar in the heart of Solvang, California.",
+    title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    description:
+      "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
     type: "website",
     locale: "en_US",
     images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Analogue Room | Vinyl Lounge & Wine Bar",
-    description: "A curated vinyl lounge and wine bar in the heart of Solvang, California.",
+    title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    description:
+      "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
     images: [ogImage.url],
   },
   robots: {
@@ -82,6 +77,7 @@ export default async function RootLayout({
         suppressHydrationWarning
         className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased"
       >
+        <LocalBusinessJsonLd />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"

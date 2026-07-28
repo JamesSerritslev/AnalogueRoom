@@ -12,8 +12,9 @@ import {
 } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
-  title: "About | The Analogue Room",
-  description: "The story of The Analogue Room - a curated vinyl bar and listening lounge in Solvang, California.",
+  title: "About",
+  description:
+    "The story of The Analogue Room: a vinyl lounge and wine bar in Solvang, built for listening, pouring, and slow nights out.",
 }
 
 export const revalidate = 60

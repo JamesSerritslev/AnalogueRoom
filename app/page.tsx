@@ -1,7 +1,21 @@
 import dynamic from "next/dynamic"
+import type { Metadata } from "next"
 import { HomePageClientScripts } from "@/components/home/home-page-client-scripts"
 import { SiteNavigation } from "@/components/site-navigation"
 import { HeroSection } from "@/components/home/hero-section"
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+  },
+  description:
+    "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+  openGraph: {
+    title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    description:
+      "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+  },
+}
 
 const PillarsSection = dynamic(() =>
   import("@/components/home/pillars-section").then((m) => ({
@@ -15,6 +29,12 @@ const RoomSection = dynamic(() =>
   })),
 )
 
+const HomeGbpCategoriesSection = dynamic(() =>
+  import("@/components/home/home-gbp-categories-section").then((m) => ({
+    default: m.HomeGbpCategoriesSection,
+  })),
+)
+
 const OfferingsSection = dynamic(() =>
   import("@/components/home/offerings-section").then((m) => ({
     default: m.OfferingsSection,
@@ -24,6 +44,12 @@ const OfferingsSection = dynamic(() =>
 const VisitSection = dynamic(() =>
   import("@/components/home/visit-section").then((m) => ({
     default: m.VisitSection,
+  })),
+)
+
+const HomeReviewsSection = dynamic(() =>
+  import("@/components/home/home-reviews-section").then((m) => ({
+    default: m.HomeReviewsSection,
   })),
 )
 
@@ -42,8 +68,10 @@ export default function HomePage() {
         <HeroSection />
         <PillarsSection />
         <RoomSection />
+        <HomeGbpCategoriesSection />
         <OfferingsSection />
         <VisitSection />
+        <HomeReviewsSection />
       </main>
       <Footer />
     </>

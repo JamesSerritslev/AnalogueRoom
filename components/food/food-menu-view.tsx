@@ -5,8 +5,8 @@ const FOOD_MENU_PDF = "/food-menu.pdf"
 const FOOD_MENU_IMAGE = "/food-menu.png"
 
 /**
- * Displays the printed food menu (Revolver Pizza / Squares card)
- * as large as possible within the viewport on mobile and desktop.
+ * Displays the printed food menu (Revolver Pizza) as large as possible
+ * within the viewport on mobile and desktop.
  */
 export function FoodMenuView() {
   return (
@@ -20,17 +20,17 @@ export function FoodMenuView() {
       <div className="mx-auto flex min-h-0 w-full max-w-[960px] flex-1 flex-col items-center gap-2 sm:gap-3">
         <header className="shrink-0 pt-2 text-center sm:pt-3 md:pt-4">
           <h1 className="font-display text-[clamp(22px,4vw,32px)] leading-[1.05] text-cream">
-            Food Menu
+            Pizza &amp; Salads
           </h1>
           <p className="font-label mt-1 text-[9px] tracking-[0.4em] text-orange uppercase sm:mt-1.5 sm:text-[10px]">
-            Powered by Revolver Pizza
+            Pizza in Solvang · Powered by Revolver Pizza
           </p>
         </header>
 
         <div className="relative min-h-0 w-full flex-1">
           <Image
             src={FOOD_MENU_IMAGE}
-            alt="Analogue Room food menu - Squares pizza powered by Revolver Pizza"
+            alt="Pizza and salad menu at The Analogue Room vinyl lounge in Solvang"
             fill
             priority
             className="object-contain object-center"

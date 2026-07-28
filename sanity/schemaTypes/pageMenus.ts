@@ -116,7 +116,7 @@ export const menuSectionType = defineType({
       name: "slug",
       title: "Anchor slug",
       type: "slug",
-      description: "Used for /menu#… links from the home page (e.g. wines, beer).",
+      description: "Used for /wine-and-beer-menu#… links from the home page (e.g. wines, beer).",
       options: { source: "title", maxLength: 64 },
     }),
     defineField({
