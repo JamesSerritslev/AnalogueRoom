@@ -39,9 +39,16 @@ export function getVenuePhoneTelHref(): string | null {
 }
 
 /**
- * Raw env for Google listing. May be a real Place ID (`ChIJ…`) or a share URL
- * (`https://share.google/…`, `https://maps.app.goo.gl/…`). Do not pass URLs into
- * `placeid=` — that 404s.
+ * Canonical Google Maps place page for The Analogue Room (no tracking query params).
+ * Prefer this over env URLs — Vercel often truncates values that contain `&`.
+ * CID from Google: 0xb2c8a55da7db22a7
+ */
+export const VENUE_GOOGLE_PLACE_URL =
+  "https://www.google.com/maps/place/Analogue+Room/@34.5964433,-120.1380902,17z/data=!3m1!4b1!4m6!3m5!1s0x80e9554f15f47a23:0xb2c8a55da7db22a7!8m2!3d34.5964433!4d-120.1380902!16s%2Fg%2F11nq_05mjq"
+
+/**
+ * Raw env for Google listing. May be a real Place ID (`ChIJ…`) or a share URL.
+ * Do not pass URLs into `placeid=` — that 404s. Long Maps URLs with `&` are unreliable in Vercel env.
  */
 function getGoogleListingEnv(): string {
   return (
@@ -59,16 +66,21 @@ function isHttpUrl(value: string): boolean {
 export function getGooglePlaceId(): string {
   const raw = getGoogleListingEnv()
   if (!raw || isHttpUrl(raw)) return ""
-  // Typical Place IDs start with ChIJ; allow other Google place id shapes without URLs
   if (/^ChIJ[\w-]+$/.test(raw) || /^[A-Za-z0-9_-]{20,}$/.test(raw)) return raw
   return ""
 }
 
-/** Share / Maps listing URL when env is a full URL (share.google, maps.app.goo.gl, etc.). */
-export function getGoogleBusinessListingUrl(): string | null {
+/**
+ * Google listing URL for CTAs.
+ * Always falls back to the hardcoded place URL so production never depends on a mangled env string.
+ */
+export function getGoogleBusinessListingUrl(): string {
   const raw = getGoogleListingEnv()
-  if (raw && isHttpUrl(raw)) return raw
-  return null
+  // Only trust short share links from env (no `&` truncation risk). Full maps URLs → use constant.
+  if (raw && isHttpUrl(raw) && !raw.includes("&") && raw.length < 200) {
+    return raw
+  }
+  return VENUE_GOOGLE_PLACE_URL
 }
 
 /**
@@ -86,34 +98,17 @@ export const VENUE_OPENING_HOURS = [
 /** Opens the venue in Apple Maps (`https://` works across Apple devices). */
 export const VENUE_APPLE_MAPS_URL = `https://maps.apple.com/?ll=${VENUE_LNG_LAT[1]},${VENUE_LNG_LAT[0]}&q=${encodeURIComponent(VENUE_NAME)}`
 
-/** Google Maps search / place URL for CTAs. */
+/** Google Maps place URL for CTAs (hardcoded listing; env optional for short share links). */
 export function getVenueGoogleMapsUrl(): string {
-  const listing = getGoogleBusinessListingUrl()
-  if (listing) return listing
-
-  const placeId = getGooglePlaceId()
-  if (placeId) {
-    return `https://www.google.com/maps/search/?api=1&query_place_id=${encodeURIComponent(placeId)}`
-  }
-  const q = `${VENUE_NAME}, ${VENUE_ADDRESS_SINGLE_LINE}`
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
+  return getGoogleBusinessListingUrl()
 }
 
 /**
- * Reviews / GBP deep link.
- * - Share URL in env → use it directly (do not wrap in placeid=)
- * - Real Place ID → Google local reviews URL
- * - Else → maps search for the venue
+ * Reviews CTA → Google place page (reviews are on the listing).
+ * Avoids `/local/reviews?placeid=` which 404s when env is a URL, not a Place ID.
  */
 export function getVenueGoogleReviewsUrl(): string {
-  const listing = getGoogleBusinessListingUrl()
-  if (listing) return listing
-
-  const placeId = getGooglePlaceId()
-  if (placeId) {
-    return `https://search.google.com/local/reviews?placeid=${encodeURIComponent(placeId)}`
-  }
-  return getVenueGoogleMapsUrl()
+  return getGoogleBusinessListingUrl()
 }
 
 /**
