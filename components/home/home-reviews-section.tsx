@@ -1,6 +1,7 @@
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import {
   getGooglePlaceId,
+  getVenueGoogleMapsEmbedSrc,
   getVenueGoogleReviewsUrl,
   VENUE_NAME,
 } from "@/lib/venue-location"
@@ -36,7 +37,7 @@ export function HomeReviewsSection() {
           <div className="overflow-hidden rounded-sm border-2 border-coal/10 bg-white">
             <iframe
               title={`${VENUE_NAME} Google reviews`}
-              src={`https://www.google.com/maps?q=place_id:${encodeURIComponent(placeId)}&output=embed`}
+              src={getVenueGoogleMapsEmbedSrc()}
               className="h-[min(70vw,480px)] w-full border-0 sm:h-[420px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
