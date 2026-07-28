@@ -2,8 +2,8 @@ import { OpenInMapsLink } from "@/components/open-in-maps-link"
 import { getVenueGoogleMapsEmbedSrc } from "@/lib/venue-location"
 
 /**
- * Homepage map for GBP consistency: official Google Maps embed (primary),
- * plus Open in Maps CTA. Mapbox VenueMap remains in the codebase for other use.
+ * Homepage map for GBP consistency: Google Maps embed + Open in Maps CTA.
+ * Square on mobile; wider landscape frame on desktop.
  */
 export function VisitSectionMap() {
   const embedSrc = getVenueGoogleMapsEmbedSrc()
@@ -11,9 +11,9 @@ export function VisitSectionMap() {
   return (
     <div
       id="location"
-      className="mx-auto mt-8 w-full min-w-0 max-w-[min(100%,520px)] scroll-mt-28 sm:mt-10 sm:scroll-mt-32 lg:scroll-mt-36"
+      className="mx-auto mt-8 w-full min-w-0 max-w-[min(100%,520px)] scroll-mt-28 sm:mt-10 sm:max-w-[1100px] sm:scroll-mt-32 lg:scroll-mt-36"
     >
-      <div className="aspect-square overflow-hidden rounded-sm border-2 border-coal/10 bg-coal/5">
+      <div className="aspect-square overflow-hidden rounded-sm border-2 border-coal/10 bg-coal/5 sm:aspect-[21/9] md:aspect-[2.4/1]">
         <iframe
           title="The Analogue Room on Google Maps: 1693 Mission Drive, Suite D2, Solvang, CA"
           src={embedSrc}

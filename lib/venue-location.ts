@@ -38,9 +38,37 @@ export function getVenuePhoneTelHref(): string | null {
   return `tel:+${digits.length === 10 ? `1${digits}` : digits}`
 }
 
-/** Google Place ID when known (reviews embed / maps). */
+/**
+ * Raw env for Google listing. May be a real Place ID (`ChIJ…`) or a share URL
+ * (`https://share.google/…`, `https://maps.app.goo.gl/…`). Do not pass URLs into
+ * `placeid=` — that 404s.
+ */
+function getGoogleListingEnv(): string {
+  return (
+    process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim() ||
+    process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID?.trim() ||
+    ""
+  )
+}
+
+function isHttpUrl(value: string): boolean {
+  return /^https?:\/\//i.test(value)
+}
+
+/** True Place ID only (e.g. ChIJ…). Empty if env is a share URL or missing. */
 export function getGooglePlaceId(): string {
-  return (process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ?? "").trim()
+  const raw = getGoogleListingEnv()
+  if (!raw || isHttpUrl(raw)) return ""
+  // Typical Place IDs start with ChIJ; allow other Google place id shapes without URLs
+  if (/^ChIJ[\w-]+$/.test(raw) || /^[A-Za-z0-9_-]{20,}$/.test(raw)) return raw
+  return ""
+}
+
+/** Share / Maps listing URL when env is a full URL (share.google, maps.app.goo.gl, etc.). */
+export function getGoogleBusinessListingUrl(): string | null {
+  const raw = getGoogleListingEnv()
+  if (raw && isHttpUrl(raw)) return raw
+  return null
 }
 
 /**
@@ -58,8 +86,11 @@ export const VENUE_OPENING_HOURS = [
 /** Opens the venue in Apple Maps (`https://` works across Apple devices). */
 export const VENUE_APPLE_MAPS_URL = `https://maps.apple.com/?ll=${VENUE_LNG_LAT[1]},${VENUE_LNG_LAT[0]}&q=${encodeURIComponent(VENUE_NAME)}`
 
-/** Google Maps search / place URL for CTAs and review fallbacks. */
+/** Google Maps search / place URL for CTAs. */
 export function getVenueGoogleMapsUrl(): string {
+  const listing = getGoogleBusinessListingUrl()
+  if (listing) return listing
+
   const placeId = getGooglePlaceId()
   if (placeId) {
     return `https://www.google.com/maps/search/?api=1&query_place_id=${encodeURIComponent(placeId)}`
@@ -68,8 +99,16 @@ export function getVenueGoogleMapsUrl(): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
 }
 
-/** GBP-style reviews deep link (falls back to maps search). */
+/**
+ * Reviews / GBP deep link.
+ * - Share URL in env → use it directly (do not wrap in placeid=)
+ * - Real Place ID → Google local reviews URL
+ * - Else → maps search for the venue
+ */
 export function getVenueGoogleReviewsUrl(): string {
+  const listing = getGoogleBusinessListingUrl()
+  if (listing) return listing
+
   const placeId = getGooglePlaceId()
   if (placeId) {
     return `https://search.google.com/local/reviews?placeid=${encodeURIComponent(placeId)}`
@@ -78,15 +117,12 @@ export function getVenueGoogleReviewsUrl(): string {
 }
 
 /**
- * Official Google Maps embed iframe src for homepage GBP consistency.
- *
- * Important: the classic keyless `output=embed` URL does NOT understand
- * `place_id:…` (it zooms out to a useless map). Pin with lat/lng + label instead.
- * Place ID is still used for Maps/reviews deep links via {@link getVenueGoogleMapsUrl}.
+ * Keyless Google Maps embed pinned to the venue.
+ * Never uses Place ID / share URLs in `q=` — those break the classic embed.
  */
 export function getVenueGoogleMapsEmbedSrc(): string {
   const [lng, lat] = VENUE_LNG_LAT
-  // Query as "Name @ lat,lng" so the marker labels the business and zooms in.
-  const q = encodeURIComponent(`${VENUE_NAME}@${lat},${lng}`)
+  // Address query is more reliable across environments than place_id on output=embed.
+  const q = encodeURIComponent(`${VENUE_NAME}, ${VENUE_ADDRESS_SINGLE_LINE}`)
   return `https://maps.google.com/maps?q=${q}&ll=${lat},${lng}&z=17&output=embed`
 }
