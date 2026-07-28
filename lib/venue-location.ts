@@ -79,12 +79,14 @@ export function getVenueGoogleReviewsUrl(): string {
 
 /**
  * Official Google Maps embed iframe src for homepage GBP consistency.
- * Uses the classic keyless embed (name + full NAP address).
+ *
+ * Important: the classic keyless `output=embed` URL does NOT understand
+ * `place_id:…` (it zooms out to a useless map). Pin with lat/lng + label instead.
+ * Place ID is still used for Maps/reviews deep links via {@link getVenueGoogleMapsUrl}.
  */
 export function getVenueGoogleMapsEmbedSrc(): string {
-  const placeId = getGooglePlaceId()
-  const q = placeId
-    ? encodeURIComponent(`place_id:${placeId}`)
-    : encodeURIComponent(`${VENUE_NAME}, ${VENUE_ADDRESS_SINGLE_LINE}`)
-  return `https://maps.google.com/maps?q=${q}&z=16&output=embed`
+  const [lng, lat] = VENUE_LNG_LAT
+  // Query as "Name @ lat,lng" so the marker labels the business and zooms in.
+  const q = encodeURIComponent(`${VENUE_NAME}@${lat},${lng}`)
+  return `https://maps.google.com/maps?q=${q}&ll=${lat},${lng}&z=17&output=embed`
 }
