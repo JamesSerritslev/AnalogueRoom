@@ -9,7 +9,7 @@ const LOCATION_ID = "location"
 function tryScrollToLocation(): void {
   if (typeof window === "undefined") return
   if (window.location.hash.replace(/^#/, "") !== LOCATION_ID) return
-  scrollToAnchorById(LOCATION_ID, { extraOffsetPx: -72 })
+  scrollToAnchorById(LOCATION_ID, { extraOffsetPx: -80 })
 }
 
 /**

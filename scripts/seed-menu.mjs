@@ -92,7 +92,7 @@ async function main() {
 
   await discardSingletonDraft(client, id)
   console.log("Discarded stale Studio draft for pageMenus (if any).")
-  console.log("Done. Open MENU MANAGER in Studio or visit /menu on the site.")
+  console.log("Done. Open MENU MANAGER in Studio or visit /wine-and-beer-menu on the site.")
 }
 
 main().catch((e) => {

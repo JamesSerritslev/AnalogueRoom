@@ -38,7 +38,7 @@ const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
 
 // ── Home · Hero ───────────────────────────────────────────────────────────────
 const DEFAULT_HERO_LEAD =
-  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
+  "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non-alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
 const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
 

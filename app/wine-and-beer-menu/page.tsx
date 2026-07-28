@@ -16,12 +16,14 @@ import { resolveMenuSections } from "@/lib/menu-resolve"
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: "Menu | The Analogue Room",
+  title: {
+    absolute: "Wine & Beer Menu | Analogue Room in Solvang",
+  },
   description:
-    "Wines by the glass and bottle, beer, and zero-proof drinks at The Analogue Room, Solvang.",
+    "Wines, craft beer, and zero-proof pours at The Analogue Room: a vinyl lounge and bar in Solvang, CA.",
 }
 
-export default async function MenuPage() {
+export default async function WineAndBeerMenuPage() {
   const [{ homeHeroUrl }, L] = await Promise.all([
     getSiteImagery(),
     getLayoutSingletons(),

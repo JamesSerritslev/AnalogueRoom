@@ -53,7 +53,7 @@ export async function RoomSection() {
           <div className="group relative aspect-square w-full max-w-[min(100%,420px)] mx-auto md:mx-0 md:justify-self-end overflow-hidden rounded-sm border border-coal/10 shadow-xl shadow-coal/15">
             <Image
               src={roomTheSpaceUrl}
-              alt="The Analogue Room"
+              alt="Listening room and bar interior at The Analogue Room in Solvang, California"
               fill
               className="object-cover motion-safe:transition-transform motion-safe:duration-[1.05s] motion-safe:ease-out group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 420px"

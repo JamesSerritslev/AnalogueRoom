@@ -12,7 +12,7 @@ import {
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { HoursRow } from "@/lib/sanity/types"
-import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
+import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
 
 function VisitHeadline({ text }: { text: string }) {
   const accent = "Spinning"
@@ -40,9 +40,11 @@ export async function VisitSection() {
     L.home?.hours && L.home.hours.length > 0 ? L.home.hours : DEFAULT_HOURS
 
   const addressLines = address.split("\n").filter(Boolean)
+  const phoneDisplay = getVenuePhoneDisplay()
+  const phoneTel = getVenuePhoneTelHref()
 
   return (
-    <section id="visit" className="relative z-2 scroll-mt-20 min-w-0 max-w-full bg-cream px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
+    <section id="visit" className="relative z-2 scroll-mt-20 min-w-0 max-w-full bg-cream px-4 pt-20 pb-10 sm:px-6 sm:pt-24 sm:pb-12 md:px-10 md:pt-28 md:pb-14 lg:px-12 lg:pt-30 lg:pb-14">
       <div className="mx-auto grid min-w-0 max-w-[1100px] grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
         {/* Hours */}
         <RevealOnScroll className="py-12">
@@ -106,6 +108,20 @@ export async function VisitSection() {
               ))}
             </a>
           </div>
+
+          {phoneDisplay && phoneTel ? (
+            <div className="mb-7">
+              <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
+                Phone
+              </p>
+              <a
+                href={phoneTel}
+                className="font-display inline-block text-base text-cream leading-normal transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                {phoneDisplay}
+              </a>
+            </div>
+          ) : null}
 
           <div className="mb-7">
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">

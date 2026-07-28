@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { usePathname } from "next/navigation"
+import { DRINKS_MENU_PATH } from "@/lib/site-routes"
 
 function scrollToId(id: string) {
   const el = document.getElementById(id)
@@ -10,14 +11,14 @@ function scrollToId(id: string) {
 }
 
 /**
- * When landing on `/menu` with a hash (e.g. `#wines`, `#beer`, `#zero-proof`),
+ * When landing on the drinks menu with a hash (e.g. `#wines`, `#beer`, `#zero-proof`),
  * scroll that section into view (after layout; works with fixed nav via `scroll-mt-*`).
  */
 export function MenuHashScroll() {
   const pathname = usePathname()
 
   useEffect(() => {
-    if (pathname !== "/menu") return
+    if (pathname !== DRINKS_MENU_PATH) return
     const id = window.location.hash.replace(/^#/, "")
     if (!id) return
 
@@ -39,7 +40,7 @@ export function MenuHashScroll() {
   }, [pathname])
 
   useEffect(() => {
-    if (pathname !== "/menu") return
+    if (pathname !== DRINKS_MENU_PATH) return
     const onHash = () => {
       const id = window.location.hash.replace(/^#/, "")
       if (id) scrollToId(id)

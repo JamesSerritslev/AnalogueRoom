@@ -14,6 +14,20 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/food",
+        destination: "/pizza-and-salad-menu",
+        permanent: true,
+      },
+      {
+        source: "/menu",
+        destination: "/wine-and-beer-menu",
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

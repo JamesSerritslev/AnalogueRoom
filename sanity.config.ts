@@ -45,8 +45,8 @@ export default defineConfig({
                 { title: "Home", href: "/" },
                 { title: "About", href: "/about" },
                 { title: "Events", href: "/events" },
-                { title: "Drinks", href: "/menu" },
-                { title: "Food", href: "/food" },
+                { title: "Drinks", href: "/wine-and-beer-menu" },
+                { title: "Food", href: "/pizza-and-salad-menu" },
                 { title: "Host Your Event", href: "/host-event" },
               ],
             }),
@@ -89,8 +89,8 @@ export default defineConfig({
             select: {},
             resolve: () => ({
               locations: [
-                { title: "Drinks", href: "/menu" },
-                { title: "Food", href: "/food" },
+                { title: "Drinks", href: "/wine-and-beer-menu" },
+                { title: "Food", href: "/pizza-and-salad-menu" },
               ],
             }),
           }),

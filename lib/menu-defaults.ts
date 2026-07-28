@@ -1,4 +1,4 @@
-/** Menu anchors on `/menu#…`; line items load only from Studio `pageMenus`. */
+/** Menu anchors on `/wine-and-beer-menu#…`; line items load only from Studio `pageMenus`. */
 
 export const MENU_SLUGS = ["wines", "beer", "zero-proof"] as const
 export type MenuSlug = (typeof MENU_SLUGS)[number]
@@ -25,7 +25,7 @@ export type MenuCategory = {
 /** Major block matching the printed menu (Wines By the Glass, Beers, …). */
 export type MenuSection = {
   title: string
-  /** Anchor id for /menu#… (e.g. wines, beer). */
+  /** Anchor id for /wine-and-beer-menu#… (e.g. wines, beer). */
   slug?: string
   note?: string
   categories: MenuCategory[]

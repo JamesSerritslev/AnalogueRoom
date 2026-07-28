@@ -1,32 +1,29 @@
-"use client"
-
-import dynamic from "next/dynamic"
-import { LazyWhenVisible } from "@/components/lazy-when-visible"
 import { OpenInMapsLink } from "@/components/open-in-maps-link"
+import { getVenueGoogleMapsEmbedSrc } from "@/lib/venue-location"
 
-const VenueMap = dynamic(() => import("@/components/VenueMap"), {
-  ssr: false,
-})
-
-const mapPlaceholder = (
-  <div
-    className="h-[min(52vw,420px)] w-full bg-coal/5 motion-safe:animate-pulse sm:h-[380px] md:h-[420px]"
-    aria-hidden
-  />
-)
-
+/**
+ * Homepage map for GBP consistency: official Google Maps embed (primary),
+ * plus Open in Maps CTA. Mapbox VenueMap remains in the codebase for other use.
+ */
 export function VisitSectionMap() {
+  const embedSrc = getVenueGoogleMapsEmbedSrc()
+
   return (
     <div
       id="location"
-      className="mx-auto mt-12 w-full min-w-0 max-w-[1100px] scroll-mt-28 sm:mt-14 md:mt-16 sm:scroll-mt-32 lg:scroll-mt-36"
+      className="mx-auto mt-8 w-full min-w-0 max-w-[min(100%,520px)] scroll-mt-28 sm:mt-10 sm:scroll-mt-32 lg:scroll-mt-36"
     >
-      <div className="overflow-hidden rounded-sm border-2 border-coal/10">
-        <LazyWhenVisible placeholder={mapPlaceholder}>
-          <VenueMap />
-        </LazyWhenVisible>
+      <div className="aspect-square overflow-hidden rounded-sm border-2 border-coal/10 bg-coal/5">
+        <iframe
+          title="The Analogue Room on Google Maps: 1693 Mission Drive, Suite D2, Solvang, CA"
+          src={embedSrc}
+          className="h-full w-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
-      <div className="mt-6 flex justify-center sm:mt-7">
+      <div className="mt-5 flex justify-center sm:mt-6">
         <OpenInMapsLink
           placement="home_map_cta"
           className="font-label inline-flex min-h-11 items-center justify-center border border-coal/25 bg-transparent px-6 py-3 text-[11px] uppercase tracking-[0.24em] text-coal transition-colors hover:border-orange hover:text-orange motion-safe:duration-300 sm:tracking-[0.28em]"
