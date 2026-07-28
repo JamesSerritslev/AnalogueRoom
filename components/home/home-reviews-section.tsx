@@ -1,17 +1,11 @@
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import {
-  getGooglePlaceId,
-  getVenueGoogleMapsEmbedSrc,
-  getVenueGoogleReviewsUrl,
-  VENUE_NAME,
-} from "@/lib/venue-location"
+import { getVenueGoogleReviewsUrl, VENUE_NAME } from "@/lib/venue-location"
 
 /**
  * Homepage Google reviews strip for GBP consistency.
- * When Place ID is set, shows Google's local reviews iframe; otherwise a CTA to GBP reviews.
+ * Links out to Google reviews (no map embed — the visit section already has the map).
  */
 export function HomeReviewsSection() {
-  const placeId = getGooglePlaceId()
   const reviewsUrl = getVenueGoogleReviewsUrl()
 
   return (
@@ -32,44 +26,19 @@ export function HomeReviewsSection() {
         </p>
       </RevealOnScroll>
 
-      {placeId ? (
-        <RevealOnScroll delay={80} className="mx-auto w-full max-w-[1100px]">
-          <div className="overflow-hidden rounded-sm border-2 border-coal/10 bg-white">
-            <iframe
-              title={`${VENUE_NAME} Google reviews`}
-              src={getVenueGoogleMapsEmbedSrc()}
-              className="h-[min(70vw,480px)] w-full border-0 sm:h-[420px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-          <div className="mt-6 mb-8 flex justify-center pb-4 sm:mb-10 sm:pb-6">
-            <a
-              href={reviewsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-label inline-flex min-h-11 items-center justify-center border border-coal/25 px-6 py-3 text-[11px] uppercase tracking-[0.24em] text-coal transition-colors hover:border-orange hover:text-orange"
-            >
-              Read all reviews on Google
-            </a>
-          </div>
-        </RevealOnScroll>
-      ) : (
-        <RevealOnScroll
-          delay={80}
-          className="mx-auto mb-8 max-w-[480px] pb-4 text-center sm:mb-10 sm:pb-6"
+      <RevealOnScroll
+        delay={80}
+        className="mx-auto mb-8 max-w-[480px] pb-4 text-center sm:mb-10 sm:pb-6"
+      >
+        <a
+          href={reviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-label inline-flex min-h-11 items-center justify-center bg-orange px-6 py-3 text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-spanish"
         >
-          <a
-            href={reviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-label inline-flex min-h-11 items-center justify-center bg-orange px-6 py-3 text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-spanish"
-          >
-            Read reviews on Google
-          </a>
-        </RevealOnScroll>
-      )}
+          Read reviews on Google
+        </a>
+      </RevealOnScroll>
     </section>
   )
 }
