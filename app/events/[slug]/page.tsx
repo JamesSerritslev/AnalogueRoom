@@ -24,6 +24,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${event.title} | The Analogue Room`,
     description: event.description,
+    alternates: {
+      canonical: `/events/${encodeURIComponent(event.slug?.current ?? slug)}`,
+    },
   }
 }
 

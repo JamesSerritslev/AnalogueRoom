@@ -49,6 +49,8 @@ export const metadata: Metadata = {
       "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
     type: "website",
     locale: "en_US",
+    url: "/",
+    siteName: "The Analogue Room",
     images: [ogImage],
   },
   twitter: {

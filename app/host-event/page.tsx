@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Host Your Event | Analogue Room in Solvang",
   description:
     "Host a private night at The Analogue Room in Solvang: vinyl, thoughtful drinks, and a lounge built for gatherings.",
+  alternates: {
+    canonical: "/host-event",
+  },
 }
 
 export const revalidate = 60

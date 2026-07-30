@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Events | Analogue Room in Solvang",
   description:
     "Upcoming nights at The Analogue Room in Solvang: listening parties, album spins, special pours, and easygoing nightlife.",
+  alternates: {
+    canonical: "/events",
+  },
 }
 
 export const revalidate = 60 // Revalidate every 60 seconds

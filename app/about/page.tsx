@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "The story of The Analogue Room: a vinyl lounge and wine bar in Solvang, built for listening, pouring, and slow nights out.",
+  alternates: {
+    canonical: "/about",
+  },
 }
 
 export const revalidate = 60
