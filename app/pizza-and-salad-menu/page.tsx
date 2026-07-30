@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   },
   description:
     "Pizza and simple salads at our Solvang vinyl lounge: small bites meant for drinks and music, not a full meal.",
+  alternates: {
+    canonical: "/pizza-and-salad-menu",
+  },
 }
 
 export default function FoodMenuPage() {

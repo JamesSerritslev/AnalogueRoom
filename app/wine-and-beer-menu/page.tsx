@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   },
   description:
     "Wines, craft beer, and zero-proof pours at The Analogue Room: a vinyl lounge and bar in Solvang, CA.",
+  alternates: {
+    canonical: "/wine-and-beer-menu",
+  },
 }
 
 export default async function WineAndBeerMenuPage() {

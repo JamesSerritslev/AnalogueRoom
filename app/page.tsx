@@ -10,10 +10,14 @@ export const metadata: Metadata = {
   },
   description:
     "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
     description:
       "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+    url: "/",
   },
 }
 
