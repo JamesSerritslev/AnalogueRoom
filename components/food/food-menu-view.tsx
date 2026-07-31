@@ -5,7 +5,7 @@ const FOOD_MENU_PDF = "/food-menu.pdf"
 const FOOD_MENU_IMAGE = "/food-menu.png"
 
 /**
- * Displays the printed food menu (Revolver Pizza) as large as possible
+ * Displays the printed food menu as large as possible
  * within the viewport on mobile and desktop.
  */
 export function FoodMenuView() {
@@ -23,7 +23,7 @@ export function FoodMenuView() {
             Pizza &amp; Salads
           </h1>
           <p className="font-label mt-1 text-[9px] tracking-[0.4em] text-orange uppercase sm:mt-1.5 sm:text-[10px]">
-            Pizza in Solvang · Powered by Revolver Pizza
+            Pizza &amp; salads in Solvang
           </p>
         </header>
 
