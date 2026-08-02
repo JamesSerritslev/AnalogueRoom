@@ -253,6 +253,24 @@ html {
   transform-origin: center 25%;
 }
 
+/* About lightbox: mobile-forward swipe cue */
+@keyframes about-swipe-hint {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  35% {
+    transform: translateX(-0.45rem);
+  }
+  70% {
+    transform: translateX(0.45rem);
+  }
+}
+
+.about-swipe-hint {
+  animation: about-swipe-hint 1.35s ease-in-out infinite;
+}
+
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .reveal-scope,
@@ -270,6 +288,11 @@ html {
 
   .hero-bg-photo.hero-bg-drift-pulse,
   .interior-hero-photo.interior-hero-drift {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .about-swipe-hint {
     animation: none !important;
     transform: none !important;
   }

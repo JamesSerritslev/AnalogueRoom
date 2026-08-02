@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { EventsList } from "@/components/events/events-list"
-import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
+import { VenueHeroCollage } from "@/components/venue-hero-collage"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { getEvents } from "@/lib/sanity/queries"
 import { DEFAULT_EVENTS_INDEX_INTRO } from "@/lib/content-defaults"
@@ -19,12 +19,7 @@ export const metadata: Metadata = {
 export const revalidate = 60 // Revalidate every 60 seconds
 
 export default async function EventsPage() {
-  const [events, { homeHeroUrl }, L] = await Promise.all([
-    getEvents(),
-    getSiteImagery(),
-    getLayoutSingletons(),
-  ])
-  const pageHeroUrl = resolvePageHeroUrl(L.eventsIndex?.heroBackground, homeHeroUrl)
+  const [events, L] = await Promise.all([getEvents(), getLayoutSingletons()])
   const eventsIntro = L.eventsIndex?.introBody?.trim() || DEFAULT_EVENTS_INDEX_INTRO
 
   return (
@@ -32,13 +27,8 @@ export default async function EventsPage() {
       <SiteNavigation />
       <main>
         {/* Hero */}
-        <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
-          <div
-            className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
-            style={{ backgroundImage: `url('${pageHeroUrl}')` }}
-          >
-            <div className="interior-hero-scrim" aria-hidden />
-          </div>
+        <section className="relative flex min-h-[52vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[58vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
+          <VenueHeroCollage />
           <div className="relative z-2">
             <p className="font-label text-[11px] tracking-[0.5em] uppercase text-orange mb-4">
               {"What's On"} · Solvang

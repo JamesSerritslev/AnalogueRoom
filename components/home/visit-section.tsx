@@ -1,4 +1,5 @@
 import { VisitSectionMap } from "@/components/home/visit-section-map"
+import { VenuePhotoImg } from "@/components/venue-photo-img"
 import {
   DEFAULT_ADDRESS,
   DEFAULT_HOURS,
@@ -13,6 +14,7 @@ import { RevealOnScroll } from "@/components/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { HoursRow } from "@/lib/sanity/types"
 import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
+import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 function VisitHeadline({ text }: { text: string }) {
   const accent = "Spinning"
@@ -157,6 +159,17 @@ export async function VisitSection() {
         </div>
         </RevealOnScroll>
       </div>
+
+      <RevealOnScroll
+        delay={100}
+        className="mx-auto mt-10 w-full max-w-[1100px] sm:mt-14"
+      >
+        <VenuePhotoImg
+          photo={VENUE_PHOTOS.storefront}
+          sizes="(max-width: 1100px) 100vw, 1100px"
+          className="h-auto w-full"
+        />
+      </RevealOnScroll>
 
       <RevealOnScroll delay={180} eager className="w-full">
         <VisitSectionMap />

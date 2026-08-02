@@ -9,9 +9,9 @@ import {
   DEFAULT_OFFERINGS_EYEBROW,
   DEFAULT_OFFERINGS_HEADLINE,
 } from "@/lib/content-defaults"
-import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveMenuSections } from "@/lib/menu-resolve"
+import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 export const revalidate = 60
 
@@ -27,11 +27,7 @@ export const metadata: Metadata = {
 }
 
 export default async function WineAndBeerMenuPage() {
-  const [{ homeHeroUrl }, L] = await Promise.all([
-    getSiteImagery(),
-    getLayoutSingletons(),
-  ])
-  const pageHeroUrl = resolvePageHeroUrl(L.menus?.heroBackground, homeHeroUrl)
+  const L = await getLayoutSingletons()
   const sections = resolveMenuSections(L.menus)
   const heroEyebrow = L.home?.offeringsEyebrow ?? DEFAULT_OFFERINGS_EYEBROW
   const heroTitle = L.home?.offeringsHeadline ?? DEFAULT_OFFERINGS_HEADLINE
@@ -45,7 +41,7 @@ export default async function WineAndBeerMenuPage() {
       <main>
         <MenuFullPageView
           sections={sections}
-          heroImageUrl={pageHeroUrl}
+          heroImageUrl={VENUE_PHOTOS.wineShelf.src}
           heroEyebrow={heroEyebrow}
           heroTitle={heroTitle}
           heroLead={heroLead}

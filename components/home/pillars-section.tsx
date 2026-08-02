@@ -8,7 +8,14 @@ import {
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/lib/render-headline-accent"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/venue-photo-img"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
+import { VENUE_PHOTOS } from "@/lib/venue-photos"
+
+const PILLARS_PHOTOS = [
+  VENUE_PHOTOS.blueVinyl,
+  VENUE_PHOTOS.analoguePint,
+] as const
 
 /** Splits after the first `. ` (e.g. "Three Words. One Room.") so each phrase is its own line. */
 function renderPillarsHeadline(headline: string): ReactNode {
@@ -66,6 +73,18 @@ export async function PillarsSection() {
                 {pillar.description}
               </p>
             </div>
+          </RevealOnScroll>
+        ))}
+      </div>
+
+      <div className="mx-auto mt-12 flex max-w-[1100px] flex-col gap-3 sm:mt-16 sm:gap-4 md:mt-20 md:grid md:grid-cols-2 md:gap-4">
+        {PILLARS_PHOTOS.map((photo, idx) => (
+          <RevealOnScroll key={photo.src} delay={idx * 80} className="w-full">
+            <VenuePhotoImg
+              photo={photo}
+              sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 540px"
+              className="h-auto w-full"
+            />
           </RevealOnScroll>
         ))}
       </div>

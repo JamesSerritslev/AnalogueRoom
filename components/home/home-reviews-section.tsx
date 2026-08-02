@@ -1,5 +1,7 @@
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/venue-photo-img"
 import { getVenueGoogleReviewsUrl, VENUE_NAME } from "@/lib/venue-location"
+import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 /**
  * Homepage Google reviews strip for GBP consistency.
@@ -24,6 +26,14 @@ export function HomeReviewsSection() {
         <p className="font-body mx-auto mb-10 max-w-[540px] text-[15px] leading-relaxed text-coal/80">
           What people say about {VENUE_NAME} in Solvang.
         </p>
+      </RevealOnScroll>
+
+      <RevealOnScroll delay={60} className="mx-auto mb-8 w-full max-w-[920px] sm:mb-10">
+        <VenuePhotoImg
+          photo={VENUE_PHOTOS.nightCrowd}
+          sizes="(max-width: 1100px) 100vw, 920px"
+          className="h-auto w-full"
+        />
       </RevealOnScroll>
 
       <RevealOnScroll

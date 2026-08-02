@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
+import { AboutPhotoCollage } from "@/components/about/about-photo-collage"
 import { SiteNavigation } from "@/components/site-navigation"
 import { Footer } from "@/components/footer"
 import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
@@ -97,6 +98,8 @@ export default async function AboutPage() {
             </div>
           ) : null}
         </section>
+
+        <AboutPhotoCollage />
 
         {/* Team Section */}
         <section className="bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
