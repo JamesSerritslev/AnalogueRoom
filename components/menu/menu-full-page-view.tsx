@@ -141,9 +141,9 @@ export function MenuFullPageView({
 
   return (
     <>
-      <section className="relative flex min-h-[36vh] flex-col justify-end overflow-hidden px-4 pb-10 pt-page-hero sm:min-h-[38vh] sm:px-6 sm:pb-12 md:px-10 lg:px-12">
+      <section className="relative flex min-h-[48vh] flex-col justify-end overflow-hidden px-4 pb-12 pt-page-hero sm:min-h-[54vh] sm:px-6 sm:pb-14 md:min-h-[58vh] md:px-10 md:pb-16 lg:px-12">
         <div
-          className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
+          className="interior-hero-photo interior-hero-drift absolute inset-0 z-0 !bg-[center_45%]"
           style={{ backgroundImage: `url('${heroImageUrl}')` }}
         >
           <div className="interior-hero-scrim" aria-hidden />

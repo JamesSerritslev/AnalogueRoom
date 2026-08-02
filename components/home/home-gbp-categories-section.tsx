@@ -2,7 +2,9 @@ import Link from "next/link"
 import type { ReactNode } from "react"
 import { OfferingsScrollLink } from "@/components/home/offerings-scroll-link"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/venue-photo-img"
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
+import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
 
 const LINK_CLASS =
   "text-orange underline decoration-orange/40 underline-offset-4 transition-colors hover:decoration-orange"
@@ -11,12 +13,17 @@ type CategoryBlock = {
   id: string
   title: string
   body: ReactNode
+  photo?: VenuePhoto
+  /** Photo on the right on desktop when true (default alternates by index). */
+  photoRight?: boolean
 }
 
 const categories: CategoryBlock[] = [
   {
     id: "bar",
     title: "Bar & Nightlife in Solvang",
+    photo: VENUE_PHOTOS.barNight,
+    photoRight: true,
     body: (
       <>
         The Analogue Room is a walk-in bar for evenings that stay easygoing:
@@ -31,7 +38,9 @@ const categories: CategoryBlock[] = [
   },
   {
     id: "wine-bar",
-    title: "Wine Bar",
+    title: "Wine & Beer",
+    photo: VENUE_PHOTOS.craftBeer,
+    photoRight: false,
     body: (
       <>
         Local Santa Barbara County labels sit beside imports worth knowing,
@@ -47,6 +56,8 @@ const categories: CategoryBlock[] = [
   {
     id: "vinyl-lounge",
     title: "Vinyl Lounge",
+    photo: VENUE_PHOTOS.browsingRecords,
+    photoRight: true,
     body: (
       <>
         Each record has its own story of how it wound up in The Analogue Room.
@@ -108,18 +119,43 @@ export function HomeGbpCategoriesSection() {
         </p>
       </RevealOnScroll>
 
-      <div className="mx-auto grid max-w-[920px] gap-10 sm:gap-12">
+      <div className="mx-auto grid max-w-[1100px] gap-12 sm:gap-16 md:gap-20">
         {categories.map((cat, idx) => (
           <RevealOnScroll key={cat.id} delay={idx * 60}>
-            <div>
-              <h2 className="font-display mb-3 text-[clamp(24px,3vw,32px)] leading-[1.1] text-coal">
-                {cat.title}
-              </h2>
-              <div className="mb-4 h-px w-8 bg-orange" />
-              <p className="font-body max-w-[640px] text-[15px] leading-relaxed text-coal/85">
-                {cat.body}
-              </p>
-            </div>
+            {cat.photo ? (
+              <div className="grid grid-cols-1 items-center gap-5 sm:gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
+                <figure
+                  className={`w-full order-first ${
+                    cat.photoRight ? "md:order-last" : "md:order-first"
+                  }`}
+                >
+                  <VenuePhotoImg
+                    photo={cat.photo}
+                    sizes="(max-width: 767px) 100vw, 520px"
+                    className="h-auto w-full"
+                  />
+                </figure>
+                <div>
+                  <h2 className="font-display mb-3 text-[clamp(24px,3vw,32px)] leading-[1.1] text-coal">
+                    {cat.title}
+                  </h2>
+                  <div className="mb-4 h-px w-8 bg-orange" />
+                  <p className="font-body max-w-[640px] text-[15px] leading-relaxed text-coal/85">
+                    {cat.body}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h2 className="font-display mb-3 text-[clamp(24px,3vw,32px)] leading-[1.1] text-coal">
+                  {cat.title}
+                </h2>
+                <div className="mb-4 h-px w-8 bg-orange" />
+                <p className="font-body max-w-[640px] text-[15px] leading-relaxed text-coal/85">
+                  {cat.body}
+                </p>
+              </div>
+            )}
           </RevealOnScroll>
         ))}
       </div>
