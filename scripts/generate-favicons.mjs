@@ -4,12 +4,15 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..")
-const svgPath = path.join(root, "public", "icon.svg")
-const svg = await readFile(svgPath)
+const logoPath = path.join(root, "public", "images", "ar-logo.png")
+const logo = await readFile(logoPath)
 
 async function writePng(size, outRel) {
   const out = path.join(root, outRel)
-  const buf = await sharp(svg).resize(size, size).png({ compressionLevel: 9 }).toBuffer()
+  const buf = await sharp(logo)
+    .resize(size, size, { fit: "cover", position: "centre" })
+    .png({ compressionLevel: 9 })
+    .toBuffer()
   await writeFile(out, buf)
   console.log(`${outRel} (${size}x${size}, ${buf.length} bytes)`)
   return buf
@@ -54,6 +57,9 @@ function pngsToIco(pngBuffersWithSizes) {
 
   return Buffer.concat([header, ...parts])
 }
+
+const meta = await sharp(logo).metadata()
+console.log(`Source: ar-logo.png (${meta.width}x${meta.height})`)
 
 const png16 = await writePng(16, "public/favicon-16x16.png")
 const png32 = await writePng(32, "public/favicon-32x32.png")
