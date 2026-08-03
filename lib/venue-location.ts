@@ -23,12 +23,15 @@ export const VENUE_ADDRESS_MULTILINE =
 export const VENUE_ADDRESS_SINGLE_LINE =
   "1693 Mission Drive, Suite D2, Solvang, CA 93463"
 
+/** Canonical display phone (match Google Business Profile character-for-character). */
+export const VENUE_PHONE_DISPLAY = "(805) 691-9093"
+
 /**
- * Display phone from GBP — set `NEXT_PUBLIC_VENUE_PHONE` to match Google Business Profile
- * character-for-character (e.g. `(805) 555-0100`). Empty when unset.
+ * Display phone from GBP — override with `NEXT_PUBLIC_VENUE_PHONE` if set;
+ * otherwise uses {@link VENUE_PHONE_DISPLAY}.
  */
 export function getVenuePhoneDisplay(): string {
-  return (process.env.NEXT_PUBLIC_VENUE_PHONE ?? "").trim()
+  return process.env.NEXT_PUBLIC_VENUE_PHONE?.trim() || VENUE_PHONE_DISPLAY
 }
 
 /** Digits-only for `tel:` links. */
