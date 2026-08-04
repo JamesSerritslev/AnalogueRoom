@@ -118,6 +118,18 @@ export const VENUE_PHOTOS = {
     width: 1024,
     height: 725,
   },
+  pizzaTray: {
+    src: "/images/food/19-pizza-tray.jpg",
+    alt: "Thick-crust pepperoni pizza with basil at The Analogue Room in Solvang",
+    width: 1024,
+    height: 682,
+  },
+  pizzaWine: {
+    src: "/images/food/20-pizza-wine.jpg",
+    alt: "Pizza slice and Analogue Room wine glass at the Solvang vinyl lounge and bar",
+    width: 1024,
+    height: 682,
+  },
 } as const satisfies Record<string, VenuePhoto>
 
 export const ALL_VENUE_PHOTOS: VenuePhoto[] = Object.values(VENUE_PHOTOS)
