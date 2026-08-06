@@ -69,6 +69,8 @@ const categories: CategoryBlock[] = [
   {
     id: "pizza",
     title: "Pizza",
+    photo: VENUE_PHOTOS.pizzaTray,
+    photoRight: false,
     body: (
       <>
         Great-tasting pizza and salads: small bites, or a pizza for the whole
@@ -84,6 +86,8 @@ const categories: CategoryBlock[] = [
   {
     id: "events",
     title: "Private Events",
+    photo: VENUE_PHOTOS.storefront,
+    photoRight: true,
     body: (
       <>
         Birthdays, listening parties, and small gatherings get the vinyl library,
