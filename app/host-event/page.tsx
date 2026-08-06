@@ -8,7 +8,7 @@ import { resolveHostEventVenueStats } from "@/lib/host-event-venue-stats"
 import { DEFAULT_HOST_EVENT_INTRO } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
-  title: "Host Your Event | Analogue Room in Solvang",
+  title: "Host Your Event · Analogue Room in Solvang",
   description:
     "Host a private night at The Analogue Room in Solvang: vinyl, thoughtful drinks, and a lounge built for gatherings.",
   alternates: {
