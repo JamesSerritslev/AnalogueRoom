@@ -8,7 +8,7 @@ import { getEvents } from "@/lib/sanity/queries"
 import { DEFAULT_EVENTS_INDEX_INTRO } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
-  title: "Events | Analogue Room in Solvang",
+  title: "Events · Analogue Room in Solvang",
   description:
     "Upcoming nights at The Analogue Room in Solvang: listening parties, album spins, special pours, and easygoing nightlife.",
   alternates: {
