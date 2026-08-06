@@ -30,15 +30,16 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "Bars in Solvang | Vinyl Lounge · Analogue Room",
-    template: "%s | The Analogue Room",
+    default: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
+    template: "%s · The Analogue Room",
   },
   description:
-    "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+    "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
   keywords: [
-    "bars in Solvang",
+    "Analogue Room",
+    "vinyl bar Solvang",
+    "vinyl lounge Solvang",
     "Solvang nightlife",
-    "vinyl lounge",
     "wine bar Solvang",
     "beer bar Solvang",
     "1693 Mission Drive",
@@ -56,9 +57,9 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
     description:
-      "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+      "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
     type: "website",
     locale: "en_US",
     url: "/",
@@ -67,9 +68,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
     description:
-      "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+      "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
     images: [ogImage.url],
   },
   robots: {
