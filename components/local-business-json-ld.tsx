@@ -29,7 +29,8 @@ export function LocalBusinessJsonLd() {
     description:
       "A vinyl listening lounge and wine & beer bar in Solvang, California. Full albums on vinyl, thoughtful drinks, and small bites.",
     url: siteUrl,
-    image: `${siteUrl}/images/og.png`,
+    image: [`${siteUrl}/images/og.png`, `${siteUrl}/icon-512.png`],
+    logo: `${siteUrl}/icon-512.png`,
     ...(phone ? { telephone: phone } : {}),
     address: {
       "@type": "PostalAddress",

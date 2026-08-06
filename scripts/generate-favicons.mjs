@@ -61,12 +61,15 @@ function pngsToIco(pngBuffersWithSizes) {
 const meta = await sharp(logo).metadata()
 console.log(`Source: ar-logo.png (${meta.width}x${meta.height})`)
 
+// Keep icons ONLY under public/ so Next.js does not emit hashed ?icon.… URLs
+// that Google Search refuses to treat as a stable favicon.
 const png16 = await writePng(16, "public/favicon-16x16.png")
 const png32 = await writePng(32, "public/favicon-32x32.png")
 const png48 = await writePng(48, "public/favicon-48x48.png")
-await writePng(96, "public/favicon-96x96.png")
-await writePng(180, "app/apple-icon.png")
-await writePng(192, "app/icon.png")
+const png96 = await writePng(96, "public/favicon-96x96.png")
+await writeFile(path.join(root, "public", "favicon.png"), png96)
+console.log("public/favicon.png (copy of 96x96)")
+await writePng(180, "public/apple-icon.png")
 await writePng(192, "public/icon-192.png")
 await writePng(512, "public/icon-512.png")
 
@@ -76,6 +79,6 @@ const ico = pngsToIco([
   { size: 48, buf: png48 },
 ])
 
-await writeFile(path.join(root, "app", "favicon.ico"), ico)
 await writeFile(path.join(root, "public", "favicon.ico"), ico)
-console.log(`favicon.ico (${ico.length} bytes) → app/ + public/`)
+console.log(`public/favicon.ico (${ico.length} bytes)`)
+console.log("Done — no app/ icon files (avoids Next hash query strings).")
