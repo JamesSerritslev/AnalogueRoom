@@ -6,17 +6,17 @@ import { HeroSection } from "@/components/home/hero-section"
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    absolute: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
   },
   description:
-    "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+    "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Bars in Solvang | Vinyl Lounge · Analogue Room",
+    title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
     description:
-      "A vinyl lounge and wine & beer bar for Solvang nightlife: full albums, thoughtful pours, at 1693 Mission Drive, Suite D2.",
+      "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
     url: "/",
   },
 }
