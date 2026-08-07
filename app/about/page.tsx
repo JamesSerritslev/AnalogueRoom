@@ -13,7 +13,9 @@ import {
 } from "@/lib/content-defaults"
 
 export const metadata: Metadata = {
-  title: "About",
+  title: {
+    absolute: "About · Analogue Room",
+  },
   description:
     "The story of The Analogue Room: a vinyl lounge and wine bar in Solvang, built for listening, pouring, and slow nights out.",
   alternates: {
