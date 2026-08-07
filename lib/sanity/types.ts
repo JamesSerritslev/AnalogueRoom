@@ -4,10 +4,20 @@ import type { PortableTextBlock } from "@portabletext/types"
 export interface SanityImageField {
   _type?: string
   asset?: {
-    _ref: string
+    _ref?: string
     _type?: string
+    _id?: string
+    url?: string
+    metadata?: {
+      dimensions?: {
+        width?: number
+        height?: number
+        aspectRatio?: number
+      }
+    }
   }
   hotspot?: Record<string, unknown>
+  crop?: Record<string, unknown>
 }
 
 export interface VenueStatPair {

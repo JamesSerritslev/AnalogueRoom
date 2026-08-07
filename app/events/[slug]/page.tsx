@@ -1,11 +1,10 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Footer } from "@/components/footer"
 import { SiteNavigation } from "@/components/site-navigation"
 import { EventBody } from "@/components/events/event-body"
-import { sanityImageUrl } from "@/lib/sanity/image-url"
+import { EventFeatureImage } from "@/components/events/event-feature-image"
 import { getEventBySlug } from "@/lib/sanity/queries"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
@@ -41,7 +40,6 @@ export default async function EventDetailPage({ params }: PageProps) {
 
   const cal = event.date ? parseCalendarDate(event.date) : null
   const dateLine = cal ? cal.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" }) : "Date TBD"
-  const imageUrl = sanityImageUrl(event.image, 1400)
   const [{ homeHeroUrl }, L] = await Promise.all([getSiteImagery(), getLayoutSingletons()])
   const pageHeroUrl = resolvePageHeroUrl(
     event.heroBackground,
@@ -81,17 +79,7 @@ export default async function EventDetailPage({ params }: PageProps) {
         </section>
 
         <section className="mx-auto max-w-[720px] px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:px-12">
-          {imageUrl ? (
-            <div className="relative aspect-[21/9] w-full mb-12 border border-coal/10 overflow-hidden rounded-sm bg-coal/5">
-              <Image
-                src={imageUrl}
-                alt={event.title ? `Image for ${event.title}` : "Event image"}
-                fill
-                className="object-cover"
-                sizes="(max-width: 720px) 100vw, 720px"
-              />
-            </div>
-          ) : null}
+          <EventFeatureImage image={event.image} title={event.title} />
 
           <p className="font-body text-[16px] leading-relaxed text-coal/88 mb-8">{event.description}</p>
 

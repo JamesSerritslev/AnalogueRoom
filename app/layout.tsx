@@ -45,17 +45,25 @@ export const metadata: Metadata = {
     "1693 Mission Drive",
   ],
   icons: {
+    // Bing prefers a real root /favicon.ico; keep PNG sizes for Google/Chrome.
     icon: [
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" },
     ],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: [{ url: "/favicon.ico" }],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   manifest: "/site.webmanifest",
+  other: {
+    "msapplication-TileImage": "/icon-192.png",
+    "msapplication-TileColor": "#282b2e",
+  },
   openGraph: {
     title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
     description:
