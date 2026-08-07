@@ -30,6 +30,22 @@ function getLosAngelesNowParts(): { todayInLA: string; currentTimeInLA: string }
   return { todayInLA, currentTimeInLA }
 }
 
+/** Shared event image projection — includes dimensions for native aspect rendering. */
+const EVENT_IMAGE_PROJECTION = `image{
+  ...,
+  asset->{
+    _id,
+    url,
+    metadata{
+      dimensions{
+        width,
+        height,
+        aspectRatio
+      }
+    }
+  }
+}`
+
 export async function getEvents(): Promise<Event[]> {
   const client = await getClientForRequest()
   if (!client) {
@@ -54,7 +70,7 @@ export async function getEvents(): Promise<Event[]> {
         time,
         description,
         longDescription,
-        image,
+        ${EVENT_IMAGE_PROJECTION},
         heroBackground,
         ticketUrl,
         featured
@@ -85,7 +101,7 @@ export const getEventBySlug = cache(async function getEventBySlug(slug: string):
         time,
         description,
         longDescription,
-        image,
+        ${EVENT_IMAGE_PROJECTION},
         heroBackground,
         ticketUrl,
         featured
