@@ -4,9 +4,17 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { Wine, MapPin } from "lucide-react"
+import { Wine, MapPin, ExternalLink } from "lucide-react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 import { requestLocationOnce } from "@/lib/geolocation"
+import {
+  VENUE_STREET_ADDRESS,
+  VENUE_ADDRESS_LOCALITY,
+  VENUE_ADDRESS_REGION,
+  VENUE_POSTAL_CODE,
+  getVenueGoogleMapsUrl,
+} from "@/lib/venue-location"
+import { DEFAULT_HERO_META_HOURS } from "@/lib/content-defaults"
 
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
 
@@ -39,9 +47,14 @@ const DEFAULT_LOGO_SRC = "/images/ar-logo.png"
 
 type NavigationProps = {
   logoSrc?: string
+  /** Compact hours line for mobile menu (e.g. hero meta hours). */
+  hoursLine?: string
 }
 
-export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
+export function Navigation({
+  logoSrc = DEFAULT_LOGO_SRC,
+  hoursLine = DEFAULT_HERO_META_HOURS,
+}: NavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -349,11 +362,37 @@ export function Navigation({ logoSrc = DEFAULT_LOGO_SRC }: NavigationProps) {
               href="https://www.instagram.com/analogueroomsyv"
               target="_blank"
               rel="noopener noreferrer"
-              className="mx-3 mt-2 inline-flex min-h-11 items-center justify-center bg-orange px-4 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-cream"
+              className="mt-2 inline-flex min-h-11 w-full items-center justify-center bg-orange px-4 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-cream"
             >
               Instagram
             </a>
           </nav>
+
+          <div className="mt-auto flex flex-col items-center border-t border-coal/10 px-5 py-6 text-center">
+            <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase">
+              Hours
+            </p>
+            <p className="mt-2 font-body text-[13px] leading-snug text-coal/85">
+              {hoursLine}
+            </p>
+            <p className="font-label mt-5 text-[9px] tracking-[0.28em] text-orange uppercase">
+              Address
+            </p>
+            <p className="mt-2 font-body text-[13px] leading-snug text-coal/85">
+              {VENUE_STREET_ADDRESS}
+              <br />
+              {VENUE_ADDRESS_LOCALITY}, {VENUE_ADDRESS_REGION} {VENUE_POSTAL_CODE}
+            </p>
+            <a
+              href={getVenueGoogleMapsUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex min-h-10 items-center justify-center gap-1.5 border border-orange/40 px-4 py-2.5 font-label text-[10px] tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15"
+            >
+              Open in Maps
+              <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
+            </a>
+          </div>
         </div>
       </div>
     </>
