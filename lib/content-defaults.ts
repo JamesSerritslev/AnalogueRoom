@@ -17,7 +17,7 @@ export const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
 export const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 export const DEFAULT_HERO_LEAD =
   "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non-alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
-export const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
+export const DEFAULT_HERO_META_HOURS = "Thu–Sat · 4–10 · Sun–Mon · 4–8"
 export const DEFAULT_HERO_META_LOCATION = "1693 Mission Drive, Suite D2, Solvang, CA 93463"
 
 // ── Home · Pillars ───────────────────────────────────────────────────────────
@@ -74,13 +74,13 @@ export const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
 export const DEFAULT_VISIT_BODY =
   "Doors open Thursday through Monday for easygoing Solvang nightlife. Come early to grab a corner, stay late to find your favorite record on the shelf."
 export const DEFAULT_HOURS: HoursRow[] = [
-  { day: "Monday", time: "4pm – 10pm", closed: false },
+  { day: "Monday", time: "4pm – 8pm", closed: false },
   { day: "Tuesday", time: "Closed", closed: true },
   { day: "Wednesday", time: "Closed", closed: true },
   { day: "Thursday", time: "4pm – 10pm", closed: false },
   { day: "Friday", time: "4pm – 10pm", closed: false },
   { day: "Saturday", time: "4pm – 10pm", closed: false },
-  { day: "Sunday", time: "4pm – 10pm", closed: false },
+  { day: "Sunday", time: "4pm – 8pm", closed: false },
 ]
 
 // ── About ────────────────────────────────────────────────────────────────────

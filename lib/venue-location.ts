@@ -87,15 +87,15 @@ export function getGoogleBusinessListingUrl(): string {
 }
 
 /**
- * Open Thu–Mon 4pm–10pm; closed Tue–Wed.
+ * Open Thu–Sat 4pm–10pm, Sun–Mon 4pm–8pm; closed Tue–Wed.
  * Day of week for schema.org: Monday=1 … Sunday=7
  */
 export const VENUE_OPENING_HOURS = [
-  { dayOfWeek: "Monday" as const, opens: "16:00", closes: "22:00" },
+  { dayOfWeek: "Monday" as const, opens: "16:00", closes: "20:00" },
   { dayOfWeek: "Thursday" as const, opens: "16:00", closes: "22:00" },
   { dayOfWeek: "Friday" as const, opens: "16:00", closes: "22:00" },
   { dayOfWeek: "Saturday" as const, opens: "16:00", closes: "22:00" },
-  { dayOfWeek: "Sunday" as const, opens: "16:00", closes: "22:00" },
+  { dayOfWeek: "Sunday" as const, opens: "16:00", closes: "20:00" },
 ]
 
 /** Opens the venue in Apple Maps (`https://` works across Apple devices). */
