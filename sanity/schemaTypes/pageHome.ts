@@ -34,7 +34,7 @@ export const pageHomeType = defineType({
       title: "Meta: hours summary",
       type: "string",
       group: "hero",
-      description: "Compact hours shown in the hero footer strip. E.g. \"Thu–Mon · 4pm–10pm\"",
+      description: "Compact hours shown in the hero footer strip. E.g. \"Thu–Sat · 4–10 · Sun–Mon · 4–8\"",
     }),
     defineField({
       name: "heroMetaLocation",

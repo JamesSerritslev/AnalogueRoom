@@ -39,7 +39,7 @@ const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
 // ── Home · Hero ───────────────────────────────────────────────────────────────
 const DEFAULT_HERO_LEAD =
   "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non-alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
-const DEFAULT_HERO_META_HOURS = "Thu–Mon · 4pm–10pm"
+const DEFAULT_HERO_META_HOURS = "Thu–Sat · 4–10 · Sun–Mon · 4–8"
 const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
 
 // ── Home · Pillars ────────────────────────────────────────────────────────────
@@ -99,13 +99,13 @@ const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
 const DEFAULT_VISIT_BODY =
   "Doors open Thursday through Monday. Come early to grab a corner, stay late to find your favorite record on the shelf."
 const DEFAULT_HOURS = [
-  { _key: "h0", _type: "hoursRow", day: "Monday",    time: "4pm – 10pm", closed: false },
+  { _key: "h0", _type: "hoursRow", day: "Monday",    time: "4pm – 8pm", closed: false },
   { _key: "h1", _type: "hoursRow", day: "Tuesday",   time: "Closed",     closed: true  },
   { _key: "h2", _type: "hoursRow", day: "Wednesday", time: "Closed",     closed: true  },
   { _key: "h3", _type: "hoursRow", day: "Thursday", time: "4pm – 10pm", closed: false },
   { _key: "h4", _type: "hoursRow", day: "Friday",    time: "4pm – 10pm", closed: false },
   { _key: "h5", _type: "hoursRow", day: "Saturday", time: "4pm – 10pm", closed: false },
-  { _key: "h6", _type: "hoursRow", day: "Sunday",    time: "4pm – 10pm", closed: false },
+  { _key: "h6", _type: "hoursRow", day: "Sunday",    time: "4pm – 8pm", closed: false },
 ]
 
 // ── About ─────────────────────────────────────────────────────────────────────

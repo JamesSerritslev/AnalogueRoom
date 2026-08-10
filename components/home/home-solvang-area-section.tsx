@@ -72,7 +72,7 @@ export function HomeSolvangAreaSection() {
             {addressLine}
           </a>
           {" · "}
-          Open Thursday–Monday, 4pm–10pm
+          Open Thu–Sat 4pm–10pm · Sun–Mon 4pm–8pm
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
