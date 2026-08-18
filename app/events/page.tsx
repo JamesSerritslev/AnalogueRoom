@@ -56,8 +56,8 @@ export default async function EventsPage() {
           </p>
         </section>
 
-        {/* Events List */}
-        <section className="mx-auto max-w-[1100px] px-4 pb-20 sm:px-6 sm:pb-24 md:px-10 md:pb-28 lg:px-12">
+        {/* Events — full details inline */}
+        <section className="mx-auto max-w-[720px] px-4 pb-20 sm:px-6 sm:pb-24 md:px-10 md:pb-28 lg:px-12">
           <EventsList events={events} />
         </section>
 

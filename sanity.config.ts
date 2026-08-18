@@ -105,7 +105,7 @@ export default defineConfig({
               locations: [
                 { title: "Events", href: "/events" },
                 ...(doc?.slug
-                  ? [{ title: doc.title ?? "Event", href: `/events/${doc.slug}` }]
+                  ? [{ title: doc.title ?? "Event", href: `/events#${doc.slug}` }]
                   : []),
               ],
             }),
