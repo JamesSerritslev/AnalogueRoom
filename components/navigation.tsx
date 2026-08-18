@@ -35,7 +35,10 @@ const NAV_CTA_OUTLINE_CLASS =
   "font-label text-[11px] tracking-[0.18em] sm:tracking-[0.22em] md:tracking-[0.24em] uppercase motion-safe:transition-colors motion-safe:duration-300 inline-flex min-h-10 shrink-0 items-center justify-center border border-coal/20 bg-transparent px-3 py-2 text-coal hover:border-orange hover:text-orange sm:px-3.5"
 
 const NAV_MOBILE_CTA_OUTLINE_CLASS =
-  "rounded-sm border border-orange/35 bg-transparent px-3 py-3.5 text-center font-label text-[11px] leading-snug tracking-[0.22em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15 sm:tracking-[0.24em]"
+  "rounded-sm border border-orange/35 bg-transparent px-3 py-2 text-center font-label text-[11px] leading-snug tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15 sm:py-2.5 sm:tracking-[0.24em]"
+
+const NAV_MOBILE_LINK_CLASS =
+  "rounded-sm px-3 py-2 font-label text-[11px] tracking-[0.22em] uppercase transition-colors sm:py-2.5 sm:text-[12px] sm:tracking-[0.25em]"
 
 const NAV_LINK_CLASS =
   "font-label text-[11px] tracking-[0.22em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase motion-safe:transition-[color,transform,border-color] motion-safe:duration-300 motion-safe:ease-out"
@@ -316,22 +319,25 @@ export function Navigation({
         />
         <div
           id="site-mobile-nav"
-          className={`mobile-nav-panel-top absolute bottom-0 right-0 z-[95] flex w-[min(100%,20rem)] flex-col border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
+          className={`mobile-nav-panel-top absolute right-0 bottom-0 z-[95] flex w-[min(100%,20rem)] flex-col overflow-hidden border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
           style={{
-            paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))",
+            paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
           }}
         >
-          <div className="border-b border-coal/10 px-5 py-4">
+          <div className="shrink-0 border-b border-coal/10 px-5 py-2.5 sm:py-3">
             <p className="font-label text-[9px] tracking-[0.35em] uppercase text-orange">Menu</p>
           </div>
-          <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-3" aria-label="Mobile">
+          <nav
+            className="flex min-h-0 flex-1 flex-col justify-center gap-0.5 overflow-hidden px-3 py-2 sm:py-3"
+            aria-label="Mobile"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-sm px-3 py-3.5 font-label text-[12px] tracking-[0.25em] uppercase transition-colors ${
+                className={`${NAV_MOBILE_LINK_CLASS} ${
                   pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"))
                     ? "bg-orange/12 text-orange"
                     : "text-coal active:bg-coal/8"
@@ -344,7 +350,7 @@ export function Navigation({
               href="https://www.standingsunwines.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-sm px-3 py-3.5 font-label text-[12px] tracking-[0.25em] uppercase text-spanish-dk active:bg-coal/8"
+              className={`${NAV_MOBILE_LINK_CLASS} text-spanish-dk active:bg-coal/8`}
             >
               Standing Sun Wines
             </a>
@@ -362,23 +368,23 @@ export function Navigation({
               href="https://www.instagram.com/analogueroomsyv"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex min-h-11 w-full items-center justify-center bg-orange px-4 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-cream"
+              className="mt-1 inline-flex min-h-9 w-full items-center justify-center bg-orange px-4 py-2 font-label text-[11px] tracking-[0.28em] uppercase text-cream sm:min-h-10 sm:py-2.5"
             >
               Instagram
             </a>
           </nav>
 
-          <div className="mt-auto flex flex-col items-center border-t border-coal/10 px-5 py-6 text-center">
+          <div className="flex shrink-0 flex-col items-center border-t border-coal/10 px-4 py-3 text-center sm:px-5 sm:py-4">
             <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase">
               Hours
             </p>
-            <p className="mt-2 font-body text-[13px] leading-snug text-coal/85">
+            <p className="mt-1 font-body text-[12px] leading-snug text-coal/85 sm:text-[13px]">
               {hoursLine}
             </p>
-            <p className="font-label mt-5 text-[9px] tracking-[0.28em] text-orange uppercase">
+            <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
               Address
             </p>
-            <p className="mt-2 font-body text-[13px] leading-snug text-coal/85">
+            <p className="mt-1 font-body text-[12px] leading-snug text-coal/85 sm:text-[13px]">
               {VENUE_STREET_ADDRESS}
               <br />
               {VENUE_ADDRESS_LOCALITY}, {VENUE_ADDRESS_REGION} {VENUE_POSTAL_CODE}
@@ -387,7 +393,7 @@ export function Navigation({
               href={getVenueGoogleMapsUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex min-h-10 items-center justify-center gap-1.5 border border-orange/40 px-4 py-2.5 font-label text-[10px] tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15"
+              className="mt-3 inline-flex min-h-9 items-center justify-center gap-1.5 border border-orange/40 px-3.5 py-2 font-label text-[10px] tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15"
             >
               Open in Maps
               <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
