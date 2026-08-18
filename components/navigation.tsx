@@ -240,7 +240,7 @@ export function Navigation({
             <a
               href={JOIN_LIST_HREF}
               onClick={handleJoinListClick}
-              className={NAV_CTA_OUTLINE_CLASS}
+              className={`${NAV_CTA_OUTLINE_CLASS} nav-join-shimmer`}
             >
               Join our List
             </a>
@@ -351,7 +351,7 @@ export function Navigation({
             <Link
               href={JOIN_LIST_HREF}
               onClick={handleJoinListClick}
-              className={NAV_MOBILE_CTA_OUTLINE_CLASS}
+              className={`${NAV_MOBILE_CTA_OUTLINE_CLASS} nav-join-shimmer`}
             >
               Join our List
             </Link>

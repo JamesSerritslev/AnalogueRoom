@@ -1,14 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { Footer } from "@/components/footer"
-import { SiteNavigation } from "@/components/site-navigation"
-import { EventBody } from "@/components/events/event-body"
-import { EventFeatureImage } from "@/components/events/event-feature-image"
+import { notFound, permanentRedirect } from "next/navigation"
 import { getEventBySlug } from "@/lib/sanity/queries"
-import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
-import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
-import { parseCalendarDate } from "@/lib/utils"
 
 export const revalidate = 60
 
@@ -18,88 +10,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const event = await getEventBySlug(decodeURIComponent(slug))
   if (!event) {
-    return { title: "Event · The Analogue Room" }
+    return { title: "Event · Analogue Room" }
   }
   return {
-    title: `${event.title} · The Analogue Room`,
+    title: `${event.title} · Analogue Room`,
     description: event.description,
     alternates: {
-      canonical: `/events/${encodeURIComponent(event.slug?.current ?? slug)}`,
+      canonical: `/events#${encodeURIComponent(event.slug?.current ?? slug)}`,
     },
   }
 }
 
-export default async function EventDetailPage({ params }: PageProps) {
+/** Legacy detail URLs → inline events calendar anchors. */
+export default async function EventDetailRedirect({ params }: PageProps) {
   const { slug: rawSlug } = await params
   const slug = decodeURIComponent(rawSlug)
   const event = await getEventBySlug(slug)
-
-  if (!event) {
-    notFound()
-  }
-
-  const cal = event.date ? parseCalendarDate(event.date) : null
-  const dateLine = cal ? cal.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" }) : "Date TBD"
-  const [{ homeHeroUrl }, L] = await Promise.all([getSiteImagery(), getLayoutSingletons()])
-  const pageHeroUrl = resolvePageHeroUrl(
-    event.heroBackground,
-    homeHeroUrl,
-    L.eventsIndex?.heroBackground,
-  )
-
-  return (
-    <>
-      <SiteNavigation />
-      <main>
-        <section className="relative flex min-h-[36vh] flex-col justify-end overflow-hidden px-4 pb-10 pt-page-hero sm:min-h-[38vh] sm:px-6 sm:pb-12 md:px-10 lg:px-12">
-          <div
-            className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
-            style={{
-              backgroundImage: `url('${pageHeroUrl}')`,
-            }}
-          >
-            <div className="interior-hero-scrim" aria-hidden />
-          </div>
-          <div className="relative z-2 max-w-[880px]">
-            <Link
-              href="/events"
-              className="-mx-1 mb-6 inline-flex min-h-10 items-center px-1 font-label text-[10px] tracking-[0.3em] uppercase text-orange/90 transition-colors hover:text-cream sm:tracking-[0.35em]"
-            >
-              ← Back to events
-            </Link>
-            <p className="font-label text-[11px] tracking-[0.4em] uppercase text-orange mb-3">{event.eventType}</p>
-            <h1 className="font-display text-[clamp(32px,5vw,52px)] text-cream leading-[1.05] mb-4">{event.title}</h1>
-            <p className="font-body text-cream/85 text-[15px]">
-              <span className="text-orange font-label tracking-[0.2em] uppercase text-[10px] mr-3">When</span>
-              {dateLine}
-              {event.time ? ` · ${event.time}` : null}
-            </p>
-            <div className="w-15 h-0.5 bg-orange mt-6" />
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-[720px] px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:px-12">
-          <EventFeatureImage image={event.image} title={event.title} />
-
-          <p className="font-body text-[16px] leading-relaxed text-coal/88 mb-8">{event.description}</p>
-
-          {event.longDescription?.length ? <EventBody value={event.longDescription} /> : null}
-
-          {event.ticketUrl ? (
-            <div className="mt-14 pt-10 border-t border-coal/10 text-center md:text-left">
-              <a
-                href={event.ticketUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-label text-[11px] tracking-[0.3em] uppercase bg-orange text-cream px-10 py-4 hover:bg-spanish transition-colors"
-              >
-                Tickets / RSVP
-              </a>
-            </div>
-          ) : null}
-        </section>
-      </main>
-      <Footer />
-    </>
-  )
+  if (!event) notFound()
+  const anchor = event.slug?.current?.trim() || slug
+  permanentRedirect(`/events#${encodeURIComponent(anchor)}`)
 }

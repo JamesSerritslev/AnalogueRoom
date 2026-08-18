@@ -119,16 +119,46 @@ export const VENUE_PHOTOS = {
     height: 725,
   },
   pizzaTray: {
-    src: "/images/food/19-pizza-tray.jpg",
-    alt: "Thick-crust pepperoni pizza with basil at The Analogue Room in Solvang",
+    src: "/images/food/21-pizza-row.jpg",
+    alt: "Four square pizza slices lined up on the bar at The Analogue Room in Solvang",
     width: 1024,
     height: 682,
   },
-  pizzaWine: {
-    src: "/images/food/20-pizza-wine.jpg",
-    alt: "Pizza slice and Analogue Room wine glass at the Solvang vinyl lounge and bar",
+  pizzaBoard: {
+    src: "/images/food/23-pizza-four.jpg",
+    alt: "Four thick-crust pizza slices on a wooden board at The Analogue Room in Solvang",
+    width: 870,
+    height: 1024,
+  },
+  pizzaCheese: {
+    src: "/images/food/24-pizza-cheese.jpg",
+    alt: "Cheese pizza slice on a wooden board at The Analogue Room in Solvang",
+    width: 1024,
+    height: 585,
+  },
+  pizzaPair: {
+    src: "/images/food/25-pizza-pair.jpg",
+    alt: "Cheese and pepperoni focaccia pizzas side by side at The Analogue Room in Solvang",
+    width: 1024,
+    height: 581,
+  },
+  pizzaPepperoni: {
+    src: "/images/food/26-pizza-pepperoni.jpg",
+    alt: "Pepperoni pizza slice on parchment at The Analogue Room in Solvang",
     width: 1024,
     height: 682,
+  },
+  pizzaSausage: {
+    src: "/images/food/27-pizza-sausage.jpg",
+    alt: "Sausage and mushroom pizza slice at The Analogue Room in Solvang",
+    width: 1024,
+    height: 682,
+  },
+  pizzaProsciutto: {
+    src: "/images/food/28-pizza-prosciutto.jpg",
+    alt: "Prosciutto, arugula, and balsamic pizza slice at The Analogue Room in Solvang",
+    width: 682,
+    height: 1024,
   },
 } as const satisfies Record<string, VenuePhoto>
 

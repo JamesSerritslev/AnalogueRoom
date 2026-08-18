@@ -1,94 +1,204 @@
+"use client"
+
 import Image from "next/image"
 import { MENU_CREAM_SENTINEL_ID } from "@/components/menu/menu-back-to-home-fixed"
-import { VenuePhotoImg } from "@/components/venue-photo-img"
+import { FOOD_MENU_PDF, FOOD_MENU_PNG } from "@/lib/food-menu"
+import type { VenuePhoto } from "@/lib/venue-photos"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
-const FOOD_MENU_PDF = "/food-menu.pdf"
-const FOOD_MENU_IMAGE = "/food-menu.png"
+const LEFT_PHOTOS = [
+  VENUE_PHOTOS.pizzaBoard,
+  VENUE_PHOTOS.pizzaProsciutto,
+  VENUE_PHOTOS.pizzaSausage,
+] as const
+
+const RIGHT_PHOTOS = [
+  VENUE_PHOTOS.pizzaCheese,
+  VENUE_PHOTOS.pizzaPepperoni,
+  VENUE_PHOTOS.pizzaPair,
+] as const
+
+const MOBILE_PHOTOS = [
+  VENUE_PHOTOS.pizzaBoard,
+  VENUE_PHOTOS.pizzaCheese,
+  VENUE_PHOTOS.pizzaPepperoni,
+  VENUE_PHOTOS.pizzaPair,
+  VENUE_PHOTOS.pizzaSausage,
+  VENUE_PHOTOS.pizzaProsciutto,
+] as const
+
+function MenuPdf({ priority = false }: { priority?: boolean }) {
+  return (
+    <a
+      href={FOOD_MENU_PDF}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
+    >
+      <Image
+        src={FOOD_MENU_PNG}
+        alt="Side Hustle Pizza menu — slices, squares, and salads with prices"
+        width={990}
+        height={1529}
+        sizes="(max-width: 1023px) 100vw, 560px"
+        className="h-auto w-full border border-coal/10 shadow-[0_18px_50px_-28px_rgba(28,24,20,0.55)]"
+        priority={priority}
+        quality={85}
+      />
+    </a>
+  )
+}
+
+function PdfLink() {
+  return (
+    <div className="mt-8 text-center lg:mt-10">
+      <a
+        href={FOOD_MENU_PDF}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-label inline-flex min-h-11 items-center justify-center border border-coal/25 px-6 py-3 text-[11px] tracking-[0.28em] text-coal uppercase transition-colors hover:border-orange hover:text-orange"
+      >
+        Open or download PDF
+      </a>
+    </div>
+  )
+}
+
+/** Fill a flex slot so left/right columns match the menu height. */
+function CoverPhoto({
+  photo,
+  sizes,
+  priority = false,
+}: {
+  photo: VenuePhoto
+  sizes: string
+  priority?: boolean
+}) {
+  return (
+    <div className="relative min-h-0 flex-1 overflow-hidden">
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        quality={75}
+        className="object-cover object-center"
+      />
+    </div>
+  )
+}
+
+/** Mobile: even 2-column grid after the menu. */
+function MobilePizzaCollage() {
+  return (
+    <div className="mt-14 grid grid-cols-2 gap-3">
+      {MOBILE_PHOTOS.map((photo, i) => (
+        <div key={photo.src} className="relative aspect-[4/5] overflow-hidden">
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            fill
+            sizes="50vw"
+            quality={75}
+            priority={i < 2}
+            className="object-cover object-center"
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
 
 /**
- * Mobile: photo → full-width menu → photo.
- * Desktop: both photos above a height-capped menu.
+ * Food menu page — photo hero + cream body.
+ * Desktop: printed menu centered with pizza images flanking it.
+ * Mobile: menu first, then an even photo grid.
  */
 export function FoodMenuView() {
   return (
-    <div className="relative flex min-h-dvh flex-col bg-earth px-4 pb-6 pt-page-hero sm:px-5 sm:pb-8 md:px-6">
-      <div
-        id={MENU_CREAM_SENTINEL_ID}
-        aria-hidden
-        className="absolute top-0 right-0 left-0 h-px"
-      />
-
-      <div className="mx-auto flex w-full max-w-[960px] flex-1 flex-col items-center gap-4 sm:gap-5 md:gap-6">
-        <header className="shrink-0 pt-2 text-center sm:pt-3 md:pt-4">
-          <h1 className="font-display text-[clamp(22px,4vw,32px)] leading-[1.05] text-cream">
-            Pizza &amp; Salads
-          </h1>
-          <p className="font-label mt-1 text-[9px] tracking-[0.4em] text-orange uppercase sm:mt-1.5 sm:text-[10px]">
-            Pizza &amp; salads in Solvang
-          </p>
-        </header>
-
-        {/* Mobile */}
-        <div className="flex w-full flex-col gap-4 sm:hidden">
-          <VenuePhotoImg
-            photo={VENUE_PHOTOS.pizzaTray}
+    <>
+      <section className="relative flex min-h-[48vh] flex-col justify-end overflow-hidden px-4 pb-12 pt-page-hero sm:min-h-[54vh] sm:px-6 sm:pb-14 md:min-h-[58vh] md:px-10 md:pb-16 lg:px-12">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={VENUE_PHOTOS.pizzaBoard.src}
+            alt={VENUE_PHOTOS.pizzaBoard.alt}
+            fill
             priority
             sizes="100vw"
-            className="h-auto w-full"
+            quality={75}
+            className="object-cover object-[center_40%] lg:hidden"
           />
           <Image
-            src={FOOD_MENU_IMAGE}
-            alt="Pizza and salad menu at The Analogue Room vinyl lounge in Solvang"
-            width={1188}
-            height={1835}
+            src={VENUE_PHOTOS.pizzaTray.src}
+            alt={VENUE_PHOTOS.pizzaTray.alt}
+            fill
             priority
-            className="h-auto w-full"
             sizes="100vw"
+            quality={75}
+            className="hidden object-cover object-[center_45%] lg:block"
           />
-          <VenuePhotoImg
-            photo={VENUE_PHOTOS.pizzaWine}
-            sizes="100vw"
-            className="h-auto w-full"
-          />
+          <div className="interior-hero-scrim" aria-hidden />
+        </div>
+        <div className="relative z-2">
+          <p className="font-label mb-4 text-[11px] tracking-[0.5em] text-orange uppercase">
+            Side Hustle Pizza
+          </p>
+          <h1 className="font-display mb-3.5 text-[clamp(36px,5.5vw,56px)] leading-[1.05] text-cream">
+            Pizza &amp; Salads
+          </h1>
+          <div className="mt-5 h-0.5 w-15 bg-orange" />
+        </div>
+      </section>
+
+      <section className="relative bg-cream px-4 py-14 text-coal sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-12 lg:py-24">
+        <div
+          id={MENU_CREAM_SENTINEL_ID}
+          aria-hidden
+          className="absolute top-0 right-0 left-0 h-px"
+        />
+
+        <p className="font-body mx-auto mb-12 max-w-[40rem] text-center text-[15px] leading-relaxed text-coal/80 sm:mb-14 lg:mb-16">
+          Pair some music with our great pizza! Made with Baker&apos;s Table focaccia crust
+          with locally sourced and house made toppings.
+        </p>
+
+        {/* Mobile / tablet: menu first, collage after */}
+        <div className="mx-auto max-w-[520px] lg:hidden">
+          <MenuPdf priority />
+          <PdfLink />
+          <MobilePizzaCollage />
         </div>
 
-        {/* Desktop */}
-        <div className="hidden w-full flex-col gap-5 sm:flex md:gap-6">
-          <div className="grid w-full grid-cols-2 gap-1">
-            <VenuePhotoImg
-              photo={VENUE_PHOTOS.pizzaTray}
-              priority
-              sizes="480px"
-              className="h-auto w-full"
-            />
-            <VenuePhotoImg
-              photo={VENUE_PHOTOS.pizzaWine}
-              sizes="480px"
-              className="h-auto w-full"
-            />
-          </div>
-          <div className="relative mx-auto aspect-[1188/1835] w-full max-h-[min(72vh,820px)] md:max-h-[min(78vh,900px)]">
-            <Image
-              src={FOOD_MENU_IMAGE}
-              alt="Pizza and salad menu at The Analogue Room vinyl lounge in Solvang"
-              fill
-              priority
-              className="object-contain object-center"
-              sizes="(max-width: 960px) 100vw, 960px"
-            />
-          </div>
-        </div>
+        {/* Desktop: menu as centerpiece; side columns match menu height */}
+        <div className="mx-auto hidden max-w-[1280px] lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(420px,560px)_minmax(0,1fr)] lg:items-stretch lg:gap-5 xl:gap-6">
+          <aside className="flex min-h-0 flex-col gap-3">
+            {LEFT_PHOTOS.map((photo, i) => (
+              <CoverPhoto
+                key={photo.src}
+                photo={photo}
+                sizes="(max-width: 1280px) 28vw, 340px"
+                priority={i === 0}
+              />
+            ))}
+          </aside>
 
-        <a
-          href={FOOD_MENU_PDF}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-label shrink-0 py-1 text-[10px] tracking-[0.28em] text-cream/70 uppercase transition-colors hover:text-orange sm:text-[11px]"
-        >
-          Open or download menu PDF
-        </a>
-      </div>
-    </div>
+          <div className="z-2">
+            <MenuPdf priority />
+            <PdfLink />
+          </div>
+
+          <aside className="flex min-h-0 flex-col gap-3">
+            {RIGHT_PHOTOS.map((photo) => (
+              <CoverPhoto
+                key={photo.src}
+                photo={photo}
+                sizes="(max-width: 1280px) 28vw, 340px"
+              />
+            ))}
+          </aside>
+        </div>
+      </section>
+    </>
   )
 }

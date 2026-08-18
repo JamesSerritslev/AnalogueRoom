@@ -6,6 +6,7 @@ type EventFeatureImageProps = {
   image: SanityImageField | undefined
   title?: string
   className?: string
+  priority?: boolean
 }
 
 function resolveEventImageSrc(image: SanityImageField | undefined): string | undefined {
@@ -21,7 +22,12 @@ function resolveEventImageSrc(image: SanityImageField | undefined): string | und
  * Renders an event image at its native aspect ratio (wide or tall Instagram-style).
  * Tall shots are width-capped so they don't dominate the page; wide shots fill the column.
  */
-export function EventFeatureImage({ image, title, className = "" }: EventFeatureImageProps) {
+export function EventFeatureImage({
+  image,
+  title,
+  className = "",
+  priority = false,
+}: EventFeatureImageProps) {
   const src = resolveEventImageSrc(image)
   if (!src) return null
 
@@ -32,7 +38,7 @@ export function EventFeatureImage({ image, title, className = "" }: EventFeature
 
   return (
     <figure
-      className={`mb-12 overflow-hidden rounded-sm border border-coal/10 bg-coal/5 ${
+      className={`mb-8 overflow-hidden rounded-sm border border-coal/10 bg-coal/5 sm:mb-10 ${
         portrait ? "mx-auto w-full max-w-[min(100%,420px)] sm:max-w-[480px]" : "w-full"
       } ${className}`}
     >
@@ -47,7 +53,7 @@ export function EventFeatureImage({ image, title, className = "" }: EventFeature
             ? "(max-width: 640px) 100vw, 480px"
             : "(max-width: 720px) 100vw, 720px"
         }
-        priority
+        priority={priority}
       />
     </figure>
   )
