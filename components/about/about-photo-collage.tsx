@@ -25,7 +25,7 @@ const ABOUT_ORDER = [
   VENUE_PHOTOS.nightCrowd,
   VENUE_PHOTOS.analogueWine,
   VENUE_PHOTOS.browsingRecords,
-  VENUE_PHOTOS.pizzaWine,
+  VENUE_PHOTOS.pizzaBoard,
 ] as const
 
 export function AboutPhotoCollage() {

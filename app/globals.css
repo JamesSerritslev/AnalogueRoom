@@ -271,6 +271,54 @@ html {
   animation: about-swipe-hint 1.35s ease-in-out infinite;
 }
 
+/* Nav “Join our List” — soft shimmer to draw the eye (not a glow) */
+@keyframes nav-join-shimmer {
+  0%,
+  82% {
+    transform: translateX(-130%) skewX(-14deg);
+    opacity: 0;
+  }
+  85% {
+    opacity: 1;
+  }
+  94% {
+    transform: translateX(130%) skewX(-14deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(130%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+.nav-join-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.nav-join-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    color-mix(in srgb, var(--color-orange) 42%, transparent) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%) skewX(-14deg);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav-join-shimmer::after {
+    animation: nav-join-shimmer 9s ease-in-out infinite;
+  }
+}
+
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .reveal-scope,
@@ -295,6 +343,11 @@ html {
   .about-swipe-hint {
     animation: none !important;
     transform: none !important;
+  }
+
+  .nav-join-shimmer::after {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 
