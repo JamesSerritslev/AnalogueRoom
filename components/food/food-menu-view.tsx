@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { MENU_CREAM_SENTINEL_ID } from "@/components/menu/menu-back-to-home-fixed"
 import { FOOD_MENU_PDF, FOOD_MENU_PNG } from "@/lib/food-menu"
 import type { VenuePhoto } from "@/lib/venue-photos"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
@@ -152,12 +151,6 @@ export function FoodMenuView() {
       </section>
 
       <section className="relative bg-cream px-4 py-14 text-coal sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-12 lg:py-24">
-        <div
-          id={MENU_CREAM_SENTINEL_ID}
-          aria-hidden
-          className="absolute top-0 right-0 left-0 h-px"
-        />
-
         <p className="font-body mx-auto mb-12 max-w-[40rem] text-center text-[15px] leading-relaxed text-coal/80 sm:mb-14 lg:mb-16">
           Pair some music with our great pizza! Made with Baker&apos;s Table focaccia crust
           with locally sourced and house made toppings.

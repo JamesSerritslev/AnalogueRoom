@@ -1,25 +1,27 @@
 import dynamic from "next/dynamic"
 import type { Metadata } from "next"
 import { HomePageClientScripts } from "@/components/home/home-page-client-scripts"
-import { SiteNavigation } from "@/components/site-navigation"
+import { SiteNavigation } from "@/components/layout/site-navigation"
 import { HeroSection } from "@/components/home/hero-section"
+import { buildPageMetadata } from "@/lib/page-metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
-  },
+export const metadata: Metadata = buildPageMetadata({
+  title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
   description:
     "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
-    description:
-      "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
-    url: "/",
-  },
-}
+  keywords: [
+    "wine bar",
+    "best wine",
+    "beer",
+    "live vinyl music",
+    "best pizza",
+    "nightlife",
+    "restaurant",
+    "local winery",
+  ],
+  path: "/",
+})
+
 
 const PillarsSection = dynamic(() =>
   import("@/components/home/pillars-section").then((m) => ({
@@ -58,7 +60,7 @@ const HomeReviewsSection = dynamic(() =>
 )
 
 const Footer = dynamic(() =>
-  import("@/components/footer").then((m) => ({ default: m.Footer })),
+  import("@/components/layout/footer").then((m) => ({ default: m.Footer })),
 )
 
 export const revalidate = 60

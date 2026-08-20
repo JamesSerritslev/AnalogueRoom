@@ -361,7 +361,7 @@ html {
   }
 }
 
-/* Home hero: same as analogueroom_index.html; CSS background + ::after scrim */
+/* Home hero: full-bleed photo + ::after scrim */
 .hero-bg-photo {
   position: absolute;
   inset: 0;

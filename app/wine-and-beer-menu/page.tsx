@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import { SiteNavigation } from "@/components/site-navigation"
-import { Footer } from "@/components/footer"
+import { SiteNavigation } from "@/components/layout/site-navigation"
+import { Footer } from "@/components/layout/footer"
 import { MenuBackToHomeFixed } from "@/components/menu/menu-back-to-home-fixed"
 import { MenuFullPageView } from "@/components/menu/menu-full-page-view"
 import { MenuHashScroll } from "@/components/menu/menu-hash-scroll"
@@ -11,20 +11,27 @@ import {
 } from "@/lib/content-defaults"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveMenuSections } from "@/lib/menu-resolve"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Wine & Beer Menu · Analogue Room in Solvang",
-  },
+export const metadata: Metadata = buildPageMetadata({
+  title: "Wine & Beer Menu · Analogue Room in Solvang",
   description:
     "Wines, craft beer, and zero-proof pours at The Analogue Room: a vinyl lounge and bar in Solvang, CA.",
-  alternates: {
-    canonical: "/wine-and-beer-menu",
-  },
-}
+  keywords: [
+    "wine",
+    "wine bar",
+    "best wine",
+    "wine solvang",
+    "beer",
+    "drinks",
+    "menu",
+  ],
+  path: "/wine-and-beer-menu",
+})
+
 
 export default async function WineAndBeerMenuPage() {
   const L = await getLayoutSingletons()

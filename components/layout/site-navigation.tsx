@@ -1,6 +1,6 @@
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
-import { Navigation } from "@/components/navigation"
+import { Navigation } from "@/components/layout/navigation"
 import { DEFAULT_HERO_META_HOURS } from "@/lib/content-defaults"
 
 export async function SiteNavigation() {

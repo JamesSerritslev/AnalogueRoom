@@ -2,23 +2,14 @@ import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import "./globals.css"
 import { draftMode } from "next/headers"
-import { DraftModeLoader } from "@/components/draft-mode-loader"
-import { LocalBusinessJsonLd } from "@/components/local-business-json-ld"
-import { PageTransition } from "@/components/page-transition"
+import { DraftModeLoader } from "@/components/studio/draft-mode-loader"
+import { LocalBusinessJsonLd } from "@/components/shared/local-business-json-ld"
+import { PageTransition } from "@/components/layout/page-transition"
 import { fontVariables } from "@/lib/fonts"
 import { getSiteUrl } from "@/lib/site-url"
 import { SanityLive } from "@/sanity/lib/live"
 
 const GA_MEASUREMENT_ID = "G-Q2DC27H5DK"
-
-const ogImage = {
-  url: "/images/og.png",
-  width: 1024,
-  height: 492,
-  type: "image/png" as const,
-  alt:
-    "The Analogue Room: minimalist illustration of analog audio equipment with the ANALOGUE ROOM wordmark",
-}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -33,17 +24,6 @@ export const metadata: Metadata = {
     default: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
     template: "%s · The Analogue Room",
   },
-  description:
-    "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
-  keywords: [
-    "Analogue Room",
-    "vinyl bar Solvang",
-    "vinyl lounge Solvang",
-    "Solvang nightlife",
-    "wine bar Solvang",
-    "beer bar Solvang",
-    "1693 Mission Drive",
-  ],
   icons: {
     // Google prefers a stable square PNG larger than 48px; Bing wants /favicon.ico.
     icon: [
@@ -62,27 +42,6 @@ export const metadata: Metadata = {
   other: {
     "msapplication-TileImage": "/icon-192.png",
     "msapplication-TileColor": "#282b2e",
-  },
-  openGraph: {
-    title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
-    description:
-      "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
-    type: "website",
-    locale: "en_US",
-    url: "/",
-    siteName: "The Analogue Room",
-    images: [ogImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
-    description:
-      "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
-    images: [ogImage.url],
-  },
-  robots: {
-    index: true,
-    follow: true,
   },
 }
 

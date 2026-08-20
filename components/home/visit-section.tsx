@@ -9,7 +9,7 @@ import {
   DEFAULT_VISIT_BODY,
   DEFAULT_VISIT_HEADLINE,
 } from "@/lib/content-defaults"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { HoursRow } from "@/lib/sanity/types"
 import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"

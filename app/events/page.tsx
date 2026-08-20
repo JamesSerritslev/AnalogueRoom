@@ -1,22 +1,32 @@
 import type { Metadata } from "next"
-import { SiteNavigation } from "@/components/site-navigation"
-import { Footer } from "@/components/footer"
+import { SiteNavigation } from "@/components/layout/site-navigation"
+import { Footer } from "@/components/layout/footer"
 import { EventsList } from "@/components/events/events-list"
-import { VenueHeroCollage } from "@/components/venue-hero-collage"
+import { VenueHeroCollage } from "@/components/shared/venue-hero-collage"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { getEvents } from "@/lib/sanity/queries"
 import { DEFAULT_EVENTS_INDEX_INTRO } from "@/lib/content-defaults"
+import { buildPageMetadata } from "@/lib/page-metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Events · Analogue Room in Solvang",
-  },
+export const metadata: Metadata = buildPageMetadata({
+  title: "Events · Analogue Room in Solvang",
   description:
-    "Upcoming nights at The Analogue Room in Solvang: listening parties, album spins, special pours, and easygoing nightlife.",
-  alternates: {
-    canonical: "/events",
-  },
-}
+    "Upcoming nights at The Analogue Room in Solvang: live vinyl music, guest DJs, special pours, and easygoing nightlife.",
+  keywords: [
+    "best music",
+    "live vinyl music",
+    "dj",
+    "guest dj",
+    "special events",
+    "nightlife",
+    "party",
+    "bar",
+    "wine bar",
+    "beer bar",
+  ],
+  path: "/events",
+})
+
 
 export const revalidate = 60 // Revalidate every 60 seconds
 

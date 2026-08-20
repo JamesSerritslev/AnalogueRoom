@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { VenuePhotoImg } from "@/components/venue-photo-img"
+import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import type { VenuePhoto } from "@/lib/venue-photos"
 import {
   Dialog,

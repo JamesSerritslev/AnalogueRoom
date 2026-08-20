@@ -1,11 +1,11 @@
 import type { ReactNode } from "react"
 import { OfferingsMenuLink } from "@/components/home/offerings-menu-link"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { HOME_MENU_SCROLL_TARGET_ID } from "@/lib/menu-scroll-storage"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
-import { renderHeadlineAccent } from "@/lib/render-headline-accent"
+import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
 import {
   DEFAULT_OFFERINGS_BEER_DESCRIPTION,
   DEFAULT_OFFERINGS_BEER_TITLE,

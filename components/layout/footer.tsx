@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { NewsletterSignupLazy } from "@/components/newsletter-signup-lazy"
+import { NewsletterSignupLazy } from "@/components/newsletter/newsletter-signup-lazy"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import {
@@ -12,7 +12,7 @@ import {
   DEFAULT_SISTER_PROPERTY_URL,
   DEFAULT_TAGLINE,
 } from "@/lib/content-defaults"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
 
 /** Shared center axis with `#newsletter` - both use the same max width and mx-auto. */

@@ -112,6 +112,12 @@ export const VENUE_PHOTOS = {
     width: 1024,
     height: 642,
   },
+  barFull: {
+    src: "/images/about/19-bar-full.jpg",
+    alt: "The Analogue Room bar in Solvang with vinyl shelves, wine bottles, and turntables under warm pendant lights",
+    width: 960,
+    height: 720,
+  },
   browsingCorner: {
     src: "/images/about/18-browsing-corner.jpg",
     alt: "Guest browsing the vinyl wall at The Analogue Room listening lounge in Solvang",

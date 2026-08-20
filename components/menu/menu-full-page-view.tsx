@@ -179,7 +179,11 @@ export function MenuFullPageView({
               <section
                 key={`${section.title}-${idx}`}
                 id={section.slug}
-                className={`scroll-mt-28 ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
+                className={`scroll-mt-28 ${
+                  section.slug === "wines" ? "max-md:scroll-mt-40" : ""
+                } ${
+                  section.slug === "beer" ? "scroll-mt-44 md:scroll-mt-48" : ""
+                } ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
               >
                 <h2 className="font-display mb-2 text-[clamp(26px,4vw,36px)] leading-[1.05] text-coal">
                   {section.title}
