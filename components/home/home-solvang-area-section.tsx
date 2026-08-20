@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import {
   DEFAULT_ADDRESS,
   DEFAULT_HOME_CTA_BODY,
@@ -10,7 +10,7 @@ import {
   DEFAULT_SOLVANG_AREA_HEADLINE,
 } from "@/lib/content-defaults"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
-import { renderHeadlineAccent } from "@/lib/render-headline-accent"
+import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
 import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
 
 export function HomeSolvangAreaSection() {

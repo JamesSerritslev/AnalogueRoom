@@ -1,11 +1,11 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { LazyWhenVisible } from "@/components/lazy-when-visible"
+import { LazyWhenVisible } from "@/components/shared/lazy-when-visible"
 
 const NewsletterSignupForm = dynamic(
   () =>
-    import("@/components/newsletter-signup-form").then((m) => ({
+    import("@/components/newsletter/newsletter-signup-form").then((m) => ({
       default: m.NewsletterSignupForm,
     })),
   { ssr: false },

@@ -10,19 +10,19 @@ const HomeScrollRestore = dynamic(
 
 const NewsletterHashScroll = dynamic(
   () =>
-    import("@/components/newsletter-hash-scroll").then((m) => m.NewsletterHashScroll),
+    import("@/components/newsletter/newsletter-hash-scroll").then((m) => m.NewsletterHashScroll),
   { ssr: false },
 )
 
 const LocationHashScroll = dynamic(
   () =>
-    import("@/components/location-hash-scroll").then((m) => m.LocationHashScroll),
+    import("@/components/home/location-hash-scroll").then((m) => m.LocationHashScroll),
   { ssr: false },
 )
 
 const OfferingsHashScroll = dynamic(
   () =>
-    import("@/components/offerings-hash-scroll").then((m) => m.OfferingsHashScroll),
+    import("@/components/home/offerings-hash-scroll").then((m) => m.OfferingsHashScroll),
   { ssr: false },
 )
 

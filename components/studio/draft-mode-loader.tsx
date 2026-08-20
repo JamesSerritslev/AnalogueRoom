@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 
 const DraftVisualEditing = dynamic(
   () =>
-    import("@/components/draft-visual-editing").then((m) => m.DraftVisualEditing),
+    import("@/components/studio/draft-visual-editing").then((m) => m.DraftVisualEditing),
   { ssr: false },
 )
 

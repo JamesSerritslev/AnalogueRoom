@@ -1,8 +1,8 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { OfferingsScrollLink } from "@/components/home/offerings-scroll-link"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { VenuePhotoImg } from "@/components/venue-photo-img"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
 import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
 

@@ -11,14 +11,15 @@ import {
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
-import { renderHeadlineAccent } from "@/lib/render-headline-accent"
+import { VENUE_PHOTOS } from "@/lib/venue-photos"
+import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
 
 function renderBrandLine(text: string) {
   return renderHeadlineAccent(text, "Intention")
 }
 
 export async function HeroSection() {
-  const [{ homeHeroUrl, siteLogoUrl, heroLead }, L] = await Promise.all([
+  const [{ siteLogoUrl, heroLead }, L] = await Promise.all([
     getSiteImagery(),
     getLayoutSingletons(),
   ])
@@ -42,13 +43,13 @@ export async function HeroSection() {
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pt-[120px] pb-28 text-center">
       <div className="hero-bg-photo hero-bg-drift-pulse" aria-hidden>
         <Image
-          src={homeHeroUrl}
-          alt="Vinyl lounge and wine bar interior at The Analogue Room in Solvang"
+          src={VENUE_PHOTOS.barFull.src}
+          alt={VENUE_PHOTOS.barFull.alt}
           fill
           priority
           fetchPriority="high"
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-[center_40%]"
           quality={85}
         />
       </div>

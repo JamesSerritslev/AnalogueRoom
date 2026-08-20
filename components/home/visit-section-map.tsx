@@ -1,4 +1,4 @@
-import { OpenInMapsLink } from "@/components/open-in-maps-link"
+import { OpenInMapsLink } from "@/components/shared/open-in-maps-link"
 import { getVenueGoogleMapsEmbedSrc } from "@/lib/venue-location"
 
 /**

@@ -6,9 +6,9 @@ import {
   DEFAULT_PILLARS_HEADLINE,
 } from "@/lib/content-defaults"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
-import { renderHeadlineAccent } from "@/lib/render-headline-accent"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { VenuePhotoImg } from "@/components/venue-photo-img"
+import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 

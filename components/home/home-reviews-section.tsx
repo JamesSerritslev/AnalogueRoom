@@ -1,5 +1,5 @@
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { VenuePhotoImg } from "@/components/venue-photo-img"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { getVenueGoogleReviewsUrl, VENUE_NAME } from "@/lib/venue-location"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 

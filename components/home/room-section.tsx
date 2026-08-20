@@ -3,10 +3,10 @@ import {
   DEFAULT_ROOM_EYEBROW,
   DEFAULT_ROOM_HEADLINE,
 } from "@/lib/content-defaults"
-import { RevealOnScroll } from "@/components/reveal-on-scroll"
-import { VenuePhotoImg } from "@/components/venue-photo-img"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
-import { renderHeadlineAccent } from "@/lib/render-headline-accent"
+import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 

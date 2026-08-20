@@ -1,22 +1,28 @@
 import type { Metadata } from "next"
-import { SiteNavigation } from "@/components/site-navigation"
-import { Footer } from "@/components/footer"
+import { SiteNavigation } from "@/components/layout/site-navigation"
+import { Footer } from "@/components/layout/footer"
 import { InquiryForm } from "@/components/host-event/inquiry-form"
 import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { resolveHostEventVenueStats } from "@/lib/host-event-venue-stats"
 import { DEFAULT_HOST_EVENT_INTRO } from "@/lib/content-defaults"
+import { buildPageMetadata } from "@/lib/page-metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Host Your Event · Analogue Room in Solvang",
-  },
+export const metadata: Metadata = buildPageMetadata({
+  title: "Host Your Event · Analogue Room in Solvang",
   description:
     "Host a private night at The Analogue Room in Solvang: vinyl, thoughtful drinks, and a lounge built for gatherings.",
-  alternates: {
-    canonical: "/host-event",
-  },
-}
+  keywords: [
+    "special events",
+    "party",
+    "nightlife",
+    "bar",
+    "wine bar",
+    "private event Solvang",
+  ],
+  path: "/host-event",
+})
+
 
 export const revalidate = 60
 
