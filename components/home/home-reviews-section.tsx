@@ -1,14 +1,39 @@
+import { ExternalLink } from "lucide-react"
 import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
-import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
+import {
+  TrackedGoogleReviewsLink,
+  TrackedYelpLink,
+} from "@/components/shared/tracked-links"
+import { GoogleReviewsIcon } from "@/components/icons/google-reviews-icon"
+import { YelpIcon } from "@/components/icons/yelp-icon"
+import { getGooglePlaceReviews } from "@/lib/google-place-reviews"
+import { DEFAULT_YELP_URL } from "@/lib/content-defaults"
 import { getVenueGoogleReviewsUrl, VENUE_NAME } from "@/lib/venue-location"
-import { VENUE_PHOTOS } from "@/lib/venue-photos"
+
+function StarRow({ rating, className = "" }: { rating: number; className?: string }) {
+  const filled = Math.round(Math.min(5, Math.max(0, rating)))
+  return (
+    <span
+      className={`inline-flex gap-0.5 text-orange ${className}`}
+      aria-label={`${rating} out of 5 stars`}
+    >
+      {Array.from({ length: 5 }, (_, i) => (
+        <span key={i} aria-hidden className={i < filled ? "opacity-100" : "opacity-25"}>
+          ★
+        </span>
+      ))}
+    </span>
+  )
+}
 
 /**
- * Homepage Google reviews strip for GBP consistency.
- * Links out to Google reviews (no map embed — the visit section already has the map).
+ * Homepage Google reviews — live Place Details when GOOGLE_PLACES_API_KEY is set,
+ * otherwise heading + link-out CTA. Yelp icon links to the Yelp listing.
  */
-export function HomeReviewsSection() {
+export async function HomeReviewsSection() {
   const reviewsUrl = getVenueGoogleReviewsUrl()
+  const data = await getGooglePlaceReviews()
+  const hasReviews = Boolean(data?.reviews.length)
 
   return (
     <section
@@ -23,31 +48,105 @@ export function HomeReviewsSection() {
           Reviews on <em className="not-italic text-orange">Google</em>
         </h2>
         <div className="mx-auto mb-8 h-0.5 w-12 bg-orange" />
-        <p className="font-body mx-auto mb-10 max-w-[540px] text-[15px] leading-relaxed text-coal/80">
-          What people say about {VENUE_NAME} in Solvang.
-        </p>
+        {hasReviews && data ? (
+          <div className="mb-10 flex flex-col items-center gap-2">
+            {data.rating != null ? (
+              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                <StarRow rating={data.rating} className="text-lg" />
+                <p className="font-display text-xl text-coal tabular-nums">
+                  {data.rating.toFixed(1)}
+                </p>
+              </div>
+            ) : null}
+            <p className="font-body text-[15px] text-coal/70">
+              {data.userRatingCount != null
+                ? `${data.userRatingCount} Google review${data.userRatingCount === 1 ? "" : "s"}`
+                : `What people say about ${VENUE_NAME} in Solvang.`}
+            </p>
+          </div>
+        ) : (
+          <p className="font-body mx-auto mb-10 max-w-[540px] text-[15px] leading-relaxed text-coal/80">
+            What people say about {VENUE_NAME} in Solvang.
+          </p>
+        )}
       </RevealOnScroll>
 
-      <RevealOnScroll delay={60} className="mx-auto mb-8 w-full max-w-[920px] sm:mb-10">
-        <VenuePhotoImg
-          photo={VENUE_PHOTOS.nightCrowd}
-          sizes="(max-width: 1100px) 100vw, 920px"
-          className="h-auto w-full"
-        />
-      </RevealOnScroll>
+      {hasReviews && data ? (
+        <div className="mx-auto flex max-w-[720px] flex-col gap-10 sm:gap-12">
+          {data.reviews.map((review, idx) => (
+            <RevealOnScroll key={`${review.authorName}-${idx}`} delay={40 + idx * 40}>
+              <blockquote className="border-t border-coal/10 pt-8 text-center sm:pt-10">
+                <StarRow rating={review.rating} className="mb-4 text-sm" />
+                <p className="font-display text-[clamp(20px,2.8vw,26px)] leading-snug text-coal">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <footer className="mt-5 font-body text-[14px] text-coal/65">
+                  {review.authorUri ? (
+                    <a
+                      href={review.authorUri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-coal/80 transition-colors hover:text-orange"
+                    >
+                      {review.authorName}
+                    </a>
+                  ) : (
+                    <span>{review.authorName}</span>
+                  )}
+                  {review.relativeTime ? (
+                    <>
+                      <span aria-hidden className="mx-2 text-coal/30">
+                        ·
+                      </span>
+                      <span>{review.relativeTime}</span>
+                    </>
+                  ) : null}
+                  <span aria-hidden className="mx-2 text-coal/30">
+                    ·
+                  </span>
+                  <span>Google</span>
+                </footer>
+              </blockquote>
+            </RevealOnScroll>
+          ))}
+        </div>
+      ) : null}
 
       <RevealOnScroll
         delay={80}
-        className="mx-auto mb-8 max-w-[480px] pb-4 text-center sm:mb-10 sm:pb-6"
+        className="mx-auto mt-10 flex max-w-[480px] flex-col items-center pb-4 text-center sm:mt-12 sm:pb-6"
       >
-        <a
-          href={reviewsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-label inline-flex min-h-11 items-center justify-center bg-orange px-6 py-3 text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-spanish"
-        >
-          Read reviews on Google
-        </a>
+        <div className="flex items-center justify-center gap-5 sm:gap-6">
+          <TrackedGoogleReviewsLink
+            href={reviewsUrl}
+            placement="home_reviews"
+            className="relative inline-flex items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+          >
+            <GoogleReviewsIcon className="h-14 w-14 sm:h-16 sm:w-16" />
+            <ExternalLink
+              className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-sm bg-cream text-coal/55 shadow-sm sm:h-4 sm:w-4"
+              strokeWidth={2}
+              aria-hidden
+            />
+            <span className="sr-only">Leave a review on Google (opens in a new tab)</span>
+          </TrackedGoogleReviewsLink>
+          <TrackedYelpLink
+            href={DEFAULT_YELP_URL}
+            placement="home_reviews"
+            className="relative inline-flex items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+          >
+            <YelpIcon className="h-12 w-12 sm:h-14 sm:w-14" />
+            <ExternalLink
+              className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-sm bg-cream text-coal/55 shadow-sm sm:h-4 sm:w-4"
+              strokeWidth={2}
+              aria-hidden
+            />
+            <span className="sr-only">Leave a review on Yelp (opens in a new tab)</span>
+          </TrackedYelpLink>
+        </div>
+        <p className="mt-5 font-body text-[14px] text-coal/70 sm:text-[15px]">
+          Leave us a review on Google or Yelp!
+        </p>
       </RevealOnScroll>
     </section>
   )

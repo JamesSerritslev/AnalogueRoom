@@ -56,6 +56,7 @@ export const VENUE_GOOGLE_PLACE_URL =
 function getGoogleListingEnv(): string {
   return (
     process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim() ||
+    process.env.GOOGLE_PLACE_ID?.trim() ||
     process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID?.trim() ||
     ""
   )
@@ -65,11 +66,24 @@ function isHttpUrl(value: string): boolean {
   return /^https?:\/\//i.test(value)
 }
 
+function looksLikePlaceId(value: string): boolean {
+  if (/^ChIJ[\w-]+$/.test(value)) return true
+  // Places API New also accepts some opaque resource ids (not URLs)
+  if (/^[A-Za-z0-9_-]{20,}$/.test(value) && !value.includes(".")) return true
+  return false
+}
+
 /** True Place ID only (e.g. ChIJ…). Empty if env is a share URL or missing. */
 export function getGooglePlaceId(): string {
-  const raw = getGoogleListingEnv()
-  if (!raw || isHttpUrl(raw)) return ""
-  if (/^ChIJ[\w-]+$/.test(raw) || /^[A-Za-z0-9_-]{20,}$/.test(raw)) return raw
+  for (const raw of [
+    process.env.GOOGLE_PLACE_ID?.trim(),
+    process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID?.trim(),
+  ]) {
+    if (raw && !isHttpUrl(raw) && looksLikePlaceId(raw)) return raw
+  }
+  const listing = getGoogleListingEnv()
+  if (!listing || isHttpUrl(listing)) return ""
+  if (looksLikePlaceId(listing)) return listing
   return ""
 }
 

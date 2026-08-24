@@ -144,9 +144,8 @@ export function AboutPhotoLightbox({
           </button>
         </div>
 
-        <p className="mx-auto max-w-[36rem] px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 text-center font-body text-[13px] leading-snug text-cream/75 sm:px-6">
-          {current?.alt}
-        </p>
+        <p className="sr-only">{current?.alt}</p>
+        <div className="pb-[max(0.75rem,env(safe-area-inset-bottom))]" aria-hidden />
       </DialogContent>
     </Dialog>
   )

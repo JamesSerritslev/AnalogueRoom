@@ -17,3 +17,62 @@ export function renderHeadlineAccent(fullText: string, accent: string): ReactNod
     </>
   )
 }
+
+export type BodyAccentLink = {
+  phrase: string
+  /** Custom node for the matched phrase (e.g. maps link). */
+  render: (phrase: string) => ReactNode
+}
+
+/**
+ * Highlights every listed phrase (first occurrence each), non-overlapping.
+ * Longer phrases win when they would collide. Optional `links` override accent markup.
+ * Text stays crawlable — only presentation changes.
+ */
+export function renderBodyAccents(
+  fullText: string,
+  accents: readonly string[],
+  links: readonly BodyAccentLink[] = [],
+): ReactNode {
+  if (!fullText?.trim()) return fullText
+
+  const linkByPhrase = new Map(links.map((l) => [l.phrase, l] as const))
+  const phrases = [
+    ...new Set([...accents, ...links.map((l) => l.phrase)].filter(Boolean)),
+  ].sort((a, b) => b.length - a.length)
+
+  if (!phrases.length) return fullText
+
+  type Hit = { start: number; end: number; text: string }
+  const hits: Hit[] = []
+
+  for (const phrase of phrases) {
+    const i = fullText.indexOf(phrase)
+    if (i < 0) continue
+    const end = i + phrase.length
+    if (hits.some((h) => i < h.end && end > h.start)) continue
+    hits.push({ start: i, end, text: phrase })
+  }
+
+  hits.sort((a, b) => a.start - b.start)
+  if (!hits.length) return fullText
+
+  const nodes: ReactNode[] = []
+  let cursor = 0
+  hits.forEach((h, idx) => {
+    if (h.start > cursor) nodes.push(fullText.slice(cursor, h.start))
+    const link = linkByPhrase.get(h.text)
+    nodes.push(
+      link ? (
+        <span key={`link-${idx}-${h.start}`}>{link.render(h.text)}</span>
+      ) : (
+        <em key={`accent-${idx}-${h.start}`} className="not-italic text-orange">
+          {h.text}
+        </em>
+      ),
+    )
+    cursor = h.end
+  })
+  if (cursor < fullText.length) nodes.push(fullText.slice(cursor))
+  return <>{nodes}</>
+}

@@ -5,8 +5,9 @@ import { EventsList } from "@/components/events/events-list"
 import { VenueHeroCollage } from "@/components/shared/venue-hero-collage"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { getEvents } from "@/lib/sanity/queries"
-import { DEFAULT_EVENTS_INDEX_INTRO } from "@/lib/content-defaults"
+import { DEFAULT_EVENTS_INDEX_INTRO, DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import { buildPageMetadata } from "@/lib/page-metadata"
+import { TrackedInstagramLink } from "@/components/shared/tracked-links"
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Events · Analogue Room in Solvang",
@@ -83,14 +84,13 @@ export default async function EventsPage() {
           <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[520px] mx-auto mb-8">
             New events drop on Instagram first. Follow @analogueroomsyv for the latest.
           </p>
-          <a
-            href="https://www.instagram.com/analogueroomsyv"
-            target="_blank"
-            rel="noopener noreferrer"
+          <TrackedInstagramLink
+            href={DEFAULT_INSTAGRAM_URL}
+            placement="events_cta"
             className="inline-flex min-h-11 items-center justify-center border border-cream px-6 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-cream transition-colors hover:bg-cream hover:text-coal sm:min-h-0 sm:px-8 sm:py-3.5 sm:tracking-[0.3em]"
           >
             Follow on Instagram
-          </a>
+          </TrackedInstagramLink>
         </section>
       </main>
       <Footer />

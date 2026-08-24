@@ -4,6 +4,9 @@ import { getVenueGoogleMapsEmbedSrc } from "@/lib/venue-location"
 /**
  * Homepage map for GBP consistency: Google Maps embed + Open in Maps CTA.
  * Square on mobile; wider landscape frame on desktop.
+ *
+ * Clicks inside the Google iframe cannot be tracked (cross-origin);
+ * the “Open in Maps” CTA is tracked via `open_in_maps`.
  */
 export function VisitSectionMap() {
   const embedSrc = getVenueGoogleMapsEmbedSrc()
@@ -26,6 +29,7 @@ export function VisitSectionMap() {
       <div className="mt-5 flex justify-center sm:mt-6">
         <OpenInMapsLink
           placement="home_map_cta"
+          provider="apple"
           className="font-label inline-flex min-h-11 items-center justify-center border border-coal/25 bg-transparent px-6 py-3 text-[11px] uppercase tracking-[0.24em] text-coal transition-colors hover:border-orange hover:text-orange motion-safe:duration-300 sm:tracking-[0.28em]"
         >
           Open in Maps

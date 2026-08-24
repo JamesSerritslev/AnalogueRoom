@@ -11,7 +11,7 @@ import {
 } from "@/lib/content-defaults"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
-import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
+import { TrackedDirectionsLink } from "@/components/shared/tracked-links"
 
 export function HomeSolvangAreaSection() {
   const addressLine = DEFAULT_ADDRESS.split("\n").join(", ")
@@ -63,14 +63,12 @@ export function HomeSolvangAreaSection() {
         </p>
         <p className="font-body mb-8 text-[13px] leading-relaxed text-cream/60">
           The Analogue Room ·{" "}
-          <a
-            href={VENUE_APPLE_MAPS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <TrackedDirectionsLink
+            placement="home_cta_address"
             className="text-cream/80 underline-offset-2 transition-colors hover:text-orange hover:underline"
           >
             {addressLine}
-          </a>
+          </TrackedDirectionsLink>
           {" · "}
           Open Thu–Sat 4pm–10pm · Sun–Mon 4pm–8pm
         </p>

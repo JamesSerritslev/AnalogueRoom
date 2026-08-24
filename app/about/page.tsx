@@ -8,6 +8,7 @@ import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import {
   DEFAULT_ABOUT_STORY_PARAGRAPHS,
+  DEFAULT_ABOUT_STORY_ACCENTS,
   DEFAULT_TEAM_INTRO,
   DEFAULT_TEAM_MEMBERS,
 } from "@/lib/content-defaults"
@@ -16,7 +17,7 @@ import { buildPageMetadata } from "@/lib/page-metadata"
 export const metadata: Metadata = buildPageMetadata({
   title: "About · Analogue Room",
   description:
-    "The story of The Analogue Room: a vinyl lounge and wine bar in Solvang, built for listening, pouring, and slow nights out.",
+    "The Analogue Room opened in downtown Solvang in July 2026: a vinyl listening lounge, wine and beer bar, and pizza kitchen in Founder's Square.",
   keywords: [
     "analogue room",
     "analogue room owner",
@@ -38,6 +39,7 @@ export default async function AboutPage() {
   const pageHeroUrl = resolvePageHeroUrl(L.about?.heroBackground, homeHeroUrl)
 
   const storyParagraphs = [...DEFAULT_ABOUT_STORY_PARAGRAPHS]
+  const storyAccents = DEFAULT_ABOUT_STORY_ACCENTS
 
   const teamMembers =
     L.about?.teamMembers?.filter((m) => m?.name?.trim())?.length ?? 0
@@ -68,7 +70,7 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        <AboutStory paragraphs={storyParagraphs} />
+        <AboutStory paragraphs={storyParagraphs} accents={storyAccents} />
 
         <section className="bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
           <div className="mx-auto mb-16 max-w-[680px] text-center">

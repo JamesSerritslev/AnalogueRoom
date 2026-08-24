@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
+import { trackNewsletterSignup } from "@/lib/analytics"
 
 export function NewsletterSignupForm() {
   const [email, setEmail] = useState("")
@@ -45,6 +46,7 @@ export function NewsletterSignupForm() {
     const data = (await res.json()) as { error?: string }
 
     if (res.ok) {
+      trackNewsletterSignup("footer")
       setMessage("You're on the list!")
       setMessageIsError(false)
       setEmail("")

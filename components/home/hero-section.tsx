@@ -10,9 +10,12 @@ import {
 } from "@/lib/content-defaults"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
-import { VENUE_APPLE_MAPS_URL } from "@/lib/venue-location"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
+import {
+  TrackedDirectionsLink,
+  TrackedInstagramLink,
+} from "@/components/shared/tracked-links"
 
 function renderBrandLine(text: string) {
   return renderHeadlineAccent(text, "Intention")
@@ -99,27 +102,24 @@ export async function HeroSection() {
           </div>
           <div className="flex min-w-0 flex-col items-center text-center">
             <p className={`${metaLabelClass} min-h-[14px]`}>Location</p>
-            <a
-              href={VENUE_APPLE_MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <TrackedDirectionsLink
+              placement="hero_location"
               className={`${metaLinkClass} mt-1.5 text-center`}
             >
               {metaLocation}
-            </a>
+            </TrackedDirectionsLink>
           </div>
         </div>
 
         <div className="hero-intro hero-intro-d7 mt-8 flex flex-col items-center text-center">
           <p className={`${metaLabelClass} min-h-[14px]`}>Follow</p>
-          <a
+          <TrackedInstagramLink
             href={instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            placement="hero_follow"
             className={`${metaLinkClass} mt-1.5`}
           >
             {instagramHandle}
-          </a>
+          </TrackedInstagramLink>
         </div>
       </div>
     </section>

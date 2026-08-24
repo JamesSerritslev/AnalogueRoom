@@ -12,7 +12,12 @@ import {
 import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { HoursRow } from "@/lib/sanity/types"
-import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
+import {
+  TrackedDirectionsLink,
+  TrackedInstagramLink,
+  TrackedTelLink,
+} from "@/components/shared/tracked-links"
+import { getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
 
 function VisitHeadline({ text }: { text: string }) {
   const accent = "Spinning"
@@ -94,10 +99,8 @@ export async function VisitSection() {
             <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
               Address
             </p>
-            <a
-              href={VENUE_APPLE_MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <TrackedDirectionsLink
+              placement="visit_address"
               className="font-display inline-block text-base text-cream leading-normal transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
             >
               {addressLines.map((line, idx) => (
@@ -106,7 +109,7 @@ export async function VisitSection() {
                   {idx < addressLines.length - 1 && <br />}
                 </span>
               ))}
-            </a>
+            </TrackedDirectionsLink>
           </div>
 
           {phoneDisplay && phoneTel ? (
@@ -114,12 +117,13 @@ export async function VisitSection() {
               <p className="font-label text-[9px] tracking-[0.4em] uppercase text-orange mb-2">
                 Phone
               </p>
-              <a
+              <TrackedTelLink
                 href={phoneTel}
+                placement="visit_phone"
                 className="font-display inline-block text-base text-cream leading-normal transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
               >
                 {phoneDisplay}
-              </a>
+              </TrackedTelLink>
             </div>
           ) : null}
 
@@ -128,14 +132,13 @@ export async function VisitSection() {
               Social
             </p>
             <p className="font-display text-base text-cream">
-              <a
+              <TrackedInstagramLink
                 href={instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                placement="visit_social"
                 className="border-b border-orange/50 hover:text-orange transition-colors"
               >
                 {instagramHandle}
-              </a>
+              </TrackedInstagramLink>
             </p>
           </div>
 
