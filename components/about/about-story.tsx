@@ -4,8 +4,55 @@ import Image from "next/image"
 import { useState } from "react"
 import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { AboutPhotoLightbox } from "@/components/about/about-photo-lightbox"
+import {
+  renderBodyAccents,
+  type BodyAccentLink,
+} from "@/components/shared/render-headline-accent"
+import { TrackedDirectionsLink, TrackedFacebookLink, TrackedInstagramLink } from "@/components/shared/tracked-links"
+import { FacebookIcon } from "@/components/icons/facebook-icon"
+import { InstagramIcon } from "@/components/icons/instagram-icon"
+import { DEFAULT_FACEBOOK_URL, DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import type { VenuePhoto } from "@/lib/venue-photos"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
+
+const LOCATION_LINK_CLASS =
+  "not-italic text-orange underline-offset-2 transition-colors hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+
+const ABOUT_LOCATION_LINKS: readonly BodyAccentLink[] = [
+  {
+    phrase: "1693 Mission Drive, Suite D2",
+    render: (phrase) => (
+      <TrackedDirectionsLink
+        placement="about_address"
+        className={LOCATION_LINK_CLASS}
+      >
+        {phrase}
+      </TrackedDirectionsLink>
+    ),
+  },
+  {
+    phrase: "Founder's Square",
+    render: (phrase) => (
+      <TrackedDirectionsLink
+        placement="about_founders_square"
+        className={LOCATION_LINK_CLASS}
+      >
+        {phrase}
+      </TrackedDirectionsLink>
+    ),
+  },
+  {
+    phrase: "downtown Solvang",
+    render: (phrase) => (
+      <TrackedDirectionsLink
+        placement="about_downtown_solvang"
+        className={LOCATION_LINK_CLASS}
+      >
+        {phrase}
+      </TrackedDirectionsLink>
+    ),
+  },
+]
 
 const ABOUT_PHOTOS = [
   VENUE_PHOTOS.storefront,
@@ -35,6 +82,24 @@ const MOSAIC_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 560px"
 
 type AboutStoryProps = {
   paragraphs: readonly string[]
+  /** Orange phrases per paragraph index (crawlable text; CSS color only). */
+  accents?: readonly (readonly string[])[]
+}
+
+function StoryParagraph({
+  text,
+  accents,
+  className,
+}: {
+  text: string
+  accents?: readonly string[]
+  className?: string
+}) {
+  return (
+    <p className={className}>
+      {renderBodyAccents(text, accents ?? [], ABOUT_LOCATION_LINKS)}
+    </p>
+  )
 }
 
 function PhotoFrame({
@@ -106,7 +171,7 @@ function MosaicPhoto({
 /**
  * Story + photos interleaved so the About page isn’t one text block then one gallery.
  */
-export function AboutStory({ paragraphs }: AboutStoryProps) {
+export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
   const [open, setOpen] = useState(false)
   const [startIndex, setStartIndex] = useState(0)
 
@@ -117,6 +182,7 @@ export function AboutStory({ paragraphs }: AboutStoryProps) {
 
   const p = paragraphs
   const [p0, p1, p2, p3, p4, ...rest] = p
+  const a = (i: number) => accents[i]
 
   return (
     <>
@@ -126,15 +192,43 @@ export function AboutStory({ paragraphs }: AboutStoryProps) {
             <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
               The Analogue Room
             </p>
-            <h2 className="font-display mb-6 text-[clamp(34px,4.5vw,52px)] leading-[1.05] text-coal">
-              A Room Worth <em className="not-italic text-orange">Sitting In</em>
-            </h2>
+            <div className="mb-6 flex items-start justify-between gap-4 sm:gap-6">
+              <h2 className="font-display min-w-0 flex-1 text-[clamp(34px,4.5vw,52px)] leading-[1.05] text-coal">
+                A Room Worth <em className="not-italic text-orange">Sitting In</em>
+              </h2>
+              <div className="mt-1 flex shrink-0 items-center gap-2.5 sm:mt-2 sm:gap-3 lg:hidden">
+                <TrackedInstagramLink
+                  href={DEFAULT_INSTAGRAM_URL}
+                  placement="about_story"
+                  className="inline-flex items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  <InstagramIcon className="h-8 w-8 sm:h-9 sm:w-9" />
+                  <span className="sr-only">Follow The Analogue Room on Instagram</span>
+                </TrackedInstagramLink>
+                <TrackedFacebookLink
+                  href={DEFAULT_FACEBOOK_URL}
+                  placement="about_story"
+                  className="inline-flex items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  <FacebookIcon className="h-8 w-8 sm:h-9 sm:w-9" />
+                  <span className="sr-only">Follow The Analogue Room on Facebook</span>
+                </TrackedFacebookLink>
+              </div>
+            </div>
             <div className="mb-8 h-0.5 w-12 bg-orange" />
             {p0 ? (
-              <p className="font-body mb-4 text-base leading-relaxed text-coal/85">{p0}</p>
+              <StoryParagraph
+                text={p0}
+                accents={a(0)}
+                className="font-body mb-4 text-base leading-relaxed text-coal/85"
+              />
             ) : null}
             {p1 ? (
-              <p className="font-body text-base leading-relaxed text-coal/85">{p1}</p>
+              <StoryParagraph
+                text={p1}
+                accents={a(1)}
+                className="font-body text-base leading-relaxed text-coal/85"
+              />
             ) : null}
           </RevealOnScroll>
         </div>
@@ -168,10 +262,18 @@ export function AboutStory({ paragraphs }: AboutStoryProps) {
           <div className="mx-auto max-w-[920px]">
             <RevealOnScroll>
               {p2 ? (
-                <p className="font-body mb-4 text-base leading-relaxed text-coal/85">{p2}</p>
+                <StoryParagraph
+                  text={p2}
+                  accents={a(2)}
+                  className="font-body mb-4 text-base leading-relaxed text-coal/85"
+                />
               ) : null}
               {p3 ? (
-                <p className="font-body text-base leading-relaxed text-coal/85">{p3}</p>
+                <StoryParagraph
+                  text={p3}
+                  accents={a(3)}
+                  className="font-body text-base leading-relaxed text-coal/85"
+                />
               ) : null}
             </RevealOnScroll>
           </div>
@@ -250,11 +352,20 @@ export function AboutStory({ paragraphs }: AboutStoryProps) {
             </RevealOnScroll>
             <RevealOnScroll delay={60}>
               <div className="font-body text-base leading-relaxed text-coal/85">
-                {p4 ? <p className={rest.length ? "mb-4" : ""}>{p4}</p> : null}
+                {p4 ? (
+                  <StoryParagraph
+                    text={p4}
+                    accents={a(4)}
+                    className={rest.length ? "mb-4" : ""}
+                  />
+                ) : null}
                 {rest.map((text, i) => (
-                  <p key={`story-rest-${i}`} className={i < rest.length - 1 ? "mb-4" : ""}>
-                    {text}
-                  </p>
+                  <StoryParagraph
+                    key={`story-rest-${i}`}
+                    text={text}
+                    accents={a(5 + i)}
+                    className={i < rest.length - 1 ? "mb-4" : ""}
+                  />
                 ))}
               </div>
             </RevealOnScroll>

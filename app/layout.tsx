@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
     default: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
-    template: "%s · The Analogue Room",
+    template: "%s · Analogue Room",
   },
   icons: {
     // Google prefers a stable square PNG larger than 48px; Bing wants /favicon.ico.

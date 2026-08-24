@@ -13,7 +13,12 @@ import {
   DEFAULT_TAGLINE,
 } from "@/lib/content-defaults"
 import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
-import { VENUE_APPLE_MAPS_URL, getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
+import {
+  TrackedDirectionsLink,
+  TrackedInstagramLink,
+  TrackedTelLink,
+} from "@/components/shared/tracked-links"
+import { getVenuePhoneDisplay, getVenuePhoneTelHref } from "@/lib/venue-location"
 
 /** Shared center axis with `#newsletter` - both use the same max width and mx-auto. */
 const footerCenterColumn = "mx-auto w-full max-w-md md:max-w-lg"
@@ -56,10 +61,8 @@ export async function Footer() {
         <strong className="font-label mb-2 block text-[10px] tracking-[0.3em] uppercase text-orange">
           The Analogue Room
         </strong>
-        <a
-          href={VENUE_APPLE_MAPS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <TrackedDirectionsLink
+          placement="footer_address"
           className="inline-block transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
         >
           {addressLines.map((line, idx) => (
@@ -68,16 +71,17 @@ export async function Footer() {
               {idx < addressLines.length - 1 && <br />}
             </span>
           ))}
-        </a>
+        </TrackedDirectionsLink>
         {phoneDisplay && phoneTel ? (
           <>
             <br />
-            <a
+            <TrackedTelLink
               href={phoneTel}
+              placement="footer_phone"
               className="mt-2 inline-block transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
             >
               {phoneDisplay}
-            </a>
+            </TrackedTelLink>
           </>
         ) : null}
       </p>
@@ -112,14 +116,13 @@ export async function Footer() {
             <p className="font-display text-sm leading-snug text-cream/80">
               {tagline}
             </p>
-            <a
+            <TrackedInstagramLink
               href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              placement="footer_follow"
               className="inline-flex min-h-11 items-center justify-center gap-2 border border-orange px-5 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-orange transition-colors hover:bg-orange hover:text-coal sm:min-h-0 sm:py-2.5 sm:tracking-[0.3em]"
             >
               Follow {instagramHandle}
-            </a>
+            </TrackedInstagramLink>
           </div>
 
           {/* Mobile: address below the centered column */}

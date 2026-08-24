@@ -8,6 +8,10 @@ export const DEFAULT_COPYRIGHT_LINE = "© 2026 The Analogue Room · Solvang, Cal
 export const DEFAULT_ADDRESS = "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
 export const DEFAULT_INSTAGRAM_HANDLE = "@analogueroomsyv"
 export const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/analogueroomsyv"
+export const DEFAULT_FACEBOOK_URL =
+  "https://www.facebook.com/profile.php?id=61574339957083"
+/** Clean listing URL (no share UTMs). */
+export const DEFAULT_YELP_URL = "https://www.yelp.com/biz/analogue-room-solvang"
 export const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 export const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
@@ -85,12 +89,27 @@ export const DEFAULT_HOURS: HoursRow[] = [
 
 // ── About ────────────────────────────────────────────────────────────────────
 export const DEFAULT_ABOUT_STORY_PARAGRAPHS = [
-  "Analogue Room is a small, intimate listening bar where wine, music, and conversation come together.",
-  "Built around a deep love for vinyl, the space invites guests to slow down, share a bottle, and listen the way music was meant to be heard.",
-  "The program features a thoughtful selection of wines alongside a rotating vinyl collection curated by the house and guest selectors.",
-  "Evenings often unfold through records played from start to finish, creating a warm and immersive atmosphere that feels both nostalgic and alive.",
-  "Part listening room, part wine bar, Analogue Room is a place for people who appreciate craftsmanship, culture, and the simple pleasure of gathering around great music and great wine.",
+  "The Analogue Room in downtown Solvang opened in July 2026.",
+  "Located at 1693 Mission Drive, Suite D2 in Founder's Square, the venue is a vinyl listening lounge, wine and beer bar, bottle and record shop, and pizza kitchen designed as a gathering place for music lovers and visitors in the Santa Ynez Valley.",
+  "Founded by John Wright, owner of Standing Sun Wines, the space features a high-fidelity sound system, a curated vinyl-only music program, and a rotating selection of wines, craft beers, and nonalcoholic drinks. The food program, led by chef Joe Blanchard, offers focaccia-style pizzas and salads.",
+  "The Analogue Room is open Monday, Wednesday, and Thursday from 4–8 p.m., and Friday and Saturday from 4–10 p.m.",
 ] as const
+
+/** Orange emphasis phrases per about story paragraph (same order as paragraphs). */
+export const DEFAULT_ABOUT_STORY_ACCENTS: readonly (readonly string[])[] = [
+  ["downtown Solvang", "July 2026"],
+  [
+    "1693 Mission Drive, Suite D2",
+    "Founder's Square",
+    "vinyl listening lounge",
+    "Santa Ynez Valley",
+  ],
+  ["John Wright", "Standing Sun Wines", "Joe Blanchard", "focaccia-style pizzas"],
+  [
+    "Monday, Wednesday, and Thursday from 4–8 p.m.",
+    "Friday and Saturday from 4–10 p.m.",
+  ],
+]
 
 export const DEFAULT_TEAM_INTRO =
   "A small team with a clear vision: to build a room that feels like home."

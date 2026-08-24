@@ -12,9 +12,19 @@ import {
   VENUE_ADDRESS_LOCALITY,
   VENUE_ADDRESS_REGION,
   VENUE_POSTAL_CODE,
-  getVenueGoogleMapsUrl,
 } from "@/lib/venue-location"
-import { DEFAULT_HERO_META_HOURS } from "@/lib/content-defaults"
+import {
+  DEFAULT_FACEBOOK_URL,
+  DEFAULT_HERO_META_HOURS,
+  DEFAULT_INSTAGRAM_URL,
+} from "@/lib/content-defaults"
+import { OpenInMapsLink } from "@/components/shared/open-in-maps-link"
+import {
+  TrackedFacebookLink,
+  TrackedInstagramLink,
+} from "@/components/shared/tracked-links"
+import { FacebookIcon } from "@/components/icons/facebook-icon"
+import { InstagramIcon } from "@/components/icons/instagram-icon"
 
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
 
@@ -251,15 +261,23 @@ export function Navigation({
               Host Your Event
             </Link>
           </li>
-          <li>
-            <a
-              href="https://www.instagram.com/analogueroomsyv"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${NAV_LINK_CLASS} inline-flex min-h-10 items-center bg-orange px-4 py-2.5 text-cream shadow-sm shadow-coal/10 motion-safe:transition-colors motion-safe:duration-300 hover:bg-spanish hover:shadow-md sm:px-5`}
+          <li className="flex shrink-0 items-center gap-2">
+            <TrackedInstagramLink
+              href={DEFAULT_INSTAGRAM_URL}
+              placement="nav_desktop"
+              className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
             >
-              Instagram
-            </a>
+              <InstagramIcon className="h-6 w-6" />
+              <span className="sr-only">Instagram</span>
+            </TrackedInstagramLink>
+            <TrackedFacebookLink
+              href={DEFAULT_FACEBOOK_URL}
+              placement="nav_desktop"
+              className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+            >
+              <FacebookIcon className="h-6 w-6" />
+              <span className="sr-only">Facebook</span>
+            </TrackedFacebookLink>
           </li>
         </ul>
 
@@ -364,14 +382,24 @@ export function Navigation({
             <Link href={HOST_EVENT_HREF} className={NAV_MOBILE_CTA_OUTLINE_CLASS}>
               Host Your Event
             </Link>
-            <a
-              href="https://www.instagram.com/analogueroomsyv"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 inline-flex min-h-9 w-full items-center justify-center bg-orange px-4 py-2 font-label text-[11px] tracking-[0.28em] uppercase text-cream sm:min-h-10 sm:py-2.5"
-            >
-              Instagram
-            </a>
+            <div className="mt-1 flex items-center justify-center gap-3">
+              <TrackedInstagramLink
+                href={DEFAULT_INSTAGRAM_URL}
+                placement="nav_mobile"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                <InstagramIcon className="h-7 w-7" />
+                <span className="sr-only">Instagram</span>
+              </TrackedInstagramLink>
+              <TrackedFacebookLink
+                href={DEFAULT_FACEBOOK_URL}
+                placement="nav_mobile"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                <FacebookIcon className="h-7 w-7" />
+                <span className="sr-only">Facebook</span>
+              </TrackedFacebookLink>
+            </div>
           </nav>
 
           <div className="flex shrink-0 flex-col items-center border-t border-coal/10 px-4 py-3 text-center sm:px-5 sm:py-4">
@@ -389,15 +417,14 @@ export function Navigation({
               <br />
               {VENUE_ADDRESS_LOCALITY}, {VENUE_ADDRESS_REGION} {VENUE_POSTAL_CODE}
             </p>
-            <a
-              href={getVenueGoogleMapsUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <OpenInMapsLink
+              placement="mobile_nav"
+              provider="google"
               className="mt-3 inline-flex min-h-9 items-center justify-center gap-1.5 border border-orange/40 px-3.5 py-2 font-label text-[10px] tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15"
             >
               Open in Maps
               <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
-            </a>
+            </OpenInMapsLink>
           </div>
         </div>
       </div>

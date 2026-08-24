@@ -1,6 +1,7 @@
 import { DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import { EventBody } from "@/components/events/event-body"
 import { EventFeatureImage } from "@/components/events/event-feature-image"
+import { TrackedInstagramLink } from "@/components/shared/tracked-links"
 import type { Event } from "@/lib/sanity/types"
 import { parseCalendarDate } from "@/lib/utils"
 
@@ -21,14 +22,13 @@ export function EventsList({ events }: EventsListProps) {
         <div className="mx-auto mb-6 h-px w-12 bg-orange" />
         <p className="mx-auto max-w-md font-body text-[15px] leading-relaxed text-coal/80">
           Upcoming nights and specials aren&apos;t listed yet, but check back soon. We usually share new dates on{" "}
-          <a
+          <TrackedInstagramLink
             href={DEFAULT_INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            placement="events_empty"
             className="border-b border-orange/50 text-orange transition-colors hover:border-orange hover:text-coal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
           >
             Instagram
-          </a>{" "}
+          </TrackedInstagramLink>{" "}
           before they appear here.
         </p>
       </div>

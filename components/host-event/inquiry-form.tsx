@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { HostSelect } from "@/components/host-event/host-select"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
+import { trackHostEventSubmit } from "@/lib/analytics"
 
 const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 
@@ -124,6 +125,7 @@ export function InquiryForm() {
           } : {}),
         }),
       }).catch(() => {/* silent */})
+      trackHostEventSubmit()
       setSubmitted(true)
     } catch {
       setFormError("Network error. Please check your connection and try again.")
