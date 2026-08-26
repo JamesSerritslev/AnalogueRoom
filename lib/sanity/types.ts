@@ -63,6 +63,8 @@ export interface PageHomeDoc {
   offeringsBeerDescription?: string
   offeringsZeroProofTitle?: string
   offeringsZeroProofDescription?: string
+  offeringsFoodTitle?: string
+  offeringsFoodDescription?: string
   visitHeadline?: string
   visitBody?: string
   hours?: HoursRow[]
@@ -106,9 +108,6 @@ export interface PageMenusItem {
   note?: string
 }
 
-/** @deprecated Use PageMenusItem */
-export type PageMenusMenuItem = PageMenusItem
-
 export interface PageMenusCategory {
   title?: string
   columns?: string
@@ -147,10 +146,12 @@ export interface Event {
   slug?: {
     current: string
   }
-  eventType: string
-  date: string
-  time: string
-  description: string
+  eventType?: string
+  date?: string
+  time?: string
+  recurring?: boolean
+  happensOn?: string
+  description?: string
   longDescription?: PortableTextBlock[]
   image?: SanityImageField
   heroBackground?: SanityImageField

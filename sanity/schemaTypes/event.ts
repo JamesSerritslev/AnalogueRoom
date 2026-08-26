@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity"
-import { imageField } from "./_imageField"
+import { PermanentEventSlugInput } from "../components/permanent-event-slug-input"
+import { eventSlugIsAvailable, isExistingPublishedEvent, isUniqueEventSlug } from "../lib/isUniqueEventSlug"
 
 export const eventType = defineType({
   name: "event",
@@ -16,11 +17,39 @@ export const eventType = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
+      description:
+        "Becomes the event page URL. Locked after the first publish. You can still change the title, photo, date, and other fields. To run this event again, change the date on this same document, or create a new event.",
       options: {
         source: "title",
         maxLength: 96,
+        isUnique: isUniqueEventSlug,
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .trim()
+            .replace(/['’]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "")
+            .slice(0, 96),
       },
-      validation: (Rule) => Rule.required(),
+      components: {
+        input: PermanentEventSlugInput,
+      },
+      validation: (Rule) =>
+        Rule.custom(async (value, context) => {
+          const slug = typeof value?.current === "string" ? value.current.trim() : ""
+          if (!slug) return "Slug is required"
+          // Existing published events keep their URL forever. Do not block date/title/photo edits.
+          if (await isExistingPublishedEvent(context)) return true
+          if (!/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(slug)) {
+            return "Use letters, numbers, and hyphens only"
+          }
+          const unique = await eventSlugIsAvailable(slug, context)
+          if (!unique) {
+            return "This URL is already used by another event. Edit that event, or generate a different slug."
+          }
+          return true
+        }),
     }),
     defineField({
       name: "eventType",
@@ -42,16 +71,55 @@ export const eventType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "recurring",
+      title: "This event repeats every week",
+      type: "boolean",
+      initialValue: false,
+      description: "Same page every week. The website always shows the next date.",
+      options: { layout: "switch" },
+    }),
+    defineField({
+      name: "happensOn",
+      title: "Day of the week",
+      type: "string",
+      options: {
+        list: [
+          { title: "Sunday", value: "sunday" },
+          { title: "Monday", value: "monday" },
+          { title: "Tuesday", value: "tuesday" },
+          { title: "Wednesday", value: "wednesday" },
+          { title: "Thursday", value: "thursday" },
+          { title: "Friday", value: "friday" },
+          { title: "Saturday", value: "saturday" },
+        ],
+      },
+      hidden: ({ document }) => !document?.recurring,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (!context.document?.recurring) return true
+          if (!value) return "Pick the day this event happens"
+          return true
+        }),
+    }),
+    defineField({
       name: "date",
-      title: "Event Date",
+      title: "Date",
       type: "date",
-      validation: (Rule) => Rule.required(),
+      description:
+        "For a one-time event. After it leaves the calendar, set a new date and publish again to list it.",
+      hidden: ({ document }) => Boolean(document?.recurring),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context.document?.recurring) return true
+          if (!value) return "Required"
+          return true
+        }),
     }),
     defineField({
       name: "time",
-      title: "Event Time",
+      title: "Time",
       type: "string",
-      description: 'e.g., "7pm – 10pm" or "Doors at 6pm"',
+      description: 'e.g. "7pm – 10pm"',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -59,7 +127,6 @@ export const eventType = defineType({
       title: "Short Description",
       type: "text",
       rows: 3,
-      description: "Brief description shown in event listings",
       validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
@@ -67,34 +134,17 @@ export const eventType = defineType({
       title: "Full Description",
       type: "array",
       of: [{ type: "block" }],
-      description: "Detailed description for the event detail page",
     }),
     defineField({
       name: "image",
       title: "Event Image",
       type: "image",
-      options: {
-        hotspot: true,
-      },
-      description: "Photo shown in listings and on the event detail page body.",
+      options: { hotspot: true },
     }),
-    imageField(
-      "heroBackground",
-      "Hero background",
-      "Full-bleed strip at the top of this event’s detail page. Empty = Events page hero, then Home hero.",
-    ),
     defineField({
       name: "ticketUrl",
       title: "Ticket URL",
       type: "url",
-      description: "Link to ticket purchase or RSVP page (optional)",
-    }),
-    defineField({
-      name: "featured",
-      title: "Featured Event",
-      type: "boolean",
-      description: "Show this event prominently on the homepage",
-      initialValue: false,
     }),
   ],
   orderings: [
@@ -114,13 +164,22 @@ export const eventType = defineType({
       title: "title",
       date: "date",
       eventType: "eventType",
+      recurring: "recurring",
+      happensOn: "happensOn",
       media: "image",
     },
     prepare(selection) {
-      const { title, date, eventType, media } = selection
+      const { title, date, eventType, recurring, happensOn, media } = selection
+      const weekday =
+        typeof happensOn === "string" && happensOn.length
+          ? happensOn.charAt(0).toUpperCase() + happensOn.slice(1)
+          : ""
+      const subtitle = recurring
+        ? ["Every week", weekday].filter(Boolean).join(" · ")
+        : `${[eventType, date].filter(Boolean).join(" · ")}`
       return {
         title: title ?? "",
-        subtitle: `${[eventType, date].filter(Boolean).join(" · ")}`,
+        subtitle,
         media,
       }
     },

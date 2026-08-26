@@ -11,7 +11,6 @@ const DEFAULT_OFFERINGS_SECTION_BG = "/images/on-the-menu.png"
 type ResolvedSiteImagery = {
   homeHeroUrl: string
   siteLogoUrl: string
-  roomTheSpaceUrl: string | null
   /** “What’s On the Menu” section background */
   offeringsSectionBgUrl: string
   /** Home hero lead; empty in Studio → use `DEFAULT_HERO_LEAD` in UI */
@@ -22,14 +21,12 @@ function resolveFromLayout(L: Awaited<ReturnType<typeof getLayoutSingletons>>): 
   const homeHeroUrl =
     sanityImageUrl(L.home?.heroBackground, 1920) ?? DEFAULT_INTERIOR_HERO
   const siteLogoUrl = sanityImageUrl(L.brand?.logo, 520) ?? DEFAULT_SITE_LOGO
-  const roomTheSpaceUrl = sanityImageUrl(L.home?.roomSectionImage, 1200) ?? null
   const offeringsSectionBgUrl =
     sanityImageUrl(L.home?.offeringsBackground, 1600) ?? DEFAULT_OFFERINGS_SECTION_BG
   const heroLead = L.home?.heroLead || null
   return {
     homeHeroUrl,
     siteLogoUrl,
-    roomTheSpaceUrl,
     offeringsSectionBgUrl,
     heroLead,
   }

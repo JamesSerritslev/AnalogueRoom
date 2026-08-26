@@ -30,6 +30,8 @@ const LAYOUT_QUERY = `{
     offeringsBeerDescription,
     offeringsZeroProofTitle,
     offeringsZeroProofDescription,
+    offeringsFoodTitle,
+    offeringsFoodDescription,
     visitHeadline,
     visitBody,
     hours[]{ day, time, closed }

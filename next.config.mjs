@@ -4,9 +4,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    qualities: [75, 90],
+    qualities: [75, 85, 88, 90],
     formats: ["image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [256, 384, 640],
     remotePatterns: [
       {
@@ -26,6 +26,16 @@ const nextConfig = {
       {
         source: "/menu",
         destination: "/wine-and-beer-menu",
+        permanent: true,
+      },
+      {
+        source: "/events/psychedelic - boot",
+        destination: "/events/psychedelic-boot-aug",
+        permanent: true,
+      },
+      {
+        source: "/events/psychedelic%20-%20boot",
+        destination: "/events/psychedelic-boot-aug",
         permanent: true,
       },
     ]

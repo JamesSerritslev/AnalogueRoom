@@ -17,8 +17,6 @@ export const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 
 // ── Home · Hero ──────────────────────────────────────────────────────────────
 export const DEFAULT_HERO_EYEBROW = "Solvang · California · Est. 2026"
-export const DEFAULT_HERO_HEADLINE_LINE1 = "Curation. Intention."
-export const DEFAULT_HERO_HEADLINE_LINE2 = "Analogue."
 export const DEFAULT_HERO_LEAD =
   "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non-alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 export const DEFAULT_HERO_META_HOURS = "Thu–Sat · 4–10 · Sun–Mon · 4–8"

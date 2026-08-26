@@ -13,7 +13,7 @@ declare global {
 export type MapsProvider = "apple" | "google"
 
 /** Fire a GA4 event when gtag is available (no-op if blocked / not loaded). */
-export function trackEvent(
+function trackEvent(
   name: string,
   params?: Record<string, string | number | boolean | undefined>,
 ): void {

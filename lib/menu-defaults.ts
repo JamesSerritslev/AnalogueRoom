@@ -34,10 +34,3 @@ export type MenuSection = {
 export function isMenuSlug(s: string): s is MenuSlug {
   return (MENU_SLUGS as readonly string[]).includes(s)
 }
-
-/** Map home offerings cards → menu section anchors. */
-export const MENU_SLUG_TO_SECTION_SLUG: Record<MenuSlug, string> = {
-  wines: "wines",
-  beer: "beer",
-  "zero-proof": "zero-proof",
-}

@@ -176,6 +176,19 @@ export const pageHomeType = defineType({
       rows: 3,
       group: "offerings",
     }),
+    defineField({
+      name: "offeringsFoodTitle",
+      title: "Food card: title",
+      type: "string",
+      group: "offerings",
+    }),
+    defineField({
+      name: "offeringsFoodDescription",
+      title: "Food card: description",
+      type: "text",
+      rows: 3,
+      group: "offerings",
+    }),
 
     // ── Visit / Hours ────────────────────────────────────────────────────
     defineField({

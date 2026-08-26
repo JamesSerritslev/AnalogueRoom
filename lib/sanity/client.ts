@@ -21,6 +21,11 @@ const client =
       })
     : null
 
+/** Published content only — safe in generateStaticParams, sitemap, and OG image generation. */
+export function getPublishedClient() {
+  return client
+}
+
 /**
  * For Presentation / Visual Editing:
  * - draftMode ON => fetch draft perspective with token and source maps (stega)
