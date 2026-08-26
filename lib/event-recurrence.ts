@@ -113,7 +113,7 @@ export function resolveRecurringOccurrenceDate(
 
 /** Weekly events stay on the Events listing with the next upcoming date. */
 export function isRecurringListed(event: RecurrenceFields): boolean {
-  return Boolean(event.recurring && isWeekday(event.happensOn))
+  return Boolean(event.recurring)
 }
 
 export function isOneOffListed(

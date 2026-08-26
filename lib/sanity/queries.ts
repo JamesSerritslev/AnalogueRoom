@@ -31,10 +31,11 @@ const EVENT_IMAGE_PROJECTION = `image{
 }`
 
 export async function getEvents(): Promise<Event[]> {
-  const client = await getClientForRequest()
-  if (!client) {
+  const rawClient = await getClientForRequest()
+  if (!rawClient) {
     return []
   }
+  const client = rawClient.withConfig({ useCdn: false })
 
   try {
     const { todayInLA, currentTimeInLA } = getLosAngelesNowParts()
@@ -222,7 +223,7 @@ function resolveListedEvent(
   if (event.recurring) {
     if (!isRecurringListed(event)) return null
     const next = resolveRecurringOccurrenceDate(event, todayInLA, currentTimeInLA)
-    return next ? { ...event, date: next } : null
+    return next ? { ...event, date: next } : event
   }
   if (!isOneOffListed(event.date, todayInLA, currentTimeInLA)) return null
   return event

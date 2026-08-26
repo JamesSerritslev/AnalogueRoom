@@ -31,11 +31,14 @@ export function RevealOnScroll({
   eager = false,
 }: RevealOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
+  /** SSR and first paint stay visible so content can never get stuck at opacity 0. */
+  const [phase, setPhase] = useState<"shown" | "pending" | "visible">("shown")
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
+
+    if (isInViewport(el, eager)) return
 
     let shown = false
     let obs: IntersectionObserver | null = null
@@ -48,7 +51,7 @@ export function RevealOnScroll({
     const show = () => {
       if (shown) return
       shown = true
-      setVisible(true)
+      setPhase("visible")
       obs?.disconnect()
       cleanupScroll()
     }
@@ -57,10 +60,7 @@ export function RevealOnScroll({
       if (isInViewport(el, eager)) show()
     }
 
-    if (isInViewport(el, eager)) {
-      show()
-      return
-    }
+    setPhase("pending")
 
     obs = new IntersectionObserver(
       ([entry]) => {
@@ -87,10 +87,17 @@ export function RevealOnScroll({
     "--reveal-delay": `${delay}ms`,
   } as CSSProperties
 
+  const phaseClass =
+    phase === "pending"
+      ? "reveal-scope-pending"
+      : phase === "visible"
+        ? "reveal-scope-visible"
+        : ""
+
   return (
     <div
       ref={ref}
-      className={`reveal-scope ${visible ? "reveal-scope-visible" : ""} ${className}`.trim()}
+      className={`reveal-scope ${phaseClass} ${className}`.trim()}
       style={style}
     >
       {children}

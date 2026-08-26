@@ -181,7 +181,9 @@ html {
 }
 
 /* ── Scroll reveal (RevealOnScroll) ───────────────────────────────────── */
-.reveal-scope {
+/* Visible by default. Only `.reveal-scope-pending` hides, after JS confirms
+   the block is below the fold — listing/copy must never stay invisible. */
+.reveal-scope-pending {
   opacity: 0;
   transform: translateY(1.65rem);
 }
@@ -289,6 +291,7 @@ html {
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .reveal-scope,
+  .reveal-scope-pending,
   .reveal-scope-visible {
     animation: none !important;
     opacity: 1 !important;
