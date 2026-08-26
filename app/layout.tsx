@@ -56,7 +56,7 @@ export default async function RootLayout({
     <html lang="en" data-scroll-behavior="smooth" className={fontVariables}>
       <body
         suppressHydrationWarning
-        className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased"
+        className="font-body min-h-dvh min-w-0 overflow-x-clip bg-cream text-coal antialiased"
       >
         <LocalBusinessJsonLd />
         <Script

@@ -49,7 +49,7 @@ export default async function EventsPage() {
         </section>
 
         <section className="mx-auto max-w-[920px] px-4 py-16 text-center sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
-          <RevealOnScroll>
+          <RevealOnScroll eager>
             <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
               {"What's Spinning"}
             </p>

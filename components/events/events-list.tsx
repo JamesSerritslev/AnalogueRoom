@@ -14,7 +14,7 @@ interface EventsListProps {
 export function EventsList({ events }: EventsListProps) {
   if (events.length === 0) {
     return (
-      <RevealOnScroll>
+      <RevealOnScroll eager>
         <div className="border border-coal/12 bg-coal/4 px-8 py-12 text-center md:py-14">
           <p className="font-label mb-4 text-[10px] uppercase tracking-[0.45em] text-orange">
             Calendar
@@ -42,7 +42,7 @@ export function EventsList({ events }: EventsListProps) {
   return (
     <div className="flex flex-col gap-16 sm:gap-20 md:gap-24">
       {events.map((event, index) => (
-        <RevealOnScroll key={event._id || index} delay={Math.min(index * 60, 180)}>
+        <RevealOnScroll key={event._id || index} eager delay={Math.min(index * 60, 180)}>
           <EventTeaser event={event} priorityImage={index === 0} />
         </RevealOnScroll>
       ))}

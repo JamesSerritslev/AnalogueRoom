@@ -17,6 +17,13 @@ type RevealOnScrollProps = {
   eager?: boolean
 }
 
+function isInViewport(el: HTMLElement, eager: boolean) {
+  const rect = el.getBoundingClientRect()
+  const vh = window.innerHeight || document.documentElement.clientHeight
+  const margin = eager ? 0 : vh * 0.08
+  return rect.top < vh - margin && rect.bottom > 0
+}
+
 export function RevealOnScroll({
   children,
   className = "",
@@ -30,21 +37,50 @@ export function RevealOnScroll({
     const el = ref.current
     if (!el) return
 
-    const obs = new IntersectionObserver(
+    let shown = false
+    let obs: IntersectionObserver | null = null
+
+    const cleanupScroll = () => {
+      window.removeEventListener("scroll", onScrollOrResize)
+      window.removeEventListener("resize", onScrollOrResize)
+    }
+
+    const show = () => {
+      if (shown) return
+      shown = true
+      setVisible(true)
+      obs?.disconnect()
+      cleanupScroll()
+    }
+
+    function onScrollOrResize() {
+      if (isInViewport(el, eager)) show()
+    }
+
+    if (isInViewport(el, eager)) {
+      show()
+      return
+    }
+
+    obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
-          setVisible(true)
-          obs.disconnect()
-        }
+        if (entry?.isIntersecting) show()
       },
       {
-        rootMargin: eager ? "0px 0px -4% 0px" : "0px 0px -14% 0px",
-        threshold: 0.06,
+        root: null,
+        rootMargin: eager ? "80px 0px 80px 0px" : "0px 0px -8% 0px",
+        threshold: 0,
       },
     )
-
     obs.observe(el)
-    return () => obs.disconnect()
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true })
+    window.addEventListener("resize", onScrollOrResize)
+
+    return () => {
+      obs?.disconnect()
+      cleanupScroll()
+    }
   }, [eager])
 
   const style = {
