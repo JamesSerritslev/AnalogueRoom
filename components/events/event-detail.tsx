@@ -1,14 +1,17 @@
 import Link from "next/link"
 import { EventBody } from "@/components/events/event-body"
 import { EventFeatureImage } from "@/components/events/event-feature-image"
+import { EventShareButton } from "@/components/events/event-share-button"
 import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
-import { formatEventDate, visibleEventType } from "@/lib/events"
+import { eventPath, formatEventDate, visibleEventType } from "@/lib/events"
 import { formatEveryWeekday } from "@/lib/event-recurrence"
 import type { Event } from "@/lib/sanity/types"
 
 export function EventDetail({ event }: { event: Event }) {
   const dateLine = formatEventDate(event.date)
   const eventType = visibleEventType(event.eventType)
+  const slug = event.slug?.current?.trim()
+  const sharePath = slug ? eventPath(slug) : undefined
 
   return (
     <article className="mx-auto max-w-[720px] px-4 pb-12 pt-page-hero sm:px-6 sm:pb-14 md:px-10 md:pb-16 lg:px-12">
@@ -43,6 +46,16 @@ export function EventDetail({ event }: { event: Event }) {
             <p className="font-label mt-2 text-[10px] tracking-[0.28em] text-orange uppercase">
               {formatEveryWeekday(event.happensOn)}
             </p>
+          ) : null}
+          {sharePath ? (
+            <div className="mt-6">
+              <EventShareButton
+                title={event.title || "Event at The Analogue Room"}
+                dateLine={dateLine}
+                time={event.time}
+                path={sharePath}
+              />
+            </div>
           ) : null}
         </header>
       </RevealOnScroll>

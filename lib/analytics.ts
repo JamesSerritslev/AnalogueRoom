@@ -80,6 +80,15 @@ export function trackNewsletterSignup(placement = "footer"): void {
   trackEvent("newsletter_signup", { placement })
 }
 
+/** Event page share (native sheet or copy link). */
+export function trackEventShare(path: string, method: "native" | "clipboard"): void {
+  trackEvent("share", {
+    content_type: "event",
+    item_id: path,
+    method,
+  })
+}
+
 /** Successful Host Your Event inquiry. */
 export function trackHostEventSubmit(): void {
   trackEvent("generate_lead", {
