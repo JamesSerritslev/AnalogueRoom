@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-export type HostSelectOption = { value: string; label: string }
+type HostSelectOption = { value: string; label: string }
 
 type HostSelectProps = {
   labelId: string

@@ -5,7 +5,7 @@ import {
   VENUE_NAME,
 } from "@/lib/venue-location"
 
-export type GooglePlaceReview = {
+type GooglePlaceReview = {
   rating: number
   text: string
   relativeTime: string
@@ -13,7 +13,7 @@ export type GooglePlaceReview = {
   authorUri: string | null
 }
 
-export type GooglePlaceReviewsData = {
+type GooglePlaceReviewsData = {
   rating: number | null
   userRatingCount: number | null
   reviews: GooglePlaceReview[]

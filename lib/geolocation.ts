@@ -36,7 +36,7 @@ async function reverseGeocode(
  * Requests browser geolocation and reverse-geocodes the result via Mapbox.
  * Calls `onResult` with the final state (granted or denied).
  */
-export function requestLocation(
+function requestLocation(
   onResult: (state: LocationState) => void,
 ): void {
   if (!navigator.geolocation) {

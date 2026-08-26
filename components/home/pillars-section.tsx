@@ -59,7 +59,6 @@ export async function PillarsSection() {
         </p>
       </RevealOnScroll>
 
-      {/* Pillars Grid */}
       <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-12">
         {pillars.map((pillar, idx) => (
           <RevealOnScroll key={idx} delay={idx * 110}>

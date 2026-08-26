@@ -1,9 +1,11 @@
 import dynamic from "next/dynamic"
 import type { Metadata } from "next"
 import { HomePageClientScripts } from "@/components/home/home-page-client-scripts"
+import { HomeTodayEventCta } from "@/components/home/home-today-event-cta"
 import { SiteNavigation } from "@/components/layout/site-navigation"
 import { HeroSection } from "@/components/home/hero-section"
 import { buildPageMetadata } from "@/lib/page-metadata"
+import { getNextOneOffEvent } from "@/lib/sanity/queries"
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
@@ -65,13 +67,17 @@ const Footer = dynamic(() =>
 
 export const revalidate = 60
 
-export default function HomePage() {
+export default async function HomePage() {
+  const nextOneOff = await getNextOneOffEvent()
+
   return (
     <>
       <HomePageClientScripts />
-      <SiteNavigation />
+      <SiteNavigation>
+        {nextOneOff ? <HomeTodayEventCta event={nextOneOff} /> : null}
+      </SiteNavigation>
       <main>
-        <HeroSection />
+        <HeroSection hasEventCta={Boolean(nextOneOff)} />
         <PillarsSection />
         <RoomSection />
         <HomeGbpCategoriesSection />

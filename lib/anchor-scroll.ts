@@ -1,4 +1,4 @@
-export type ScrollToAnchorOptions = {
+type ScrollToAnchorOptions = {
   /** Gap below fixed nav after applying the element's `scroll-margin-top` */
   extraOffsetPx?: number
   behavior?: ScrollBehavior

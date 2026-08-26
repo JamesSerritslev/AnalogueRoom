@@ -4,7 +4,7 @@ const SINGLETONS: { id: string; title: string; schema: string }[] = [
   { id: "siteBrand", title: "Site · Brand", schema: "siteBrand" },
   { id: "pageHome", title: "Page · Home", schema: "pageHome" },
   { id: "pageAbout", title: "Page · About", schema: "pageAbout" },
-  { id: "pageEventsIndex", title: "Page · Events", schema: "pageEventsIndex" },
+  { id: "pageEventsIndex", title: "Page · Events intro", schema: "pageEventsIndex" },
   { id: "pageHostEvent", title: "Page · Host your event", schema: "pageHostEvent" },
 ]
 

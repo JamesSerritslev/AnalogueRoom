@@ -89,8 +89,8 @@ export async function OfferingsSection() {
     },
     {
       href: FOOD_MENU_PATH,
-      title: DEFAULT_OFFERINGS_FOOD_TITLE,
-      description: DEFAULT_OFFERINGS_FOOD_DESCRIPTION,
+      title: L.home?.offeringsFoodTitle || DEFAULT_OFFERINGS_FOOD_TITLE,
+      description: L.home?.offeringsFoodDescription || DEFAULT_OFFERINGS_FOOD_DESCRIPTION,
       icon: FOOD_ICON,
     },
   ]

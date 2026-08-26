@@ -4,6 +4,11 @@
  * (photos, bios, intro) is left as-is so Studio stays the source of truth.
  *
  *   SANITY_API_TOKEN=sk... npm run seed:pages
+ *   SANITY_API_TOKEN=sk... npm run seed:pages -- --copy-only
+ *
+ * `--copy-only` writes code defaults that were missing from Studio (home address,
+ * visit blurb, food card) without re-uploading images or replacing Studio-edited
+ * pillars, team photos, or the drinks menu.
  *
  * Requires NEXT_PUBLIC_SANITY_PROJECT_ID (+ dataset) in .env.local or env.
  *
@@ -40,7 +45,7 @@ const DEFAULT_TAGLINE = "Curation. Intention. Analogue."
 const DEFAULT_HERO_LEAD =
   "A vinyl lounge and wine bar in the heart of Solvang, offering a rotating selection of local and imported wines, beers, and non-alcoholic options, all paired with the warmth of music played the way it was meant to be heard."
 const DEFAULT_HERO_META_HOURS = "Thu–Sat · 4–10 · Sun–Mon · 4–8"
-const DEFAULT_HERO_META_LOCATION = "1693 Mission Dr, Solvang"
+const DEFAULT_HERO_META_LOCATION = "1693 Mission Drive, Suite D2, Solvang, CA 93463"
 
 // ── Home · Pillars ────────────────────────────────────────────────────────────
 const DEFAULT_PILLARS_EYEBROW = "Our Approach"
@@ -93,11 +98,14 @@ const DEFAULT_OFFERINGS_BEER_DESCRIPTION =
 const DEFAULT_OFFERINGS_ZERO_PROOF_TITLE = "Zero Proof"
 const DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION =
   "A genuine, considered non-alcoholic menu. Sodas, mocktails, alcohol-free wines and beers, because the experience matters more than the alcohol."
+const DEFAULT_OFFERINGS_FOOD_TITLE = "Food"
+const DEFAULT_OFFERINGS_FOOD_DESCRIPTION =
+  "Pizza by the slice or pan, plus simple salads. Made to share between records."
 
 // ── Home · Visit ──────────────────────────────────────────────────────────────
 const DEFAULT_VISIT_HEADLINE = "When We're Spinning"
 const DEFAULT_VISIT_BODY =
-  "Doors open Thursday through Monday. Come early to grab a corner, stay late to find your favorite record on the shelf."
+  "Doors open Thursday through Monday for easygoing Solvang nightlife. Come early to grab a corner, stay late to find your favorite record on the shelf."
 const DEFAULT_HOURS = [
   { _key: "h0", _type: "hoursRow", day: "Monday",    time: "4pm – 8pm", closed: false },
   { _key: "h1", _type: "hoursRow", day: "Tuesday",   time: "Closed",     closed: true  },
@@ -233,6 +241,8 @@ async function main() {
     process.exit(1)
   }
 
+  const copyOnly = process.argv.includes("--copy-only")
+
   const client = createClient({
     projectId,
     dataset,
@@ -240,6 +250,28 @@ async function main() {
     token,
     useCdn: false,
   })
+
+  const codeCopy = {
+    heroMetaLocation: DEFAULT_HERO_META_LOCATION,
+    visitBody: DEFAULT_VISIT_BODY,
+    offeringsFoodTitle: DEFAULT_OFFERINGS_FOOD_TITLE,
+    offeringsFoodDescription: DEFAULT_OFFERINGS_FOOD_DESCRIPTION,
+  }
+
+  if (copyOnly) {
+    console.log("Copy-only seed: updating Page · Home text from site defaults …")
+    await withRetries("Patch pageHome copy", () =>
+      client.patch(IDS.pageHome).set(codeCopy).commit(),
+    )
+    await withRetries("Discard draft for pageHome", () =>
+      discardSingletonDraft(client, IDS.pageHome),
+    )
+    console.log(
+      "\nDone. Studio Page · Home now has the full address, visit blurb, and Food card copy.\n" +
+        "Pillars, hours, images, team, and the drinks menu were left as they were in Studio.\n",
+    )
+    return
+  }
 
   console.log("Uploading images …")
   const interior = await uploadImage(client, "public/images/interior.jpeg")
@@ -285,26 +317,26 @@ async function main() {
     })
   })
 
-  await withRetries("Save pageHome", () =>
-    client.createOrReplace({
+  await withRetries("Save pageHome", async () => {
+    const existingHome = await client.fetch(`*[_id == $id][0]{_id}`, { id: IDS.pageHome })
+    if (existingHome?._id) {
+      return client.patch(IDS.pageHome).set(codeCopy).commit()
+    }
+    return client.createOrReplace({
       _id: IDS.pageHome,
       _type: "pageHome",
-      // Hero
       heroBackground: interiorImg,
       heroLead: DEFAULT_HERO_LEAD,
       heroMetaHours: DEFAULT_HERO_META_HOURS,
-      heroMetaLocation: DEFAULT_HERO_META_LOCATION,
-      // Pillars
+      ...codeCopy,
       pillarsEyebrow: DEFAULT_PILLARS_EYEBROW,
       pillarsHeadline: DEFAULT_PILLARS_HEADLINE,
       pillarsBody: DEFAULT_PILLARS_BODY,
       pillars: DEFAULT_PILLARS,
-      // The Space
       roomSectionImage: interiorImg,
       roomEyebrow: DEFAULT_ROOM_EYEBROW,
       roomHeadline: DEFAULT_ROOM_HEADLINE,
       roomBody: DEFAULT_ROOM_BODY,
-      // Offerings
       ...(menuBgImg ? { offeringsBackground: menuBgImg } : {}),
       offeringsEyebrow: DEFAULT_OFFERINGS_EYEBROW,
       offeringsHeadline: DEFAULT_OFFERINGS_HEADLINE,
@@ -315,12 +347,10 @@ async function main() {
       offeringsBeerDescription: DEFAULT_OFFERINGS_BEER_DESCRIPTION,
       offeringsZeroProofTitle: DEFAULT_OFFERINGS_ZERO_PROOF_TITLE,
       offeringsZeroProofDescription: DEFAULT_OFFERINGS_ZERO_PROOF_DESCRIPTION,
-      // Visit / Hours
       visitHeadline: DEFAULT_VISIT_HEADLINE,
-      visitBody: DEFAULT_VISIT_BODY,
       hours: DEFAULT_HOURS,
-    }),
-  )
+    })
+  })
 
   const prevAbout = await client.fetch(
     `*[_id == $id][0]{ teamMembers, teamIntro }`,

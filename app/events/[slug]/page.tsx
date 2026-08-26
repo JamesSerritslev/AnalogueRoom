@@ -1,32 +1,73 @@
 import type { Metadata } from "next"
-import { notFound, permanentRedirect } from "next/navigation"
-import { getEventBySlug } from "@/lib/sanity/queries"
+import { notFound } from "next/navigation"
+import { EventDetail } from "@/components/events/event-detail"
+import { EventVenuePhotos } from "@/components/events/event-venue-photos"
+import { Footer } from "@/components/layout/footer"
+import { SiteNavigation } from "@/components/layout/site-navigation"
+import { eventPath } from "@/lib/events"
+import { SITE_NAME } from "@/lib/page-metadata"
+import { getAllEventSlugs, getEventBySlug } from "@/lib/sanity/queries"
 
 export const revalidate = 60
+export const dynamicParams = true
 
 type PageProps = { params: Promise<{ slug: string }> }
 
+async function loadEvent(rawSlug: string) {
+  return getEventBySlug(decodeURIComponent(rawSlug))
+}
+
+export async function generateStaticParams() {
+  const entries = await getAllEventSlugs()
+  return entries.map(({ slug }) => ({ slug }))
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params
-  const event = await getEventBySlug(decodeURIComponent(slug))
+  const { slug: rawSlug } = await params
+  const event = await loadEvent(rawSlug)
   if (!event) {
     return { title: "Event · Analogue Room" }
   }
+
+  const slug = event.slug?.current?.trim() || decodeURIComponent(rawSlug)
+  const path = eventPath(slug)
+  const title = `${event.title} · Analogue Room`
+  const description = event.description || `An event at ${SITE_NAME} in Solvang.`
+
   return {
-    title: `${event.title} · Analogue Room`,
-    description: event.description,
-    alternates: {
-      canonical: `/events#${encodeURIComponent(event.slug?.current ?? slug)}`,
+    title: { absolute: title },
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      title,
+      description,
+      siteName: SITE_NAME,
+      locale: "en_US",
+      type: "website",
+      url: path,
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: { index: true, follow: true },
   }
 }
 
-/** Legacy detail URLs → inline events calendar anchors. */
-export default async function EventDetailRedirect({ params }: PageProps) {
+export default async function EventDetailPage({ params }: PageProps) {
   const { slug: rawSlug } = await params
-  const slug = decodeURIComponent(rawSlug)
-  const event = await getEventBySlug(slug)
+  const event = await loadEvent(rawSlug)
   if (!event) notFound()
-  const anchor = event.slug?.current?.trim() || slug
-  permanentRedirect(`/events#${encodeURIComponent(anchor)}`)
+
+  return (
+    <>
+      <SiteNavigation />
+      <main>
+        <EventDetail event={event} />
+        <EventVenuePhotos />
+      </main>
+      <Footer />
+    </>
+  )
 }

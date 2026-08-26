@@ -1,4 +1,9 @@
 import { MENU_CREAM_SENTINEL_ID } from "@/components/menu/menu-back-to-home-fixed"
+import {
+  InteriorHeroText,
+  MENU_HERO_TITLE_CLASS,
+} from "@/components/shared/interior-hero-text"
+import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import type { MenuCategory, MenuItemRow, MenuSection } from "@/lib/menu-defaults"
 
 type MenuFullPageViewProps = {
@@ -148,17 +153,9 @@ export function MenuFullPageView({
         >
           <div className="interior-hero-scrim" aria-hidden />
         </div>
-        <div className="relative z-2">
-          {eyebrow ? (
-            <p className="font-label mb-4 text-[11px] tracking-[0.5em] text-orange uppercase">
-              {eyebrow}
-            </p>
-          ) : null}
-          <h1 className="font-display mb-3.5 text-[clamp(36px,5.5vw,56px)] leading-[1.05] text-cream">
-            {title}
-          </h1>
-          <div className="mt-5 h-0.5 w-15 bg-orange" />
-        </div>
+        <InteriorHeroText eyebrow={eyebrow} titleClassName={MENU_HERO_TITLE_CLASS}>
+          {title}
+        </InteriorHeroText>
       </section>
 
       <section className="relative bg-cream px-4 py-16 text-coal sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
@@ -169,43 +166,46 @@ export function MenuFullPageView({
         />
         <div className="mx-auto max-w-[720px]">
           {lead ? (
-            <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
-              {lead}
-            </p>
+            <RevealOnScroll>
+              <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
+                {lead}
+              </p>
+            </RevealOnScroll>
           ) : null}
 
           <div className={`space-y-16 sm:space-y-20 ${lead ? "" : "pt-8 sm:pt-10"}`}>
             {sections.map((section, idx) => (
-              <section
-                key={`${section.title}-${idx}`}
-                id={section.slug}
-                className={`scroll-mt-28 ${
-                  section.slug === "wines" ? "max-md:scroll-mt-40" : ""
-                } ${
-                  section.slug === "beer" ? "scroll-mt-44 md:scroll-mt-48" : ""
-                } ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
-              >
-                <h2 className="font-display mb-2 text-[clamp(26px,4vw,36px)] leading-[1.05] text-coal">
-                  {section.title}
-                </h2>
-                <div className="mb-4 h-0.5 w-12 bg-orange" />
-                {section.note ? (
-                  <p className="font-label mb-10 text-[10px] tracking-[0.22em] text-coal/55 uppercase">
-                    {section.note}
-                  </p>
-                ) : (
-                  <div className="mb-10" />
-                )}
-                <div className="space-y-12">
-                  {section.categories.map((category, cIdx) => (
-                    <MenuCategoryBlock
-                      key={`${section.title}-${category.title}-${cIdx}`}
-                      category={category}
-                      sectionSlug={section.slug}
-                    />
-                  ))}
-                </div>
-              </section>
+              <RevealOnScroll key={`${section.title}-${idx}`}>
+                <section
+                  id={section.slug}
+                  className={`scroll-mt-28 ${
+                    section.slug === "wines" ? "max-md:scroll-mt-40" : ""
+                  } ${
+                    section.slug === "beer" ? "scroll-mt-44 md:scroll-mt-48" : ""
+                  } ${idx > 0 ? "border-t border-coal/10 pt-16 sm:pt-20" : ""}`}
+                >
+                  <h2 className="font-display mb-2 text-[clamp(26px,4vw,36px)] leading-[1.05] text-coal">
+                    {section.title}
+                  </h2>
+                  <div className="mb-4 h-0.5 w-12 bg-orange" />
+                  {section.note ? (
+                    <p className="font-label mb-10 text-[10px] tracking-[0.22em] text-coal/55 uppercase">
+                      {section.note}
+                    </p>
+                  ) : (
+                    <div className="mb-10" />
+                  )}
+                  <div className="space-y-12">
+                    {section.categories.map((category, cIdx) => (
+                      <MenuCategoryBlock
+                        key={`${section.title}-${category.title}-${cIdx}`}
+                        category={category}
+                        sectionSlug={section.slug}
+                      />
+                    ))}
+                  </div>
+                </section>
+              </RevealOnScroll>
             ))}
           </div>
         </div>

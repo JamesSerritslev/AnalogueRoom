@@ -1,6 +1,7 @@
 /**
  * Sanity Studio mounted at `/studio` (see `app/studio/[[...index]]/page.tsx`).
  * https://www.sanity.io/docs/api-versioning
+ * Schema: event calendar fields live in sanity/schemaTypes/event.ts
  */
 
 import { visionTool } from "@sanity/vision"
@@ -105,7 +106,7 @@ export default defineConfig({
               locations: [
                 { title: "Events", href: "/events" },
                 ...(doc?.slug
-                  ? [{ title: doc.title ?? "Event", href: `/events#${doc.slug}` }]
+                  ? [{ title: doc.title ?? "Event", href: `/events/${doc.slug}` }]
                   : []),
               ],
             }),

@@ -15,10 +15,6 @@ export const VENUE_ADDRESS_REGION = "CA"
 export const VENUE_POSTAL_CODE = "93463"
 export const VENUE_ADDRESS_COUNTRY = "US"
 
-/** Human-readable multiline address (matches GBP / site NAP). */
-export const VENUE_ADDRESS_MULTILINE =
-  "1693 Mission Drive\nSuite D2\nSolvang, CA 93463"
-
 /** Single-line NAP string for hero meta, schema text, and maps queries. */
 export const VENUE_ADDRESS_SINGLE_LINE =
   "1693 Mission Drive, Suite D2, Solvang, CA 93463"
@@ -91,7 +87,7 @@ export function getGooglePlaceId(): string {
  * Google listing URL for CTAs.
  * Always falls back to the hardcoded place URL so production never depends on a mangled env string.
  */
-export function getGoogleBusinessListingUrl(): string {
+function getGoogleBusinessListingUrl(): string {
   const raw = getGoogleListingEnv()
   // Only trust short share links from env (no `&` truncation risk). Full maps URLs → use constant.
   if (raw && isHttpUrl(raw) && !raw.includes("&") && raw.length < 200) {

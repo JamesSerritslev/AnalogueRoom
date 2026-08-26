@@ -118,12 +118,6 @@ export const VENUE_PHOTOS = {
     width: 960,
     height: 720,
   },
-  browsingCorner: {
-    src: "/images/about/18-browsing-corner.jpg",
-    alt: "Guest browsing the vinyl wall at The Analogue Room listening lounge in Solvang",
-    width: 1024,
-    height: 725,
-  },
   pizzaTray: {
     src: "/images/food/21-pizza-row.jpg",
     alt: "Four square pizza slices lined up on the bar at The Analogue Room in Solvang",
@@ -167,5 +161,3 @@ export const VENUE_PHOTOS = {
     height: 1024,
   },
 } as const satisfies Record<string, VenuePhoto>
-
-export const ALL_VENUE_PHOTOS: VenuePhoto[] = Object.values(VENUE_PHOTOS)

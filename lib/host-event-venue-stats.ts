@@ -1,8 +1,8 @@
 import type { PageHostEventDoc } from "@/lib/sanity/types"
 
-export type VenueStatDisplay = { value: string; label: string }
+type VenueStatDisplay = { value: string; label: string }
 
-export const DEFAULT_HOST_EVENT_VENUE_STATS: VenueStatDisplay[] = [
+const DEFAULT_HOST_EVENT_VENUE_STATS: VenueStatDisplay[] = [
   { value: "60", label: "Standing Capacity" },
   { value: "40", label: "Seated Capacity" },
   { value: "500", label: "Square Footage" },

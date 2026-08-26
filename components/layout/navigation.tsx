@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { type ReactNode, useEffect, useRef, useState } from "react"
 import { Wine, MapPin, ExternalLink } from "lucide-react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 import { requestLocationOnce } from "@/lib/geolocation"
@@ -12,6 +12,8 @@ import {
   VENUE_ADDRESS_LOCALITY,
   VENUE_ADDRESS_REGION,
   VENUE_POSTAL_CODE,
+  getVenuePhoneDisplay,
+  getVenuePhoneTelHref,
 } from "@/lib/venue-location"
 import {
   DEFAULT_FACEBOOK_URL,
@@ -22,6 +24,7 @@ import { OpenInMapsLink } from "@/components/shared/open-in-maps-link"
 import {
   TrackedFacebookLink,
   TrackedInstagramLink,
+  TrackedTelLink,
 } from "@/components/shared/tracked-links"
 import { FacebookIcon } from "@/components/icons/facebook-icon"
 import { InstagramIcon } from "@/components/icons/instagram-icon"
@@ -62,17 +65,22 @@ type NavigationProps = {
   logoSrc?: string
   /** Compact hours line for mobile menu (e.g. hero meta hours). */
   hoursLine?: string
+  /** Optional bar flush under the nav (home one-off event CTA). */
+  children?: ReactNode
 }
 
 export function Navigation({
   logoSrc = DEFAULT_LOGO_SRC,
   hoursLine = DEFAULT_HERO_META_HOURS,
+  children,
 }: NavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [navHidden, setNavHidden] = useState(false)
   const lastScrollY = useRef(0)
+  const phoneDisplay = getVenuePhoneDisplay()
+  const phoneTel = getVenuePhoneTelHref()
 
   function goHomeAnchor(
     anchorId: string,
@@ -181,9 +189,14 @@ export function Navigation({
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between gap-2 border-b border-coal/8 bg-cream/92 px-4 py-2 backdrop-blur-md motion-safe:transition-transform motion-safe:duration-300 sm:gap-3 sm:px-6 sm:py-3 md:px-10 lg:translate-y-0 lg:py-4 ${
+      <div
+        className={`fixed top-0 left-0 right-0 z-[100] motion-safe:transition-transform motion-safe:duration-300 lg:translate-y-0 ${
           navHidden ? "-translate-y-full" : "translate-y-0"
+        }`}
+      >
+      <nav
+        className={`flex items-center justify-between gap-2 bg-cream/92 px-4 py-2 backdrop-blur-md sm:gap-3 sm:px-6 sm:py-3 md:px-10 lg:py-4 ${
+          children ? "border-b-0" : "border-b border-coal/8"
         } pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-[max(0.75rem,env(safe-area-inset-top))]`}
       >
         <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 lg:gap-4">
@@ -320,6 +333,8 @@ export function Navigation({
           </button>
         </div>
       </nav>
+      {children}
+      </div>
 
       {/* Mobile / small tablet: slide-over menu */}
       <div
@@ -329,8 +344,8 @@ export function Navigation({
         <button
           type="button"
           className={`mobile-nav-panel-top absolute inset-0 bg-coal/45 transition-opacity duration-200 ${
-            menuOpen ? "opacity-100" : "opacity-0"
-          }`}
+            children ? "mobile-nav-panel-top-with-cta" : ""
+          } ${menuOpen ? "opacity-100" : "opacity-0"}`}
           aria-label="Close menu"
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
@@ -338,8 +353,8 @@ export function Navigation({
         <div
           id="site-mobile-nav"
           className={`mobile-nav-panel-top absolute right-0 bottom-0 z-[95] flex w-[min(100%,20rem)] flex-col overflow-hidden border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
-            menuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+            children ? "mobile-nav-panel-top-with-cta" : ""
+          } ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
           style={{
             paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
           }}
@@ -417,6 +432,20 @@ export function Navigation({
               <br />
               {VENUE_ADDRESS_LOCALITY}, {VENUE_ADDRESS_REGION} {VENUE_POSTAL_CODE}
             </p>
+            {phoneDisplay && phoneTel ? (
+              <>
+                <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
+                  Phone
+                </p>
+                <TrackedTelLink
+                  href={phoneTel}
+                  placement="nav_mobile"
+                  className="mt-1 inline-flex min-h-9 items-center justify-center font-body text-[12px] text-coal/85 transition-colors hover:text-orange sm:text-[13px]"
+                >
+                  {phoneDisplay}
+                </TrackedTelLink>
+              </>
+            ) : null}
             <OpenInMapsLink
               placement="mobile_nav"
               provider="google"
