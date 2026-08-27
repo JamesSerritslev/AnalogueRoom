@@ -2,7 +2,6 @@ import Link from "next/link"
 import { EventBody } from "@/components/events/event-body"
 import { EventFeatureImage } from "@/components/events/event-feature-image"
 import { EventShareButton } from "@/components/events/event-share-button"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { eventPath, formatEventDate, visibleEventType } from "@/lib/events"
 import { formatEveryWeekday } from "@/lib/event-recurrence"
 import type { Event } from "@/lib/sanity/types"
@@ -15,8 +14,7 @@ export function EventDetail({ event }: { event: Event }) {
 
   return (
     <article className="mx-auto max-w-[720px] px-4 pb-12 pt-page-hero sm:px-6 sm:pb-14 md:px-10 md:pb-16 lg:px-12">
-      <RevealOnScroll eager>
-        <p className="mb-10 text-center sm:mb-12">
+      <p className="mb-10 text-center sm:mb-12">
           <Link
             href="/events"
             className="font-label text-[10px] tracking-[0.35em] text-orange uppercase transition-colors hover:text-coal"
@@ -58,29 +56,21 @@ export function EventDetail({ event }: { event: Event }) {
             </div>
           ) : null}
         </header>
-      </RevealOnScroll>
 
-      <RevealOnScroll eager delay={80}>
-        <EventFeatureImage image={event.image} title={event.title} priority />
-      </RevealOnScroll>
+      <EventFeatureImage image={event.image} title={event.title} priority />
 
       {event.description ? (
-        <RevealOnScroll>
-          <p className="font-body mb-6 text-[16px] leading-relaxed text-coal/88">
-            {event.description}
-          </p>
-        </RevealOnScroll>
+        <p className="font-body mb-6 text-[16px] leading-relaxed text-coal/88">
+          {event.description}
+        </p>
       ) : null}
 
       {event.longDescription?.length ? (
-        <RevealOnScroll>
-          <EventBody value={event.longDescription} />
-        </RevealOnScroll>
+        <EventBody value={event.longDescription} />
       ) : null}
 
       {event.ticketUrl ? (
-        <RevealOnScroll>
-          <div className="mt-10 border-t border-coal/10 pt-8 text-center">
+        <div className="mt-10 border-t border-coal/10 pt-8 text-center">
             <a
               href={event.ticketUrl}
               target="_blank"
@@ -90,7 +80,6 @@ export function EventDetail({ event }: { event: Event }) {
               Tickets / RSVP
             </a>
           </div>
-        </RevealOnScroll>
       ) : null}
     </article>
   )

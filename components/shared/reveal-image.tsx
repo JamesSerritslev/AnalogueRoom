@@ -8,37 +8,32 @@ import {
   useState,
 } from "react"
 
-type RevealOnScrollProps = {
+type RevealImageProps = {
   children: ReactNode
   className?: string
-  /** Stagger siblings with different delays (ms). */
   delay?: number
-  /** Larger root margin; fires when element is farther from viewport bottom. */
-  eager?: boolean
 }
 
-function isInViewport(el: HTMLElement, eager: boolean) {
+function isInViewport(el: HTMLElement) {
   const rect = el.getBoundingClientRect()
   const vh = window.innerHeight || document.documentElement.clientHeight
-  const margin = eager ? 0 : vh * 0.08
-  return rect.top < vh - margin && rect.bottom > 0
+  return rect.top < vh * 0.94 && rect.bottom > 0
 }
 
-export function RevealOnScroll({
+/** Fade images in as they enter view. Starts visible so nothing can get stuck hidden. */
+export function RevealImage({
   children,
   className = "",
   delay = 0,
-  eager = false,
-}: RevealOnScrollProps) {
+}: RevealImageProps) {
   const ref = useRef<HTMLDivElement>(null)
-  /** SSR and first paint stay visible so content can never get stuck at opacity 0. */
   const [phase, setPhase] = useState<"shown" | "pending" | "visible">("shown")
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-
-    if (isInViewport(el, eager)) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (isInViewport(el)) return
 
     let shown = false
     let obs: IntersectionObserver | null = null
@@ -57,7 +52,7 @@ export function RevealOnScroll({
     }
 
     function onScrollOrResize() {
-      if (isInViewport(el, eager)) show()
+      if (isInViewport(el)) show()
     }
 
     setPhase("pending")
@@ -66,11 +61,7 @@ export function RevealOnScroll({
       ([entry]) => {
         if (entry?.isIntersecting) show()
       },
-      {
-        root: null,
-        rootMargin: eager ? "80px 0px 80px 0px" : "0px 0px -8% 0px",
-        threshold: 0,
-      },
+      { root: null, rootMargin: "0px 0px -6% 0px", threshold: 0 },
     )
     obs.observe(el)
 
@@ -81,24 +72,20 @@ export function RevealOnScroll({
       obs?.disconnect()
       cleanupScroll()
     }
-  }, [eager])
-
-  const style = {
-    "--reveal-delay": `${delay}ms`,
-  } as CSSProperties
+  }, [])
 
   const phaseClass =
     phase === "pending"
-      ? "reveal-scope-pending"
+      ? "reveal-image-pending"
       : phase === "visible"
-        ? "reveal-scope-visible"
+        ? "reveal-image-visible"
         : ""
 
   return (
     <div
       ref={ref}
-      className={`reveal-scope ${phaseClass} ${className}`.trim()}
-      style={style}
+      className={`reveal-image ${phaseClass} ${className}`.trim()}
+      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
     >
       {children}
     </div>

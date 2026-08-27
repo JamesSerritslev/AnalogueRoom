@@ -1,3 +1,5 @@
+import { smoothScrollToY } from "@/lib/smooth-scroll"
+
 /** Shared scroll helpers for drinks menu section anchors. */
 
 function isMobileViewport() {
@@ -33,8 +35,5 @@ export function scrollDrinksMenuToId(id: string) {
     navBottom -
     clearanceBelowNav(id) +
     extraScrollForId(id)
-  window.scrollTo({
-    top: Math.max(0, top),
-    behavior: "smooth",
-  })
+  smoothScrollToY(Math.max(0, top))
 }

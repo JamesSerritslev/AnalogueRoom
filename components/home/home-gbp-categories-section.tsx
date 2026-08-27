@@ -1,7 +1,6 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { OfferingsScrollLink } from "@/components/home/offerings-scroll-link"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
 import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
@@ -26,8 +25,8 @@ const categories: CategoryBlock[] = [
     photoRight: true,
     body: (
       <>
-        The Analogue Room is a walk-in bar for evenings that stay easygoing:
-        wine, craft beer, zero-proof pours, and full albums on vinyl. For what
+        The Analogue Room is a walk-in bar that's open later than most places in Solvang:
+        wine, craft beer, zero-proof pours, and albums on vinyl. For what
         we&apos;re pouring, see{" "}
         <OfferingsScrollLink className={LINK_CLASS}>
           drinks and listening on the menu
@@ -90,8 +89,8 @@ const categories: CategoryBlock[] = [
     photoRight: true,
     body: (
       <>
-        Birthdays, listening parties, and small gatherings get the vinyl library,
-        bar service, and a room designed to hold a night.{" "}
+        Analogue Room is a great place to host your private events: Birthdays, listening parties, and small gatherings get the vinyl library,
+        bar service, and a room designed for great memories.{" "}
         <Link href="/host-event" className={LINK_CLASS}>
           Host your event
         </Link>{" "}
@@ -110,7 +109,7 @@ export function HomeGbpCategoriesSection() {
       id="what-we-are"
       className="relative z-2 scroll-mt-20 bg-cream px-4 py-20 text-coal sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12"
     >
-      <RevealOnScroll className="mx-auto mb-14 max-w-[680px] text-center sm:mb-16" eager>
+      <div className="mx-auto mb-14 max-w-[680px] text-center sm:mb-16">
         <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
           In Solvang
         </p>
@@ -121,11 +120,11 @@ export function HomeGbpCategoriesSection() {
         <p className="font-body text-[15px] leading-relaxed text-coal/80">
           A vinyl lounge and wine &amp; beer bar: where great drinks, pizza, and music come together.
         </p>
-      </RevealOnScroll>
+      </div>
 
       <div className="mx-auto grid max-w-[1100px] gap-12 sm:gap-16 md:gap-20">
-        {categories.map((cat, idx) => (
-          <RevealOnScroll key={cat.id} delay={idx * 60}>
+        {categories.map((cat) => (
+          <div key={cat.id}>
             {cat.photo ? (
               <div className="grid grid-cols-1 items-center gap-5 sm:gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
                 <figure
@@ -160,7 +159,7 @@ export function HomeGbpCategoriesSection() {
                 </p>
               </div>
             )}
-          </RevealOnScroll>
+          </div>
         ))}
       </div>
     </section>

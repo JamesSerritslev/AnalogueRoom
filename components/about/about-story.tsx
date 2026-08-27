@@ -2,8 +2,8 @@
 
 import Image from "next/image"
 import { useState } from "react"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { AboutPhotoLightbox } from "@/components/about/about-photo-lightbox"
+import { RevealImage } from "@/components/shared/reveal-image"
 import {
   renderBodyAccents,
   type BodyAccentLink,
@@ -119,22 +119,24 @@ function PhotoFrame({
   priority?: boolean
 }) {
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(index)}
-      className={`group relative block w-full overflow-hidden ${aspectClass} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
-      aria-label={`Open photo: ${photo.alt}`}
-    >
-      <Image
-        src={photo.src}
-        alt={photo.alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        quality={88}
-        className="object-cover object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
-      />
-    </button>
+    <RevealImage className="w-full">
+      <button
+        type="button"
+        onClick={() => onOpen(index)}
+        className={`group relative block w-full overflow-hidden ${aspectClass} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
+        aria-label={`Open photo: ${photo.alt}`}
+      >
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          quality={88}
+          className="object-cover object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
+        />
+      </button>
+    </RevealImage>
   )
 }
 
@@ -149,22 +151,24 @@ function MosaicPhoto({
   onOpen: (index: number) => void
 }) {
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(index)}
-      className="group relative block w-full cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-      aria-label={`Open photo: ${photo.alt}`}
-    >
-      <Image
-        src={photo.src}
-        alt={photo.alt}
-        width={photo.width}
-        height={photo.height}
-        sizes={MOSAIC_SIZES}
-        quality={88}
-        className="h-auto w-full motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
-      />
-    </button>
+    <RevealImage className="w-full">
+      <button
+        type="button"
+        onClick={() => onOpen(index)}
+        className="group relative block w-full cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+        aria-label={`Open photo: ${photo.alt}`}
+      >
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          sizes={MOSAIC_SIZES}
+          quality={88}
+          className="h-auto w-full motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
+        />
+      </button>
+    </RevealImage>
   )
 }
 
@@ -188,8 +192,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
     <>
       <section className="bg-cream px-4 py-16 sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
         <div className="mx-auto max-w-[920px]">
-          <RevealOnScroll>
-            <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
+          <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
               The Analogue Room
             </p>
             <div className="mb-6 flex items-start justify-between gap-4 sm:gap-6">
@@ -230,12 +233,10 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
                 className="font-body text-base leading-relaxed text-coal/85"
               />
             ) : null}
-          </RevealOnScroll>
         </div>
 
         <div className="mx-auto mt-12 grid max-w-[1000px] grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4">
-          <RevealOnScroll delay={40}>
-            <PhotoFrame
+          <PhotoFrame
               photo={ABOUT_PHOTOS[0]}
               index={0}
               onOpen={openAt}
@@ -243,9 +244,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
               aspectClass="aspect-[4/3]"
               priority
             />
-          </RevealOnScroll>
-          <RevealOnScroll delay={100}>
-            <PhotoFrame
+          <PhotoFrame
               photo={ABOUT_PHOTOS[1]}
               index={1}
               onOpen={openAt}
@@ -253,14 +252,12 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
               aspectClass="aspect-[4/3]"
               priority
             />
-          </RevealOnScroll>
         </div>
       </section>
 
       {(p2 || p3) && (
         <section className="bg-cream px-4 pb-16 sm:px-6 sm:pb-20 md:px-10 lg:px-12">
           <div className="mx-auto max-w-[920px]">
-            <RevealOnScroll>
               {p2 ? (
                 <StoryParagraph
                   text={p2}
@@ -275,20 +272,18 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
                   className="font-body text-base leading-relaxed text-coal/85"
                 />
               ) : null}
-            </RevealOnScroll>
           </div>
 
           <div className="mx-auto mt-12 grid max-w-[1000px] grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-4">
-            {[2, 3, 4].map((i, delayIdx) => (
-              <RevealOnScroll key={ABOUT_PHOTOS[i].src} delay={delayIdx * 60}>
-                <PhotoFrame
+            {[2, 3, 4].map((i) => (
+              <PhotoFrame
+                key={ABOUT_PHOTOS[i].src}
                   photo={ABOUT_PHOTOS[i]}
                   index={i}
                   onOpen={openAt}
                   sizes={TRIO_SIZES}
-                  aspectClass="aspect-[3/4]"
-                />
-              </RevealOnScroll>
+                aspectClass="aspect-[3/4]"
+              />
             ))}
           </div>
         </section>
@@ -296,7 +291,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
 
       <section className="bg-cream px-4 pb-16 sm:px-6 sm:pb-20 md:px-10 lg:px-12">
         <div className="mx-auto grid max-w-[1000px] grid-cols-1 items-center gap-8 md:grid-cols-[1fr_minmax(0,1.15fr)_1fr] md:gap-6 lg:gap-8">
-          <RevealOnScroll className="hidden md:block" delay={40}>
+          <div className="hidden md:block">
             <PhotoFrame
               photo={ABOUT_PHOTOS[5]}
               index={5}
@@ -304,13 +299,11 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
               sizes={QUOTE_SIZES}
               aspectClass="aspect-[3/4]"
             />
-          </RevealOnScroll>
-          <RevealOnScroll>
-            <blockquote className="border-t-2 border-b-2 border-coal py-8 text-center font-display text-[clamp(22px,3vw,30px)] leading-snug text-orange md:py-10">
-              &ldquo;Curation. Intention. Analogue.&rdquo;
-            </blockquote>
-          </RevealOnScroll>
-          <RevealOnScroll className="hidden md:block" delay={80}>
+          </div>
+          <blockquote className="border-t-2 border-b-2 border-coal py-8 text-center font-display text-[clamp(22px,3vw,30px)] leading-snug text-orange md:py-10">
+            &ldquo;Curation. Intention. Analogue.&rdquo;
+          </blockquote>
+          <div className="hidden md:block">
             <PhotoFrame
               photo={ABOUT_PHOTOS[6]}
               index={6}
@@ -318,7 +311,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
               sizes={QUOTE_SIZES}
               aspectClass="aspect-[3/4]"
             />
-          </RevealOnScroll>
+          </div>
         </div>
         <div className="mx-auto mt-8 grid max-w-[1000px] grid-cols-2 gap-3 md:hidden">
           <PhotoFrame
@@ -341,17 +334,14 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
       {(p4 || rest.length > 0) && (
         <section className="bg-cream px-4 pb-16 sm:px-6 sm:pb-20 md:px-10 lg:px-12">
           <div className="mx-auto grid max-w-[1000px] grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-14">
-            <RevealOnScroll>
-              <PhotoFrame
-                photo={ABOUT_PHOTOS[7]}
-                index={7}
-                onOpen={openAt}
-                sizes={HALF_SIZES}
-                aspectClass="aspect-[4/3]"
-              />
-            </RevealOnScroll>
-            <RevealOnScroll delay={60}>
-              <div className="font-body text-base leading-relaxed text-coal/85">
+            <PhotoFrame
+              photo={ABOUT_PHOTOS[7]}
+              index={7}
+              onOpen={openAt}
+              sizes={HALF_SIZES}
+              aspectClass="aspect-[4/3]"
+            />
+            <div className="font-body text-base leading-relaxed text-coal/85">
                 {p4 ? (
                   <StoryParagraph
                     text={p4}
@@ -368,28 +358,23 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
                   />
                 ))}
               </div>
-            </RevealOnScroll>
           </div>
 
           <div className="mx-auto mt-12 grid max-w-[1000px] grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4">
-            <RevealOnScroll>
-              <PhotoFrame
+            <PhotoFrame
                 photo={ABOUT_PHOTOS[8]}
                 index={8}
                 onOpen={openAt}
                 sizes={PAIR_SIZES}
                 aspectClass="aspect-[4/3]"
-              />
-            </RevealOnScroll>
-            <RevealOnScroll delay={80}>
-              <PhotoFrame
+            />
+            <PhotoFrame
                 photo={ABOUT_PHOTOS[9]}
                 index={9}
                 onOpen={openAt}
                 sizes={PAIR_SIZES}
                 aspectClass="aspect-[4/3]"
-              />
-            </RevealOnScroll>
+            />
           </div>
         </section>
       )}
@@ -399,13 +384,9 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
           {ABOUT_PHOTOS.slice(10).map((shot, i) => {
             const index = i + 10
             return (
-              <RevealOnScroll
-                key={shot.src}
-                delay={Math.min(i * 40, 240)}
-                className="mb-3 break-inside-avoid sm:mb-3.5 md:mb-4"
-              >
+              <div key={shot.src} className="mb-3 break-inside-avoid sm:mb-3.5 md:mb-4">
                 <MosaicPhoto photo={shot} index={index} onOpen={openAt} />
-              </RevealOnScroll>
+              </div>
             )
           })}
         </div>

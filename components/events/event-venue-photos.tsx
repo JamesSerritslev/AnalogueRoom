@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { AboutPhotoLightbox } from "@/components/about/about-photo-lightbox"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { RevealImage } from "@/components/shared/reveal-image"
 import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
 
 const EVENT_VENUE_PHOTOS = [
@@ -32,21 +32,23 @@ function PhotoTile({
   onOpen: (index: number) => void
 }) {
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(index)}
-      className={`group relative block w-full overflow-hidden ${PHOTO_ASPECT[index]} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
-      aria-label={`Open photo: ${photo.alt}`}
-    >
-      <Image
-        src={photo.src}
-        alt={photo.alt}
-        fill
-        sizes={PHOTO_SIZES}
-        quality={88}
-        className="object-cover object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
-      />
-    </button>
+    <RevealImage className="w-full">
+      <button
+        type="button"
+        onClick={() => onOpen(index)}
+        className={`group relative block w-full overflow-hidden ${PHOTO_ASPECT[index]} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
+        aria-label={`Open photo: ${photo.alt}`}
+      >
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes={PHOTO_SIZES}
+          quality={88}
+          className="object-cover object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
+        />
+      </button>
+    </RevealImage>
   )
 }
 
@@ -67,9 +69,7 @@ export function EventVenuePhotos() {
     >
       <div className="mx-auto grid max-w-[1000px] grid-cols-2 gap-2 sm:gap-3 md:gap-4">
         {EVENT_VENUE_PHOTOS.map((photo, index) => (
-          <RevealOnScroll key={photo.src} delay={Math.min(index * 50, 150)}>
-            <PhotoTile photo={photo} index={index} onOpen={openAt} />
-          </RevealOnScroll>
+          <PhotoTile key={photo.src} photo={photo} index={index} onOpen={openAt} />
         ))}
       </div>
       <AboutPhotoLightbox

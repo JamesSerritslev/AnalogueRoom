@@ -1,11 +1,14 @@
 import Image from "next/image"
 import type { VenuePhoto } from "@/lib/venue-photos"
+import { RevealImage } from "@/components/shared/reveal-image"
 
 type VenuePhotoImgProps = {
   photo: VenuePhoto
   className?: string
   sizes?: string
   priority?: boolean
+  /** Scroll fade. Off in lightboxes so the open photo is not delayed. */
+  reveal?: boolean
 }
 
 const DEFAULT_SIZES = "(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 520px"
@@ -16,8 +19,9 @@ export function VenuePhotoImg({
   className = "h-auto w-full",
   sizes = DEFAULT_SIZES,
   priority = false,
+  reveal = true,
 }: VenuePhotoImgProps) {
-  return (
+  const image = (
     <Image
       src={photo.src}
       alt={photo.alt}
@@ -29,4 +33,8 @@ export function VenuePhotoImg({
       quality={75}
     />
   )
+
+  if (!reveal) return image
+
+  return <RevealImage className="w-full">{image}</RevealImage>
 }

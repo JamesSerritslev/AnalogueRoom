@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { SiteNavigation } from "@/components/layout/site-navigation"
 import { Footer } from "@/components/layout/footer"
 import { MenuBackToHomeFixed } from "@/components/menu/menu-back-to-home-fixed"
 import { MenuFullPageView } from "@/components/menu/menu-full-page-view"
@@ -42,7 +41,6 @@ export default async function WineAndBeerMenuPage() {
 
   return (
     <>
-      <SiteNavigation />
       <MenuBackToHomeFixed />
       <MenuHashScroll />
       <main>

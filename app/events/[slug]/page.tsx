@@ -3,7 +3,6 @@ import { notFound } from "next/navigation"
 import { EventDetail } from "@/components/events/event-detail"
 import { EventVenuePhotos } from "@/components/events/event-venue-photos"
 import { Footer } from "@/components/layout/footer"
-import { SiteNavigation } from "@/components/layout/site-navigation"
 import { eventPath } from "@/lib/events"
 import { SITE_NAME } from "@/lib/page-metadata"
 import { getAllEventSlugs, getEventBySlug } from "@/lib/sanity/queries"
@@ -62,7 +61,6 @@ export default async function EventDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <SiteNavigation />
       <main>
         <EventDetail event={event} />
         <EventVenuePhotos />

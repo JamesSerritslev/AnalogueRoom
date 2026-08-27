@@ -9,7 +9,6 @@ import {
   DEFAULT_VISIT_BODY,
   DEFAULT_VISIT_HEADLINE,
 } from "@/lib/content-defaults"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import type { HoursRow } from "@/lib/sanity/types"
 import {
@@ -51,7 +50,7 @@ export async function VisitSection() {
   return (
     <section id="visit" className="relative z-2 scroll-mt-20 min-w-0 max-w-full bg-cream px-4 pt-20 pb-10 sm:px-6 sm:pt-24 sm:pb-12 md:px-10 md:pt-28 md:pb-14 lg:px-12 lg:pt-30 lg:pb-14">
       <div className="mx-auto grid min-w-0 max-w-[1100px] grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:gap-20">
-        <RevealOnScroll className="py-12">
+        <div className="py-12">
           <p className="font-label mb-4 text-[10px] tracking-[0.5em] uppercase text-orange">
             Hours
           </p>
@@ -82,9 +81,8 @@ export async function VisitSection() {
               </div>
             ))}
           </div>
-        </RevealOnScroll>
+        </div>
 
-        <RevealOnScroll delay={120}>
         <div className="bg-coal p-6 text-cream text-left sm:p-8 md:p-10 lg:p-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
             Visit
@@ -156,12 +154,11 @@ export async function VisitSection() {
             </p>
           </div>
         </div>
-        </RevealOnScroll>
       </div>
 
-      <RevealOnScroll delay={180} eager className="w-full">
+      <div className="w-full">
         <VisitSectionMap />
-      </RevealOnScroll>
+      </div>
     </section>
   )
 }

@@ -6,7 +6,7 @@ import {
   MENU_HERO_TITLE_CLASS,
 } from "@/components/shared/interior-hero-text"
 import { FOOD_MENU_PDF, FOOD_MENU_PNG } from "@/lib/food-menu"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { RevealImage } from "@/components/shared/reveal-image"
 import type { VenuePhoto } from "@/lib/venue-photos"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
@@ -79,7 +79,7 @@ function CoverPhoto({
   priority?: boolean
 }) {
   return (
-    <div className="relative min-h-0 flex-1 overflow-hidden">
+    <RevealImage className="relative min-h-0 flex-1 overflow-hidden">
       <Image
         src={photo.src}
         alt={photo.alt}
@@ -89,7 +89,7 @@ function CoverPhoto({
         quality={75}
         className="object-cover object-center"
       />
-    </div>
+    </RevealImage>
   )
 }
 
@@ -98,8 +98,7 @@ function MobilePizzaCollage() {
   return (
     <div className="mt-14 grid grid-cols-2 gap-3">
       {MOBILE_PHOTOS.map((photo, i) => (
-        <RevealOnScroll key={photo.src} delay={Math.min(i * 50, 200)}>
-          <div className="relative aspect-[4/5] overflow-hidden">
+        <RevealImage key={photo.src} className="relative aspect-[4/5] overflow-hidden">
             <Image
               src={photo.src}
               alt={photo.alt}
@@ -109,8 +108,7 @@ function MobilePizzaCollage() {
               priority={i < 2}
               className="object-cover object-center"
             />
-          </div>
-        </RevealOnScroll>
+        </RevealImage>
       ))}
     </div>
   )
@@ -152,24 +150,20 @@ export function FoodMenuView() {
       </section>
 
       <section className="relative bg-cream px-4 py-14 text-coal sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-12 lg:py-24">
-        <RevealOnScroll>
-          <p className="font-body mx-auto mb-12 max-w-[40rem] text-center text-[15px] leading-relaxed text-coal/80 sm:mb-14 lg:mb-16">
+        <p className="font-body mx-auto mb-12 max-w-[40rem] text-center text-[15px] leading-relaxed text-coal/80 sm:mb-14 lg:mb-16">
             Pair some music with our great pizza! Made with Baker&apos;s Table focaccia crust
             with locally sourced and house made toppings.
           </p>
-        </RevealOnScroll>
 
         {/* Mobile / tablet: menu first, collage after */}
         <div className="mx-auto max-w-[520px] lg:hidden">
-          <RevealOnScroll>
-            <MenuPdf priority />
-            <PdfLink />
-          </RevealOnScroll>
+          <MenuPdf priority />
+          <PdfLink />
           <MobilePizzaCollage />
         </div>
 
         {/* Desktop: menu as centerpiece; side columns match menu height */}
-        <RevealOnScroll className="mx-auto hidden max-w-[1280px] lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(420px,560px)_minmax(0,1fr)] lg:items-stretch lg:gap-5 xl:gap-6">
+        <div className="mx-auto hidden max-w-[1280px] lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(420px,560px)_minmax(0,1fr)] lg:items-stretch lg:gap-5 xl:gap-6">
           <aside className="flex min-h-0 flex-col gap-3">
             {LEFT_PHOTOS.map((photo, i) => (
               <CoverPhoto
@@ -195,7 +189,7 @@ export function FoodMenuView() {
               />
             ))}
           </aside>
-        </RevealOnScroll>
+        </div>
       </section>
     </>
   )

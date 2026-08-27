@@ -1,8 +1,6 @@
 import dynamic from "next/dynamic"
 import type { Metadata } from "next"
 import { HomePageClientScripts } from "@/components/home/home-page-client-scripts"
-import { HomeTodayEventCta } from "@/components/home/home-today-event-cta"
-import { SiteNavigation } from "@/components/layout/site-navigation"
 import { HeroSection } from "@/components/home/hero-section"
 import { buildPageMetadata } from "@/lib/page-metadata"
 import { getNextOneOffEvent } from "@/lib/sanity/queries"
@@ -73,9 +71,6 @@ export default async function HomePage() {
   return (
     <>
       <HomePageClientScripts />
-      <SiteNavigation>
-        {nextOneOff ? <HomeTodayEventCta event={nextOneOff} /> : null}
-      </SiteNavigation>
       <main>
         <HeroSection hasEventCta={Boolean(nextOneOff)} />
         <PillarsSection />

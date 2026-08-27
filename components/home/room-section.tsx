@@ -3,7 +3,6 @@ import {
   DEFAULT_ROOM_EYEBROW,
   DEFAULT_ROOM_HEADLINE,
 } from "@/lib/content-defaults"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
@@ -28,8 +27,7 @@ export async function RoomSection() {
   return (
     <section id="room" className="relative z-2 scroll-mt-20 bg-cream px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
       <div className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14 lg:gap-16">
-        <RevealOnScroll>
-          <div>
+        <div>
             <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
               {eyebrow}
             </p>
@@ -46,27 +44,25 @@ export async function RoomSection() {
               </p>
             ))}
           </div>
-        </RevealOnScroll>
 
-        <RevealOnScroll delay={140} className="w-full">
+        <div className="w-full">
           <VenuePhotoImg
             photo={VENUE_PHOTOS.recordWall}
             sizes="(max-width: 767px) 100vw, 520px"
             className="h-auto w-full"
             priority
           />
-        </RevealOnScroll>
+        </div>
       </div>
 
       <div className="mx-auto mt-8 flex max-w-[1100px] flex-col gap-3 sm:mt-10 sm:gap-4 md:mt-14 md:grid md:grid-cols-2 md:gap-4">
-        {ROOM_STRIP.map((photo, idx) => (
-          <RevealOnScroll key={photo.src} delay={idx * 70} className="w-full">
-            <VenuePhotoImg
-              photo={photo}
-              sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 540px"
-              className="h-auto w-full"
-            />
-          </RevealOnScroll>
+        {ROOM_STRIP.map((photo) => (
+          <VenuePhotoImg
+            key={photo.src}
+            photo={photo}
+            sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 540px"
+            className="h-auto w-full"
+          />
         ))}
       </div>
     </section>
