@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { Footer } from "@/components/layout/footer"
 import { EventsList } from "@/components/events/events-list"
+import { EventsSeoContent } from "@/components/events/events-seo-content"
 import { VenueHeroCollage } from "@/components/shared/venue-hero-collage"
-import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { getEvents } from "@/lib/sanity/queries"
 import { DEFAULT_EVENTS_INDEX_INTRO, DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import { buildPageMetadata } from "@/lib/page-metadata"
@@ -10,18 +10,19 @@ import { InteriorHeroText } from "@/components/shared/interior-hero-text"
 import { TrackedInstagramLink } from "@/components/shared/tracked-links"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Events · Analogue Room in Solvang",
+  title: "Events · Live DJ & Late Nights in Solvang",
   description:
-    "Upcoming nights at The Analogue Room in Solvang: live vinyl music, guest DJs, special pours, and easygoing nightlife.",
+    "Guest DJs, vinyl spun live in the room, and a bar open later than most of Solvang. See what's on at Analogue Room: wine, beer, pizza, and live music from the booth.",
   keywords: [
-    "best music",
+    "bars open late",
+    "bars open late Solvang",
+    "live DJ",
+    "live DJ Solvang",
+    "live music",
+    "live music Solvang",
     "live vinyl music",
-    "dj",
-    "guest dj",
-    "special events",
-    "nightlife",
-    "party",
-    "bar",
+    "guest DJ",
+    "nightlife Solvang",
     "wine bar",
     "beer bar",
   ],
@@ -32,8 +33,7 @@ export const metadata: Metadata = buildPageMetadata({
 export const dynamic = "force-dynamic"
 
 export default async function EventsPage() {
-  const [events, L] = await Promise.all([getEvents(), getLayoutSingletons()])
-  const eventsIntro = L.eventsIndex?.introBody?.trim() || DEFAULT_EVENTS_INDEX_INTRO
+  const events = await getEvents()
 
   return (
     <>
@@ -53,14 +53,16 @@ export default async function EventsPage() {
             Upcoming <em className="not-italic text-orange">Nights</em>
           </h2>
           <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
-          <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mx-auto">
-            {eventsIntro}
+          <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[640px] mx-auto">
+            {DEFAULT_EVENTS_INDEX_INTRO}
           </p>
         </section>
 
         <section className="mx-auto max-w-[720px] px-4 pb-20 sm:px-6 sm:pb-24 md:px-10 md:pb-28 lg:px-12">
           <EventsList events={events} />
         </section>
+
+        <EventsSeoContent />
 
         <section className="bg-coal px-4 py-16 text-center text-cream sm:px-6 sm:py-20 md:px-10 md:py-22 lg:px-12">
           <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">

@@ -119,7 +119,7 @@ export const DEFAULT_TEAM_MEMBERS: AboutTeamMember[] = [
 ]
 
 export const DEFAULT_EVENTS_INDEX_INTRO =
-  "From listening parties and album releases to special pours and pop-ups. Here's what's on at The Analogue Room."
+  "From listening nights and guest DJs to special pours, Analogue Room is a vinyl bar in downtown Solvang with live music from the booth. There is no digital playlist. All music is hand-picked throughout the night, and our hours run later than most of town."
 
 export const DEFAULT_HOST_EVENT_INTRO =
   "From intimate birthday gatherings to listening parties and corporate retreats, The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."
