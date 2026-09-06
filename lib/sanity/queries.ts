@@ -161,6 +161,8 @@ export type EventSlugEntry = {
   date?: string
   recurring?: boolean
   happensOn?: string
+  updatedAt?: string
+  imageUrl?: string
 }
 
 /** All event slugs, including expired — detail pages stay live forever. */
@@ -177,12 +179,16 @@ export async function getAllEventSlugs(): Promise<EventSlugEntry[]> {
         date?: string
         recurring?: boolean
         happensOn?: string
+        _updatedAt?: string
+        imageUrl?: string
       }[]
     >(
       `*[_type == "event" && defined(slug.current)]{
         slug,
         date,
-        ${EVENT_RECURRENCE_PROJECTION}
+        ${EVENT_RECURRENCE_PROJECTION},
+        _updatedAt,
+        "imageUrl": image.asset->url
       } | order(date desc)`,
     )
     return rows
@@ -191,6 +197,8 @@ export async function getAllEventSlugs(): Promise<EventSlugEntry[]> {
         date: row.date,
         recurring: row.recurring,
         happensOn: row.happensOn,
+        updatedAt: row._updatedAt,
+        imageUrl: row.imageUrl,
       }))
       .filter((row) => row.slug.length > 0)
   } catch (error) {

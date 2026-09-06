@@ -5,7 +5,6 @@ import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/studio/draft-mode-loader"
 import { LocalBusinessJsonLd } from "@/components/shared/local-business-json-ld"
 import { PageTransition } from "@/components/layout/page-transition"
-import { DesktopSmoothScroll } from "@/components/layout/desktop-smooth-scroll"
 import { NavGate } from "@/components/layout/nav-gate"
 import { SiteNavigation } from "@/components/layout/site-navigation"
 import { fontVariables } from "@/lib/fonts"
@@ -77,9 +76,7 @@ export default async function RootLayout({
         <NavGate>
           <SiteNavigation />
         </NavGate>
-        <DesktopSmoothScroll>
-          <PageTransition>{children}</PageTransition>
-        </DesktopSmoothScroll>
+        <PageTransition>{children}</PageTransition>
         {isEnabled ? (
           <>
             <SanityLive />

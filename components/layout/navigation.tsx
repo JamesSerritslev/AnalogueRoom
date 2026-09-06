@@ -48,10 +48,10 @@ const navLinks = [
 ]
 
 const NAV_CTA_OUTLINE_CLASS =
-  "font-label text-[11px] tracking-[0.18em] sm:tracking-[0.22em] md:tracking-[0.24em] uppercase motion-safe:transition-colors motion-safe:duration-300 inline-flex min-h-10 shrink-0 items-center justify-center border border-coal/20 bg-transparent px-3 py-2 text-coal hover:border-orange hover:text-orange sm:px-3.5"
+  "font-label text-[11px] tracking-[0.18em] sm:tracking-[0.22em] md:tracking-[0.24em] uppercase motion-safe:transition-colors motion-safe:duration-300 inline-flex min-h-10 shrink-0 items-center justify-center border border-coal bg-transparent px-3 py-2 text-coal hover:bg-coal hover:text-cream sm:px-3.5"
 
 const NAV_MOBILE_CTA_OUTLINE_CLASS =
-  "rounded-sm border border-orange/35 bg-transparent px-3 py-2 text-center font-label text-[11px] leading-snug tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15 sm:py-2.5 sm:tracking-[0.24em]"
+  "rounded-sm border border-coal bg-transparent px-3 py-2 text-center font-label text-[11px] leading-snug tracking-[0.2em] text-coal uppercase transition-colors hover:bg-coal hover:text-cream active:bg-coal sm:py-2.5 sm:tracking-[0.24em]"
 
 const NAV_MOBILE_LINK_CLASS =
   "rounded-sm px-3 py-2 font-label text-[11px] tracking-[0.22em] uppercase transition-colors sm:py-2.5 sm:text-[12px] sm:tracking-[0.25em]"
@@ -270,16 +270,16 @@ export function Navigation({
             </a>
           </li>
           <li className="flex shrink-0 flex-wrap items-center justify-end gap-2">
-            <a
-              href={JOIN_LIST_HREF}
-              onClick={handleJoinListClick}
-              className={`${NAV_CTA_OUTLINE_CLASS} nav-join-shimmer`}
-            >
-              Join our List
-            </a>
             <Link href={HOST_EVENT_HREF} className={NAV_CTA_OUTLINE_CLASS}>
               Host Your Event
             </Link>
+            <a
+              href={JOIN_LIST_HREF}
+              onClick={handleJoinListClick}
+              className={NAV_CTA_OUTLINE_CLASS}
+            >
+              Join our List
+            </a>
           </li>
           <li className="flex shrink-0 items-center gap-2">
             <TrackedInstagramLink
@@ -394,34 +394,16 @@ export function Navigation({
             >
               Standing Sun Wines
             </a>
-            <Link
-              href={JOIN_LIST_HREF}
-              onClick={handleJoinListClick}
-              className={`${NAV_MOBILE_CTA_OUTLINE_CLASS} nav-join-shimmer`}
-            >
-              Join our List
-            </Link>
             <Link href={HOST_EVENT_HREF} className={NAV_MOBILE_CTA_OUTLINE_CLASS}>
               Host Your Event
             </Link>
-            <div className="mt-1 flex items-center justify-center gap-3">
-              <TrackedInstagramLink
-                href={DEFAULT_INSTAGRAM_URL}
-                placement="nav_mobile"
-                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-              >
-                <InstagramIcon className="h-7 w-7" />
-                <span className="sr-only">Instagram</span>
-              </TrackedInstagramLink>
-              <TrackedFacebookLink
-                href={DEFAULT_FACEBOOK_URL}
-                placement="nav_mobile"
-                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-              >
-                <FacebookIcon className="h-7 w-7" />
-                <span className="sr-only">Facebook</span>
-              </TrackedFacebookLink>
-            </div>
+            <Link
+              href={JOIN_LIST_HREF}
+              onClick={handleJoinListClick}
+              className={NAV_MOBILE_CTA_OUTLINE_CLASS}
+            >
+              Join our List
+            </Link>
           </nav>
 
           <div className="flex shrink-0 flex-col items-center border-t border-coal/10 px-4 py-3 text-center sm:px-5 sm:py-4">
@@ -453,6 +435,27 @@ export function Navigation({
                 </TrackedTelLink>
               </>
             ) : null}
+            <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
+              Follow
+            </p>
+            <div className="mt-1 flex items-center justify-center gap-3">
+              <TrackedInstagramLink
+                href={DEFAULT_INSTAGRAM_URL}
+                placement="nav_mobile"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                <InstagramIcon className="h-7 w-7" />
+                <span className="sr-only">Instagram</span>
+              </TrackedInstagramLink>
+              <TrackedFacebookLink
+                href={DEFAULT_FACEBOOK_URL}
+                placement="nav_mobile"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                <FacebookIcon className="h-7 w-7" />
+                <span className="sr-only">Facebook</span>
+              </TrackedFacebookLink>
+            </div>
             <OpenInMapsLink
               placement="mobile_nav"
               provider="google"
