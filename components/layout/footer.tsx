@@ -12,6 +12,7 @@ import {
   DEFAULT_SISTER_PROPERTY_URL,
   DEFAULT_TAGLINE,
 } from "@/lib/content-defaults"
+import { PRIVACY_PATH } from "@/lib/site-routes"
 import {
   TrackedDirectionsLink,
   TrackedInstagramLink,
@@ -139,6 +140,13 @@ export async function Footer() {
 
       <p className="mx-auto max-w-[1200px] border-t border-cream/10 pt-6 text-center font-label text-[10px] uppercase tracking-[0.3em] text-cream/40">
           {DEFAULT_COPYRIGHT_LINE}
+          {" · "}
+          <Link
+            href={PRIVACY_PATH}
+            className="transition-colors hover:text-orange"
+          >
+            Privacy Policy
+          </Link>
         </p>
     </footer>
   )

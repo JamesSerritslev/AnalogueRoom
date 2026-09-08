@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { getSiteUrl } from "@/lib/site-url"
-import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
+import { DRINKS_MENU_PATH, FOOD_MENU_PATH, PRIVACY_PATH } from "@/lib/site-routes"
 import { eventPath } from "@/lib/events"
 import { OG_IMAGE } from "@/lib/page-metadata"
 import { getAllEventSlugs, isEventListed } from "@/lib/sanity/queries"
@@ -61,6 +61,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: "/host-event",
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      path: PRIVACY_PATH,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
   ]
 
