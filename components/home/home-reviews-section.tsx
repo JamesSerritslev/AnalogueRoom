@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import {
   TrackedGoogleReviewsLink,
   TrackedYelpLink,
@@ -40,7 +39,7 @@ export async function HomeReviewsSection() {
       id="reviews"
       className="relative z-2 scroll-mt-20 bg-cream px-4 pt-8 pb-16 sm:px-6 sm:pt-10 sm:pb-20 md:px-10 md:pt-12 md:pb-24 lg:px-12"
     >
-      <RevealOnScroll className="mx-auto max-w-[720px] text-center" eager>
+      <div className="mx-auto max-w-[720px] text-center">
         <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
           From Guests
         </p>
@@ -69,13 +68,12 @@ export async function HomeReviewsSection() {
             What people say about {VENUE_NAME} in Solvang.
           </p>
         )}
-      </RevealOnScroll>
+      </div>
 
       {hasReviews && data ? (
         <div className="mx-auto flex max-w-[720px] flex-col gap-10 sm:gap-12">
           {data.reviews.map((review, idx) => (
-            <RevealOnScroll key={`${review.authorName}-${idx}`} delay={40 + idx * 40}>
-              <blockquote className="border-t border-coal/10 pt-8 text-center sm:pt-10">
+            <blockquote key={`${review.authorName}-${idx}`} className="border-t border-coal/10 pt-8 text-center sm:pt-10">
                 <StarRow rating={review.rating} className="mb-4 text-sm" />
                 <p className="font-display text-[clamp(20px,2.8vw,26px)] leading-snug text-coal">
                   &ldquo;{review.text}&rdquo;
@@ -107,15 +105,11 @@ export async function HomeReviewsSection() {
                   <span>Google</span>
                 </footer>
               </blockquote>
-            </RevealOnScroll>
           ))}
         </div>
       ) : null}
 
-      <RevealOnScroll
-        delay={80}
-        className="mx-auto mt-10 flex max-w-[480px] flex-col items-center pb-4 text-center sm:mt-12 sm:pb-6"
-      >
+      <div className="mx-auto mt-10 flex max-w-[480px] flex-col items-center pb-4 text-center sm:mt-12 sm:pb-6">
         <div className="flex items-center justify-center gap-5 sm:gap-6">
           <TrackedGoogleReviewsLink
             href={reviewsUrl}
@@ -147,7 +141,7 @@ export async function HomeReviewsSection() {
         <p className="mt-5 font-body text-[14px] text-coal/70 sm:text-[15px]">
           Leave us a review on Google or Yelp!
         </p>
-      </RevealOnScroll>
+      </div>
     </section>
   )
 }

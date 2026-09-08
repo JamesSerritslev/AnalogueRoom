@@ -12,7 +12,7 @@ import {
   DEFAULT_SISTER_PROPERTY_URL,
   DEFAULT_TAGLINE,
 } from "@/lib/content-defaults"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { PRIVACY_PATH } from "@/lib/site-routes"
 import {
   TrackedDirectionsLink,
   TrackedInstagramLink,
@@ -98,8 +98,7 @@ export async function Footer() {
 
   return (
     <footer className="relative z-2 min-w-0 max-w-full overflow-x-hidden bg-coal px-4 py-16 text-cream sm:px-6 sm:py-20 md:px-10 md:py-22 lg:px-12">
-      <RevealOnScroll eager>
-        <div className="relative mx-auto mb-12 w-full max-w-[1200px] md:mb-14 md:min-h-24">
+      <div className="relative mx-auto mb-12 w-full max-w-[1200px] md:mb-14 md:min-h-24">
           {/* Logo & address flank the row on md+ without shifting the center axis */}
           <div className="absolute left-0 top-0 hidden md:block">{logoLink}</div>
           <div className="absolute right-0 top-0 hidden max-w-[220px] flex-col gap-6 text-right md:flex">
@@ -129,10 +128,9 @@ export async function Footer() {
           <div className="mt-10 flex flex-col items-center gap-6 text-center md:hidden">
             {addressBlock}
           </div>
-        </div>
-      </RevealOnScroll>
+      </div>
 
-      {/* Outside reveal so deep links (#newsletter) always target a painted anchor */}
+      {/* Deep links (#newsletter) always target a painted anchor */}
       <div
         id="newsletter"
         className={`${footerCenterColumn} mb-12 scroll-mt-[9.5rem] border-t border-cream/10 pt-10 md:scroll-mt-[10.5rem]`}
@@ -140,11 +138,16 @@ export async function Footer() {
         <NewsletterSignupLazy />
       </div>
 
-      <RevealOnScroll eager className="mx-auto max-w-[1200px]">
-        <p className="border-t border-cream/10 pt-6 text-center font-label text-[10px] uppercase tracking-[0.3em] text-cream/40">
+      <p className="mx-auto max-w-[1200px] border-t border-cream/10 pt-6 text-center font-label text-[10px] uppercase tracking-[0.3em] text-cream/40">
           {DEFAULT_COPYRIGHT_LINE}
+          {" · "}
+          <Link
+            href={PRIVACY_PATH}
+            className="transition-colors hover:text-orange"
+          >
+            Privacy Policy
+          </Link>
         </p>
-      </RevealOnScroll>
     </footer>
   )
 }

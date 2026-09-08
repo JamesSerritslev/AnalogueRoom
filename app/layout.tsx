@@ -5,6 +5,8 @@ import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/studio/draft-mode-loader"
 import { LocalBusinessJsonLd } from "@/components/shared/local-business-json-ld"
 import { PageTransition } from "@/components/layout/page-transition"
+import { NavGate } from "@/components/layout/nav-gate"
+import { SiteNavigation } from "@/components/layout/site-navigation"
 import { fontVariables } from "@/lib/fonts"
 import { getSiteUrl } from "@/lib/site-url"
 import { SanityLive } from "@/sanity/lib/live"
@@ -56,7 +58,7 @@ export default async function RootLayout({
     <html lang="en" data-scroll-behavior="smooth" className={fontVariables}>
       <body
         suppressHydrationWarning
-        className="font-body min-h-dvh min-w-0 overflow-x-hidden bg-cream text-coal antialiased"
+        className="font-body min-h-dvh min-w-0 overflow-x-clip bg-cream text-coal antialiased"
       >
         <LocalBusinessJsonLd />
         <Script
@@ -71,6 +73,9 @@ export default async function RootLayout({
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
+        <NavGate>
+          <SiteNavigation />
+        </NavGate>
         <PageTransition>{children}</PageTransition>
         {isEnabled ? (
           <>

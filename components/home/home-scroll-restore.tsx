@@ -3,6 +3,7 @@
 import { useLayoutEffect } from "react"
 import { usePathname } from "next/navigation"
 import { HOME_MENU_SECTION_HASH, HOME_MENU_SCROLL_TARGET_ID, HOME_SCROLL_STORAGE_KEY } from "@/lib/menu-scroll-storage"
+import { smoothScrollToY } from "@/lib/smooth-scroll"
 
 /**
  * On `/`: if URL has `#offerings-intro` (from menu “Back to home”), smooth-scroll
@@ -26,7 +27,7 @@ export function HomeScrollRestore() {
               Number.parseFloat(getComputedStyle(el).scrollMarginTop) || 0
             /** Small offset below nav clearance (scroll-mt handled via scrollMargin). */
             const top = Math.max(0, docTop - scrollMargin)
-            window.scrollTo({ top, left: 0, behavior: "smooth" })
+            smoothScrollToY(top, "smooth")
           })
         })
       }
@@ -40,7 +41,7 @@ export function HomeScrollRestore() {
     if (raw == null) return
     sessionStorage.removeItem(HOME_SCROLL_STORAGE_KEY)
     const y = Math.max(0, Number.parseInt(raw, 10) || 0)
-    window.scrollTo(0, y)
+    smoothScrollToY(y, "auto")
   }, [pathname])
 
   return null

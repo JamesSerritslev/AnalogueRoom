@@ -120,8 +120,20 @@ html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -136,13 +148,13 @@ html {
     position: relative;
     min-width: 0;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   main {
     min-width: 0;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   :where(a, button, input, select, textarea):focus-visible {
@@ -180,24 +192,39 @@ html {
   font-weight: 400;
 }
 
-/* ── Scroll reveal (RevealOnScroll) ───────────────────────────────────── */
-.reveal-scope {
-  opacity: 0;
-  transform: translateY(1.65rem);
+@keyframes page-transition-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-.reveal-scope-visible {
-  animation: reveal-soft 0.88s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+.reveal-image-pending {
+  opacity: 0;
+  transform: translateY(1.25rem);
+}
+
+.reveal-image-visible {
+  animation: reveal-image 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--reveal-delay, 0ms);
 }
 
-@keyframes reveal-soft {
+@keyframes reveal-image {
   from {
     opacity: 0;
-    transform: translateY(1.65rem);
+    transform: translateY(1.25rem);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-transition {
+    animation: page-transition-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 }
 
@@ -238,58 +265,15 @@ html {
   animation: about-swipe-hint 1.35s ease-in-out infinite;
 }
 
-/* Nav “Join our List” — soft shimmer to draw the eye (not a glow) */
-@keyframes nav-join-shimmer {
-  0%,
-  82% {
-    transform: translateX(-130%) skewX(-14deg);
-    opacity: 0;
-  }
-  85% {
-    opacity: 1;
-  }
-  94% {
-    transform: translateX(130%) skewX(-14deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(130%) skewX(-14deg);
-    opacity: 0;
-  }
-}
-
-.nav-join-shimmer {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.nav-join-shimmer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 38%,
-    color-mix(in srgb, var(--color-orange) 42%, transparent) 50%,
-    transparent 62%
-  );
-  transform: translateX(-130%) skewX(-14deg);
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .nav-join-shimmer::after {
-    animation: nav-join-shimmer 9s ease-in-out infinite;
-  }
-}
-
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  .reveal-scope,
-  .reveal-scope-visible {
+  .page-transition {
+    animation: none !important;
+  }
+
+  .reveal-image,
+  .reveal-image-pending,
+  .reveal-image-visible {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
@@ -304,11 +288,6 @@ html {
   .about-swipe-hint {
     animation: none !important;
     transform: none !important;
-  }
-
-  .nav-join-shimmer::after {
-    animation: none !important;
-    opacity: 0 !important;
   }
 }
 

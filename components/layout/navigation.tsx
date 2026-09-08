@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { type ReactNode, useEffect, useRef, useState } from "react"
 import { Wine, MapPin, ExternalLink } from "lucide-react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
+import { smoothScrollToY } from "@/lib/smooth-scroll"
 import { requestLocationOnce } from "@/lib/geolocation"
 import {
   VENUE_STREET_ADDRESS,
@@ -29,7 +30,9 @@ import {
 import { FacebookIcon } from "@/components/icons/facebook-icon"
 import { InstagramIcon } from "@/components/icons/instagram-icon"
 
+import { HomeTodayEventCta } from "@/components/home/home-today-event-cta"
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
+import type { Event } from "@/lib/sanity/types"
 
 const JOIN_LIST_HREF = "/#newsletter"
 const OFFERINGS_HREF = "/#offerings"
@@ -45,10 +48,10 @@ const navLinks = [
 ]
 
 const NAV_CTA_OUTLINE_CLASS =
-  "font-label text-[11px] tracking-[0.18em] sm:tracking-[0.22em] md:tracking-[0.24em] uppercase motion-safe:transition-colors motion-safe:duration-300 inline-flex min-h-10 shrink-0 items-center justify-center border border-coal/20 bg-transparent px-3 py-2 text-coal hover:border-orange hover:text-orange sm:px-3.5"
+  "font-label text-[11px] tracking-[0.18em] sm:tracking-[0.22em] md:tracking-[0.24em] uppercase motion-safe:transition-colors motion-safe:duration-300 inline-flex min-h-10 shrink-0 items-center justify-center border border-coal bg-transparent px-3 py-2 text-coal hover:bg-coal hover:text-cream sm:px-3.5"
 
 const NAV_MOBILE_CTA_OUTLINE_CLASS =
-  "rounded-sm border border-orange/35 bg-transparent px-3 py-2 text-center font-label text-[11px] leading-snug tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15 sm:py-2.5 sm:tracking-[0.24em]"
+  "rounded-sm border border-coal bg-transparent px-3 py-2 text-center font-label text-[11px] leading-snug tracking-[0.2em] text-coal uppercase transition-colors hover:bg-coal hover:text-cream active:bg-coal sm:py-2.5 sm:tracking-[0.24em]"
 
 const NAV_MOBILE_LINK_CLASS =
   "rounded-sm px-3 py-2 font-label text-[11px] tracking-[0.22em] uppercase transition-colors sm:py-2.5 sm:text-[12px] sm:tracking-[0.25em]"
@@ -65,6 +68,8 @@ type NavigationProps = {
   logoSrc?: string
   /** Compact hours line for mobile menu (e.g. hero meta hours). */
   hoursLine?: string
+  /** Shown under the bar on the home page when a one-off night is listed. */
+  homeEvent?: Event | null
   /** Optional bar flush under the nav (home one-off event CTA). */
   children?: ReactNode
 }
@@ -72,6 +77,7 @@ type NavigationProps = {
 export function Navigation({
   logoSrc = DEFAULT_LOGO_SRC,
   hoursLine = DEFAULT_HERO_META_HOURS,
+  homeEvent = null,
   children,
 }: NavigationProps) {
   const pathname = usePathname()
@@ -81,6 +87,9 @@ export function Navigation({
   const lastScrollY = useRef(0)
   const phoneDisplay = getVenuePhoneDisplay()
   const phoneTel = getVenuePhoneTelHref()
+  const eventCta =
+    pathname === "/" && homeEvent ? <HomeTodayEventCta event={homeEvent} /> : children
+  const hasCta = Boolean(eventCta)
 
   function goHomeAnchor(
     anchorId: string,
@@ -196,7 +205,7 @@ export function Navigation({
       >
       <nav
         className={`flex items-center justify-between gap-2 bg-cream/92 px-4 py-2 backdrop-blur-md sm:gap-3 sm:px-6 sm:py-3 md:px-10 lg:py-4 ${
-          children ? "border-b-0" : "border-b border-coal/8"
+          hasCta ? "border-b-0" : "border-b border-coal/8"
         } pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-[max(0.75rem,env(safe-area-inset-top))]`}
       >
         <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 lg:gap-4">
@@ -215,15 +224,13 @@ export function Navigation({
                   const next = `${window.location.pathname}${window.location.search}`
                   window.history.replaceState(null, "", next || "/")
                 }
-                window.scrollTo({
-                  top: 0,
-                  left: 0,
-                  behavior:
-                    typeof window !== "undefined" &&
+                smoothScrollToY(
+                  0,
+                  typeof window !== "undefined" &&
                     window.matchMedia("(prefers-reduced-motion: reduce)").matches
-                      ? "auto"
-                      : "smooth",
-                })
+                    ? "auto"
+                    : "smooth",
+                )
               }
             }}
           >
@@ -263,16 +270,16 @@ export function Navigation({
             </a>
           </li>
           <li className="flex shrink-0 flex-wrap items-center justify-end gap-2">
-            <a
-              href={JOIN_LIST_HREF}
-              onClick={handleJoinListClick}
-              className={`${NAV_CTA_OUTLINE_CLASS} nav-join-shimmer`}
-            >
-              Join our List
-            </a>
             <Link href={HOST_EVENT_HREF} className={NAV_CTA_OUTLINE_CLASS}>
               Host Your Event
             </Link>
+            <a
+              href={JOIN_LIST_HREF}
+              onClick={handleJoinListClick}
+              className={NAV_CTA_OUTLINE_CLASS}
+            >
+              Join our List
+            </a>
           </li>
           <li className="flex shrink-0 items-center gap-2">
             <TrackedInstagramLink
@@ -315,11 +322,11 @@ export function Navigation({
           </div>
           <button
             type="button"
-            className="inline-flex min-h-9 min-w-9 shrink-0 items-center justify-center rounded-sm border border-coal/15 text-coal sm:min-h-11 sm:min-w-11"
+            className="relative z-[120] inline-flex min-h-9 min-w-9 shrink-0 items-center justify-center rounded-sm border border-coal/15 text-coal sm:min-h-11 sm:min-w-11"
             aria-expanded={menuOpen}
             aria-controls="site-mobile-nav"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            onClick={() => setMenuOpen((o) => !o)}
+            onClick={() => setMenuOpen((open) => !open)}
           >
             {menuOpen ? (
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -333,28 +340,28 @@ export function Navigation({
           </button>
         </div>
       </nav>
-      {children}
+      {eventCta}
       </div>
 
       {/* Mobile / small tablet: slide-over menu */}
       <div
-        className={`fixed inset-0 z-[90] lg:hidden ${menuOpen ? "" : "pointer-events-none"}`}
+        className="pointer-events-none fixed inset-0 z-[90] lg:hidden"
         aria-hidden={!menuOpen}
       >
         <button
           type="button"
-          className={`mobile-nav-panel-top absolute inset-0 bg-coal/45 transition-opacity duration-200 ${
-            children ? "mobile-nav-panel-top-with-cta" : ""
-          } ${menuOpen ? "opacity-100" : "opacity-0"}`}
+          className={`mobile-nav-panel-top pointer-events-auto absolute inset-x-0 bottom-0 bg-coal/45 transition-opacity duration-200 ${
+            hasCta ? "mobile-nav-panel-top-with-cta" : ""
+          } ${menuOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
           aria-label="Close menu"
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         />
         <div
           id="site-mobile-nav"
-          className={`mobile-nav-panel-top absolute right-0 bottom-0 z-[95] flex w-[min(100%,20rem)] flex-col overflow-hidden border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
-            children ? "mobile-nav-panel-top-with-cta" : ""
-          } ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`mobile-nav-panel-top pointer-events-auto absolute right-0 bottom-0 z-[95] flex w-[min(100%,20rem)] flex-col overflow-hidden border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
+            hasCta ? "mobile-nav-panel-top-with-cta" : ""
+          } ${menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"}`}
           style={{
             paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
           }}
@@ -387,34 +394,16 @@ export function Navigation({
             >
               Standing Sun Wines
             </a>
-            <Link
-              href={JOIN_LIST_HREF}
-              onClick={handleJoinListClick}
-              className={`${NAV_MOBILE_CTA_OUTLINE_CLASS} nav-join-shimmer`}
-            >
-              Join our List
-            </Link>
             <Link href={HOST_EVENT_HREF} className={NAV_MOBILE_CTA_OUTLINE_CLASS}>
               Host Your Event
             </Link>
-            <div className="mt-1 flex items-center justify-center gap-3">
-              <TrackedInstagramLink
-                href={DEFAULT_INSTAGRAM_URL}
-                placement="nav_mobile"
-                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-              >
-                <InstagramIcon className="h-7 w-7" />
-                <span className="sr-only">Instagram</span>
-              </TrackedInstagramLink>
-              <TrackedFacebookLink
-                href={DEFAULT_FACEBOOK_URL}
-                placement="nav_mobile"
-                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-              >
-                <FacebookIcon className="h-7 w-7" />
-                <span className="sr-only">Facebook</span>
-              </TrackedFacebookLink>
-            </div>
+            <Link
+              href={JOIN_LIST_HREF}
+              onClick={handleJoinListClick}
+              className={NAV_MOBILE_CTA_OUTLINE_CLASS}
+            >
+              Join our List
+            </Link>
           </nav>
 
           <div className="flex shrink-0 flex-col items-center border-t border-coal/10 px-4 py-3 text-center sm:px-5 sm:py-4">
@@ -446,6 +435,27 @@ export function Navigation({
                 </TrackedTelLink>
               </>
             ) : null}
+            <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
+              Follow
+            </p>
+            <div className="mt-1 flex items-center justify-center gap-3">
+              <TrackedInstagramLink
+                href={DEFAULT_INSTAGRAM_URL}
+                placement="nav_mobile"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                <InstagramIcon className="h-7 w-7" />
+                <span className="sr-only">Instagram</span>
+              </TrackedInstagramLink>
+              <TrackedFacebookLink
+                href={DEFAULT_FACEBOOK_URL}
+                placement="nav_mobile"
+                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              >
+                <FacebookIcon className="h-7 w-7" />
+                <span className="sr-only">Facebook</span>
+              </TrackedFacebookLink>
+            </div>
             <OpenInMapsLink
               placement="mobile_nav"
               provider="google"

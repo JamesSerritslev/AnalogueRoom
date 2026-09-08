@@ -31,10 +31,11 @@ const EVENT_IMAGE_PROJECTION = `image{
 }`
 
 export async function getEvents(): Promise<Event[]> {
-  const client = await getClientForRequest()
-  if (!client) {
+  const rawClient = await getClientForRequest()
+  if (!rawClient) {
     return []
   }
+  const client = rawClient.withConfig({ useCdn: false })
 
   try {
     const { todayInLA, currentTimeInLA } = getLosAngelesNowParts()
@@ -63,6 +64,44 @@ export async function getEvents(): Promise<Event[]> {
       .sort((a, b) => (a.date ?? "").localeCompare(b.date ?? ""))
   } catch (error) {
     console.error("Error fetching events from Sanity:", error)
+    return []
+  }
+}
+
+/** Expired one-off nights — kept as indexable archive pages and linked from /events. */
+export async function getPastEvents(): Promise<Event[]> {
+  const rawClient = await getClientForRequest()
+  if (!rawClient) {
+    return []
+  }
+  const client = rawClient.withConfig({ useCdn: false })
+
+  try {
+    const { todayInLA, currentTimeInLA } = getLosAngelesNowParts()
+    const events = await client.fetch<Event[]>(
+      `*[
+        _type == "event" &&
+        recurring != true &&
+        defined(slug.current) &&
+        defined(date) &&
+        (
+          date < $todayInLA ||
+          (date == $todayInLA && $currentTimeInLA > $sameDayCutoff)
+        )
+      ] {
+        _id,
+        title,
+        slug,
+        date,
+        time,
+        ${EVENT_RECURRENCE_PROJECTION},
+        ${EVENT_IMAGE_PROJECTION}
+      } | order(date desc)`,
+      { todayInLA, currentTimeInLA, sameDayCutoff: LA_EVENT_CUTOFF_TIME },
+    )
+    return events.filter((event) => !isOneOffListed(event.date, todayInLA, currentTimeInLA))
+  } catch (error) {
+    console.error("Error fetching past events from Sanity:", error)
     return []
   }
 }
@@ -160,9 +199,11 @@ export type EventSlugEntry = {
   date?: string
   recurring?: boolean
   happensOn?: string
+  updatedAt?: string
+  imageUrl?: string
 }
 
-/** All event slugs, including expired — detail pages stay live forever. */
+/** All event slugs, including expired — detail pages stay live and indexed. */
 export async function getAllEventSlugs(): Promise<EventSlugEntry[]> {
   const client = getPublishedClient()
   if (!client) {
@@ -176,12 +217,16 @@ export async function getAllEventSlugs(): Promise<EventSlugEntry[]> {
         date?: string
         recurring?: boolean
         happensOn?: string
+        _updatedAt?: string
+        imageUrl?: string
       }[]
     >(
       `*[_type == "event" && defined(slug.current)]{
         slug,
         date,
-        ${EVENT_RECURRENCE_PROJECTION}
+        ${EVENT_RECURRENCE_PROJECTION},
+        _updatedAt,
+        "imageUrl": image.asset->url
       } | order(date desc)`,
     )
     return rows
@@ -190,6 +235,8 @@ export async function getAllEventSlugs(): Promise<EventSlugEntry[]> {
         date: row.date,
         recurring: row.recurring,
         happensOn: row.happensOn,
+        updatedAt: row._updatedAt,
+        imageUrl: row.imageUrl,
       }))
       .filter((row) => row.slug.length > 0)
   } catch (error) {
@@ -222,7 +269,7 @@ function resolveListedEvent(
   if (event.recurring) {
     if (!isRecurringListed(event)) return null
     const next = resolveRecurringOccurrenceDate(event, todayInLA, currentTimeInLA)
-    return next ? { ...event, date: next } : null
+    return next ? { ...event, date: next } : event
   }
   if (!isOneOffListed(event.date, todayInLA, currentTimeInLA)) return null
   return event

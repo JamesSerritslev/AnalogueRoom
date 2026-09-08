@@ -1,29 +1,28 @@
 import type { Metadata } from "next"
-import { SiteNavigation } from "@/components/layout/site-navigation"
 import { Footer } from "@/components/layout/footer"
-import { EventsList } from "@/components/events/events-list"
+import { EventsList, PastEventsList } from "@/components/events/events-list"
+import { EventsSeoContent } from "@/components/events/events-seo-content"
 import { VenueHeroCollage } from "@/components/shared/venue-hero-collage"
-import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
-import { getEvents } from "@/lib/sanity/queries"
+import { getEvents, getPastEvents } from "@/lib/sanity/queries"
 import { DEFAULT_EVENTS_INDEX_INTRO, DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import { buildPageMetadata } from "@/lib/page-metadata"
 import { InteriorHeroText } from "@/components/shared/interior-hero-text"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { TrackedInstagramLink } from "@/components/shared/tracked-links"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Events · Analogue Room in Solvang",
+  title: "Events · Live DJ & Late Nights in Solvang",
   description:
-    "Upcoming nights at The Analogue Room in Solvang: live vinyl music, guest DJs, special pours, and easygoing nightlife.",
+    "Guest DJs, live vinyl, and a bar open late in Solvang. See upcoming nights at Analogue Room: wine, beer, pizza, and music from the booth.",
   keywords: [
-    "best music",
+    "bars open late",
+    "bars open late Solvang",
+    "live DJ",
+    "live DJ Solvang",
+    "live music",
+    "live music Solvang",
     "live vinyl music",
-    "dj",
-    "guest dj",
-    "special events",
-    "nightlife",
-    "party",
-    "bar",
+    "guest DJ",
+    "nightlife Solvang",
     "wine bar",
     "beer bar",
   ],
@@ -31,15 +30,13 @@ export const metadata: Metadata = buildPageMetadata({
 })
 
 
-export const revalidate = 60 // Revalidate every 60 seconds
+export const dynamic = "force-dynamic"
 
 export default async function EventsPage() {
-  const [events, L] = await Promise.all([getEvents(), getLayoutSingletons()])
-  const eventsIntro = L.eventsIndex?.introBody?.trim() || DEFAULT_EVENTS_INDEX_INTRO
+  const [events, pastEvents] = await Promise.all([getEvents(), getPastEvents()])
 
   return (
     <>
-      <SiteNavigation />
       <main>
         <section className="relative flex min-h-[52vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[58vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <VenueHeroCollage />
@@ -49,44 +46,61 @@ export default async function EventsPage() {
         </section>
 
         <section className="mx-auto max-w-[920px] px-4 py-16 text-center sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
-          <RevealOnScroll>
-            <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
-              {"What's Spinning"}
-            </p>
-            <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-coal leading-[1.05] mb-6">
-              Upcoming <em className="not-italic text-orange">Nights</em>
-            </h2>
-            <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
-            <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[560px] mx-auto">
-              {eventsIntro}
-            </p>
-          </RevealOnScroll>
+          <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
+            {"What's Spinning"}
+          </p>
+          <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-coal leading-[1.05] mb-6">
+            Upcoming <em className="not-italic text-orange">Nights</em>
+          </h2>
+          <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
+          <p className="font-body text-[15px] font-normal leading-relaxed text-coal/85 max-w-[640px] mx-auto">
+            {DEFAULT_EVENTS_INDEX_INTRO}
+          </p>
         </section>
 
         <section className="mx-auto max-w-[720px] px-4 pb-20 sm:px-6 sm:pb-24 md:px-10 md:pb-28 lg:px-12">
           <EventsList events={events} />
         </section>
 
+        {pastEvents.length > 0 ? (
+          <section className="mx-auto max-w-[1000px] px-4 pb-20 sm:px-6 sm:pb-24 md:px-10 md:pb-28 lg:px-12">
+            <div className="mb-10 text-center sm:mb-12">
+              <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
+                Archive
+              </p>
+              <h2 className="font-display mb-6 text-[clamp(34px,4.5vw,52px)] leading-[1.05] text-coal">
+                Previous <em className="not-italic text-orange">Nights</em>
+              </h2>
+              <div className="mx-auto mb-6 h-0.5 w-12 bg-orange" />
+              <p className="font-body mx-auto max-w-[640px] text-[15px] leading-relaxed text-coal/85">
+                Guest DJs and one-off nights we&apos;ve already hosted. Each page stays up so you can
+                see what a night at the room looks like.
+              </p>
+            </div>
+            <PastEventsList events={pastEvents} />
+          </section>
+        ) : null}
+
+        <EventsSeoContent />
+
         <section className="bg-coal px-4 py-16 text-center text-cream sm:px-6 sm:py-20 md:px-10 md:py-22 lg:px-12">
-          <RevealOnScroll>
-            <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
-              Stay in the Loop
-            </p>
-            <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-cream leading-[1.05] mb-6">
-              Follow For <em className="not-italic text-orange">Updates</em>
-            </h2>
-            <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
-            <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[520px] mx-auto mb-8">
-              New events drop on Instagram first. Follow @analogueroomsyv for the latest.
-            </p>
-            <TrackedInstagramLink
-              href={DEFAULT_INSTAGRAM_URL}
-              placement="events_cta"
-              className="inline-flex min-h-11 items-center justify-center border border-cream px-6 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-cream transition-colors hover:bg-cream hover:text-coal sm:min-h-0 sm:px-8 sm:py-3.5 sm:tracking-[0.3em]"
-            >
-              Follow on Instagram
-            </TrackedInstagramLink>
-          </RevealOnScroll>
+          <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
+            Stay in the Loop
+          </p>
+          <h2 className="font-display text-[clamp(34px,4.5vw,52px)] text-cream leading-[1.05] mb-6">
+            Follow For <em className="not-italic text-orange">Updates</em>
+          </h2>
+          <div className="w-12 h-0.5 bg-orange mx-auto mb-6" />
+          <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[520px] mx-auto mb-8">
+            New events drop on Instagram first. Follow @analogueroomsyv for the latest.
+          </p>
+          <TrackedInstagramLink
+            href={DEFAULT_INSTAGRAM_URL}
+            placement="events_cta"
+            className="inline-flex min-h-11 items-center justify-center border border-cream px-6 py-3 font-label text-[11px] tracking-[0.28em] uppercase text-cream transition-colors hover:bg-cream hover:text-coal sm:min-h-0 sm:px-8 sm:py-3.5 sm:tracking-[0.3em]"
+          >
+            Follow on Instagram
+          </TrackedInstagramLink>
         </section>
       </main>
       <Footer />

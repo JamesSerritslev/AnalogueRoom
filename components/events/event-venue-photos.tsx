@@ -1,9 +1,9 @@
 "use client"
 
-import Image from "next/image"
 import { useState } from "react"
 import { AboutPhotoLightbox } from "@/components/about/about-photo-lightbox"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
+import { RevealImage } from "@/components/shared/reveal-image"
+import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
 import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
 
 const EVENT_VENUE_PHOTOS = [
@@ -32,21 +32,21 @@ function PhotoTile({
   onOpen: (index: number) => void
 }) {
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(index)}
-      className={`group relative block w-full overflow-hidden ${PHOTO_ASPECT[index]} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
-      aria-label={`Open photo: ${photo.alt}`}
-    >
-      <Image
-        src={photo.src}
-        alt={photo.alt}
-        fill
-        sizes={PHOTO_SIZES}
-        quality={88}
-        className="object-cover object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
-      />
-    </button>
+    <RevealImage className="w-full">
+      <button
+        type="button"
+        onClick={() => onOpen(index)}
+        className={`group relative block w-full overflow-hidden ${PHOTO_ASPECT[index]} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
+        aria-label={`Open photo: ${photo.alt}`}
+      >
+        <CoverPhotoImg
+          photo={photo}
+          sizes={PHOTO_SIZES}
+          quality={88}
+          className="object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
+        />
+      </button>
+    </RevealImage>
   )
 }
 
@@ -63,13 +63,17 @@ export function EventVenuePhotos() {
   return (
     <section
       className="px-4 pb-20 sm:px-6 sm:pb-24 md:px-10 md:pb-28 lg:px-12"
-      aria-label="The Analogue Room"
+      aria-labelledby="event-venue-photos-heading"
     >
+      <h2
+        id="event-venue-photos-heading"
+        className="font-display mx-auto mb-8 max-w-[1000px] text-center text-[clamp(24px,3vw,32px)] text-coal sm:mb-10"
+      >
+        Inside the Room
+      </h2>
       <div className="mx-auto grid max-w-[1000px] grid-cols-2 gap-2 sm:gap-3 md:gap-4">
         {EVENT_VENUE_PHOTOS.map((photo, index) => (
-          <RevealOnScroll key={photo.src} delay={Math.min(index * 50, 150)}>
-            <PhotoTile photo={photo} index={index} onOpen={openAt} />
-          </RevealOnScroll>
+          <PhotoTile key={photo.src} photo={photo} index={index} onOpen={openAt} />
         ))}
       </div>
       <AboutPhotoLightbox

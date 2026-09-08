@@ -12,7 +12,6 @@ import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import {
   TrackedDirectionsLink,
   TrackedInstagramLink,
@@ -53,23 +52,22 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
         <Image
           src={VENUE_PHOTOS.barFull.src}
           alt={VENUE_PHOTOS.barFull.alt}
-          fill
+          width={VENUE_PHOTOS.barFull.width}
+          height={VENUE_PHOTOS.barFull.height}
           priority
           fetchPriority="high"
           sizes="100vw"
           unoptimized
-          className="object-cover object-[center_40%]"
+          className="absolute inset-0 h-full w-full object-cover object-[center_40%]"
         />
       </div>
 
       <div className="relative z-2 mx-auto w-full max-w-[880px]">
-        <RevealOnScroll eager>
-          <p className="font-label mb-6 text-[10px] tracking-[0.35em] text-orange drop-shadow-lg sm:mb-8 sm:text-[11px] sm:tracking-[0.45em] md:tracking-[0.5em] uppercase">
-            {eyebrow}
-          </p>
-        </RevealOnScroll>
+        <p className="font-label mb-6 text-[10px] tracking-[0.35em] text-orange drop-shadow-lg sm:mb-8 sm:text-[11px] sm:tracking-[0.45em] md:tracking-[0.5em] uppercase">
+          {eyebrow}
+        </p>
 
-        <RevealOnScroll eager delay={80} className="mx-auto mb-10 aspect-square w-[min(260px,55vw)]">
+        <div className="mx-auto mb-10 aspect-square w-[min(260px,55vw)]">
           <Image
             src={siteLogoUrl}
             alt="The Analogue Room logo"
@@ -79,66 +77,54 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
             className="aspect-square w-full object-contain drop-shadow-xl"
             quality={90}
           />
-        </RevealOnScroll>
+        </div>
 
-        <RevealOnScroll eager delay={140}>
-          <h1 className="font-display mb-4 text-[clamp(28px,5.5vw,52px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-5">
-            <span className="text-orange">Vinyl Lounge</span>
-            {" & Wine Bar in "}
-            <span className="text-orange">Solvang</span>
-          </h1>
-        </RevealOnScroll>
+        <h1 className="font-display mb-4 text-[clamp(28px,5.5vw,52px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-5">
+          <span className="text-orange">Vinyl Lounge</span>
+          {" & Wine Bar in "}
+          <span className="text-orange">Solvang</span>
+        </h1>
 
-        <RevealOnScroll eager delay={180}>
-          <p className="font-display mb-6 text-[clamp(22px,4vw,36px)] leading-[1.15] text-cream/90 drop-shadow-md sm:mb-7">
-            {renderBrandLine(brandLine)}
-          </p>
-        </RevealOnScroll>
+        <p className="font-display mb-6 text-[clamp(22px,4vw,36px)] leading-[1.15] text-cream/90 drop-shadow-md sm:mb-7">
+          {renderBrandLine(brandLine)}
+        </p>
 
-        <RevealOnScroll eager delay={240}>
-          <div className="my-8 flex items-center justify-center gap-3.5">
-            <div className="w-15 h-px bg-cream/40" />
-            <span className="text-orange text-sm">★</span>
-            <div className="w-15 h-px bg-cream/40" />
+        <div className="my-8 flex items-center justify-center gap-3.5">
+          <div className="w-15 h-px bg-cream/40" />
+          <span className="text-orange text-sm">★</span>
+          <div className="w-15 h-px bg-cream/40" />
+        </div>
+
+        <p className="font-body mx-auto mb-10 max-w-[540px] text-sm font-normal leading-relaxed text-cream/85 drop-shadow-md">
+          {lead}
+        </p>
+
+        <div className="mt-8 grid grid-cols-2 items-start gap-x-6 border-t border-cream/20 pt-8 sm:gap-x-12 md:gap-x-16">
+          <div className="flex min-w-0 flex-col items-center text-center">
+            <p className={`${metaLabelClass} min-h-[14px]`}>Hours</p>
+            <p className={`${metaValueClass} mt-1.5`}>{metaHours}</p>
           </div>
-        </RevealOnScroll>
-
-        <RevealOnScroll eager delay={280}>
-          <p className="font-body mx-auto mb-10 max-w-[540px] text-sm font-normal leading-relaxed text-cream/85 drop-shadow-md">
-            {lead}
-          </p>
-        </RevealOnScroll>
-
-        <RevealOnScroll eager delay={340}>
-          <div className="mt-8 grid grid-cols-2 items-start gap-x-6 border-t border-cream/20 pt-8 sm:gap-x-12 md:gap-x-16">
-            <div className="flex min-w-0 flex-col items-center text-center">
-              <p className={`${metaLabelClass} min-h-[14px]`}>Hours</p>
-              <p className={`${metaValueClass} mt-1.5`}>{metaHours}</p>
-            </div>
-            <div className="flex min-w-0 flex-col items-center text-center">
-              <p className={`${metaLabelClass} min-h-[14px]`}>Location</p>
-              <TrackedDirectionsLink
-                placement="hero_location"
-                className={`${metaLinkClass} mt-1.5 text-center`}
-              >
-                {metaLocation}
-              </TrackedDirectionsLink>
-            </div>
-          </div>
-        </RevealOnScroll>
-
-        <RevealOnScroll eager delay={400}>
-          <div className="mt-8 flex flex-col items-center text-center">
-            <p className={`${metaLabelClass} min-h-[14px]`}>Follow</p>
-            <TrackedInstagramLink
-              href={instagramUrl}
-              placement="hero_follow"
-              className={`${metaLinkClass} mt-1.5`}
+          <div className="flex min-w-0 flex-col items-center text-center">
+            <p className={`${metaLabelClass} min-h-[14px]`}>Location</p>
+            <TrackedDirectionsLink
+              placement="hero_location"
+              className={`${metaLinkClass} mt-1.5 text-center`}
             >
-              {instagramHandle}
-            </TrackedInstagramLink>
+              {metaLocation}
+            </TrackedDirectionsLink>
           </div>
-        </RevealOnScroll>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center text-center">
+          <p className={`${metaLabelClass} min-h-[14px]`}>Follow</p>
+          <TrackedInstagramLink
+            href={instagramUrl}
+            placement="hero_follow"
+            className={`${metaLinkClass} mt-1.5`}
+          >
+            {instagramHandle}
+          </TrackedInstagramLink>
+        </div>
       </div>
     </section>
   )

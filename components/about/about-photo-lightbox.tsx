@@ -104,6 +104,7 @@ export function AboutPhotoLightbox({
                     photo={photo}
                     sizes="(max-width: 1100px) 100vw, 1100px"
                     className="h-auto max-h-[min(86dvh,960px)] w-full max-w-full object-contain"
+                    reveal={false}
                   />
                 </div>
               ))}

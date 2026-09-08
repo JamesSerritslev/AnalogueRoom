@@ -1,10 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { HostSelect } from "@/components/host-event/host-select"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
 import { trackHostEventSubmit } from "@/lib/analytics"
+import { PRIVACY_PATH } from "@/lib/site-routes"
 
 const INQUIRY_SCROLL_TARGET_ID = "host-event-inquiry-section"
 
@@ -313,6 +315,15 @@ export function InquiryForm() {
         >
           {isSubmitting ? "Sending..." : "Submit Inquiry"}
         </button>
+        <p className="font-body mt-3 text-center text-[12px] leading-relaxed text-cream/45">
+          We use this to reply about your booking.{" "}
+          <Link
+            href={PRIVACY_PATH}
+            className="text-cream/60 underline decoration-cream/25 underline-offset-2 transition-colors hover:text-orange hover:decoration-orange"
+          >
+            Privacy Policy
+          </Link>
+        </p>
       </div>
     </form>
   )

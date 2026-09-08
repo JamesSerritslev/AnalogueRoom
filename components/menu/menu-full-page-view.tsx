@@ -3,7 +3,6 @@ import {
   InteriorHeroText,
   MENU_HERO_TITLE_CLASS,
 } from "@/components/shared/interior-hero-text"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import type { MenuCategory, MenuItemRow, MenuSection } from "@/lib/menu-defaults"
 
 type MenuFullPageViewProps = {
@@ -166,18 +165,16 @@ export function MenuFullPageView({
         />
         <div className="mx-auto max-w-[720px]">
           {lead ? (
-            <RevealOnScroll>
-              <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
-                {lead}
-              </p>
-            </RevealOnScroll>
+            <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
+              {lead}
+            </p>
           ) : null}
 
           <div className={`space-y-16 sm:space-y-20 ${lead ? "" : "pt-8 sm:pt-10"}`}>
             {sections.map((section, idx) => (
-              <RevealOnScroll key={`${section.title}-${idx}`}>
-                <section
-                  id={section.slug}
+              <section
+                key={`${section.title}-${idx}`}
+                id={section.slug}
                   className={`scroll-mt-28 ${
                     section.slug === "wines" ? "max-md:scroll-mt-40" : ""
                   } ${
@@ -205,7 +202,6 @@ export function MenuFullPageView({
                     ))}
                   </div>
                 </section>
-              </RevealOnScroll>
             ))}
           </div>
         </div>

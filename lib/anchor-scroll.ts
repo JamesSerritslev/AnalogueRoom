@@ -1,3 +1,5 @@
+import { smoothScrollToY } from "@/lib/smooth-scroll"
+
 type ScrollToAnchorOptions = {
   /** Gap below fixed nav after applying the element's `scroll-margin-top` */
   extraOffsetPx?: number
@@ -28,6 +30,6 @@ export function scrollToAnchorById(
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const behavior = reduceMotion ? "auto" : (options?.behavior ?? "smooth")
 
-  window.scrollTo({ top, left: 0, behavior })
+  smoothScrollToY(top, behavior)
   return true
 }

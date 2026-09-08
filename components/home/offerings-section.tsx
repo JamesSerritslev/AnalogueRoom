@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { OfferingsMenuLink } from "@/components/home/offerings-menu-link"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { HOME_MENU_SCROLL_TARGET_ID } from "@/lib/menu-scroll-storage"
@@ -109,7 +108,7 @@ export async function OfferingsSection() {
       </div>
 
       <div className="relative z-10">
-        <RevealOnScroll className="mx-auto mb-12 max-w-[680px] text-center sm:mb-14 md:mb-16" eager>
+        <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-14 md:mb-16">
           <p
             id={HOME_MENU_SCROLL_TARGET_ID}
             className="scroll-mt-28 font-label mb-4 text-[10px] uppercase tracking-[0.5em] text-orange"
@@ -123,16 +122,11 @@ export async function OfferingsSection() {
           <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
             {body}
           </p>
-        </RevealOnScroll>
+        </div>
 
         <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:items-stretch">
-          {offerings.map((offering, idx) => (
-            <RevealOnScroll
-              key={offering.href}
-              delay={idx * 100}
-              className="min-h-0 md:h-full"
-            >
-              <OfferingsMenuLink href={offering.href} className={CARD_CLASS}>
+          {offerings.map((offering) => (
+            <OfferingsMenuLink key={offering.href} href={offering.href} className={`${CARD_CLASS} min-h-0 md:h-full`}>
                 <div className="-mt-1 mb-4 flex shrink-0 items-center justify-end gap-2 sm:-mt-1.5">
                   <span className="font-label text-[10px] tracking-[0.35em] uppercase text-cream/55 transition-colors group-hover:text-orange">
                     View menu
@@ -163,7 +157,6 @@ export async function OfferingsSection() {
                   {offering.description}
                 </p>
               </OfferingsMenuLink>
-            </RevealOnScroll>
           ))}
         </div>
       </div>

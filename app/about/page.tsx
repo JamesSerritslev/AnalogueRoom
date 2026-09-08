@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { AboutStory } from "@/components/about/about-story"
-import { SiteNavigation } from "@/components/layout/site-navigation"
 import { Footer } from "@/components/layout/footer"
 import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
@@ -15,7 +14,7 @@ import {
 import { buildPageMetadata } from "@/lib/page-metadata"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About · Analogue Room",
+  title: "About The Analogue Room · Vinyl Lounge & Wine Bar in Solvang",
   description:
     "The Analogue Room opened in downtown Solvang in July 2026: a vinyl listening lounge, wine and beer bar, and pizza kitchen in Founder's Square.",
   keywords: [
@@ -50,7 +49,6 @@ export default async function AboutPage() {
 
   return (
     <>
-      <SiteNavigation />
       <main>
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
           <div

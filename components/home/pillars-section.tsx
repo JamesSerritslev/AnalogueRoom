@@ -7,7 +7,6 @@ import {
 } from "@/lib/content-defaults"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
-import { RevealOnScroll } from "@/components/shared/reveal-on-scroll"
 import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
@@ -46,7 +45,7 @@ export async function PillarsSection() {
 
   return (
     <section id="pillars" className="relative z-2 scroll-mt-20 bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">
-      <RevealOnScroll className="mx-auto mb-12 max-w-[680px] text-center sm:mb-16 md:mb-20" eager>
+      <div className="mx-auto mb-12 max-w-[680px] text-center sm:mb-16 md:mb-20">
         <p className="font-label text-[10px] tracking-[0.5em] uppercase text-orange mb-4">
           {eyebrow}
         </p>
@@ -57,12 +56,11 @@ export async function PillarsSection() {
         <p className="font-body text-[15px] font-normal leading-relaxed text-cream/70 max-w-[560px] mx-auto">
           {body}
         </p>
-      </RevealOnScroll>
+      </div>
 
       <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-3 md:gap-12">
         {pillars.map((pillar, idx) => (
-          <RevealOnScroll key={idx} delay={idx * 110}>
-            <div className="border border-cream/12 px-4 py-8 text-center motion-safe:transition-all motion-safe:duration-300 hover:-translate-y-1 hover:border-orange hover:bg-orange/4 hover:shadow-lg hover:shadow-black/25 sm:px-6 sm:py-10">
+          <div key={idx} className="border border-cream/12 px-4 py-8 text-center motion-safe:transition-all motion-safe:duration-300 hover:-translate-y-1 hover:border-orange hover:bg-orange/4 hover:shadow-lg hover:shadow-black/25 sm:px-6 sm:py-10">
               <p className="font-display text-5xl text-orange/80 leading-none mb-4">
                 {String(idx + 1).padStart(2, "0")}
               </p>
@@ -72,19 +70,17 @@ export async function PillarsSection() {
                 {pillar.description}
               </p>
             </div>
-          </RevealOnScroll>
         ))}
       </div>
 
       <div className="mx-auto mt-12 flex max-w-[1100px] flex-col gap-3 sm:mt-16 sm:gap-4 md:mt-20 md:grid md:grid-cols-2 md:gap-4">
-        {PILLARS_PHOTOS.map((photo, idx) => (
-          <RevealOnScroll key={photo.src} delay={idx * 80} className="w-full">
-            <VenuePhotoImg
-              photo={photo}
-              sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 540px"
-              className="h-auto w-full"
-            />
-          </RevealOnScroll>
+        {PILLARS_PHOTOS.map((photo) => (
+          <VenuePhotoImg
+            key={photo.src}
+            photo={photo}
+            sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 540px"
+            className="h-auto w-full"
+          />
         ))}
       </div>
     </section>

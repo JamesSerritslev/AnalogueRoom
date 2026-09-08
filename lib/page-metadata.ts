@@ -22,6 +22,19 @@ type PageSeoInput = {
   path: string
 }
 
+/** Keep meta descriptions in the 150–160 character window crawlers expect. */
+export function clipMetaDescription(text: string, max = 155): string {
+  const trimmed = text.replace(/\s+/g, " ").trim()
+  if (trimmed.length <= max) return trimmed
+  const slice = trimmed.slice(0, max - 1)
+  const lastSpace = slice.lastIndexOf(" ")
+  const clipped = (lastSpace > 80 ? slice.slice(0, lastSpace) : slice).replace(
+    /[.,;:]+$/,
+    "",
+  )
+  return `${clipped}…`
+}
+
 /** Full per-page SEO metadata (title, description, keywords, OG, Twitter, robots). */
 export function buildPageMetadata({
   title,
@@ -30,15 +43,16 @@ export function buildPageMetadata({
   path,
 }: PageSeoInput): Metadata {
   const url = path.startsWith("/") ? path : `/${path}`
+  const metaDescription = clipMetaDescription(description)
 
   return {
     title: { absolute: title },
-    description,
+    description: metaDescription,
     keywords,
     alternates: { canonical: url },
     openGraph: {
       title,
-      description,
+      description: metaDescription,
       siteName: SITE_NAME,
       locale: "en_US",
       type: "website",
@@ -48,7 +62,7 @@ export function buildPageMetadata({
     twitter: {
       card: "summary_large_image",
       title,
-      description,
+      description: metaDescription,
       images: [OG_IMAGE.url],
     },
     robots: INDEXABLE_ROBOTS,

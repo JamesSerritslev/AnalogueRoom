@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { SiteNavigation } from "@/components/layout/site-navigation"
 import { Footer } from "@/components/layout/footer"
 import { FoodMenuView } from "@/components/food/food-menu-view"
 import { buildPageMetadata } from "@/lib/page-metadata"
@@ -20,7 +19,6 @@ export const metadata: Metadata = buildPageMetadata({
 export default function FoodMenuPage() {
   return (
     <>
-      <SiteNavigation />
       <main>
         <FoodMenuView />
       </main>

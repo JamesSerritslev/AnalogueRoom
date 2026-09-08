@@ -1,8 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useDedupedLocationResolution } from "@/hooks/use-deduped-location"
 import { trackNewsletterSignup } from "@/lib/analytics"
+import { PRIVACY_PATH } from "@/lib/site-routes"
 
 export function NewsletterSignupForm() {
   const [email, setEmail] = useState("")
@@ -129,6 +131,15 @@ export function NewsletterSignupForm() {
           {message}
         </p>
       ) : null}
+      <p className="font-body text-[12px] leading-relaxed text-cream/45">
+        We only use this to send updates.{" "}
+        <Link
+          href={PRIVACY_PATH}
+          className="text-cream/60 underline decoration-cream/25 underline-offset-2 transition-colors hover:text-orange hover:decoration-orange"
+        >
+          Privacy Policy
+        </Link>
+      </p>
     </form>
   )
 }
