@@ -53,6 +53,7 @@ export async function getEvents(): Promise<Event[]> {
         slug,
         date,
         time,
+        description,
         ${EVENT_RECURRENCE_PROJECTION},
         ${EVENT_IMAGE_PROJECTION}
       }`,

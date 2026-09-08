@@ -12,7 +12,7 @@ const components: PortableTextComponents = {
       <h3 className="font-display text-xl text-coal mt-8 mb-2.5">{children}</h3>
     ),
     normal: ({ children }) => (
-      <p className="font-body text-[15px] leading-relaxed text-coal/85 mb-4">{children}</p>
+      <p className="font-body mb-4 text-[16px] leading-relaxed text-coal/88">{children}</p>
     ),
     blockquote: ({ children }) => (
       <blockquote className="font-display text-lg text-orange border-l-[3px] border-orange pl-5 my-6 italic">

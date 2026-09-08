@@ -127,6 +127,8 @@ export const eventType = defineType({
       title: "Short Description",
       type: "text",
       rows: 3,
+      description:
+        "Shown on the events calendar above the See more info button. Not shown on the event page.",
       validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
@@ -134,6 +136,7 @@ export const eventType = defineType({
       title: "Full Description",
       type: "array",
       of: [{ type: "block" }],
+      description: "Shown only on this event’s own page. Use this for the full write-up.",
     }),
     defineField({
       name: "image",

@@ -80,6 +80,12 @@ function EventTeaser({
           priority={priorityImage}
         />
 
+        {event.description ? (
+          <p className="mx-auto mb-6 max-w-[560px] font-body text-[16px] leading-relaxed text-coal/88">
+            {event.description}
+          </p>
+        ) : null}
+
         {slug ? (
           <Link
             href={eventPath(slug)}
@@ -125,11 +131,11 @@ export function PastEventsList({ events }: EventsListProps) {
             const title = event.title || "Past event"
             const dateLabel = formatEventDateShort(event.date)
             return (
-              <li key={event._id || slug} className="min-h-0 overflow-hidden">
-                <RevealImage className="relative aspect-[3/4] w-full overflow-hidden bg-coal/5">
+              <li key={event._id || slug} className="min-h-0 overflow-hidden rounded-[8px]">
+                <RevealImage className="relative aspect-[3/4] w-full overflow-hidden rounded-[8px] bg-coal/5">
                   <Link
                     href={eventPath(slug)}
-                    className="absolute inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                    className="absolute inset-0 rounded-[8px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
                     aria-label={`${title}, ${dateLabel}`}
                   >
                     <Image

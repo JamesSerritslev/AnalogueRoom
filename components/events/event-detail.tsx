@@ -83,12 +83,6 @@ export function EventDetail({
 
       <EventFeatureImage image={event.image} title={event.title} priority />
 
-      {event.description ? (
-        <p className="font-body mb-6 text-[16px] leading-relaxed text-coal/88">
-          {event.description}
-        </p>
-      ) : null}
-
       {event.longDescription?.length ? (
         <EventBody value={event.longDescription} />
       ) : null}

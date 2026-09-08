@@ -66,6 +66,42 @@ export function weekdayTitleFromYmd(ymd: string): string {
   return WEEKDAYS.find((day) => WEEKDAY_INDEX[day.value] === idx)?.title ?? ""
 }
 
+function parseYmdUtc(ymd: string): Date | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ymd)
+  if (!m) return null
+  return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])))
+}
+
+function startOfWeekSunday(ymd: string): string {
+  return addDaysYmd(ymd, -weekdayIndexOfYmd(ymd))
+}
+
+/**
+ * Home banner timing: “This Friday” this week, “Next Friday” the week after,
+ * otherwise the weekday plus date so far-ahead listings stay accurate.
+ */
+export function homeEventWhenPrefix(eventYmd: string, todayYmd?: string): string {
+  const weekday = weekdayTitleFromYmd(eventYmd)
+  const eventDate = parseYmdUtc(eventYmd)
+  if (!eventDate || !weekday) return ""
+
+  const today = todayYmd ?? getLosAngelesNowParts().todayInLA
+  const eventWeek = parseYmdUtc(startOfWeekSunday(eventYmd))
+  const todayWeek = parseYmdUtc(startOfWeekSunday(today))
+  if (!eventWeek || !todayWeek) return weekday
+
+  const weekDiff = Math.round((eventWeek.getTime() - todayWeek.getTime()) / 86_400_000 / 7)
+  if (weekDiff <= 0) return `This ${weekday}`
+  if (weekDiff === 1) return `Next ${weekday}`
+
+  const monthDay = eventDate.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  })
+  return `${weekday}, ${monthDay}`
+}
+
 function weekdayIndexOfYmd(ymd: string): number {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ymd)
   if (!m) return 0

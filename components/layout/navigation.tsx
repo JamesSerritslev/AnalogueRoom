@@ -146,14 +146,7 @@ export function Navigation({
   }, [menuOpen])
 
   useEffect(() => {
-    const desktopMq = window.matchMedia("(min-width: 1024px)")
-
     const onScroll = () => {
-      if (desktopMq.matches) {
-        setNavHidden(false)
-        return
-      }
-
       const y = window.scrollY
       const diff = y - lastScrollY.current
 
@@ -168,17 +161,11 @@ export function Navigation({
       lastScrollY.current = y
     }
 
-    const onMqChange = () => {
-      if (desktopMq.matches) setNavHidden(false)
-    }
-
     lastScrollY.current = window.scrollY
     window.addEventListener("scroll", onScroll, { passive: true })
-    desktopMq.addEventListener("change", onMqChange)
 
     return () => {
       window.removeEventListener("scroll", onScroll)
-      desktopMq.removeEventListener("change", onMqChange)
     }
   }, [])
 
@@ -199,7 +186,7 @@ export function Navigation({
   return (
     <>
       <div
-        className={`fixed top-0 left-0 right-0 z-[100] motion-safe:transition-transform motion-safe:duration-300 lg:translate-y-0 ${
+        className={`fixed top-0 left-0 right-0 z-[100] motion-safe:transition-transform motion-safe:duration-300 ${
           navHidden ? "-translate-y-full" : "translate-y-0"
         }`}
       >

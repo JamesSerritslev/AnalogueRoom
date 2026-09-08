@@ -1,20 +1,20 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { eventPath } from "@/lib/events"
-import { weekdayTitleFromYmd } from "@/lib/event-recurrence"
+import { homeEventWhenPrefix } from "@/lib/event-recurrence"
 import type { Event } from "@/lib/sanity/types"
 
 export function HomeTodayEventCta({ event }: { event: Event }) {
   const slug = event.slug?.current?.trim()
   if (!slug || !event.title?.trim() || !event.date) return null
 
-  const weekday = weekdayTitleFromYmd(event.date)
+  const when = homeEventWhenPrefix(event.date)
   const time = event.time?.trim()
 
   return (
     <div className="flex min-h-8 items-center justify-center gap-2 bg-orange px-3 py-1 sm:min-h-9 sm:gap-3 sm:px-6 md:px-10">
       <p className="min-w-0 truncate font-label text-[10px] tracking-[0.08em] text-cream uppercase sm:text-[11px] sm:tracking-[0.12em]">
-        This {weekday}: {event.title.trim()}
+        {when}: {event.title.trim()}
         {time ? ` — ${time}` : null}
       </p>
       <Link
