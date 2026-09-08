@@ -89,7 +89,7 @@ function EventTeaser({
         {slug ? (
           <Link
             href={eventPath(slug)}
-            className="inline-flex min-h-11 items-center justify-center bg-orange px-8 py-3.5 font-label text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-spanish"
+            className="inline-flex min-h-11 items-center justify-center bg-coal px-8 py-3.5 font-label text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-orange"
           >
             See more info
           </Link>
