@@ -9,11 +9,10 @@ export function GoogleReviewsIcon({ className }: GoogleReviewsIconProps) {
   return (
     <Image
       src="/images/google-reviews-icon.png"
-      alt=""
+      alt="Google Reviews"
       width={48}
       height={48}
       className={`object-contain ${className ?? ""}`.trim()}
-      aria-hidden
     />
   )
 }

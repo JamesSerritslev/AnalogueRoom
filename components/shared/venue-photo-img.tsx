@@ -38,3 +38,25 @@ export function VenuePhotoImg({
 
   return <RevealImage className="w-full">{image}</RevealImage>
 }
+
+/** Cover-fit photo with explicit width/height so crawlers see dimensions. */
+export function CoverPhotoImg({
+  photo,
+  className = "",
+  sizes = DEFAULT_SIZES,
+  priority = false,
+  quality = 75,
+}: VenuePhotoImgProps & { quality?: number }) {
+  return (
+    <Image
+      src={photo.src}
+      alt={photo.alt}
+      width={photo.width}
+      height={photo.height}
+      sizes={sizes}
+      priority={priority}
+      quality={quality}
+      className={`absolute inset-0 h-full w-full object-cover ${className}`.trim()}
+    />
+  )
+}

@@ -68,6 +68,44 @@ export async function getEvents(): Promise<Event[]> {
   }
 }
 
+/** Expired one-off nights — kept as indexable archive pages and linked from /events. */
+export async function getPastEvents(): Promise<Event[]> {
+  const rawClient = await getClientForRequest()
+  if (!rawClient) {
+    return []
+  }
+  const client = rawClient.withConfig({ useCdn: false })
+
+  try {
+    const { todayInLA, currentTimeInLA } = getLosAngelesNowParts()
+    const events = await client.fetch<Event[]>(
+      `*[
+        _type == "event" &&
+        recurring != true &&
+        defined(slug.current) &&
+        defined(date) &&
+        (
+          date < $todayInLA ||
+          (date == $todayInLA && $currentTimeInLA > $sameDayCutoff)
+        )
+      ] {
+        _id,
+        title,
+        slug,
+        date,
+        time,
+        ${EVENT_RECURRENCE_PROJECTION},
+        ${EVENT_IMAGE_PROJECTION}
+      } | order(date desc)`,
+      { todayInLA, currentTimeInLA, sameDayCutoff: LA_EVENT_CUTOFF_TIME },
+    )
+    return events.filter((event) => !isOneOffListed(event.date, todayInLA, currentTimeInLA))
+  } catch (error) {
+    console.error("Error fetching past events from Sanity:", error)
+    return []
+  }
+}
+
 /** Next one-time (non-weekly) event still on the calendar, if any. */
 export const getNextOneOffEvent = cache(async function getNextOneOffEvent(): Promise<Event | null> {
   const client = await getClientForRequest()
@@ -165,7 +203,7 @@ export type EventSlugEntry = {
   imageUrl?: string
 }
 
-/** All event slugs, including expired — detail pages stay live forever. */
+/** All event slugs, including expired — detail pages stay live and indexed. */
 export async function getAllEventSlugs(): Promise<EventSlugEntry[]> {
   const client = getPublishedClient()
   if (!client) {

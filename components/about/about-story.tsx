@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { AboutPhotoLightbox } from "@/components/about/about-photo-lightbox"
 import { RevealImage } from "@/components/shared/reveal-image"
+import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
 import {
   renderBodyAccents,
   type BodyAccentLink,
@@ -126,14 +127,12 @@ function PhotoFrame({
         className={`group relative block w-full overflow-hidden ${aspectClass} cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange`}
         aria-label={`Open photo: ${photo.alt}`}
       >
-        <Image
-          src={photo.src}
-          alt={photo.alt}
-          fill
+        <CoverPhotoImg
+          photo={photo}
           sizes={sizes}
           priority={priority}
           quality={88}
-          className="object-cover object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
+          className="object-center motion-safe:transition-opacity motion-safe:duration-300 group-active:opacity-90"
         />
       </button>
     </RevealImage>

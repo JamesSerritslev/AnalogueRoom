@@ -52,12 +52,13 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
         <Image
           src={VENUE_PHOTOS.barFull.src}
           alt={VENUE_PHOTOS.barFull.alt}
-          fill
+          width={VENUE_PHOTOS.barFull.width}
+          height={VENUE_PHOTOS.barFull.height}
           priority
           fetchPriority="high"
           sizes="100vw"
           unoptimized
-          className="object-cover object-[center_40%]"
+          className="absolute inset-0 h-full w-full object-cover object-[center_40%]"
         />
       </div>
 

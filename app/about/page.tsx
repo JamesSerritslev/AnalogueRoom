@@ -14,7 +14,7 @@ import {
 import { buildPageMetadata } from "@/lib/page-metadata"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About · Analogue Room",
+  title: "About The Analogue Room · Vinyl Lounge & Wine Bar in Solvang",
   description:
     "The Analogue Room opened in downtown Solvang in July 2026: a vinyl listening lounge, wine and beer bar, and pizza kitchen in Founder's Square.",
   keywords: [

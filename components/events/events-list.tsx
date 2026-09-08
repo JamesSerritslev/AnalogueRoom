@@ -1,10 +1,13 @@
+import Image from "next/image"
 import Link from "next/link"
 import { DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import { EventFeatureImage } from "@/components/events/event-feature-image"
+import { RevealImage } from "@/components/shared/reveal-image"
 import { TrackedInstagramLink } from "@/components/shared/tracked-links"
-import { eventPath, formatEventDate } from "@/lib/events"
+import { eventPath, formatEventDate, formatEventDateShort } from "@/lib/events"
 import { formatEveryWeekday } from "@/lib/event-recurrence"
-import type { Event } from "@/lib/sanity/types"
+import { sanityCroppedImageUrl } from "@/lib/sanity/image-url"
+import type { Event, SanityImageField } from "@/lib/sanity/types"
 
 interface EventsListProps {
   events: Event[]
@@ -87,5 +90,78 @@ function EventTeaser({
         ) : null}
       </div>
     </article>
+  )
+}
+
+function pastEventImageSrc(image: SanityImageField | undefined): string | undefined {
+  if (!image?.asset) return undefined
+  const assetId = image.asset._ref || image.asset._id
+  const forBuilder: SanityImageField = assetId
+    ? { ...image, asset: { ...image.asset, _ref: assetId } }
+    : image
+  return sanityCroppedImageUrl(forBuilder, 720, 960) ?? image.asset.url
+}
+
+/** Flyer collage so past nights stay internally linked for crawlers. */
+export function PastEventsList({ events }: EventsListProps) {
+  const tiles = events.flatMap((event) => {
+    const slug = event.slug?.current?.trim()
+    const src = pastEventImageSrc(event.image)
+    if (!slug || !src) return []
+    return [{ event, slug, src }]
+  })
+  const unlabeled = events.filter((event) => {
+    const slug = event.slug?.current?.trim()
+    return Boolean(slug && !pastEventImageSrc(event.image))
+  })
+
+  if (tiles.length === 0 && unlabeled.length === 0) return null
+
+  return (
+    <div>
+      {tiles.length > 0 ? (
+        <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 sm:gap-2 md:gap-2.5">
+          {tiles.map(({ event, slug, src }) => {
+            const title = event.title || "Past event"
+            const dateLabel = formatEventDateShort(event.date)
+            return (
+              <li key={event._id || slug} className="min-h-0 overflow-hidden">
+                <RevealImage className="relative aspect-[3/4] w-full overflow-hidden bg-coal/5">
+                  <Link
+                    href={eventPath(slug)}
+                    className="absolute inset-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                    aria-label={`${title}, ${dateLabel}`}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${title} flyer, ${dateLabel}`}
+                      width={720}
+                      height={960}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 320px"
+                      className="absolute inset-0 h-full w-full object-cover object-center motion-safe:transition-transform motion-safe:duration-500 hover:scale-[1.04]"
+                    />
+                  </Link>
+                </RevealImage>
+              </li>
+            )
+          })}
+        </ul>
+      ) : null}
+      {unlabeled.length > 0 ? (
+        <ul className="sr-only">
+          {unlabeled.map((event) => {
+            const slug = event.slug?.current?.trim()
+            if (!slug) return null
+            return (
+              <li key={event._id || slug}>
+                <Link href={eventPath(slug)}>
+                  {event.title || "Past event"} · {formatEventDateShort(event.date)}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      ) : null}
+    </div>
   )
 }

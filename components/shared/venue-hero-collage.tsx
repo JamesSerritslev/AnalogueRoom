@@ -1,4 +1,4 @@
-import Image from "next/image"
+import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 /**
@@ -11,23 +11,17 @@ export function VenueHeroCollage() {
 
   return (
     <div className="absolute inset-0 z-0">
-      <Image
-        src={mobile.src}
-        alt={mobile.alt}
-        fill
+      <CoverPhotoImg
+        photo={mobile}
         priority
         sizes="100vw"
-        quality={75}
-        className="object-cover object-[center_22%] md:hidden"
+        className="object-[center_22%] md:hidden"
       />
-      <Image
-        src={desktop.src}
-        alt={desktop.alt}
-        fill
+      <CoverPhotoImg
+        photo={desktop}
         priority
         sizes="100vw"
-        quality={75}
-        className="hidden object-cover object-[center_35%] md:block"
+        className="hidden object-[center_35%] md:block"
       />
       <div className="interior-hero-scrim" aria-hidden />
     </div>

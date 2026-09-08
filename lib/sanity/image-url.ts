@@ -16,6 +16,16 @@ export function sanityImageUrl(
   return typeof width === "number" ? chain.width(width).url() : chain.url()
 }
 
+/** Fixed crop for collage tiles so tall flyers cannot overflow the box. */
+export function sanityCroppedImageUrl(
+  source: SanityImageSource | undefined,
+  width: number,
+  height: number,
+): string | undefined {
+  if (!builder || !source) return undefined
+  return builder.image(source).fit("crop").format("webp").width(width).height(height).url()
+}
+
 /** JPEG crop for OG / social cards (Satori is unreliable with webp). */
 export function sanityOgImageUrl(
   source: SanityImageSource | undefined,

@@ -1,14 +1,20 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import {
   InteriorHeroText,
   MENU_HERO_TITLE_CLASS,
 } from "@/components/shared/interior-hero-text"
+import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
 import { FOOD_MENU_PDF, FOOD_MENU_PNG } from "@/lib/food-menu"
 import { RevealImage } from "@/components/shared/reveal-image"
+import { DRINKS_MENU_PATH } from "@/lib/site-routes"
 import type { VenuePhoto } from "@/lib/venue-photos"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
+
+const FOOD_SEO_LINK =
+  "text-orange underline decoration-orange/40 underline-offset-4 transition-colors hover:decoration-orange"
 
 const LEFT_PHOTOS = [
   VENUE_PHOTOS.pizzaBoard,
@@ -80,15 +86,7 @@ function CoverPhoto({
 }) {
   return (
     <RevealImage className="relative min-h-0 flex-1 overflow-hidden">
-      <Image
-        src={photo.src}
-        alt={photo.alt}
-        fill
-        sizes={sizes}
-        priority={priority}
-        quality={75}
-        className="object-cover object-center"
-      />
+      <CoverPhotoImg photo={photo} sizes={sizes} priority={priority} />
     </RevealImage>
   )
 }
@@ -99,15 +97,7 @@ function MobilePizzaCollage() {
     <div className="mt-14 grid grid-cols-2 gap-3">
       {MOBILE_PHOTOS.map((photo, i) => (
         <RevealImage key={photo.src} className="relative aspect-[4/5] overflow-hidden">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              sizes="50vw"
-              quality={75}
-              priority={i < 2}
-              className="object-cover object-center"
-            />
+            <CoverPhotoImg photo={photo} sizes="50vw" priority={i < 2} />
         </RevealImage>
       ))}
     </div>
@@ -124,23 +114,17 @@ export function FoodMenuView() {
     <>
       <section className="relative flex min-h-[48vh] flex-col justify-end overflow-hidden px-4 pb-12 pt-page-hero sm:min-h-[54vh] sm:px-6 sm:pb-14 md:min-h-[58vh] md:px-10 md:pb-16 lg:px-12">
         <div className="absolute inset-0 z-0">
-          <Image
-            src={VENUE_PHOTOS.pizzaBoard.src}
-            alt={VENUE_PHOTOS.pizzaBoard.alt}
-            fill
+          <CoverPhotoImg
+            photo={VENUE_PHOTOS.pizzaBoard}
             priority
             sizes="100vw"
-            quality={75}
-            className="object-cover object-[center_40%] lg:hidden"
+            className="object-[center_40%] lg:hidden"
           />
-          <Image
-            src={VENUE_PHOTOS.pizzaTray.src}
-            alt={VENUE_PHOTOS.pizzaTray.alt}
-            fill
+          <CoverPhotoImg
+            photo={VENUE_PHOTOS.pizzaTray}
             priority
             sizes="100vw"
-            quality={75}
-            className="hidden object-cover object-[center_45%] lg:block"
+            className="hidden object-[center_45%] lg:block"
           />
           <div className="interior-hero-scrim" aria-hidden />
         </div>
@@ -150,10 +134,17 @@ export function FoodMenuView() {
       </section>
 
       <section className="relative bg-cream px-4 py-14 text-coal sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-12 lg:py-24">
-        <p className="font-body mx-auto mb-12 max-w-[40rem] text-center text-[15px] leading-relaxed text-coal/80 sm:mb-14 lg:mb-16">
-            Pair some music with our great pizza! Made with Baker&apos;s Table focaccia crust
-            with locally sourced and house made toppings.
+        <div className="mx-auto mb-12 max-w-[40rem] text-center sm:mb-14 lg:mb-16">
+          <h2 className="font-display mb-4 text-[clamp(28px,3.4vw,40px)] leading-[1.08] text-coal">
+            Side Hustle Pizza
+          </h2>
+          <div className="mx-auto mb-5 h-px w-8 bg-orange" />
+          <p className="font-body text-[15px] leading-relaxed text-coal/80">
+            Pair some music with our great pizza. Baker&apos;s Table focaccia crust,
+            locally sourced toppings, and house-made salads meant for drinks and
+            vinyl—not a full restaurant meal.
           </p>
+        </div>
 
         {/* Mobile / tablet: menu first, collage after */}
         <div className="mx-auto max-w-[520px] lg:hidden">
@@ -189,6 +180,41 @@ export function FoodMenuView() {
               />
             ))}
           </aside>
+        </div>
+      </section>
+
+      <section className="bg-cream px-4 pb-16 text-coal sm:px-6 sm:pb-20 md:px-10 md:pb-24 lg:px-12">
+        <div className="mx-auto max-w-[720px]">
+          <h2 className="font-display mb-3 text-[clamp(28px,3.4vw,40px)] leading-[1.08] text-coal">
+            Pizza at a vinyl lounge
+          </h2>
+          <div className="mb-5 h-px w-8 bg-orange" />
+          <div className="font-body space-y-4 text-[15px] leading-relaxed text-coal/85">
+            <p>
+              Side Hustle Pizza at Analogue Room offers focaccia bread pizzas, plus
+              simple salads. We&apos;re open later than most restaurants, so if
+              you&apos;re looking for a late night bite after a day in the Santa
+              Ynez Valley, come stop by!
+            </p>
+            <p>
+              The printed menu above lists our full food menu. Open the PDF if you
+              want to zoom or save it. Order a 6&quot; × 8&quot; cut in two to
+              split with a friend, or a 12&quot; × 8&quot; for a group.
+            </p>
+            <p>
+              Pair a slice with the{" "}
+              <Link href={DRINKS_MENU_PATH} className={FOOD_SEO_LINK}>
+                wine and beer menu
+              </Link>
+              , or see what&apos;s spinning on the{" "}
+              <Link href="/events" className={FOOD_SEO_LINK}>
+                events calendar
+              </Link>
+              . We&apos;re at 1693 Mission Drive, Suite D2, in Founder&apos;s
+              Square, Solvang. Thursday through Saturday 4pm to 10pm; Sunday and
+              Monday 4pm to 8pm.
+            </p>
+          </div>
         </div>
       </section>
     </>
