@@ -186,7 +186,7 @@ export function FoodMenuView() {
       <section className="bg-cream px-4 pb-16 text-coal sm:px-6 sm:pb-20 md:px-10 md:pb-24 lg:px-12">
         <div className="mx-auto max-w-[720px]">
           <h2 className="font-display mb-3 text-[clamp(28px,3.4vw,40px)] leading-[1.08] text-coal">
-            Pizza at a vinyl lounge
+            Give it a try!
           </h2>
           <div className="mb-5 h-px w-8 bg-orange" />
           <div className="font-body space-y-4 text-[15px] leading-relaxed text-coal/85">
@@ -198,11 +198,11 @@ export function FoodMenuView() {
             </p>
             <p>
               The printed menu above lists our full food menu. Open the PDF if you
-              want to zoom or save it. Order a 6&quot; × 8&quot; cut in two to
+              want to zoom or save it for later. Order a 6&quot; × 8&quot; cut in two to
               split with a friend, or a 12&quot; × 8&quot; for a group.
             </p>
             <p>
-              Pair a slice with the{" "}
+              Pair a slice with a drink from our{" "}
               <Link href={DRINKS_MENU_PATH} className={FOOD_SEO_LINK}>
                 wine and beer menu
               </Link>

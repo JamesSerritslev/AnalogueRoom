@@ -10,7 +10,7 @@ import { InteriorHeroText } from "@/components/shared/interior-hero-text"
 import { TrackedInstagramLink } from "@/components/shared/tracked-links"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Events · Live DJ & Late Nights in Solvang",
+  title: "Events · Live DJ & Late Nights at Analogue Room in Solvang",
   description:
     "Guest DJs, live vinyl, and a bar open late in Solvang. See upcoming nights at Analogue Room: wine, beer, pizza, and music from the booth.",
   keywords: [
