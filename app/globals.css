@@ -229,15 +229,6 @@ html {
   }
 }
 
-@keyframes hero-bg-drift {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.045); }
-}
-
-.hero-bg-photo.hero-bg-drift-pulse {
-  transform-origin: center center;
-}
-
 /* ── Inner pages: ultra-slow hero parallax-ish zoom ────────────────────── */
 @keyframes interior-hero-drift {
   0% { transform: scale(1); }
@@ -266,6 +257,26 @@ html {
   animation: about-swipe-hint 1.35s ease-in-out infinite;
 }
 
+@keyframes hero-logo-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  62% {
+    transform: rotate(378deg);
+  }
+  82% {
+    transform: rotate(352deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-logo-spin-active {
+  transform-origin: center center;
+  animation: hero-logo-spin 1.65s cubic-bezier(0.22, 0.82, 0.24, 1) 1 both;
+}
+
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .page-transition {
@@ -280,7 +291,6 @@ html {
     transform: none !important;
   }
 
-  .hero-bg-photo.hero-bg-drift-pulse,
   .interior-hero-photo.interior-hero-drift {
     animation: none !important;
     transform: none !important;
@@ -290,13 +300,14 @@ html {
     animation: none !important;
     transform: none !important;
   }
+
+  .hero-logo-spin-active {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
-  .hero-bg-photo.hero-bg-drift-pulse {
-    animation: hero-bg-drift 22s ease-in-out infinite alternate;
-  }
-
   .interior-hero-photo.interior-hero-drift {
     animation: interior-hero-drift 36s ease-in-out infinite alternate;
   }
@@ -308,14 +319,12 @@ html {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
+  background-color: var(--coal);
   background-repeat: no-repeat;
   image-rendering: auto;
   filter: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  will-change: auto;
 }
 
 .hero-bg-photo::after {

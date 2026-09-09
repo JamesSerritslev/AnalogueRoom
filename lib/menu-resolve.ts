@@ -11,6 +11,10 @@ import type {
   PageMenusSection,
 } from "@/lib/sanity/types"
 
+function withoutEmDash(text: string): string {
+  return text.replace(/\s*—\s*/g, ": ").replace(/—/g, ", ")
+}
+
 function normalizeColumns(raw: string | undefined | null): MenuColumns {
   if (raw === "glass-bottle" || raw === "bottle-can") return raw
   return "single"
@@ -24,7 +28,13 @@ function normalizeItem(it: PageMenusItem | undefined | null): MenuItemRow | null
   const glassPrice = it?.glassPrice?.trim() || undefined
   const bottlePrice = it?.bottlePrice?.trim() || undefined
   const price = it?.price?.trim() || undefined
-  return { title, description, glassPrice, bottlePrice, price }
+  return {
+    title: withoutEmDash(title),
+    description: description ? withoutEmDash(description) : undefined,
+    glassPrice,
+    bottlePrice,
+    price,
+  }
 }
 
 function normalizeCategory(
@@ -38,7 +48,7 @@ function normalizeCategory(
       .filter(Boolean) ?? []
   if (!items.length) return null
   return {
-    title,
+    title: withoutEmDash(title),
     columns: normalizeColumns(block.columns),
     items: items as MenuItemRow[],
   }
@@ -64,10 +74,11 @@ function normalizeSection(
       ?.map((c) => normalizeCategory(c))
       .filter(Boolean) ?? []
   if (!categories.length) return null
+  const note = section.note?.trim()
   return {
-    title,
+    title: withoutEmDash(title),
     slug: sectionSlug(section),
-    note: section.note?.trim() || undefined,
+    note: note ? withoutEmDash(note) : undefined,
     categories: categories as MenuCategory[],
   }
 }

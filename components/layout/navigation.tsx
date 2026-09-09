@@ -223,7 +223,7 @@ export function Navigation({
           >
             <Image
               src={logoSrc}
-              alt="The Analogue Room logo"
+              alt="Analogue Room logo"
               width={60}
               height={60}
               className="h-9 w-9 object-contain sm:h-12 sm:w-12 lg:h-[60px] lg:w-[60px]"

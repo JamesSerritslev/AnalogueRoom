@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = buildPageMetadata({
   title: "Privacy Policy · Analogue Room",
   description:
-    "How The Analogue Room in Solvang handles information you choose to share: location, newsletter signup, and host-event inquiries.",
+    "How Analogue Room in Solvang handles information you choose to share: location, newsletter signup, and host-event inquiries.",
   keywords: ["privacy policy", "analogue room", "solvang"],
   path: PRIVACY_PATH,
 })
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
           </p>
 
           <p className={P_CLASS}>
-            The Analogue Room is a vinyl lounge and wine bar in Solvang,
+            Analogue Room is a vinyl lounge and wine bar in Solvang,
             California. We do not create accounts on this site. We only collect
             personal information when you choose to share it: allowing location,
             joining our email list, or sending a Host Your Event inquiry.
@@ -131,7 +131,7 @@ export default function PrivacyPage() {
 
           <h2 className={H2_CLASS}>Contact</h2>
           <p className={P_CLASS}>
-            The Analogue Room
+            Analogue Room
             <br />
             {VENUE_ADDRESS_SINGLE_LINE}
             <br />

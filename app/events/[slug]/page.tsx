@@ -3,9 +3,9 @@ import { notFound } from "next/navigation"
 import { EventDetail } from "@/components/events/event-detail"
 import { EventVenuePhotos } from "@/components/events/event-venue-photos"
 import { Footer } from "@/components/layout/footer"
-import { eventPath, formatEventDateShort } from "@/lib/events"
+import { eventPath, eventDocumentTitle } from "@/lib/events"
 import { clipMetaDescription, SITE_NAME } from "@/lib/page-metadata"
-import { getAllEventSlugs, getEventBySlug, isEventListed } from "@/lib/sanity/queries"
+import { getAllEventSlugs, getEventBySlug, getRelatedEvents, isEventListed } from "@/lib/sanity/queries"
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -31,10 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const slug = event.slug?.current?.trim() || decodeURIComponent(rawSlug)
   const path = eventPath(slug)
   const listed = isEventListed(event)
-  const dateLabel = formatEventDateShort(event.date)
-  const title = listed
-    ? `${event.title} · Analogue Room`
-    : `${event.title} · ${dateLabel} · Analogue Room`
+  const title = eventDocumentTitle(event, listed)
   const description = clipMetaDescription(
     event.description ||
       `${event.title} at ${SITE_NAME} in Solvang. Vinyl, wine, beer, and pizza at 1693 Mission Drive.`,
@@ -66,10 +63,17 @@ export default async function EventDetailPage({ params }: PageProps) {
   const event = await loadEvent(rawSlug)
   if (!event) notFound()
 
+  const slug = event.slug?.current?.trim() || decodeURIComponent(rawSlug)
+  const relatedEvents = await getRelatedEvents(slug)
+
   return (
     <>
       <main>
-        <EventDetail event={event} listed={isEventListed(event)} />
+        <EventDetail
+          event={event}
+          listed={isEventListed(event)}
+          relatedEvents={relatedEvents}
+        />
         <EventVenuePhotos />
       </main>
       <Footer />

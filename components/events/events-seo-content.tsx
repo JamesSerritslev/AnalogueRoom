@@ -17,7 +17,7 @@ const LINK_CLASS =
 
 const FAQ_ITEMS = [
   {
-    question: "Is The Analogue Room a bar open late in Solvang?",
+    question: "Is Analogue Room a bar open late in Solvang?",
     answer:
       "Yes. We're one of the later bars in downtown Solvang: Thursday through Saturday 4pm to 10pm, Sunday and Monday 4pm to 8pm. Closed Tuesday and Wednesday.",
   },

@@ -33,3 +33,18 @@ export function visibleEventType(eventType?: string | null): string | null {
 export function eventPath(slug: string): string {
   return `/events/${encodeURIComponent(slug)}`
 }
+
+/** Document / Open Graph title — long enough for crawlers, includes Solvang. */
+export function eventDocumentTitle(
+  event: { title?: string; eventType?: string | null; date?: string },
+  listed: boolean,
+): string {
+  const name = event.title?.trim() || "Event"
+  if (listed) {
+    const type = visibleEventType(event.eventType)
+    return type
+      ? `${name} · ${type} at Analogue Room in Solvang`
+      : `${name} · Event at Analogue Room in Solvang`
+  }
+  return `${name} · ${formatEventDateShort(event.date)} · Analogue Room in Solvang`
+}

@@ -72,7 +72,7 @@ const DEFAULT_PILLARS = [
     _type: "pillar",
     title: "Analogue",
     description:
-      "Vinyl, played properly. No algorithms. No skips. The full album, the way the artist meant it. A return to the analogue way of listening.",
+      "Vinyl, played properly. No algorithms. A return to the analogue way of listening.",
   },
 ]
 
@@ -80,7 +80,7 @@ const DEFAULT_PILLARS = [
 const DEFAULT_ROOM_EYEBROW = "The Space"
 const DEFAULT_ROOM_HEADLINE = "A Place to Slow Down"
 const DEFAULT_ROOM_BODY = [
-  "The Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California, a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
+  "Analogue Room is a vinyl lounge and wine bar in the heart of Solvang, California, a space designed for those who believe the best moments come with a glass in your hand and a needle in the groove.",
   "We're not a club. We're not a museum. We're a room. A warm, intentional, beautifully cluttered room where the music breathes, the drinks are thoughtful, and the conversation finds its rhythm.",
 ]
 
@@ -127,10 +127,10 @@ const DEFAULT_ABOUT_TEAM_MEMBERS = [
 ]
 
 const DEFAULT_EVENTS_INTRO =
-  "From listening parties and album releases to special pours and pop-ups. Here's what's on at The Analogue Room."
+  "From listening parties and album releases to special pours and pop-ups. Here's what's on at Analogue Room."
 
 const DEFAULT_HOST_INTRO =
-  "From intimate birthday gatherings to listening parties and corporate retreats, The Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."
+  "From intimate birthday gatherings to listening parties and corporate retreats, Analogue Room offers a one-of-a-kind backdrop for the moments that matter. Vinyl, thoughtful drinks, and a room designed to bring people together."
 
 function loadEnvLocal() {
   const p = path.join(ROOT, ".env.local")

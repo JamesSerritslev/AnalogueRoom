@@ -18,7 +18,7 @@ export const revalidate = 60
 export const metadata: Metadata = buildPageMetadata({
   title: "Wine & Beer Menu · Analogue Room in Solvang",
   description:
-    "Wines, craft beer, and zero-proof pours at The Analogue Room: a vinyl lounge and bar in Solvang, CA.",
+    "Wines, craft beer, and zero-proof pours at Analogue Room: a vinyl lounge and bar in Solvang, CA.",
   keywords: [
     "wine",
     "wine bar",

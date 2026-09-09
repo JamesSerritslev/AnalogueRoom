@@ -7,7 +7,7 @@ export const VENUE_LNG_LAT: [number, number] = [
   34.59649 - 0.0002,
 ]
 
-export const VENUE_NAME = "The Analogue Room"
+export const VENUE_NAME = "Analogue Room"
 
 export const VENUE_STREET_ADDRESS = "1693 Mission Drive, Suite D2"
 export const VENUE_ADDRESS_LOCALITY = "Solvang"
@@ -38,7 +38,7 @@ export function getVenuePhoneTelHref(): string | null {
 }
 
 /**
- * Canonical Google Maps place page for The Analogue Room (no tracking query params).
+ * Canonical Google Maps place page for Analogue Room (no tracking query params).
  * Prefer this over env URLs — Vercel often truncates values that contain `&`.
  * CID from Google: 0xb2c8a55da7db22a7
  */

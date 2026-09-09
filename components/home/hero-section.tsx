@@ -11,6 +11,7 @@ import {
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
+import { HeroLogo } from "@/components/home/hero-logo"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
 import {
   TrackedDirectionsLink,
@@ -34,6 +35,7 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
   const metaHours = L.home?.heroMetaHours || DEFAULT_HERO_META_HOURS
   const instagramHandle = DEFAULT_INSTAGRAM_HANDLE
   const instagramUrl = DEFAULT_INSTAGRAM_URL
+  const heroPhoto = VENUE_PHOTOS.barFull
 
   const metaLabelClass =
     "font-label text-[9px] tracking-[0.4em] uppercase text-orange"
@@ -44,21 +46,21 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
 
   return (
     <section
-      className={`relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-8 pb-28 text-center ${
+      className={`relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-coal px-8 pb-28 text-center md:min-h-[max(100svh,calc(100vw*2/3))] ${
         hasEventCta ? "pt-[152px]" : "pt-[120px]"
       }`}
     >
-      <div className="hero-bg-photo hero-bg-drift-pulse" aria-hidden>
+      <div className="hero-bg-photo" aria-hidden>
         <Image
-          src={VENUE_PHOTOS.barFull.src}
-          alt={VENUE_PHOTOS.barFull.alt}
-          width={VENUE_PHOTOS.barFull.width}
-          height={VENUE_PHOTOS.barFull.height}
+          src={heroPhoto.src}
+          alt={heroPhoto.alt}
+          width={heroPhoto.width}
+          height={heroPhoto.height}
           priority
           fetchPriority="high"
           sizes="100vw"
-          unoptimized
-          className="absolute inset-0 h-full w-full object-cover object-[center_40%]"
+          quality={90}
+          className="absolute inset-0 h-full w-full object-cover object-center md:object-contain"
         />
       </div>
 
@@ -67,17 +69,7 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
           {eyebrow}
         </p>
 
-        <div className="mx-auto mb-10 aspect-square w-[min(260px,55vw)]">
-          <Image
-            src={siteLogoUrl}
-            alt="The Analogue Room logo"
-            width={260}
-            height={260}
-            sizes="(max-width: 640px) 55vw, 260px"
-            className="aspect-square w-full object-contain drop-shadow-xl"
-            quality={90}
-          />
-        </div>
+        <HeroLogo src={siteLogoUrl} />
 
         <h1 className="font-display mb-4 text-[clamp(28px,5.5vw,52px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-5">
           <span className="text-orange">Vinyl Lounge</span>

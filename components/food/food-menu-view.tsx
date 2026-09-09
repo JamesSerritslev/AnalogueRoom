@@ -47,7 +47,7 @@ function MenuPdf({ priority = false }: { priority?: boolean }) {
     >
       <Image
         src={FOOD_MENU_PNG}
-        alt="Side Hustle Pizza menu — slices, squares, and salads with prices"
+        alt="Side Hustle Pizza menu: slices, squares, and salads with prices"
         width={990}
         height={1529}
         sizes="(max-width: 1023px) 100vw, 560px"
@@ -142,7 +142,7 @@ export function FoodMenuView() {
           <p className="font-body text-[15px] leading-relaxed text-coal/80">
             Pair some music with our great pizza. Baker&apos;s Table focaccia crust,
             locally sourced toppings, and house-made salads meant for drinks and
-            vinyl—not a full restaurant meal.
+            vinyl.
           </p>
         </div>
 
@@ -213,6 +213,17 @@ export function FoodMenuView() {
               . We&apos;re at 1693 Mission Drive, Suite D2, in Founder&apos;s
               Square, Solvang. Thursday through Saturday 4pm to 10pm; Sunday and
               Monday 4pm to 8pm.
+            </p>
+            <p>
+              Most of downtown Solvang winds down early. We stay open later so
+              you can come after a tasting, after dinner, or when you want vinyl
+              and a bite without booking a table. Walk in. Order at the bar.
+              Records are already spinning. If you&apos;re planning a birthday
+              or a listening night,{" "}
+              <Link href="/host-event" className={FOOD_SEO_LINK}>
+                Host Your Event
+              </Link>{" "}
+              covers private bookings.
             </p>
           </div>
         </div>

@@ -2,7 +2,9 @@ import Link from "next/link"
 import type { ReactNode } from "react"
 import { OfferingsScrollLink } from "@/components/home/offerings-scroll-link"
 import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
+import { eventPath, formatEventDateShort } from "@/lib/events"
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
+import type { Event } from "@/lib/sanity/types"
 import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
 
 const LINK_CLASS =
@@ -17,23 +19,66 @@ type CategoryBlock = {
   photoRight?: boolean
 }
 
-const categories: CategoryBlock[] = [
+function nightlifeBody(upcomingEvents: Event[]) {
+  const nights = upcomingEvents
+    .flatMap((event) => {
+      const slug = event.slug?.current?.trim()
+      const title = event.title?.trim()
+      if (!slug || !title) return []
+      return [{ slug, title, date: event.date }]
+    })
+    .slice(0, 3)
+
+  return (
+    <>
+      Analogue Room is a walk-in bar that&apos;s open later than most places in Solvang:
+      wine, craft beer, zero-proof pours, and vinyl. For what
+      we&apos;re pouring, see{" "}
+      <OfferingsScrollLink className={LINK_CLASS}>
+        drinks and listening on the menu
+      </OfferingsScrollLink>
+      .
+      {nights.length > 0 ? (
+        <>
+          {" "}
+          Upcoming nights include{" "}
+          {nights.map((night, index) => (
+            <span key={night.slug}>
+              {index > 0 ? (index === nights.length - 1 ? ", and " : ", ") : null}
+              <Link href={eventPath(night.slug)} className={LINK_CLASS}>
+                {night.title}
+              </Link>
+              <span className="text-coal/60"> ({formatEventDateShort(night.date)})</span>
+            </span>
+          ))}
+          . See the{" "}
+          <Link href="/events" className={LINK_CLASS}>
+            events calendar
+          </Link>
+          .
+        </>
+      ) : (
+        <>
+          {" "}
+          See the{" "}
+          <Link href="/events" className={LINK_CLASS}>
+            events calendar
+          </Link>{" "}
+          for guest DJs and late nights.
+        </>
+      )}
+    </>
+  )
+}
+
+function categoryBlocks(upcomingEvents: Event[]): CategoryBlock[] {
+  return [
   {
     id: "bar",
     title: "Bar & Nightlife in Solvang",
     photo: VENUE_PHOTOS.barNight,
     photoRight: true,
-    body: (
-      <>
-        The Analogue Room is a walk-in bar that's open later than most places in Solvang:
-        wine, craft beer, zero-proof pours, and albums on vinyl. For what
-        we&apos;re pouring, see{" "}
-        <OfferingsScrollLink className={LINK_CLASS}>
-          drinks and listening on the menu
-        </OfferingsScrollLink>
-        .
-      </>
-    ),
+    body: nightlifeBody(upcomingEvents),
   },
   {
     id: "wine-bar",
@@ -55,11 +100,11 @@ const categories: CategoryBlock[] = [
   {
     id: "vinyl-lounge",
     title: "Vinyl Lounge",
-    photo: VENUE_PHOTOS.browsingRecords,
+    photo: VENUE_PHOTOS.barPatrons,
     photoRight: true,
     body: (
       <>
-        Each record has its own story of how it wound up in The Analogue Room.
+        Each record has its own story of how it wound up at Analogue Room.
         Shelves are stocked with a variety of records and locally built speakers
         that bring quality sound. Every open hour, records are spinning.
       </>
@@ -99,11 +144,17 @@ const categories: CategoryBlock[] = [
     ),
   },
 ]
+}
 
 /**
  * GBP-aligned category H2s with in-paragraph editorial links (mini “Core” structure).
  */
-export function HomeGbpCategoriesSection() {
+export function HomeGbpCategoriesSection({
+  upcomingEvents = [],
+}: {
+  upcomingEvents?: Event[]
+}) {
+  const categories = categoryBlocks(upcomingEvents)
   return (
     <section
       id="what-we-are"

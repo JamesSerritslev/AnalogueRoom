@@ -89,7 +89,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "Whites — Local Selections",
+        title: "Whites: Local Selections",
         columns: "glass-bottle",
         items: [
           {
@@ -110,7 +110,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "Whites — Imports",
+        title: "Whites: Imports",
         columns: "glass-bottle",
         items: [
           {
@@ -131,7 +131,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "Reds — Local Selections",
+        title: "Reds: Local Selections",
         columns: "glass-bottle",
         items: [
           {
@@ -152,7 +152,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "Reds — Imports",
+        title: "Reds: Imports",
         columns: "glass-bottle",
         items: [
           {
@@ -292,7 +292,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "White Wines — Local Selections",
+        title: "White Wines: Local Selections",
         columns: "single",
         items: [
           {
@@ -330,7 +330,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "White Wines — Imported Selections",
+        title: "White Wines: Imported Selections",
         columns: "single",
         items: [
           {
@@ -363,7 +363,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "Red Wines — Local Selections",
+        title: "Red Wines: Local Selections",
         columns: "single",
         items: [
           { title: "Pax ‘Cuvee Syrah’, Syrah, Sonoma Coast, 2025", price: "51" },
@@ -395,7 +395,7 @@ export const SEED_MENU_SECTIONS = withKeys([
         ],
       },
       {
-        title: "Red Wines — Imported Selections",
+        title: "Red Wines: Imported Selections",
         columns: "single",
         items: [
           {

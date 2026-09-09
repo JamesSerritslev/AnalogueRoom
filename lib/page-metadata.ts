@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 
-export const SITE_NAME = "The Analogue Room"
+export const SITE_NAME = "Analogue Room"
 
 export const OG_IMAGE = {
   url: "/images/og.png",
   width: 1024,
   height: 492,
   type: "image/png" as const,
-  alt: "The Analogue Room: minimalist illustration of analog audio equipment with the ANALOGUE ROOM wordmark",
+  alt: "Analogue Room: minimalist illustration of analog audio equipment with the ANALOGUE ROOM wordmark",
 } as const
 
 const INDEXABLE_ROBOTS = {

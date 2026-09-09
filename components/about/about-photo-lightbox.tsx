@@ -73,7 +73,7 @@ export function AboutPhotoLightbox({
         aria-describedby={undefined}
       >
         <DialogTitle className="sr-only">
-          Photo gallery — {current?.alt ?? "The Analogue Room"}
+          Photo gallery: {current?.alt ?? "Analogue Room"}
         </DialogTitle>
         <DialogDescription className="sr-only">
           Swipe left or right to browse photos. Press Escape to close.

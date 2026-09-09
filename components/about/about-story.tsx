@@ -192,7 +192,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
       <section className="bg-cream px-4 py-16 sm:px-6 sm:py-20 md:px-10 md:py-24 lg:px-12">
         <div className="mx-auto max-w-[920px]">
           <p className="font-label mb-4 text-[10px] tracking-[0.5em] text-orange uppercase">
-              The Analogue Room
+              Analogue Room
             </p>
             <div className="mb-6 flex items-start justify-between gap-4 sm:gap-6">
               <h2 className="font-display min-w-0 flex-1 text-[clamp(34px,4.5vw,52px)] leading-[1.05] text-coal">
@@ -205,7 +205,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
                   className="inline-flex items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
                 >
                   <InstagramIcon className="h-8 w-8 sm:h-9 sm:w-9" />
-                  <span className="sr-only">Follow The Analogue Room on Instagram</span>
+                  <span className="sr-only">Follow Analogue Room on Instagram</span>
                 </TrackedInstagramLink>
                 <TrackedFacebookLink
                   href={DEFAULT_FACEBOOK_URL}
@@ -213,7 +213,7 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
                   className="inline-flex items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
                 >
                   <FacebookIcon className="h-8 w-8 sm:h-9 sm:w-9" />
-                  <span className="sr-only">Follow The Analogue Room on Facebook</span>
+                  <span className="sr-only">Follow Analogue Room on Facebook</span>
                 </TrackedFacebookLink>
               </div>
             </div>

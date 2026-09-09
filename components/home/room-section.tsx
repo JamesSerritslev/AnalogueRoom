@@ -10,7 +10,7 @@ import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 const ROOM_STRIP = [
-  VENUE_PHOTOS.boothWine,
+  VENUE_PHOTOS.djBooth,
   VENUE_PHOTOS.analogueWine,
 ] as const
 
@@ -47,7 +47,7 @@ export async function RoomSection() {
 
         <div className="w-full">
           <VenuePhotoImg
-            photo={VENUE_PHOTOS.recordWall}
+            photo={VENUE_PHOTOS.barCrowd}
             sizes="(max-width: 767px) 100vw, 520px"
             className="h-auto w-full"
             priority

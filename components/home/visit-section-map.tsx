@@ -18,7 +18,7 @@ export function VisitSectionMap() {
     >
       <div className="aspect-square overflow-hidden rounded-sm border-2 border-coal/10 bg-coal/5 sm:aspect-[21/9] md:aspect-[2.4/1]">
         <iframe
-          title="The Analogue Room on Google Maps: 1693 Mission Drive, Suite D2, Solvang, CA"
+          title="Analogue Room on Google Maps: 1693 Mission Drive, Suite D2, Solvang, CA"
           src={embedSrc}
           className="h-full w-full border-0"
           loading="lazy"

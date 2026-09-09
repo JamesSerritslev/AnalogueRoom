@@ -3,7 +3,7 @@
  *
  * `.env.local` / Vercel:
  *   RESEND_API_KEY=re_...
- *   RESEND_FROM="The Analogue Room <events@yourdomain.com>"   // verified domain
+ *   RESEND_FROM="Analogue Room <events@yourdomain.com>"   // verified domain
  *   HOST_INQUIRY_TO_EMAIL=you@example.com,other@example.com   // comma-separated (up to 50)
  */
 
@@ -100,7 +100,7 @@ function buildInquiryEmailHtml(
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:580px;margin:0 auto;background-color:${BRAND.cream};border:1px solid rgba(40,43,46,0.12);">
     <tr>
       <td style="background-color:${BRAND.coal};padding:22px 28px 20px;border-bottom:3px solid ${BRAND.orange};">
-        <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.42em;text-transform:uppercase;color:${BRAND.orange};font-weight:600;">The Analogue Room</p>
+        <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.42em;text-transform:uppercase;color:${BRAND.orange};font-weight:600;">Analogue Room</p>
         <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:400;color:${BRAND.cream};line-height:1.15;">${escapeHtml(title)}</h1>
       </td>
     </tr>
@@ -241,7 +241,7 @@ export async function POST(req: Request) {
     )
   }
 
-  const subject = `The Analogue Room - New Inquiry from ${firstName} ${lastName}`
+  const subject = `Analogue Room - New Inquiry from ${firstName} ${lastName}`
 
   const text = [
     subject.toUpperCase(),

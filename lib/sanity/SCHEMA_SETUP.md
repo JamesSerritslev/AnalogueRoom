@@ -1,4 +1,4 @@
-# Sanity Studio Schema for The Analogue Room Events
+# Sanity Studio Schema for Analogue Room Events
 
 This file documents the Sanity schema that the client should create in their Sanity Studio project.
 

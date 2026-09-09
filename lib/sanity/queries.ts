@@ -107,6 +107,19 @@ export async function getPastEvents(): Promise<Event[]> {
   }
 }
 
+/** Other nights to link from an event page — upcoming first, then recent past. */
+export async function getRelatedEvents(excludeSlug: string, limit = 3): Promise<Event[]> {
+  const exclude = excludeSlug.trim()
+  if (!exclude || limit <= 0) return []
+
+  const [upcoming, past] = await Promise.all([getEvents(), getPastEvents()])
+  const notSelf = (event: Event) => {
+    const slug = event.slug?.current?.trim()
+    return Boolean(slug && slug !== exclude)
+  }
+  return [...upcoming.filter(notSelf), ...past.filter(notSelf)].slice(0, limit)
+}
+
 /** Next one-time (non-weekly) event still on the calendar, if any. */
 export const getNextOneOffEvent = cache(async function getNextOneOffEvent(): Promise<Event | null> {
   const client = await getClientForRequest()

@@ -2,6 +2,7 @@ import Image from "next/image"
 import type { SanityImageField } from "@/lib/sanity/types"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import { RevealImage } from "@/components/shared/reveal-image"
+import { cn } from "@/lib/utils"
 
 type EventFeatureImageProps = {
   image: SanityImageField | undefined
@@ -39,9 +40,11 @@ export function EventFeatureImage({
 
   return (
     <RevealImage
-      className={`mb-8 overflow-hidden rounded-sm border border-coal/10 bg-coal/5 sm:mb-10 ${
-        portrait ? "mx-auto w-full max-w-[min(100%,420px)] sm:max-w-[480px]" : "w-full"
-      } ${className}`}
+      className={cn(
+        "mb-8 overflow-hidden rounded-sm border border-coal/10 bg-coal/5 sm:mb-10",
+        portrait ? "mx-auto w-full max-w-[min(100%,420px)] sm:max-w-[480px]" : "w-full",
+        className,
+      )}
     >
       <figure>
         <Image

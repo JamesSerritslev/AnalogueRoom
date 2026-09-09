@@ -128,7 +128,7 @@ export const eventType = defineType({
       type: "text",
       rows: 3,
       description:
-        "Shown on the events calendar above the See more info button. Not shown on the event page.",
+        "Calendar teaser above See more info. If Full Description is empty, this also appears on the event page. Required for every event.",
       validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
@@ -136,7 +136,8 @@ export const eventType = defineType({
       title: "Full Description",
       type: "array",
       of: [{ type: "block" }],
-      description: "Shown only on this event’s own page. Use this for the full write-up.",
+      description:
+        "Optional. Extra write-up on this event’s page only. Leave empty if the short description is enough. The page still fills in from title, date, time, photo, shared venue copy, and other nights.",
     }),
     defineField({
       name: "image",

@@ -4,6 +4,7 @@ import {
   DEFAULT_PILLARS_BODY,
   DEFAULT_PILLARS_EYEBROW,
   DEFAULT_PILLARS_HEADLINE,
+  resolvePillarDescription,
 } from "@/lib/content-defaults"
 import { HOME_HEADLINE_ACCENTS } from "@/lib/home-headline-accents"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
@@ -38,10 +39,14 @@ export async function PillarsSection() {
   const eyebrow = L.home?.pillarsEyebrow || DEFAULT_PILLARS_EYEBROW
   const headline = L.home?.pillarsHeadline || DEFAULT_PILLARS_HEADLINE
   const body = L.home?.pillarsBody || DEFAULT_PILLARS_BODY
-  const pillars =
+  const pillars = (
     L.home?.pillars?.filter((p) => p?.title?.trim())?.length
       ? L.home.pillars
       : DEFAULT_PILLARS
+  ).map((pillar) => ({
+    ...pillar,
+    description: resolvePillarDescription(pillar),
+  }))
 
   return (
     <section id="pillars" className="relative z-2 scroll-mt-20 bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12 lg:py-30">

@@ -15,7 +15,7 @@ export function HomeTodayEventCta({ event }: { event: Event }) {
     <div className="flex min-h-8 items-center justify-center gap-2 bg-orange px-3 py-1 sm:min-h-9 sm:gap-3 sm:px-6 md:px-10">
       <p className="min-w-0 truncate font-label text-[10px] tracking-[0.08em] text-cream uppercase sm:text-[11px] sm:tracking-[0.12em]">
         {when}: {event.title.trim()}
-        {time ? ` — ${time}` : null}
+        {time ? ` · ${time}` : null}
       </p>
       <Link
         href={eventPath(slug)}

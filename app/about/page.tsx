@@ -14,9 +14,9 @@ import {
 import { buildPageMetadata } from "@/lib/page-metadata"
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About The Analogue Room · Vinyl Lounge & Wine Bar in Solvang",
+  title: "About Analogue Room · Vinyl Lounge & Wine Bar in Solvang",
   description:
-    "The Analogue Room opened in downtown Solvang in July 2026: a vinyl listening lounge, wine and beer bar, and pizza kitchen in Founder's Square.",
+    "Analogue Room opened in downtown Solvang in July 2026: a vinyl listening lounge, wine and beer bar, and pizza kitchen in Founder's Square.",
   keywords: [
     "analogue room",
     "analogue room owner",
@@ -104,8 +104,9 @@ export default async function AboutPage() {
                       <Image
                         src={photoUrl}
                         alt={name}
-                        fill
-                        className="object-cover"
+                        width={140}
+                        height={140}
+                        className="h-full w-full object-cover"
                         sizes="140px"
                       />
                     ) : (

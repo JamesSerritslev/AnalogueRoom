@@ -47,7 +47,7 @@ export async function Footer() {
     >
       <Image
         src={siteLogoUrl}
-        alt="The Analogue Room logo"
+        alt="Analogue Room logo"
         width={80}
         height={80}
         className="h-16 w-16 rounded-full object-contain md:h-20 md:w-20"
@@ -59,7 +59,7 @@ export async function Footer() {
     <>
       <p className="text-[13px] leading-relaxed text-cream/70">
         <strong className="font-label mb-2 block text-[10px] tracking-[0.3em] uppercase text-orange">
-          The Analogue Room
+          Analogue Room
         </strong>
         <TrackedDirectionsLink
           placement="footer_address"

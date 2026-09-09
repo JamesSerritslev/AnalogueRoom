@@ -3,12 +3,12 @@ import type { Metadata } from "next"
 import { HomePageClientScripts } from "@/components/home/home-page-client-scripts"
 import { HeroSection } from "@/components/home/hero-section"
 import { buildPageMetadata } from "@/lib/page-metadata"
-import { getNextOneOffEvent } from "@/lib/sanity/queries"
+import { getEvents, getNextOneOffEvent } from "@/lib/sanity/queries"
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Analogue Room · Vinyl Bar & Lounge in Solvang, CA",
   description:
-    "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and full albums on vinyl at 1693 Mission Drive, Suite D2.",
+    "Analogue Room is a vinyl bar and lounge in Solvang, CA: wine, craft beer, zero-proof pours, and vinyl at 1693 Mission Drive, Suite D2.",
   keywords: [
     "wine bar",
     "best wine",
@@ -66,7 +66,10 @@ const Footer = dynamic(() =>
 export const revalidate = 60
 
 export default async function HomePage() {
-  const nextOneOff = await getNextOneOffEvent()
+  const [nextOneOff, upcomingEvents] = await Promise.all([
+    getNextOneOffEvent(),
+    getEvents(),
+  ])
 
   return (
     <>
@@ -75,7 +78,7 @@ export default async function HomePage() {
         <HeroSection hasEventCta={Boolean(nextOneOff)} />
         <PillarsSection />
         <RoomSection />
-        <HomeGbpCategoriesSection />
+        <HomeGbpCategoriesSection upcomingEvents={upcomingEvents} />
         <OfferingsSection />
         <VisitSection />
         <HomeReviewsSection />

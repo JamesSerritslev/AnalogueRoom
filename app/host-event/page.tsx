@@ -11,7 +11,7 @@ import { buildPageMetadata } from "@/lib/page-metadata"
 export const metadata: Metadata = buildPageMetadata({
   title: "Host Your Event · Analogue Room in Solvang",
   description:
-    "Host a private night at The Analogue Room in Solvang: vinyl, thoughtful drinks, and a lounge built for gatherings.",
+    "Host a private night at Analogue Room in Solvang: vinyl, thoughtful drinks, and a lounge built for gatherings.",
   keywords: [
     "special events",
     "party",
