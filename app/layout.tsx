@@ -41,6 +41,11 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/site.webmanifest",
+  verification: {
+    other: {
+      "msvalidate.01": "2CF82E3E82C611FCBE60DCC61409B712",
+    },
+  },
   other: {
     "msapplication-TileImage": "/icon-192.png",
     "msapplication-TileColor": "#282b2e",
