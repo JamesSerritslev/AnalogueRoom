@@ -11,7 +11,6 @@ import {
 import { getSiteImagery } from "@/lib/sanity/site-imagery"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
-import { HeroLogo } from "@/components/home/hero-logo"
 import { renderHeadlineAccent } from "@/components/shared/render-headline-accent"
 import {
   TrackedDirectionsLink,
@@ -69,7 +68,18 @@ export async function HeroSection({ hasEventCta = false }: { hasEventCta?: boole
           {eyebrow}
         </p>
 
-        <HeroLogo src={siteLogoUrl} />
+        <div className="mx-auto mb-10 aspect-square w-[min(260px,55vw)]">
+          <Image
+            src={siteLogoUrl}
+            alt="Analogue Room logo"
+            width={260}
+            height={260}
+            sizes="(max-width: 640px) 55vw, 260px"
+            className="aspect-square w-full object-contain drop-shadow-xl"
+            quality={90}
+            priority
+          />
+        </div>
 
         <h1 className="font-display mb-4 text-[clamp(28px,5.5vw,52px)] leading-[1.1] text-cream drop-shadow-lg sm:mb-5">
           <span className="text-orange">Vinyl Lounge</span>
