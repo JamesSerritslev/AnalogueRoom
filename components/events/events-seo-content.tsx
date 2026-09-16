@@ -8,7 +8,7 @@ import {
   DEFAULT_INSTAGRAM_HANDLE,
   DEFAULT_INSTAGRAM_URL,
 } from "@/lib/content-defaults"
-import { FOOD_MENU_PATH } from "@/lib/site-routes"
+import { FOOD_MENU_PATH, OKTOBERFEST_SOLVANG_PATH } from "@/lib/site-routes"
 import { getSiteUrl } from "@/lib/site-url"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
@@ -110,7 +110,11 @@ export function EventsSeoContent() {
                 <Link href={FOOD_MENU_PATH} className={LINK_CLASS}>
                   late-night pizza
                 </Link>
-                {", or come after dinner, after a tasting, or when you want to extend your fun night in the Santa Ynez Valley. Walk-in. No cover unless an event says otherwise."}
+                {", or come after dinner, after a tasting, or when you want to extend your fun night in the Santa Ynez Valley. Walk-in. No cover unless an event says otherwise. Looking for "}
+                <Link href={OKTOBERFEST_SOLVANG_PATH} className={LINK_CLASS}>
+                  Oktoberfest in Solvang
+                </Link>
+                {"? Analogue Room Oktoberfest is on September 25, 2026."}
               </p>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { ChevronLeft } from "lucide-react"
 import { EventBody } from "@/components/events/event-body"
 import { EventFeatureImage } from "@/components/events/event-feature-image"
 import { EventShareButton } from "@/components/events/event-share-button"
+import { TrackedDirectionsLink } from "@/components/shared/tracked-links"
 import { eventPageLead } from "@/lib/event-page-copy"
 import { eventPath, formatEventDate, formatEventDateShort, visibleEventType } from "@/lib/events"
 import { formatEveryWeekday } from "@/lib/event-recurrence"
@@ -109,18 +110,24 @@ export function EventDetail({
         {eventPageLead(event)}
       </p>
 
-      {listed && event.ticketUrl ? (
-        <div className="mt-10 border-t border-coal/10 pt-8 text-center">
+      <div className="mt-10 flex flex-col items-center justify-center gap-3 border-t border-coal/10 pt-8 sm:flex-row sm:gap-4">
+        {listed && event.ticketUrl ? (
           <a
             href={event.ticketUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center justify-center bg-orange px-8 py-3.5 font-label text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-spanish"
+            className="inline-flex min-h-11 w-full items-center justify-center bg-orange px-8 py-3.5 font-label text-[11px] tracking-[0.28em] text-cream uppercase transition-colors hover:bg-spanish sm:w-auto"
           >
             Tickets / RSVP
           </a>
-        </div>
-      ) : null}
+        ) : null}
+        <TrackedDirectionsLink
+          placement="event_directions"
+          className="inline-flex min-h-11 w-full items-center justify-center border border-coal px-8 py-3.5 font-label text-[11px] tracking-[0.28em] text-coal uppercase transition-colors hover:bg-coal hover:text-cream sm:w-auto"
+        >
+          Get directions
+        </TrackedDirectionsLink>
+      </div>
 
       <section className="mt-12 border-t border-coal/10 pt-10 text-left">
         <h2 className="font-display mb-3 text-[clamp(24px,3vw,32px)] leading-[1.1] text-coal">

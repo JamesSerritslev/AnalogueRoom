@@ -63,14 +63,25 @@ export async function Footer() {
         </strong>
         <TrackedDirectionsLink
           placement="footer_address"
-          className="inline-block transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+          className="group inline-block transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
         >
-          {addressLines.map((line, idx) => (
-            <span key={idx}>
-              {line}
-              {idx < addressLines.length - 1 && <br />}
-            </span>
-          ))}
+          {addressLines.map((line, idx) => {
+            const isCityLine = idx === addressLines.length - 1 && addressLines.length > 1
+            return (
+              <span key={idx}>
+                <span
+                  className={
+                    isCityLine
+                      ? undefined
+                      : "border-b border-cream/35 pb-0.5 transition-colors group-hover:border-orange"
+                  }
+                >
+                  {line}
+                </span>
+                {idx < addressLines.length - 1 ? <br /> : null}
+              </span>
+            )
+          })}
         </TrackedDirectionsLink>
         {phoneDisplay && phoneTel ? (
           <>
@@ -78,7 +89,7 @@ export async function Footer() {
             <TrackedTelLink
               href={phoneTel}
               placement="footer_phone"
-              className="mt-2 inline-block transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+              className="mt-2 inline-block border-b border-cream/35 pb-0.5 transition-colors hover:border-orange hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
             >
               {phoneDisplay}
             </TrackedTelLink>
