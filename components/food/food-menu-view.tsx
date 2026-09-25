@@ -53,7 +53,7 @@ function MenuPdf({ priority = false }: { priority?: boolean }) {
         sizes="(max-width: 1023px) 100vw, 560px"
         className="h-auto w-full border border-coal/10 shadow-[0_18px_50px_-28px_rgba(28,24,20,0.55)]"
         priority={priority}
-        quality={85}
+        quality={90}
       />
     </a>
   )

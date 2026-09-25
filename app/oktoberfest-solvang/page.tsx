@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { EventFeatureImage } from "@/components/events/event-feature-image"
 import { Footer } from "@/components/layout/footer"
 import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
 import {
@@ -269,6 +270,15 @@ export default async function OktoberfestSolvangPage() {
             with late-night energy in the Santa Ynez Valley.
           </p>
 
+          {cmsEvent?.image ? (
+            <EventFeatureImage
+              image={cmsEvent.image}
+              title={title}
+              priority
+              className="!mx-auto !mb-10 !w-full !max-w-[min(100%,560px)] sm:!mb-12 sm:!max-w-[640px]"
+            />
+          ) : null}
+
           <div className="my-8 border border-coal/10 bg-parched/40 px-5 py-6 sm:px-7 sm:py-7">
             <p className="font-label mb-2 text-[10px] tracking-[0.35em] text-orange uppercase">
               Featured night
@@ -304,10 +314,10 @@ export default async function OktoberfestSolvangPage() {
 
           <div className="mb-10">
             <VenuePhotoImg
-              photo={VENUE_PHOTOS.craftBeer}
+              photo={VENUE_PHOTOS.barFull}
               sizes="(max-width: 767px) 100vw, 720px"
               className="h-auto w-full"
-              priority
+              priority={!cmsEvent?.image}
             />
           </div>
 

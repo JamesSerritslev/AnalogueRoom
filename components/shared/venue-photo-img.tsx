@@ -30,7 +30,7 @@ export function VenuePhotoImg({
       sizes={sizes}
       className={className}
       priority={priority}
-      quality={75}
+      quality={88}
     />
   )
 
@@ -45,7 +45,7 @@ export function CoverPhotoImg({
   className = "",
   sizes = DEFAULT_SIZES,
   priority = false,
-  quality = 75,
+  quality = 88,
 }: VenuePhotoImgProps & { quality?: number }) {
   return (
     <Image

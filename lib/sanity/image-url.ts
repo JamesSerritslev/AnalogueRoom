@@ -12,7 +12,7 @@ export function sanityImageUrl(
   width?: number
 ): string | undefined {
   if (!builder || !source) return undefined
-  const chain = builder.image(source).fit("max").format("webp")
+  const chain = builder.image(source).fit("max").format("webp").quality(90)
   return typeof width === "number" ? chain.width(width).url() : chain.url()
 }
 
@@ -23,7 +23,14 @@ export function sanityCroppedImageUrl(
   height: number,
 ): string | undefined {
   if (!builder || !source) return undefined
-  return builder.image(source).fit("crop").format("webp").width(width).height(height).url()
+  return builder
+    .image(source)
+    .fit("crop")
+    .format("webp")
+    .quality(90)
+    .width(width)
+    .height(height)
+    .url()
 }
 
 /** JPEG crop for OG / social cards (Satori is unreliable with webp). */
@@ -32,5 +39,5 @@ export function sanityOgImageUrl(
   width = 1200,
 ): string | undefined {
   if (!builder || !source) return undefined
-  return builder.image(source).fit("crop").format("jpg").quality(85).width(width).url()
+  return builder.image(source).fit("crop").format("jpg").quality(90).width(width).url()
 }

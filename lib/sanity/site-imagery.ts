@@ -19,10 +19,10 @@ type ResolvedSiteImagery = {
 
 function resolveFromLayout(L: Awaited<ReturnType<typeof getLayoutSingletons>>): ResolvedSiteImagery {
   const homeHeroUrl =
-    sanityImageUrl(L.home?.heroBackground, 1920) ?? DEFAULT_INTERIOR_HERO
-  const siteLogoUrl = sanityImageUrl(L.brand?.logo, 520) ?? DEFAULT_SITE_LOGO
+    sanityImageUrl(L.home?.heroBackground, 2560) ?? DEFAULT_INTERIOR_HERO
+  const siteLogoUrl = sanityImageUrl(L.brand?.logo, 800) ?? DEFAULT_SITE_LOGO
   const offeringsSectionBgUrl =
-    sanityImageUrl(L.home?.offeringsBackground, 1600) ?? DEFAULT_OFFERINGS_SECTION_BG
+    sanityImageUrl(L.home?.offeringsBackground, 2400) ?? DEFAULT_OFFERINGS_SECTION_BG
   const heroLead = L.home?.heroLead || null
   return {
     homeHeroUrl,
@@ -43,7 +43,7 @@ export function resolvePageHeroUrl(
 ): string {
   const candidates = [pageHero, ...fallbacks]
   for (const source of candidates) {
-    const url = sanityImageUrl(source, 1920)
+    const url = sanityImageUrl(source, 2560)
     if (url) return url
   }
   return homeHeroUrl

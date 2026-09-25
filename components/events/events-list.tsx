@@ -105,7 +105,7 @@ function pastEventImageSrc(image: SanityImageField | undefined): string | undefi
   const forBuilder: SanityImageField = assetId
     ? { ...image, asset: { ...image.asset, _ref: assetId } }
     : image
-  return sanityCroppedImageUrl(forBuilder, 720, 960) ?? image.asset.url
+  return sanityCroppedImageUrl(forBuilder, 1080, 1440) ?? image.asset.url
 }
 
 /** Flyer collage so past nights stay internally linked for crawlers. */
@@ -144,6 +144,7 @@ export function PastEventsList({ events }: EventsListProps) {
                       width={720}
                       height={960}
                       sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 320px"
+                      quality={88}
                       className="absolute inset-0 h-full w-full object-cover object-center motion-safe:transition-transform motion-safe:duration-500 hover:scale-[1.04]"
                     />
                   </Link>

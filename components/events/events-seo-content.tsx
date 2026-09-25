@@ -81,10 +81,6 @@ export function EventsSeoContent() {
         <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
           <figure className="grid w-full grid-cols-1 gap-2 order-first md:order-last sm:gap-3">
             <VenuePhotoImg
-              photo={VENUE_PHOTOS.nightCrowd}
-              sizes="(max-width: 767px) 100vw, 520px"
-            />
-            <VenuePhotoImg
               photo={VENUE_PHOTOS.pizzaTray}
               sizes="(max-width: 767px) 100vw, 520px"
             />

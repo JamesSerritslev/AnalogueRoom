@@ -17,7 +17,7 @@ function resolveEventImageSrc(image: SanityImageField | undefined): string | und
   const forBuilder: SanityImageField = assetId
     ? { ...image, asset: { ...image.asset, _ref: assetId } }
     : image
-  return sanityImageUrl(forBuilder, 1400) ?? image.asset.url
+  return sanityImageUrl(forBuilder, 2400) ?? image.asset.url
 }
 
 /**
@@ -59,6 +59,7 @@ export function EventFeatureImage({
               : "(max-width: 720px) 100vw, 720px"
           }
           priority={priority}
+          quality={88}
         />
       </figure>
     </RevealImage>

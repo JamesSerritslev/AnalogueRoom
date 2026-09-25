@@ -89,11 +89,15 @@ export function trackEventShare(path: string, method: "native" | "clipboard"): v
   })
 }
 
+/** Static estimated value for Host Your Event conversion reporting. */
+export const HOST_EVENT_CONVERSION_VALUE = 2400
+
 /** Successful Host Your Event inquiry. */
 export function trackHostEventSubmit(): void {
-  trackEvent("generate_lead", {
+  trackEvent("host_event_submit", {
     lead_type: "host_event",
     placement: "host_event_form",
+    value: HOST_EVENT_CONVERSION_VALUE,
+    currency: "USD",
   })
-  trackEvent("host_event_submit", { placement: "host_event_form" })
 }

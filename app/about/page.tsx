@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import { AboutStory } from "@/components/about/about-story"
 import { Footer } from "@/components/layout/footer"
-import { getSiteImagery, resolvePageHeroUrl } from "@/lib/sanity/site-imagery"
+import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
 import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import {
@@ -12,6 +12,7 @@ import {
   DEFAULT_TEAM_MEMBERS,
 } from "@/lib/content-defaults"
 import { buildPageMetadata } from "@/lib/page-metadata"
+import { VENUE_PHOTOS } from "@/lib/venue-photos"
 
 export const metadata: Metadata = buildPageMetadata({
   title: "About Analogue Room · Vinyl Lounge & Wine Bar in Solvang",
@@ -31,11 +32,7 @@ export const metadata: Metadata = buildPageMetadata({
 export const revalidate = 60
 
 export default async function AboutPage() {
-  const [{ homeHeroUrl }, L] = await Promise.all([
-    getSiteImagery(),
-    getLayoutSingletons(),
-  ])
-  const pageHeroUrl = resolvePageHeroUrl(L.about?.heroBackground, homeHeroUrl)
+  const L = await getLayoutSingletons()
 
   const storyParagraphs = [...DEFAULT_ABOUT_STORY_PARAGRAPHS]
   const storyAccents = DEFAULT_ABOUT_STORY_ACCENTS
@@ -51,10 +48,13 @@ export default async function AboutPage() {
     <>
       <main>
         <section className="relative flex min-h-[50vh] items-end overflow-hidden px-4 pb-14 pt-page-hero sm:min-h-[55vh] sm:px-6 sm:pb-16 md:px-10 md:pb-[4.5rem] lg:px-12">
-          <div
-            className="interior-hero-photo interior-hero-drift absolute inset-0 z-0"
-            style={{ backgroundImage: `url('${pageHeroUrl}')` }}
-          >
+          <div className="absolute inset-0 z-0">
+            <CoverPhotoImg
+              photo={VENUE_PHOTOS.djBooth}
+              priority
+              sizes="100vw"
+              className="object-[center_35%]"
+            />
             <div className="interior-hero-scrim" aria-hidden />
           </div>
           <div className="relative z-2">
@@ -86,7 +86,7 @@ export default async function AboutPage() {
 
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
             {teamMembers.map((member, idx) => {
-              const photoUrl = sanityImageUrl(member.photo, 560)
+              const photoUrl = sanityImageUrl(member.photo, 800)
               const name = member.name ?? "Team member"
               return (
                 <div

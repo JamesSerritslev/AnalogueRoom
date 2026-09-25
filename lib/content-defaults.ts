@@ -98,7 +98,7 @@ export const DEFAULT_HOURS: HoursRow[] = [
 // ── About ────────────────────────────────────────────────────────────────────
 export const DEFAULT_ABOUT_STORY_PARAGRAPHS = [
   "Analogue Room in downtown Solvang opened in July 2026.",
-  "Located at 1693 Mission Drive, Suite D2 in Founder's Square, the venue is a vinyl listening lounge, wine and beer bar, bottle and record shop, and pizza kitchen designed as a gathering place for music lovers and visitors in the Santa Ynez Valley.",
+  "Located at 1693 Mission Drive, Suite D2 in Founder's Square, the venue is a vinyl listening lounge, wine and beer bar, bottle shop, and pizza kitchen designed as a gathering place for music lovers and visitors in the Santa Ynez Valley.",
   "Founded by John Wright, owner of Standing Sun Wines, the space features a high-fidelity sound system, a curated vinyl-only music program, and a rotating selection of wines, craft beers, and nonalcoholic drinks. The food program, led by Joe Blanchard, offers focaccia-style pizzas and salads.",
   "Analogue Room is open Thursday through Saturday from 4–10 p.m., and Sunday and Monday from 4–8 p.m. Closed Tuesday and Wednesday.",
 ] as const

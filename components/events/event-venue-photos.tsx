@@ -9,7 +9,7 @@ import { VENUE_PHOTOS, type VenuePhoto } from "@/lib/venue-photos"
 const EVENT_VENUE_PHOTOS = [
   VENUE_PHOTOS.blueVinyl,
   VENUE_PHOTOS.djRecords,
-  VENUE_PHOTOS.nightCrowd,
+  VENUE_PHOTOS.barCrowd,
   VENUE_PHOTOS.decksOverhead,
 ] as const
 

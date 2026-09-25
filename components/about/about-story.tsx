@@ -68,7 +68,6 @@ const ABOUT_PHOTOS = [
   VENUE_PHOTOS.decksOverhead,
   VENUE_PHOTOS.barNight,
   VENUE_PHOTOS.fullBooth,
-  VENUE_PHOTOS.nightCrowd,
   VENUE_PHOTOS.analogueWine,
   VENUE_PHOTOS.browsingRecords,
   VENUE_PHOTOS.pizzaBoard,
