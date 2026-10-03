@@ -144,6 +144,7 @@ export const getNextOneOffEvent = cache(async function getNextOneOffEvent(): Pro
         slug,
         date,
         time,
+        ${EVENT_IMAGE_PROJECTION},
         ${EVENT_RECURRENCE_PROJECTION}
       } | order(date asc, time asc)`,
       { todayInLA, currentTimeInLA, sameDayCutoff: LA_EVENT_CUTOFF_TIME },

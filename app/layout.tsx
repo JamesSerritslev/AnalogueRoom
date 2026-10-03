@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from "next"
-import Script from "next/script"
 import "./globals.css"
 import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/studio/draft-mode-loader"
 import { LocalBusinessJsonLd } from "@/components/shared/local-business-json-ld"
+import { CookieConsent } from "@/components/layout/cookie-consent"
 import { PageTransition } from "@/components/layout/page-transition"
 import { NavGate } from "@/components/layout/nav-gate"
+import { OrderOnlineFab } from "@/components/layout/order-online-fab"
 import { SiteNavigation } from "@/components/layout/site-navigation"
 import { fontVariables } from "@/lib/fonts"
 import { getSiteUrl } from "@/lib/site-url"
 import { SanityLive } from "@/sanity/lib/live"
-
-const GA_MEASUREMENT_ID = "G-Q2DC27H5DK"
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -66,22 +65,12 @@ export default async function RootLayout({
         className="font-body min-h-dvh min-w-0 overflow-x-clip bg-cream text-coal antialiased"
       >
         <LocalBusinessJsonLd />
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
-          `}
-        </Script>
         <NavGate>
           <SiteNavigation />
+          <OrderOnlineFab />
         </NavGate>
         <PageTransition>{children}</PageTransition>
+        <CookieConsent />
         {isEnabled ? (
           <>
             <SanityLive />

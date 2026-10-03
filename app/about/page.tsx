@@ -84,36 +84,34 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 sm:gap-14 md:grid-cols-2 lg:grid-cols-3 lg:gap-16">
             {teamMembers.map((member, idx) => {
               const photoUrl = sanityImageUrl(member.photo, 800)
               const name = member.name ?? "Team member"
               return (
                 <div
                   key={`${member.name ?? "member"}-${idx}`}
-                  className="border border-cream/10 bg-cream/4 px-6 py-8 text-center transition-all duration-300 hover:border-orange hover:bg-orange/6 sm:px-8 sm:py-9 md:px-9 md:py-10"
+                  className="text-center"
                 >
                   <div
-                    className={`relative mx-auto mb-6 h-35 w-35 overflow-hidden rounded-full ${
-                      photoUrl
-                        ? "border border-cream/10"
-                        : "border border-dashed border-cream/20 bg-cream/5"
+                    className={`relative mx-auto mb-7 h-52 w-52 overflow-hidden rounded-full sm:h-56 sm:w-56 ${
+                      photoUrl ? "" : "bg-cream/5"
                     }`}
                   >
                     {photoUrl ? (
                       <Image
                         src={photoUrl}
                         alt={name}
-                        width={140}
-                        height={140}
+                        width={224}
+                        height={224}
                         className="h-full w-full object-cover"
-                        sizes="140px"
+                        sizes="(max-width: 640px) 208px, 224px"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center">
                         <svg
-                          width="40"
-                          height="40"
+                          width="56"
+                          height="56"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -132,7 +130,7 @@ export default async function AboutPage() {
                   </p>
                   <h3 className="font-display text-2xl text-cream">{member.name}</h3>
                   {member.bio ? (
-                    <p className="font-body mt-3 text-[13px] leading-relaxed text-cream/60">
+                    <p className="font-body mx-auto mt-3 max-w-[280px] text-[13px] leading-relaxed text-cream/60">
                       {member.bio}
                     </p>
                   ) : null}

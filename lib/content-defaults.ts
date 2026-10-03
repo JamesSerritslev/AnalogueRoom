@@ -12,6 +12,8 @@ export const DEFAULT_FACEBOOK_URL =
   "https://www.facebook.com/profile.php?id=61574339957083"
 /** Clean listing URL (no share UTMs). */
 export const DEFAULT_YELP_URL = "https://www.yelp.com/biz/analogue-room-solvang"
+/** Cash App order link. */
+export const DEFAULT_ORDER_ONLINE_URL = "https://cash.app/$analogueroom"
 export const DEFAULT_SISTER_PROPERTY_NAME = "Standing Sun Wines"
 export const DEFAULT_SISTER_PROPERTY_URL = "https://www.standingsunwines.com"
 

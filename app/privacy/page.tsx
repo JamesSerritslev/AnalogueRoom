@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           </h1>
           <div className="mb-6 h-0.5 w-12 bg-orange" />
           <p className="font-label mb-10 text-[10px] tracking-[0.28em] text-coal/50 uppercase">
-            Last updated September 8, 2026
+            Last updated October 2, 2026
           </p>
 
           <p className={P_CLASS}>
@@ -104,9 +104,10 @@ export default function PrivacyPage() {
 
           <h2 className={H2_CLASS}>Website analytics</h2>
           <p className={P_CLASS}>
-            The site uses Google Analytics to see which pages are visited. That
-            is ordinary usage data, not a form you fill out. You can block
-            analytics cookies in your browser if you prefer.
+            The site can use Google Analytics to see which pages are visited.
+            Analytics cookies load only if you choose Accept on the cookie
+            notice. If you Decline, we do not load Google Analytics. You can
+            also block analytics cookies in your browser if you prefer.
           </p>
 
           <h2 className={H2_CLASS}>How long we keep it</h2>
