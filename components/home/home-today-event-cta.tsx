@@ -25,6 +25,8 @@ function HomeTodayEventCtaInner({
 }) {
   const [expanded, setExpanded] = useState(false)
   const autoHideTimerRef = useRef<number | undefined>(undefined)
+  /** Timed intro is showing — ignore scroll-minimize and keep nav pinned. */
+  const introActiveRef = useRef(false)
   const when = homeEventWhenPrefix(event.date!)
   const time = event.time?.trim()
   const title = event.title.trim()
@@ -43,37 +45,60 @@ function HomeTodayEventCtaInner({
   }, [])
 
   const minimize = useCallback(() => {
+    introActiveRef.current = false
     clearAutoHide()
     setExpanded(false)
   }, [clearAutoHide])
 
   const expand = useCallback(() => {
+    introActiveRef.current = false
     clearAutoHide()
     setExpanded(true)
   }, [clearAutoHide])
 
+  // Keep the site nav pinned while the large CTA is open (nav also hides on scroll).
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("ar-event-cta-expanded", { detail: { expanded } }),
+    )
+    return () => {
+      window.dispatchEvent(
+        new CustomEvent("ar-event-cta-expanded", { detail: { expanded: false } }),
+      )
+    }
+  }, [expanded])
+
   // Every page load / mount: wait 2s, show for 5s, then auto-hide.
+  // Runs even if the user is already scrolling down the page.
   useEffect(() => {
     const showTimer = window.setTimeout(() => {
+      introActiveRef.current = true
       setExpanded(true)
       autoHideTimerRef.current = window.setTimeout(() => {
         autoHideTimerRef.current = undefined
+        introActiveRef.current = false
         setExpanded(false)
       }, 5000)
     }, 2000)
 
     return () => {
       window.clearTimeout(showTimer)
+      introActiveRef.current = false
       clearAutoHide()
     }
   }, [clearAutoHide])
 
+  // Manual expand: scroll down minimizes. Timed intro: stay open through scrolling.
   useEffect(() => {
     if (!expanded) return
 
     let lastY = window.scrollY
     const onScroll = () => {
       const y = window.scrollY
+      if (introActiveRef.current) {
+        lastY = y
+        return
+      }
       if (y > lastY && y > 24) {
         minimize()
       }

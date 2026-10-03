@@ -84,6 +84,8 @@ export function Navigation({
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [navHidden, setNavHidden] = useState(false)
+  const [eventCtaExpanded, setEventCtaExpanded] = useState(false)
+  const eventCtaExpandedRef = useRef(false)
   const lastScrollY = useRef(0)
   const phoneDisplay = getVenuePhoneDisplay()
   const phoneTel = getVenuePhoneTelHref()
@@ -146,6 +148,17 @@ export function Navigation({
   }, [menuOpen])
 
   useEffect(() => {
+    const onEventCta = (e: Event) => {
+      const expanded = Boolean((e as CustomEvent<{ expanded?: boolean }>).detail?.expanded)
+      eventCtaExpandedRef.current = expanded
+      setEventCtaExpanded(expanded)
+      if (expanded) setNavHidden(false)
+    }
+    window.addEventListener("ar-event-cta-expanded", onEventCta)
+    return () => window.removeEventListener("ar-event-cta-expanded", onEventCta)
+  }, [])
+
+  useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY
       const diff = y - lastScrollY.current
@@ -153,7 +166,8 @@ export function Navigation({
       if (y <= 16) {
         setNavHidden(false)
       } else if (diff > 10) {
-        setNavHidden(true)
+        // Keep nav + event CTA visible while the large CTA is open.
+        if (!eventCtaExpandedRef.current) setNavHidden(true)
       } else if (diff < -10) {
         setNavHidden(false)
       }
@@ -187,7 +201,7 @@ export function Navigation({
     <>
       <div
         className={`fixed top-0 left-0 right-0 z-[100] motion-safe:transition-transform motion-safe:duration-300 ${
-          navHidden ? "-translate-y-full" : "translate-y-0"
+          navHidden && !eventCtaExpanded ? "-translate-y-full" : "translate-y-0"
         }`}
       >
       <nav
