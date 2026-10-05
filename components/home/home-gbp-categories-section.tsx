@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { ReactNode } from "react"
 import { OfferingsScrollLink } from "@/components/home/offerings-scroll-link"
 import { VenuePhotoImg } from "@/components/shared/venue-photo-img"
+import { DEFAULT_ORDER_ONLINE_URL } from "@/lib/content-defaults"
 import { eventPath, formatEventDateShort } from "@/lib/events"
 import { DRINKS_MENU_PATH, FOOD_MENU_PATH } from "@/lib/site-routes"
 import type { Event } from "@/lib/sanity/types"
@@ -93,7 +94,16 @@ function categoryBlocks(upcomingEvents: Event[]): CategoryBlock[] {
         <Link href={DRINKS_MENU_PATH} className={LINK_CLASS}>
           wine and beer menu
         </Link>
-        .
+        , or{" "}
+        <a
+          href={DEFAULT_ORDER_ONLINE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={LINK_CLASS}
+        >
+          order online for pickup
+        </a>
+        !
       </>
     ),
   },
@@ -123,7 +133,16 @@ function categoryBlocks(upcomingEvents: Event[]): CategoryBlock[] {
         <Link href={FOOD_MENU_PATH} className={LINK_CLASS}>
           pizza and salad menu
         </Link>
-        .
+        . Order online ahead of time{" "}
+        <a
+          href={DEFAULT_ORDER_ONLINE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={LINK_CLASS}
+        >
+          here
+        </a>
+        !
       </>
     ),
   },

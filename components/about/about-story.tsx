@@ -2,58 +2,16 @@
 
 import Image from "next/image"
 import { useState } from "react"
+import { AboutContact } from "@/components/about/about-contact"
 import { AboutPhotoLightbox } from "@/components/about/about-photo-lightbox"
 import { RevealImage } from "@/components/shared/reveal-image"
 import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
-import {
-  renderBodyAccents,
-  type BodyAccentLink,
-} from "@/components/shared/render-headline-accent"
-import { TrackedDirectionsLink, TrackedFacebookLink, TrackedInstagramLink } from "@/components/shared/tracked-links"
+import { TrackedFacebookLink, TrackedInstagramLink } from "@/components/shared/tracked-links"
 import { FacebookIcon } from "@/components/icons/facebook-icon"
 import { InstagramIcon } from "@/components/icons/instagram-icon"
 import { DEFAULT_FACEBOOK_URL, DEFAULT_INSTAGRAM_URL } from "@/lib/content-defaults"
 import type { VenuePhoto } from "@/lib/venue-photos"
 import { VENUE_PHOTOS } from "@/lib/venue-photos"
-
-const LOCATION_LINK_CLASS =
-  "not-italic text-orange underline-offset-2 transition-colors hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-
-const ABOUT_LOCATION_LINKS: readonly BodyAccentLink[] = [
-  {
-    phrase: "1693 Mission Drive, Suite D2",
-    render: (phrase) => (
-      <TrackedDirectionsLink
-        placement="about_address"
-        className={LOCATION_LINK_CLASS}
-      >
-        {phrase}
-      </TrackedDirectionsLink>
-    ),
-  },
-  {
-    phrase: "Founder's Square",
-    render: (phrase) => (
-      <TrackedDirectionsLink
-        placement="about_founders_square"
-        className={LOCATION_LINK_CLASS}
-      >
-        {phrase}
-      </TrackedDirectionsLink>
-    ),
-  },
-  {
-    phrase: "downtown Solvang",
-    render: (phrase) => (
-      <TrackedDirectionsLink
-        placement="about_downtown_solvang"
-        className={LOCATION_LINK_CLASS}
-      >
-        {phrase}
-      </TrackedDirectionsLink>
-    ),
-  },
-]
 
 const ABOUT_PHOTOS = [
   VENUE_PHOTOS.storefront,
@@ -82,24 +40,16 @@ const MOSAIC_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 560px"
 
 type AboutStoryProps = {
   paragraphs: readonly string[]
-  /** Orange phrases per paragraph index (crawlable text; CSS color only). */
-  accents?: readonly (readonly string[])[]
 }
 
 function StoryParagraph({
   text,
-  accents,
   className,
 }: {
   text: string
-  accents?: readonly string[]
   className?: string
 }) {
-  return (
-    <p className={className}>
-      {renderBodyAccents(text, accents ?? [], ABOUT_LOCATION_LINKS)}
-    </p>
-  )
+  return <p className={className}>{text}</p>
 }
 
 function PhotoFrame({
@@ -173,7 +123,7 @@ function MosaicPhoto({
 /**
  * Story + photos interleaved so the About page isn’t one text block then one gallery.
  */
-export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
+export function AboutStory({ paragraphs }: AboutStoryProps) {
   const [open, setOpen] = useState(false)
   const [startIndex, setStartIndex] = useState(0)
 
@@ -184,7 +134,6 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
 
   const p = paragraphs
   const [p0, p1, p2, p3, p4, ...rest] = p
-  const a = (i: number) => accents[i]
 
   return (
     <>
@@ -220,14 +169,12 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
             {p0 ? (
               <StoryParagraph
                 text={p0}
-                accents={a(0)}
                 className="font-body mb-4 text-base leading-relaxed text-coal/85"
               />
             ) : null}
             {p1 ? (
               <StoryParagraph
                 text={p1}
-                accents={a(1)}
                 className="font-body text-base leading-relaxed text-coal/85"
               />
             ) : null}
@@ -259,14 +206,12 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
               {p2 ? (
                 <StoryParagraph
                   text={p2}
-                  accents={a(2)}
                   className="font-body mb-4 text-base leading-relaxed text-coal/85"
                 />
               ) : null}
               {p3 ? (
                 <StoryParagraph
                   text={p3}
-                  accents={a(3)}
                   className="font-body text-base leading-relaxed text-coal/85"
                 />
               ) : null}
@@ -329,6 +274,8 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
         </div>
       </section>
 
+      <AboutContact />
+
       {(p4 || rest.length > 0) && (
         <section className="bg-cream px-4 pb-16 sm:px-6 sm:pb-20 md:px-10 lg:px-12">
           <div className="mx-auto grid max-w-[1000px] grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-14">
@@ -343,16 +290,18 @@ export function AboutStory({ paragraphs, accents = [] }: AboutStoryProps) {
                 {p4 ? (
                   <StoryParagraph
                     text={p4}
-                    accents={a(4)}
-                    className={rest.length ? "mb-4" : ""}
+                    className={rest.length ? "font-body mb-4 text-base leading-relaxed text-coal/85" : "font-body text-base leading-relaxed text-coal/85"}
                   />
                 ) : null}
                 {rest.map((text, i) => (
                   <StoryParagraph
                     key={`story-rest-${i}`}
                     text={text}
-                    accents={a(5 + i)}
-                    className={i < rest.length - 1 ? "mb-4" : ""}
+                    className={
+                      i < rest.length - 1
+                        ? "font-body mb-4 text-base leading-relaxed text-coal/85"
+                        : "font-body text-base leading-relaxed text-coal/85"
+                    }
                   />
                 ))}
               </div>

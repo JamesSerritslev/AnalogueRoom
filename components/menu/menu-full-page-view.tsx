@@ -1,8 +1,10 @@
 import { MENU_CREAM_SENTINEL_ID } from "@/components/menu/menu-back-to-home-fixed"
+import { OrderOnlineButton } from "@/components/shared/order-online-button"
 import {
   InteriorHeroText,
   MENU_HERO_TITLE_CLASS,
 } from "@/components/shared/interior-hero-text"
+import { DEFAULT_DRINKS_ORDER_ONLINE_NOTE } from "@/lib/content-defaults"
 import type { MenuCategory, MenuItemRow, MenuSection } from "@/lib/menu-defaults"
 
 type MenuFullPageViewProps = {
@@ -165,10 +167,17 @@ export function MenuFullPageView({
         />
         <div className="mx-auto max-w-[720px]">
           {lead ? (
-            <p className="font-body mb-16 text-center text-[15px] leading-relaxed text-coal/80">
+            <p className="font-body mb-10 text-center text-[15px] leading-relaxed text-coal/80">
               {lead}
             </p>
           ) : null}
+
+          <div className="mb-16 flex flex-col items-center gap-3 text-center">
+            <p className="font-body text-[14px] leading-relaxed text-coal/70">
+              {DEFAULT_DRINKS_ORDER_ONLINE_NOTE}
+            </p>
+            <OrderOnlineButton />
+          </div>
 
           <div className={`space-y-16 sm:space-y-20 ${lead ? "" : "pt-8 sm:pt-10"}`}>
             {sections.map((section, idx) => (

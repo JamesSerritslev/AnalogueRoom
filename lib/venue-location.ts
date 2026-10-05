@@ -1,6 +1,6 @@
 /**
- * Canonical venue pin for Mapbox and deep links (must stay in sync with the map marker).
- * Mapbox expects `[longitude, latitude]`.
+ * Canonical venue coordinates and deep links for Google Maps embeds / CTAs.
+ * Stored as `[longitude, latitude]` (GeoJSON order).
  */
 export const VENUE_LNG_LAT: [number, number] = [
   -120.138116 + 0.000005,

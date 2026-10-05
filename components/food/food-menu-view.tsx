@@ -6,7 +6,9 @@ import {
   InteriorHeroText,
   MENU_HERO_TITLE_CLASS,
 } from "@/components/shared/interior-hero-text"
+import { OrderOnlineButton } from "@/components/shared/order-online-button"
 import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
+import { DEFAULT_FOOD_ORDER_ONLINE_NOTE, DEFAULT_ORDER_ONLINE_URL } from "@/lib/content-defaults"
 import { FOOD_MENU_PDF, FOOD_MENU_PNG } from "@/lib/food-menu"
 import { RevealImage } from "@/components/shared/reveal-image"
 import { DRINKS_MENU_PATH } from "@/lib/site-routes"
@@ -61,7 +63,11 @@ function MenuPdf({ priority = false }: { priority?: boolean }) {
 
 function PdfLink() {
   return (
-    <div className="mt-8 text-center lg:mt-10">
+    <div className="mt-8 flex flex-col items-center gap-3 text-center lg:mt-10">
+      <p className="font-body text-[14px] leading-relaxed text-coal/70">
+        {DEFAULT_FOOD_ORDER_ONLINE_NOTE}
+      </p>
+      <OrderOnlineButton />
       <a
         href={FOOD_MENU_PDF}
         target="_blank"
@@ -210,6 +216,15 @@ export function FoodMenuView() {
               <Link href="/events" className={FOOD_SEO_LINK}>
                 events calendar
               </Link>
+              . You can also{" "}
+              <a
+                href={DEFAULT_ORDER_ONLINE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={FOOD_SEO_LINK}
+              >
+                order pizza online for pickup
+              </a>
               . We&apos;re at 1693 Mission Drive, Suite D2, in Founder&apos;s
               Square, Solvang. Thursday through Saturday 4pm to 10pm; Sunday and
               Monday 4pm to 8pm.

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
+import { AboutFaq } from "@/components/about/about-faq"
 import { AboutStory } from "@/components/about/about-story"
 import { Footer } from "@/components/layout/footer"
 import { CoverPhotoImg } from "@/components/shared/venue-photo-img"
@@ -7,7 +8,6 @@ import { getLayoutSingletons } from "@/lib/sanity/layout-singletons"
 import { sanityImageUrl } from "@/lib/sanity/image-url"
 import {
   DEFAULT_ABOUT_STORY_PARAGRAPHS,
-  DEFAULT_ABOUT_STORY_ACCENTS,
   DEFAULT_TEAM_INTRO,
   DEFAULT_TEAM_MEMBERS,
 } from "@/lib/content-defaults"
@@ -35,7 +35,6 @@ export default async function AboutPage() {
   const L = await getLayoutSingletons()
 
   const storyParagraphs = [...DEFAULT_ABOUT_STORY_PARAGRAPHS]
-  const storyAccents = DEFAULT_ABOUT_STORY_ACCENTS
 
   const teamMembers =
     L.about?.teamMembers?.filter((m) => m?.name?.trim())?.length ?? 0
@@ -68,7 +67,9 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        <AboutStory paragraphs={storyParagraphs} accents={storyAccents} />
+        <AboutStory paragraphs={storyParagraphs} />
+
+        <AboutFaq />
 
         <section className="bg-coal px-4 py-20 text-cream sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-12">
           <div className="mx-auto mb-16 max-w-[680px] text-center">

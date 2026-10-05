@@ -105,22 +105,6 @@ export const DEFAULT_ABOUT_STORY_PARAGRAPHS = [
   "Analogue Room is open Thursday through Saturday from 4–10 p.m., and Sunday and Monday from 4–8 p.m. Closed Tuesday and Wednesday.",
 ] as const
 
-/** Orange emphasis phrases per about story paragraph (same order as paragraphs). */
-export const DEFAULT_ABOUT_STORY_ACCENTS: readonly (readonly string[])[] = [
-  ["downtown Solvang", "July 2026"],
-  [
-    "1693 Mission Drive, Suite D2",
-    "Founder's Square",
-    "vinyl listening lounge",
-    "Santa Ynez Valley",
-  ],
-  ["John Wright", "Standing Sun Wines", "Joe Blanchard", "focaccia-style pizzas"],
-  [
-    "Thursday through Saturday from 4–10 p.m.",
-    "Sunday and Monday from 4–8 p.m.",
-  ],
-]
-
 export const DEFAULT_TEAM_INTRO =
   "A small team with a clear vision: to build a room that feels like home."
 
@@ -129,6 +113,63 @@ export const DEFAULT_TEAM_MEMBERS: AboutTeamMember[] = [
   { name: "Blake Economus", role: "General Manager" },
   { name: "Ray Fortune", role: "Bar Manager, Vinyl Curator" },
 ]
+
+/** About page FAQ — full business Q&A (review before push). */
+export const DEFAULT_ABOUT_FAQ = [
+  {
+    question: "What is Analogue Room?",
+    answer:
+      "Analogue Room is a vinyl listening lounge, wine and beer bar, bottle shop, and pizza kitchen in downtown Solvang. We play vinyl through a high-fidelity system, pour a rotating list of wines, craft beers, and zero-proof drinks, and serve focaccia-style pizzas and salads.",
+  },
+  {
+    question: "Where are you located?",
+    answer:
+      "We're at 1693 Mission Drive, Suite D2, in Founder's Square, downtown Solvang, California 93463. Phone: (805) 691-9093.",
+  },
+  {
+    question: "What are your hours?",
+    answer:
+      "Thursday through Saturday 4–10 p.m., Sunday and Monday 4–8 p.m. Closed Tuesday and Wednesday. We're open later than most of downtown Solvang!",
+  },
+  {
+    question: "What kind of music do you play?",
+    answer:
+      "We have many different genres of music on our shelves. If you see an album you love up on the shelves, you can ask for us to give it a spin. Guest DJs and listening nights appear on our events calendar when scheduled.",
+  },
+  {
+    question: "Do you serve food?",
+    answer:
+      "Yes. Side Hustle Pizza serves focaccia-style pizzas by the slice or pan, plus simple salads meant to pair with drinks and music. See the full list on our pizza and salad menu.",
+  },
+  {
+    question: "What do you pour to drink?",
+    answer:
+      "A rotating selection of local Santa Barbara County wines and imports, craft beer, and a considered zero-proof menu. You can also take bottles home from our bottle shop. Browse the wine and beer menu for what's on now.",
+  },
+  {
+    question: "Can I order pizza or wine online for pickup?",
+    answer:
+      "Yes. You can order pizza online for pickup, and you can order a bottle of wine online for pickup. Use Order Online on this site, then swing by when your order is ready.",
+  },
+  {
+    question: "Can I host a private event?",
+    answer:
+      "Yes. Birthdays, listening parties, corporate gatherings, and other private bookings are welcome. Start with Host Your Event on this site and our team will follow up.",
+  },
+  {
+    question: "Is Analogue Room 21+?",
+    answer:
+      "The whole family and pets are welcome! Guests ordering or being served alcohol must be 21 or older with valid ID.",
+  },
+] as const
+
+/** Short line above Order Online on the drinks menu. */
+export const DEFAULT_DRINKS_ORDER_ONLINE_NOTE =
+  "Want a bottle for later? Order online for pickup."
+
+/** Short line above Order Online on the food menu. */
+export const DEFAULT_FOOD_ORDER_ONLINE_NOTE =
+  "Craving a slice? Order pizza online for pickup."
 
 export const DEFAULT_EVENTS_INDEX_INTRO =
   "From listening nights and guest DJs to special pours, Analogue Room is a vinyl bar in downtown Solvang with live music from the booth. There is no digital playlist. All music is hand-picked throughout the night, and our hours run later than most of town."

@@ -177,7 +177,7 @@ function HomeTodayEventCtaInner({
       >
         <div className="min-h-0 overflow-hidden">
           <div
-            className={`relative flex min-h-8 items-center justify-center gap-2 bg-cream px-3 py-1 transition-[opacity,background-color] duration-500 ease-in-out hover:bg-cream motion-reduce:transition-none sm:min-h-9 sm:gap-3 sm:px-6 md:px-10 ${
+            className={`relative flex min-h-8 items-center justify-center gap-2 bg-cream/92 px-3 py-1 backdrop-blur-md transition-[opacity,background-color] duration-500 ease-in-out hover:bg-cream/92 motion-reduce:transition-none sm:min-h-9 sm:gap-3 sm:px-6 md:px-10 max-lg:bg-transparent max-lg:backdrop-blur-none max-lg:hover:bg-transparent ${
               expanded ? "pointer-events-none opacity-0" : "opacity-100"
             }`}
           >

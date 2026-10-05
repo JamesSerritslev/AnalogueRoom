@@ -7,7 +7,6 @@ import { type ReactNode, useEffect, useRef, useState } from "react"
 import { Wine, MapPin, ExternalLink } from "lucide-react"
 import { scrollToAnchorById } from "@/lib/anchor-scroll"
 import { smoothScrollToY } from "@/lib/smooth-scroll"
-import { requestLocationOnce } from "@/lib/geolocation"
 import {
   VENUE_STREET_ADDRESS,
   VENUE_ADDRESS_LOCALITY,
@@ -20,6 +19,7 @@ import {
   DEFAULT_FACEBOOK_URL,
   DEFAULT_HERO_META_HOURS,
   DEFAULT_INSTAGRAM_URL,
+  DEFAULT_ORDER_ONLINE_URL,
 } from "@/lib/content-defaults"
 import { OpenInMapsLink } from "@/components/shared/open-in-maps-link"
 import {
@@ -85,7 +85,9 @@ export function Navigation({
   const [menuOpen, setMenuOpen] = useState(false)
   const [navHidden, setNavHidden] = useState(false)
   const [eventCtaExpanded, setEventCtaExpanded] = useState(false)
+  const [mobilePanelTop, setMobilePanelTop] = useState(0)
   const eventCtaExpandedRef = useRef(false)
+  const headerRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
   const phoneDisplay = getVenuePhoneDisplay()
   const phoneTel = getVenuePhoneTelHref()
@@ -122,21 +124,18 @@ export function Navigation({
     goHomeAnchor("offerings", OFFERINGS_HREF, { extraOffsetPx: -140 })
   }
 
-  async function handleLocationClick(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleLocationClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     setMenuOpen(false)
     setNavHidden(false)
-    // Prompt for location first, then take them to the map (whether granted or denied).
-    void requestLocationOnce().finally(() => {
-      if (pathname === "/") {
-        scrollToAnchorById("location", { extraOffsetPx: -80 })
-        if (typeof window !== "undefined" && typeof window.history.replaceState === "function") {
-          window.history.replaceState(null, "", LOCATION_HREF)
-        }
-        return
+    if (pathname === "/") {
+      scrollToAnchorById("location", { extraOffsetPx: -80 })
+      if (typeof window !== "undefined" && typeof window.history.replaceState === "function") {
+        window.history.replaceState(null, "", LOCATION_HREF)
       }
-      router.push(LOCATION_HREF)
-    })
+      return
+    }
+    router.push(LOCATION_HREF)
   }
 
   useEffect(() => {
@@ -145,6 +144,18 @@ export function Navigation({
 
   useEffect(() => {
     if (menuOpen) setNavHidden(false)
+  }, [menuOpen])
+
+  // Hide the floating Order Online FAB while the mobile drawer is open.
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("ar-mobile-nav", { detail: { open: menuOpen } }),
+    )
+    return () => {
+      window.dispatchEvent(
+        new CustomEvent("ar-mobile-nav", { detail: { open: false } }),
+      )
+    }
   }, [menuOpen])
 
   useEffect(() => {
@@ -185,28 +196,83 @@ export function Navigation({
 
   useEffect(() => {
     if (!menuOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = "hidden"
+
+    const scrollY = window.scrollY
+    const html = document.documentElement
+    const body = document.body
+    const prev = {
+      htmlOverflow: html.style.overflow,
+      bodyOverflow: body.style.overflow,
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyWidth: body.style.width,
+      bodyOverscroll: body.style.overscrollBehavior,
+    }
+
+    html.style.overflow = "hidden"
+    body.style.overflow = "hidden"
+    body.style.position = "fixed"
+    body.style.top = `-${scrollY}px`
+    body.style.width = "100%"
+    body.style.overscrollBehavior = "none"
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false)
     }
     window.addEventListener("keydown", onKey)
+
     return () => {
-      document.body.style.overflow = prev
+      html.style.overflow = prev.htmlOverflow
+      body.style.overflow = prev.bodyOverflow
+      body.style.position = prev.bodyPosition
+      body.style.top = prev.bodyTop
+      body.style.width = prev.bodyWidth
+      body.style.overscrollBehavior = prev.bodyOverscroll
       window.removeEventListener("keydown", onKey)
+      window.scrollTo(0, scrollY)
     }
   }, [menuOpen])
+
+  // Keep the slide-over flush under the real nav (+ event bar) height.
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+
+    const update = () => {
+      setMobilePanelTop(Math.round(el.getBoundingClientRect().bottom))
+    }
+    update()
+
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    window.addEventListener("resize", update)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener("resize", update)
+    }
+  }, [eventCtaExpanded, hasCta, menuOpen, navHidden])
 
   return (
     <>
       <div
+        ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-[100] motion-safe:transition-transform motion-safe:duration-300 ${
           navHidden && !eventCtaExpanded ? "-translate-y-full" : "translate-y-0"
+        } ${
+          hasCta && !eventCtaExpanded
+            ? "max-lg:bg-cream/92 max-lg:backdrop-blur-md"
+            : ""
         }`}
       >
       <nav
         className={`flex items-center justify-between gap-2 bg-cream/92 px-4 py-2 backdrop-blur-md sm:gap-3 sm:px-6 sm:py-3 md:px-10 lg:py-4 ${
-          hasCta ? "border-b-0" : "border-b border-coal/8"
+          hasCta
+            ? `border-b border-coal ${
+                eventCtaExpanded
+                  ? ""
+                  : "max-lg:bg-transparent max-lg:backdrop-blur-none"
+              }`
+            : "border-b border-coal/8"
         } pt-[max(0.5rem,env(safe-area-inset-top))] sm:pt-[max(0.75rem,env(safe-area-inset-top))]`}
       >
         <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 lg:gap-4">
@@ -316,7 +382,7 @@ export function Navigation({
               type="button"
               onClick={handleLocationClick}
               className={NAV_MOBILE_ICON_CLASS}
-              aria-label="Share your location and view the map"
+              aria-label="View map and location"
             >
               <MapPin className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
             </button>
@@ -344,25 +410,26 @@ export function Navigation({
       {eventCta}
       </div>
 
-      {/* Mobile / small tablet: slide-over menu */}
+      {/* Mobile / small tablet: slide-over menu (below fixed nav so hamburger stays clickable) */}
       <div
-        className="pointer-events-none fixed inset-0 z-[90] lg:hidden"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-[90] lg:hidden"
+        style={{ top: mobilePanelTop }}
         aria-hidden={!menuOpen}
       >
         <button
           type="button"
-          className={`mobile-nav-panel-top pointer-events-auto absolute inset-x-0 bottom-0 bg-coal/45 transition-opacity duration-200 ${
-            hasCta ? "mobile-nav-panel-top-with-cta" : ""
-          } ${menuOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          className={`pointer-events-auto absolute inset-0 bg-coal/45 transition-opacity duration-200 ${
+            menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
           aria-label="Close menu"
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
         />
         <div
           id="site-mobile-nav"
-          className={`mobile-nav-panel-top pointer-events-auto absolute right-0 bottom-0 z-[95] flex w-[min(100%,20rem)] flex-col overflow-hidden border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
-            hasCta ? "mobile-nav-panel-top-with-cta" : ""
-          } ${menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"}`}
+          className={`pointer-events-auto absolute inset-y-0 right-0 z-[95] flex w-[min(100%,20rem)] flex-col overflow-hidden border-l border-coal/10 bg-cream shadow-xl transition-transform duration-200 ease-out ${
+            menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
+          }`}
           style={{
             paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
           }}
@@ -371,7 +438,7 @@ export function Navigation({
             <p className="font-label text-[9px] tracking-[0.35em] uppercase text-orange">Menu</p>
           </div>
           <nav
-            className="flex min-h-0 flex-1 flex-col justify-center gap-0.5 overflow-hidden px-3 py-2 sm:py-3"
+            className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-2 sm:py-3"
             aria-label="Mobile"
           >
             {navLinks.map((link) => (
@@ -387,6 +454,14 @@ export function Navigation({
                 {link.label}
               </Link>
             ))}
+            <a
+              href={DEFAULT_ORDER_ONLINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${NAV_MOBILE_LINK_CLASS} text-coal active:bg-coal/8`}
+            >
+              Order Online
+            </a>
             <a
               href="https://www.standingsunwines.com"
               target="_blank"

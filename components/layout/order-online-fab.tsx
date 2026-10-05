@@ -3,35 +3,69 @@
 import { useEffect, useRef, useState } from "react"
 import { DEFAULT_ORDER_ONLINE_URL } from "@/lib/content-defaults"
 
+const WHAT_WE_ARE_ID = "what-we-are"
+
 /**
  * Chat-bubble style Order Online CTA — fixed bottom-right, opaque cream.
- * Hides on scroll down, fades in on scroll up (mobile + desktop).
+ * Hides on scroll down / shows on scroll up until the visitor scrolls past
+ * “What You’ll Find Here” (`#what-we-are`); after that it stays visible.
+ * Hidden while the mobile side nav is open so it never overlaps the drawer.
  */
 export function OrderOnlineFab() {
-  const [visible, setVisible] = useState(true)
+  const [scrollVisible, setScrollVisible] = useState(true)
+  const [pastWhatYouFind, setPastWhatYouFind] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const lastScrollY = useRef(0)
 
   useEffect(() => {
     lastScrollY.current = window.scrollY
 
+    const updatePastSection = () => {
+      const el = document.getElementById(WHAT_WE_ARE_ID)
+      if (!el) {
+        setPastWhatYouFind(false)
+        return
+      }
+      // Fully scrolled past the section (bottom edge above the sticky nav band).
+      setPastWhatYouFind(el.getBoundingClientRect().bottom <= 96)
+    }
+
     const onScroll = () => {
       const y = window.scrollY
       const diff = y - lastScrollY.current
 
+      updatePastSection()
+
       if (y <= 16) {
-        setVisible(true)
+        setScrollVisible(true)
       } else if (diff > 10) {
-        setVisible(false)
+        setScrollVisible(false)
       } else if (diff < -10) {
-        setVisible(true)
+        setScrollVisible(true)
       }
 
       lastScrollY.current = y
     }
 
+    updatePastSection()
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    window.addEventListener("resize", updatePastSection)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", updatePastSection)
+    }
   }, [])
+
+  useEffect(() => {
+    const onMobileNav = (e: Event) => {
+      const open = Boolean((e as CustomEvent<{ open?: boolean }>).detail?.open)
+      setMenuOpen(open)
+    }
+    window.addEventListener("ar-mobile-nav", onMobileNav)
+    return () => window.removeEventListener("ar-mobile-nav", onMobileNav)
+  }, [])
+
+  const visible = (pastWhatYouFind || scrollVisible) && !menuOpen
 
   return (
     <a
