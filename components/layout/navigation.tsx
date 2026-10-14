@@ -51,10 +51,10 @@ const NAV_CTA_OUTLINE_CLASS =
   "font-label text-[11px] tracking-[0.18em] sm:tracking-[0.22em] md:tracking-[0.24em] uppercase motion-safe:transition-colors motion-safe:duration-300 inline-flex min-h-10 shrink-0 items-center justify-center border border-coal bg-transparent px-3 py-2 text-coal hover:bg-coal hover:text-cream sm:px-3.5"
 
 const NAV_MOBILE_CTA_OUTLINE_CLASS =
-  "rounded-sm border border-coal bg-transparent px-3 py-2 text-center font-label text-[11px] leading-snug tracking-[0.2em] text-coal uppercase transition-colors hover:bg-coal hover:text-cream active:bg-coal sm:py-2.5 sm:tracking-[0.24em]"
+  "min-h-0 rounded-sm border border-coal bg-transparent px-3 py-[clamp(0.35rem,1.3vh,0.6rem)] text-center font-label text-[clamp(12px,3.2vmin,14px)] leading-snug tracking-[0.18em] text-coal uppercase transition-colors hover:bg-coal hover:text-cream active:bg-coal"
 
 const NAV_MOBILE_LINK_CLASS =
-  "rounded-sm px-3 py-2 font-label text-[11px] tracking-[0.22em] uppercase transition-colors sm:py-2.5 sm:text-[12px] sm:tracking-[0.25em]"
+  "min-h-0 rounded-sm px-3 py-[clamp(0.3rem,1.1vh,0.55rem)] font-label text-[clamp(13px,3.4vmin,15px)] tracking-[0.2em] uppercase transition-colors"
 
 const NAV_LINK_CLASS =
   "font-label text-[11px] tracking-[0.22em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase motion-safe:transition-[color,transform,border-color] motion-safe:duration-300 motion-safe:ease-out"
@@ -431,14 +431,17 @@ export function Navigation({
             menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
           }`}
           style={{
-            paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
+            paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))",
           }}
         >
-          <div className="shrink-0 border-b border-coal/10 px-5 py-2.5 sm:py-3">
-            <p className="font-label text-[9px] tracking-[0.35em] uppercase text-orange">Menu</p>
+          <div className="shrink-0 border-b border-coal/10 px-4 py-[clamp(0.35rem,1.2vh,0.65rem)] sm:px-5">
+            <p className="font-label text-[10px] tracking-[0.35em] uppercase text-orange">
+              Menu
+            </p>
           </div>
+
           <nav
-            className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-2 sm:py-3"
+            className="flex min-h-0 flex-1 flex-col justify-evenly gap-[clamp(0.15rem,0.8vh,0.35rem)] overflow-hidden px-3 py-[clamp(0.25rem,1vh,0.5rem)]"
             aria-label="Mobile"
           >
             {navLinks.map((link) => (
@@ -446,7 +449,8 @@ export function Navigation({
                 key={link.href}
                 href={link.href}
                 className={`${NAV_MOBILE_LINK_CLASS} ${
-                  pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"))
+                  pathname === link.href ||
+                  (link.href !== "/" && pathname.startsWith(link.href + "/"))
                     ? "bg-orange/12 text-orange"
                     : "text-coal active:bg-coal/8"
                 }`}
@@ -482,64 +486,75 @@ export function Navigation({
             </Link>
           </nav>
 
-          <div className="flex shrink-0 flex-col items-center border-t border-coal/10 px-4 py-3 text-center sm:px-5 sm:py-4">
-            <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase">
-              Hours
-            </p>
-            <p className="mt-1 font-body text-[12px] leading-snug text-coal/85 sm:text-[13px]">
-              {hoursLine}
-            </p>
-            <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
-              Address
-            </p>
-            <p className="mt-1 font-body text-[12px] leading-snug text-coal/85 sm:text-[13px]">
-              {VENUE_STREET_ADDRESS}
-              <br />
-              {VENUE_ADDRESS_LOCALITY}, {VENUE_ADDRESS_REGION} {VENUE_POSTAL_CODE}
-            </p>
+          <div className="flex shrink-0 flex-col items-center gap-[clamp(0.35rem,1.4vh,0.75rem)] border-t border-coal/10 px-3 py-[clamp(0.5rem,1.6vh,0.9rem)] text-center sm:px-4">
+            <div>
+              <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase sm:text-[10px]">
+                Hours
+              </p>
+              <p className="mt-0.5 font-body text-[clamp(13px,3.2vmin,15px)] leading-snug text-coal/85">
+                {hoursLine}
+              </p>
+            </div>
+            <div>
+              <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase sm:text-[10px]">
+                Address
+              </p>
+              <p className="mt-0.5 font-body text-[clamp(13px,3.2vmin,15px)] leading-snug text-coal/85">
+                {VENUE_STREET_ADDRESS}
+                <br />
+                {VENUE_ADDRESS_LOCALITY}, {VENUE_ADDRESS_REGION}{" "}
+                {VENUE_POSTAL_CODE}
+              </p>
+            </div>
             {phoneDisplay && phoneTel ? (
-              <>
-                <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
+              <div>
+                <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase sm:text-[10px]">
                   Phone
                 </p>
                 <TrackedTelLink
                   href={phoneTel}
                   placement="nav_mobile"
-                  className="mt-1 inline-flex min-h-9 items-center justify-center font-body text-[12px] text-coal/85 transition-colors hover:text-orange sm:text-[13px]"
+                  className="mt-0.5 inline-flex items-center justify-center font-body text-[clamp(13px,3.2vmin,15px)] text-coal/85 transition-colors hover:text-orange"
                 >
                   {phoneDisplay}
                 </TrackedTelLink>
-              </>
+              </div>
             ) : null}
-            <p className="font-label mt-3 text-[9px] tracking-[0.28em] text-orange uppercase">
-              Follow
-            </p>
-            <div className="mt-1 flex items-center justify-center gap-3">
-              <TrackedInstagramLink
-                href={DEFAULT_INSTAGRAM_URL}
-                placement="nav_mobile"
-                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+            <div className="flex flex-col items-center gap-[clamp(0.25rem,1vh,0.5rem)]">
+              <p className="font-label text-[9px] tracking-[0.28em] text-orange uppercase sm:text-[10px]">
+                Follow
+              </p>
+              <div className="flex items-center justify-center gap-2.5">
+                <TrackedInstagramLink
+                  href={DEFAULT_INSTAGRAM_URL}
+                  placement="nav_mobile"
+                  className="inline-flex h-[clamp(2.25rem,6.5vmin,2.75rem)] w-[clamp(2.25rem,6.5vmin,2.75rem)] items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  <InstagramIcon className="h-[clamp(1.5rem,5vmin,1.85rem)] w-[clamp(1.5rem,5vmin,1.85rem)]" />
+                  <span className="sr-only">Instagram</span>
+                </TrackedInstagramLink>
+                <TrackedFacebookLink
+                  href={DEFAULT_FACEBOOK_URL}
+                  placement="nav_mobile"
+                  className="inline-flex h-[clamp(2.25rem,6.5vmin,2.75rem)] w-[clamp(2.25rem,6.5vmin,2.75rem)] items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  <FacebookIcon className="h-[clamp(1.5rem,5vmin,1.85rem)] w-[clamp(1.5rem,5vmin,1.85rem)]" />
+                  <span className="sr-only">Facebook</span>
+                </TrackedFacebookLink>
+              </div>
+              <OpenInMapsLink
+                placement="mobile_nav"
+                provider="google"
+                className="inline-flex items-center justify-center gap-1.5 border border-orange/40 px-3 py-[clamp(0.35rem,1.2vh,0.55rem)] font-label text-[clamp(11px,2.8vmin,12px)] tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15"
               >
-                <InstagramIcon className="h-7 w-7" />
-                <span className="sr-only">Instagram</span>
-              </TrackedInstagramLink>
-              <TrackedFacebookLink
-                href={DEFAULT_FACEBOOK_URL}
-                placement="nav_mobile"
-                className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-              >
-                <FacebookIcon className="h-7 w-7" />
-                <span className="sr-only">Facebook</span>
-              </TrackedFacebookLink>
+                Open in Maps
+                <ExternalLink
+                  className="h-3.5 w-3.5"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
+              </OpenInMapsLink>
             </div>
-            <OpenInMapsLink
-              placement="mobile_nav"
-              provider="google"
-              className="mt-3 inline-flex min-h-9 items-center justify-center gap-1.5 border border-orange/40 px-3.5 py-2 font-label text-[10px] tracking-[0.2em] text-orange uppercase transition-colors hover:bg-orange/10 active:bg-orange/15"
-            >
-              Open in Maps
-              <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden />
-            </OpenInMapsLink>
           </div>
         </div>
       </div>
