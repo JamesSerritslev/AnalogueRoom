@@ -104,10 +104,8 @@ export default function PrivacyPage() {
 
           <h2 className={H2_CLASS}>Website analytics</h2>
           <p className={P_CLASS}>
-            The site can use Google Analytics to see which pages are visited.
-            Analytics cookies load only if you choose Accept on the cookie
-            notice. If you Decline, we do not load Google Analytics. You can
-            also block analytics cookies in your browser if you prefer.
+            The site uses Google Analytics to see which pages are visited.
+            You can block analytics cookies in your browser if you prefer.
           </p>
 
           <h2 className={H2_CLASS}>How long we keep it</h2>

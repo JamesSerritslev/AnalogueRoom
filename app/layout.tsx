@@ -3,7 +3,7 @@ import "./globals.css"
 import { draftMode } from "next/headers"
 import { DraftModeLoader } from "@/components/studio/draft-mode-loader"
 import { LocalBusinessJsonLd } from "@/components/shared/local-business-json-ld"
-import { CookieConsent } from "@/components/layout/cookie-consent"
+import { GoogleAnalytics } from "@/components/layout/google-analytics"
 import { PageTransition } from "@/components/layout/page-transition"
 import { NavGate } from "@/components/layout/nav-gate"
 import { OrderOnlineFab } from "@/components/layout/order-online-fab"
@@ -70,7 +70,7 @@ export default async function RootLayout({
           <OrderOnlineFab />
         </NavGate>
         <PageTransition>{children}</PageTransition>
-        <CookieConsent />
+        <GoogleAnalytics />
         {isEnabled ? (
           <>
             <SanityLive />

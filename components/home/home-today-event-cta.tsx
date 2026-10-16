@@ -68,7 +68,7 @@ function HomeTodayEventCtaInner({
     }
   }, [expanded])
 
-  // Every page load / mount: wait 2s, show for 5s, then auto-hide.
+  // Every page load / mount: wait 2s, show for 4s, then auto-hide.
   // Runs even if the user is already scrolling down the page.
   useEffect(() => {
     const showTimer = window.setTimeout(() => {
@@ -78,7 +78,7 @@ function HomeTodayEventCtaInner({
         autoHideTimerRef.current = undefined
         introActiveRef.current = false
         setExpanded(false)
-      }, 5000)
+      }, 4000)
     }, 2000)
 
     return () => {

@@ -1,3 +1,5 @@
+export const GA_MEASUREMENT_ID = "G-Q2DC27H5DK"
+
 type GtagFn = (
   command: "event" | "config" | "js" | "set",
   ...args: unknown[]
@@ -12,7 +14,7 @@ declare global {
 
 export type MapsProvider = "apple" | "google"
 
-/** Fire a GA4 event when gtag is available (no-op if blocked / not loaded). */
+/** Fire a GA4 event when gtag is available (no-op until the script loads). */
 function trackEvent(
   name: string,
   params?: Record<string, string | number | boolean | undefined>,
